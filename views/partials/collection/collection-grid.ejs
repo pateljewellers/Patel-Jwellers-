@@ -1,0 +1,23 @@
+<section class="section collection-grid-section scroll-section" id="collection-grid">
+  <div class="container">
+    <div class="section-head collection-grid__title reveal-up">
+      <span class="section-eyebrow">Curated Collections</span>
+      <h2>Shop premium jewellery categories</h2>
+      <p class="collection-grid__intro">Each collection is selected for its timeless luxury, rich heritage and elegant versatility.</p>
+    </div>
+    <div class="collection-grid">
+      <% collection.collectionGrid.forEach(function(item) { %>
+        <a class="collection-card reveal-up" href="<%= item.href %>">
+          <div class="collection-card__img-wrap">
+            <img src="<%= item.image %>" alt="<%= item.title %>" width="700" height="900">
+            <div class="collection-card__tag"><span><%= item.title %></span></div>
+          </div>
+          <div class="collection-card__body">
+            <p><%= item.subtitle %></p>
+            <span class="collection-card__link">Explore</span>
+          </div>
+        </a>
+      <% }); %>
+    </div>
+  </div>
+</section>

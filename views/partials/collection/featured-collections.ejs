@@ -1,0 +1,21 @@
+<section class="section collection-featured scroll-section" id="collection-featured">
+  <div class="container">
+    <div class="section-head reveal-up">
+      <span class="section-eyebrow">Featured Collections</span>
+      <h2>Designer highlights for every jewellery mood</h2>
+    </div>
+    <div class="featured-grid">
+      <% collection.featuredCollections.forEach(function(item) { %>
+        <a href="<%= item.href %>" class="featured-card reveal-up">
+          <div class="featured-card__media">
+            <img src="<%= item.image %>" alt="<%= item.title %>" width="700" height="800">
+          </div>
+          <div class="featured-card__body">
+            <h3><%= item.title %></h3>
+            <p><%= item.text %></p>
+          </div>
+        </a>
+      <% }); %>
+    </div>
+  </div>
+</section>

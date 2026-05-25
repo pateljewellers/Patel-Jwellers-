@@ -1,8 +1,17 @@
 <%- include('../partials/layout-start') %>
 <%- include('../partials/header') %>
-<main class="main-content">
-  <%- include('../partials/page-hero') %>
-  <%- include('../partials/page-placeholder') %>
+<main class="main-content page-collection">
+  <%- include('../partials/collection/hero') %>
+
+  <% if (!isCategoryView) { %>
+    <%- include('../partials/collection/collection-grid') %>
+    <%- include('../partials/collection/luxury-card') %>
+    <%- include('../partials/collection/featured-collections') %>
+  <% } else { %>
+    <%- include('../partials/collection/category-detail') %>
+  <% } %>
+
+  <%- include('../partials/collection/custom-design-cta') %>
 </main>
 <%- include('../partials/footer') %>
 <%- include('../partials/layout-end') %>

@@ -1,6 +1,7 @@
 const { getPageMeta } = require('../config/navigation');
 const homeContent = require('../config/home-content');
 const aboutContent = require('../config/about-content');
+const collectionContent = require('../config/collection-content');
 
 function renderPage(pageId, viewName) {
   return function pageHandler(req, res) {
@@ -35,10 +36,28 @@ function getAboutPage(req, res) {
   });
 }
 
+function getCollectionPage(req, res) {
+  const meta = getPageMeta('collection');
+  const selectedCategory = req.query.category || collectionContent.defaultCategory;
+  const category = collectionContent.categories.find((item) => item.id === selectedCategory) || collectionContent.categories[0];
+  const isCategoryView = typeof req.query.category !== 'undefined';
+
+  res.render('pages/collection', {
+    title: meta.title,
+    description: meta.description,
+    page: 'collection',
+    bodyClass: 'page-collection',
+    collection: collectionContent,
+    selectedCategory,
+    category,
+    isCategoryView,
+  });
+}
+
 module.exports = {
   getHomePage,
   getAboutPage,
-  getCollectionPage: renderPage('collection', 'pages/collection'),
+  getCollectionPage,
   getShagunPage: renderPage('shagun', 'pages/shagun-registration'),
   getGalleryPage: renderPage('gallery', 'pages/gallery'),
   getCustomDesignPage: renderPage('custom-design', 'pages/custom-design'),

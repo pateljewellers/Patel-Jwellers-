@@ -1,0 +1,13 @@
+<section class="section collection-luxury scroll-section" id="collection-luxury">
+  <div class="container collection-luxury__inner">
+    <div class="collection-luxury__copy reveal-right">
+      <span class="section-eyebrow"><%= collection.luxuryCard.eyebrow %></span>
+      <h2><%= collection.luxuryCard.title %></h2>
+      <p><%= collection.luxuryCard.description %></p>
+      <a href="<%= collection.luxuryCard.cta.href %>" class="btn btn--primary btn--magnetic"><%= collection.luxuryCard.cta.label %></a>
+    </div>
+    <div class="collection-luxury__image reveal-left">
+      <img src="<%= collection.luxuryCard.image %>" alt="Luxury jewellery collection" loading="lazy" width="1000" height="900">
+    </div>
+  </div>
+</section>

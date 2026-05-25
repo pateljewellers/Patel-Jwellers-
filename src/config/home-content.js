@@ -42,10 +42,10 @@ module.exports = {
   ],
 
   collections: [
-    { id: 'bridal', title: 'Bridal', image: '/images/collection/bridal.jpg', href: '/collection' },
-    { id: 'diamonds', title: 'Diamonds', image: '/images/collection/diamonds.jpg', href: '/collection' },
-    { id: 'gold', title: 'Gold', image: '/images/collection/gold.jpg', href: '/collection' },
-    { id: 'antique', title: 'Antique', image: '/images/collection/antique.jpg', href: '/collection' },
+    { id: 'bridal', title: 'Bridal', image: '/images/gallery/model-11.jpg', href: '/collection?category=bridal' },
+    { id: 'diamonds', title: 'Diamonds', image: '/images/gallery/model-12.jpg', href: '/collection?category=diamonds' },
+    { id: 'gold', title: 'Gold', image: '/images/gallery/model-14.jpg', href: '/collection?category=gold' },
+    { id: 'antique', title: 'Antique', image: '/images/gallery/model-17.jpg', href: '/collection?category=antique' },
   ],
 
   about: {

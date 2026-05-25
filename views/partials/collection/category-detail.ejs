@@ -1,0 +1,69 @@
+<section class="section category-detail scroll-section" id="collection-category-detail">
+  <div class="category-gallery reveal-up">
+    <div class="container">
+      <div class="section-head">
+        <span class="section-eyebrow">Image Gallery</span>
+        <h2>Handpicked looks from the <%= category.title %></h2>
+      </div>
+      <div class="category-gallery__grid">
+        <% category.gallery.forEach(function(item) { %>
+          <div class="category-gallery__item">
+            <img src="<%= item.src %>" alt="<%= item.alt %>" loading="lazy" width="800" height="900">
+          </div>
+        <% }); %>
+      </div>
+    </div>
+  </div>
+
+  <div class="category-featured reveal-up">
+    <div class="container">
+      <div class="section-head">
+        <span class="section-eyebrow">Featured Designs</span>
+        <h2>Designs that define this collection</h2>
+      </div>
+      <div class="category-featured__grid">
+        <% category.featuredDesigns.forEach(function(item) { %>
+          <article class="category-featured__card">
+            <img src="<%= item.image %>" alt="<%= item.alt %>" width="700" height="760">
+            <div class="category-featured__body">
+              <h3><%= item.title %></h3>
+              <p><%= item.text %></p>
+            </div>
+          </article>
+        <% }); %>
+      </div>
+    </div>
+  </div>
+
+  <div class="section collection-material reveal-up">
+    <div class="container">
+      <div class="collection-material__inner">
+        <div class="collection-material__copy">
+          <span class="section-eyebrow"><%= category.material.eyebrow %></span>
+          <h2><%= category.material.title %></h2>
+          <div class="collection-material__details">
+            <% category.material.details.forEach(function(item) { %>
+              <div>
+                <h3><%= item.title %></h3>
+                <p><%= item.text %></p>
+              </div>
+            <% }); %>
+          </div>
+        </div>
+        <div class="collection-material__media">
+          <img src="<%= category.material.image %>" alt="Material details for <%= category.title %>" loading="lazy" width="1200" height="900">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section collection-inquiry reveal-up">
+    <div class="container collection-inquiry__inner">
+      <div class="collection-inquiry__copy">
+        <h2><%= category.inquiry.title %></h2>
+        <p><%= category.inquiry.text %></p>
+      </div>
+      <a href="<%= category.inquiry.cta.href %>" class="btn btn--primary btn--magnetic"><%= category.inquiry.cta.label %></a>
+    </div>
+  </div>
+</section>
