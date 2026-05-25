@@ -1,0 +1,19 @@
+<section class="section about-section about-craftsmanship scroll-section" id="about-craftsmanship">
+  <div class="container about-craftsmanship__inner">
+    <div class="about-craftsmanship__content reveal-up">
+      <span class="section-eyebrow"><%= about.craftsmanship.eyebrow %></span>
+      <h2><%= about.craftsmanship.title %></h2>
+      <div class="about-craftsmanship__points">
+        <% about.craftsmanship.points.forEach(function(point) { %>
+          <article class="about-card">
+            <h3><%= point.title %></h3>
+            <p><%= point.text %></p>
+          </article>
+        <% }); %>
+      </div>
+    </div>
+    <div class="about-craftsmanship__media reveal-left">
+      <img src="<%= about.craftsmanship.image %>" alt="Craftsmanship at Patel Jewellers" loading="lazy" width="900" height="700">
+    </div>
+  </div>
+</section>

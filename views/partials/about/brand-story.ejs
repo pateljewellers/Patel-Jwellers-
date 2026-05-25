@@ -1,0 +1,11 @@
+<section class="section about-section about-story scroll-section" id="about-story">
+  <div class="container about-story__inner">
+    <div class="about-story__text reveal-up">
+      <span class="section-eyebrow"><%= about.story.eyebrow %></span>
+      <h2><%= about.story.title %></h2>
+      <% about.story.paragraphs.forEach(function(paragraph, index) { %>
+        <p class="reveal-up" style="--delay: <%= 80 + index * 60 %>ms"><%= paragraph %></p>
+      <% }); %>
+    </div>
+  </div>
+</section>

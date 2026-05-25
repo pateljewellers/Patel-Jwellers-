@@ -1,0 +1,21 @@
+<section class="section about-section about-heritage scroll-section" id="about-heritage">
+  <div class="container about-heritage__grid">
+    <div class="about-heritage__media reveal-left">
+      <div class="about-heritage__image-frame">
+        <img src="<%= about.heritage.image %>" alt="Our Heritage" loading="lazy" width="800" height="900">
+      </div>
+    </div>
+    <div class="about-heritage__content reveal-right">
+      <span class="section-eyebrow"><%= about.heritage.eyebrow %></span>
+      <h2><%= about.heritage.title %></h2>
+      <div class="about-heritage__items">
+        <% about.heritage.items.forEach(function(item) { %>
+          <article class="about-card reveal-up">
+            <h3><%= item.title %></h3>
+            <p><%= item.text %></p>
+          </article>
+        <% }); %>
+      </div>
+    </div>
+  </div>
+</section>

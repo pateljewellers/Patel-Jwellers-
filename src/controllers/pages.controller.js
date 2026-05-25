@@ -1,5 +1,6 @@
 const { getPageMeta } = require('../config/navigation');
 const homeContent = require('../config/home-content');
+const aboutContent = require('../config/about-content');
 
 function renderPage(pageId, viewName) {
   return function pageHandler(req, res) {
@@ -23,9 +24,20 @@ function getHomePage(req, res) {
   });
 }
 
+function getAboutPage(req, res) {
+  const meta = getPageMeta('about');
+  res.render('pages/about', {
+    title: meta.title,
+    description: meta.description,
+    page: 'about',
+    bodyClass: 'page-about',
+    about: aboutContent,
+  });
+}
+
 module.exports = {
   getHomePage,
-  getAboutPage: renderPage('about', 'pages/about'),
+  getAboutPage,
   getCollectionPage: renderPage('collection', 'pages/collection'),
   getShagunPage: renderPage('shagun', 'pages/shagun-registration'),
   getGalleryPage: renderPage('gallery', 'pages/gallery'),

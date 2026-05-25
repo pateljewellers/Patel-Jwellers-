@@ -1,0 +1,13 @@
+<section class="section about-section about-values scroll-section" id="about-values">
+  <div class="container about-values__inner reveal-up">
+    <span class="section-eyebrow"><%= about.values.eyebrow %></span>
+    <h2><%= about.values.title %></h2>
+    <div class="about-values__list">
+      <% about.values.list.forEach(function(value) { %>
+        <div class="about-value-card reveal-up">
+          <p><%= value %></p>
+        </div>
+      <% }); %>
+    </div>
+  </div>
+</section>

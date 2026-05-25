@@ -1,0 +1,185 @@
+/* ========== ABOUT PAGE — Patel Jewellers Mehsanawala ========== */
+
+.about-hero {
+  padding: var(--space-4xl) 0;
+  background: linear-gradient(180deg, rgba(155, 27, 42, 0.08) 0%, var(--color-bg) 100%);
+}
+
+.about-hero__inner {
+  display: grid;
+  gap: var(--space-4xl);
+  align-items: center;
+}
+
+@media (min-width: 900px) {
+  .about-hero__inner {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.about-hero__content {
+  max-width: 620px;
+}
+
+.about-hero__content h1,
+.about-heritage__content h2,
+.about-craftsmanship__content h2,
+.about-values__inner h2,
+.about-team-store__content h2,
+.about-story__text h2 {
+  font-size: clamp(2.5rem, 3.8vw, 4rem);
+  line-height: 1.02;
+  margin-bottom: var(--space-lg);
+}
+
+.about-hero__content p,
+.about-story__text p,
+.about-team-store__content p,
+.about-heritage__content p,
+.about-craftsmanship__content p {
+  color: var(--color-text-muted);
+  font-size: 1.05rem;
+  line-height: 1.85;
+  margin-bottom: var(--space-lg);
+}
+
+.about-hero__media img,
+.about-heritage__image-frame img,
+.about-craftsmanship__media img,
+.about-team-store__media img {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+}
+
+.about-hero__media img {
+  object-position: center 30%;
+  transition: transform 0.8s var(--ease-smooth);
+}
+
+.about-hero__media:hover img {
+  transform: scale(1.035);
+}
+
+.about-story {
+  background: var(--color-white);
+}
+
+.about-story__inner {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.about-heritage__grid,
+.about-craftsmanship__inner,
+.about-team-store__inner {
+  display: grid;
+  gap: var(--space-4xl);
+  align-items: center;
+}
+
+@media (min-width: 900px) {
+  .about-heritage__grid,
+  .about-craftsmanship__inner,
+  .about-team-store__inner {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.about-heritage__items,
+.about-craftsmanship__points,
+.about-values__list,
+.about-team-store__features {
+  display: grid;
+  gap: var(--space-lg);
+}
+
+.about-card {
+  padding: var(--space-xl);
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+}
+
+.about-card h3 {
+  margin-bottom: var(--space-sm);
+  color: var(--color-primary-dark);
+  font-size: 1.1rem;
+}
+
+.about-card p,
+.about-value-card p {
+  color: var(--color-text-muted);
+}
+
+.about-values {
+  background: linear-gradient(180deg, rgba(155, 27, 42, 0.08) 0%, rgba(255, 255, 255, 0.96) 100%);
+}
+
+.about-values__inner {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.about-values__list {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.about-value-card {
+  background: var(--color-white);
+  border: 1px solid var(--color-border);
+  padding: var(--space-xl);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+}
+
+.about-value-card p {
+  color: var(--color-dark);
+  font-weight: 500;
+}
+
+.about-team-store__content ul {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 var(--space-3xl) 0;
+  display: grid;
+  gap: var(--space-md);
+}
+
+.about-team-store__content li {
+  padding-left: 1.5rem;
+  position: relative;
+  color: var(--color-text-muted);
+}
+
+.about-team-store__content li::before {
+  content: '•';
+  position: absolute;
+  left: 0;
+  top: 0;
+  color: var(--color-primary);
+  font-size: 1.25rem;
+  line-height: 1;
+}
+
+.about-heritage__image-frame,
+.about-craftsmanship__media,
+.about-team-store__media {
+  position: relative;
+}
+
+.about-hero__media,
+.about-heritage__media,
+.about-craftsmanship__media,
+.about-team-store__media {
+  overflow: hidden;
+}
+
+@media (max-width: 899px) {
+  .about-values__list {
+    grid-template-columns: 1fr;
+  }
+}

@@ -1,0 +1,18 @@
+<section class="section about-section about-team-store scroll-section" id="about-team-store">
+  <div class="container about-team-store__inner">
+    <div class="about-team-store__content reveal-right">
+      <span class="section-eyebrow"><%= about.teamStore.eyebrow %></span>
+      <h2><%= about.teamStore.title %></h2>
+      <p><%= about.teamStore.description %></p>
+      <ul class="about-team-store__features">
+        <% about.teamStore.features.forEach(function(feature) { %>
+          <li><%= feature %></li>
+        <% }); %>
+      </ul>
+      <a href="<%= about.teamStore.cta.href %>" class="btn btn--outline btn--magnetic reveal-up reveal-delay-2"><%= about.teamStore.cta.label %></a>
+    </div>
+    <div class="about-team-store__media reveal-left">
+      <img src="<%= about.teamStore.image %>" alt="Team and store at Patel Jewellers" loading="lazy" width="900" height="700">
+    </div>
+  </div>
+</section>
