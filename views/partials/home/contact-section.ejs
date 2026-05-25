@@ -1,29 +1,30 @@
-<section class="section home-contact" id="contact">
+<section class="section home-contact scroll-section" id="contact">
+  <div class="home-section-divider container" aria-hidden="true"></div>
   <div class="container">
-    <header class="section-header reveal-up">
+    <header class="section-header reveal-blur">
       <span class="section-eyebrow"><%= home.contact.eyebrow %></span>
       <h2><%= home.contact.title %></h2>
     </header>
-    <div class="contact-grid reveal-up">
-      <div class="contact-info">
-        <div class="contact-info__item">
+    <div class="contact-grid">
+      <div class="contact-info reveal-left">
+        <div class="contact-info__item reveal-up">
           <span class="contact-info__label">Address</span>
           <p><%= home.contact.address %></p>
         </div>
-        <div class="contact-info__item">
+        <div class="contact-info__item reveal-up reveal-delay-1">
           <span class="contact-info__label">Phone</span>
           <p><a href="tel:+919876543210"><%= home.contact.phone %></a></p>
         </div>
-        <div class="contact-info__item">
+        <div class="contact-info__item reveal-up reveal-delay-2">
           <span class="contact-info__label">Email</span>
           <p><a href="mailto:<%= home.contact.email %>"><%= home.contact.email %></a></p>
         </div>
-        <div class="contact-info__item">
+        <div class="contact-info__item reveal-up reveal-delay-3">
           <span class="contact-info__label">Hours</span>
           <p><%= home.contact.hours %></p>
         </div>
       </div>
-      <form class="contact-form" action="/contact" method="get" aria-label="Quick contact form">
+      <form class="contact-form reveal-right" action="/contact" method="get" aria-label="Quick contact form">
         <div class="form-group">
           <label for="contact-name">Your Name</label>
           <input type="text" id="contact-name" name="name" placeholder="Enter your name" autocomplete="name">

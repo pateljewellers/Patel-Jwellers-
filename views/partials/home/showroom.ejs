@@ -1,17 +1,18 @@
-<section class="section home-showroom" id="showroom">
+<section class="section home-showroom scroll-section" id="showroom">
+  <div class="home-section-divider container" aria-hidden="true"></div>
   <div class="container home-showroom__grid">
-    <div class="home-showroom__media reveal-left">
+    <div class="home-showroom__media img-fly" data-fly="left" data-parallax="soft">
       <img src="<%= home.showroom.image %>" alt="Patel Jewellers luxury showroom" loading="lazy" width="640" height="480">
     </div>
     <div class="home-showroom__content reveal-right">
       <span class="section-eyebrow"><%= home.showroom.eyebrow %></span>
       <h2><%= home.showroom.title %></h2>
       <ul class="showroom-features">
-        <% home.showroom.features.forEach(function(f) { %>
-          <li><%= f %></li>
+        <% home.showroom.features.forEach(function(f, i) { %>
+          <li class="reveal-up" style="--delay: <%= i * 70 %>ms"><%= f %></li>
         <% }); %>
       </ul>
-      <a href="<%= home.showroom.cta.href %>" class="btn btn--primary"><%= home.showroom.cta.label %></a>
+      <a href="<%= home.showroom.cta.href %>" class="btn btn--primary btn--magnetic reveal-scale"><%= home.showroom.cta.label %></a>
     </div>
   </div>
 </section>

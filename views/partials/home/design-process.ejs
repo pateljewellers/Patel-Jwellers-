@@ -1,21 +1,22 @@
-<section class="section home-process" id="custom-design">
+<section class="section home-process scroll-section" id="custom-design">
+  <div class="home-section-divider container" aria-hidden="true"></div>
   <div class="container">
-    <header class="section-header reveal-up">
+    <header class="section-header reveal-blur">
       <span class="section-eyebrow"><%= home.designProcess.eyebrow %></span>
       <h2><%= home.designProcess.title %></h2>
       <p><%= home.designProcess.subtitle %></p>
     </header>
-    <div class="process-steps">
+    <div class="process-steps stagger-group" data-stagger="130">
       <% home.designProcess.steps.forEach(function(step, i) { %>
-        <article class="process-step reveal-up" style="--delay: <%= i * 100 %>ms">
+        <article class="process-step reveal-up">
           <span class="process-step__num"><%= step.num %></span>
           <h3><%= step.title %></h3>
           <p><%= step.desc %></p>
         </article>
       <% }); %>
     </div>
-    <div class="section-cta reveal-up">
-      <a href="<%= home.designProcess.cta.href %>" class="btn btn--primary"><%= home.designProcess.cta.label %></a>
+    <div class="section-cta reveal-scale">
+      <a href="<%= home.designProcess.cta.href %>" class="btn btn--primary btn--magnetic"><%= home.designProcess.cta.label %></a>
     </div>
   </div>
 </section>

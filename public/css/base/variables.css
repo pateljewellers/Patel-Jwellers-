@@ -39,9 +39,14 @@
   /* Motion — smooth but performant */
   --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
   --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
-  --duration-fast: 150ms;
-  --duration-normal: 300ms;
-  --duration-slow: 500ms;
+  --ease-spring: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-land: cubic-bezier(0.22, 1.12, 0.38, 1);
+  --duration-fast: 200ms;
+  --duration-normal: 400ms;
+  --duration-slow: 650ms;
+  --duration-reveal: 1.15s;
+  --duration-hero-slide: 1.35s;
 
   /* Shadows */
   --shadow-sm: 0 1px 3px rgba(42, 42, 42, 0.08);

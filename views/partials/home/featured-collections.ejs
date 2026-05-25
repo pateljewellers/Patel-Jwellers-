@@ -1,14 +1,15 @@
-<section class="section home-collections" id="collections">
+<section class="section home-collections scroll-section" id="collections">
+  <div class="home-section-divider container" aria-hidden="true"></div>
   <div class="container">
-    <header class="section-header reveal-up">
+    <header class="section-header reveal-blur">
       <span class="section-eyebrow">Curated For You</span>
       <h2>Featured Collections</h2>
       <p>Discover our signature ranges — each crafted with hallmark purity and timeless design.</p>
     </header>
-    <div class="collections-grid">
+    <div class="collections-grid stagger-group" data-stagger="140">
       <% home.collections.forEach(function(col, i) { %>
-        <a href="<%= col.href %>" class="collection-card reveal-up" style="--delay: <%= i * 80 %>ms">
-          <div class="collection-card__img-wrap">
+        <a href="<%= col.href %>" class="collection-card">
+          <div class="collection-card__img-wrap img-fly" data-parallax="soft">
             <img src="<%= col.image %>" alt="<%= col.title %> collection" loading="lazy" width="400" height="500">
             <div class="collection-card__overlay"></div>
           </div>

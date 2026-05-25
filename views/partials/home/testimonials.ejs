@@ -1,22 +1,21 @@
-<section class="section home-testimonials" id="testimonials">
+<section class="section home-testimonials scroll-section" id="testimonials">
+  <div class="home-section-divider container" aria-hidden="true"></div>
   <div class="container">
-    <header class="section-header reveal-up">
+    <header class="section-header reveal-blur">
       <span class="section-eyebrow"><%= home.testimonials.eyebrow %></span>
       <h2><%= home.testimonials.title %></h2>
     </header>
-    <div class="testimonials-slider" id="testimonials-slider">
-      <div class="testimonials-track">
-        <% home.testimonials.items.forEach(function(t, i) { %>
-          <blockquote class="testimonial-card reveal-up" style="--delay: <%= i * 120 %>ms">
-            <div class="testimonial-card__stars" aria-hidden="true">★★★★★</div>
-            <p class="testimonial-card__quote">"<%= t.quote %>"</p>
-            <footer>
-              <cite><%= t.name %></cite>
-              <span><%= t.role %></span>
-            </footer>
-          </blockquote>
-        <% }); %>
-      </div>
+    <div class="testimonials-track stagger-group" data-stagger="150">
+      <% home.testimonials.items.forEach(function(t, i) { %>
+        <blockquote class="testimonial-card reveal-rotate">
+          <div class="testimonial-card__stars" aria-hidden="true">★★★★★</div>
+          <p class="testimonial-card__quote">"<%= t.quote %>"</p>
+          <footer>
+            <cite><%= t.name %></cite>
+            <span><%= t.role %></span>
+          </footer>
+        </blockquote>
+      <% }); %>
     </div>
   </div>
 </section>

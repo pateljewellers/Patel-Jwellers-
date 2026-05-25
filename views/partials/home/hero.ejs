@@ -1,28 +1,77 @@
-<section class="home-hero" id="home-hero">
-  <div class="home-hero__media" data-parallax="hero">
-    <img
-      src="<%= home.hero.image %>"
-      alt="<%= appName %> — luxury jewellery showcase"
-      class="home-hero__img"
-      fetchpriority="high"
-      width="1920"
-      height="1080"
-    >
+<section class="home-hero" id="home-hero" data-slide-interval="<%= home.hero.slideInterval %>">
+  <div class="hero-slider" id="hero-slider" aria-roledescription="carousel" aria-label="Jewellery showcase">
+    <div class="hero-slider__viewport">
+      <div class="hero-slider__track" id="hero-track">
+        <% home.hero.slides.forEach(function(slide, i) { %>
+          <div
+            class="hero-slide<%= i === 0 ? ' is-active' : '' %>"
+            data-slide-index="<%= i %>"
+            role="group"
+            aria-roledescription="slide"
+            aria-label="Slide <%= i + 1 %> of <%= home.hero.slides.length %>"
+          >
+            <img
+              src="<%= slide.image %>"
+              alt="<%= slide.alt %>"
+              class="hero-slide__img"
+              <%= i === 0 ? 'fetchpriority="high"' : 'loading="lazy"' %>
+              width="1920"
+              height="1080"
+            >
+          </div>
+        <% }); %>
+      </div>
+    </div>
+
     <div class="home-hero__overlay"></div>
+
+    <div class="hero-slider__progress" aria-hidden="true">
+      <span class="hero-slider__progress-bar" id="hero-progress"></span>
+    </div>
+
+    <div class="hero-slider__captions container">
+      <% home.hero.slides.forEach(function(slide, i) { %>
+        <p class="hero-slide__caption<%= i === 0 ? ' is-active' : '' %>" data-caption-index="<%= i %>">
+          <%= slide.caption %>
+        </p>
+      <% }); %>
+    </div>
+
+    <button type="button" class="hero-slider__arrow hero-slider__arrow--prev" id="hero-prev" aria-label="Previous slide">
+      <span aria-hidden="true">‹</span>
+    </button>
+    <button type="button" class="hero-slider__arrow hero-slider__arrow--next" id="hero-next" aria-label="Next slide">
+      <span aria-hidden="true">›</span>
+    </button>
+
+    <div class="hero-slider__dots" role="tablist" aria-label="Choose slide">
+      <% home.hero.slides.forEach(function(slide, i) { %>
+        <button
+          type="button"
+          class="hero-slider__dot<%= i === 0 ? ' is-active' : '' %>"
+          data-goto="<%= i %>"
+          role="tab"
+          aria-selected="<%= i === 0 ? 'true' : 'false' %>"
+          aria-label="Slide <%= i + 1 %>: <%= slide.caption %>"
+        ></button>
+      <% }); %>
+    </div>
   </div>
+
   <div class="home-hero__content container">
-    <span class="home-hero__eyebrow reveal-up"><%= home.hero.eyebrow %></span>
+    <span class="home-hero__eyebrow reveal-blur"><%= home.hero.eyebrow %></span>
     <h1 class="home-hero__title reveal-up reveal-delay-1"><%= home.hero.title %></h1>
   </div>
+
   <div class="home-hero__scroll-hint" aria-hidden="true">
     <span class="home-hero__scroll-line"></span>
   </div>
 </section>
 
-<section class="home-intro">
-  <div class="container home-intro__inner reveal-up">
+<section class="home-intro scroll-section">
+  <div class="container home-intro__inner reveal-scale">
     <h2 class="home-intro__tagline"><%= home.hero.tagline %></h2>
-    <p class="home-intro__desc">Exquisite gold, certified diamonds & bridal masterpieces — crafted in Mehsana for generations.</p>
-    <a href="<%= home.hero.cta.href %>" class="btn btn--primary btn--magnetic"><%= home.hero.cta.label %></a>
+    <p class="home-intro__desc reveal-up reveal-delay-1">Exquisite gold, certified diamonds & bridal masterpieces — crafted in Mehsana for generations.</p>
+    <a href="<%= home.hero.cta.href %>" class="btn btn--primary btn--magnetic reveal-up reveal-delay-2"><%= home.hero.cta.label %></a>
   </div>
 </section>

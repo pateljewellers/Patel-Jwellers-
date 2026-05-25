@@ -1,10 +1,37 @@
 module.exports = {
   hero: {
-    image: '/images/hero/hero.jpg',
     eyebrow: 'Patel Jewellers · Mehsanawala',
     title: 'Where Every Piece Tells a Story',
     tagline: 'Timeless Jewellery, Crafted Forever',
     cta: { label: 'Explore Collection', href: '/collection' },
+    slideInterval: 6500,
+    slides: [
+      {
+        image: '/images/hero/slide-01.jpg',
+        alt: 'Luxury gold jewellery collection',
+        caption: 'Hallmark Gold Collections',
+      },
+      {
+        image: '/images/hero/slide-02.jpg',
+        alt: 'Bridal diamond necklace set',
+        caption: 'Bridal Masterpieces',
+      },
+      {
+        image: '/images/hero/slide-03.jpg',
+        alt: 'Handcrafted diamond rings',
+        caption: 'Certified Diamonds',
+      },
+      {
+        image: '/images/hero/slide-04.jpg',
+        alt: 'Traditional wedding jewellery',
+        caption: 'Heritage Bridal Sets',
+      },
+      {
+        image: '/images/hero/slide-05.jpg',
+        alt: 'Designer diamond solitaire ring',
+        caption: 'Signature Solitaires',
+      },
+    ],
   },
 
   trust: [

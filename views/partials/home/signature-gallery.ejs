@@ -1,20 +1,21 @@
-<section class="section home-gallery" id="signature-gallery">
+<section class="section home-gallery scroll-section" id="signature-gallery">
+  <div class="home-section-divider container" aria-hidden="true"></div>
   <div class="container">
-    <header class="section-header reveal-up">
+    <header class="section-header reveal-blur">
       <span class="section-eyebrow"><%= home.gallery.eyebrow %></span>
       <h2><%= home.gallery.title %></h2>
       <p><%= home.gallery.subtitle %></p>
     </header>
-    <div class="gallery-masonry">
+    <div class="gallery-masonry stagger-group" data-stagger="120">
       <% home.gallery.images.forEach(function(img, i) { %>
-        <figure class="gallery-item reveal-up" style="--delay: <%= i * 60 %>ms">
+        <figure class="gallery-item">
           <img src="<%= img.src %>" alt="<%= img.alt %>" loading="lazy" width="400" height="<%= i % 3 === 0 ? 500 : 350 %>">
           <figcaption class="gallery-item__caption"><%= img.alt %></figcaption>
         </figure>
       <% }); %>
     </div>
     <div class="section-cta reveal-up">
-      <a href="<%= home.gallery.cta.href %>" class="btn btn--outline"><%= home.gallery.cta.label %></a>
+      <a href="<%= home.gallery.cta.href %>" class="btn btn--outline btn--magnetic"><%= home.gallery.cta.label %></a>
     </div>
   </div>
 </section>

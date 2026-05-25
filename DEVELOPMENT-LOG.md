@@ -213,4 +213,46 @@ Downloaded to `public/images/` — hero, collection (4), gallery (6), about, soc
 
 ---
 
+## Prompt 3 — Hero Multi-Image Slider + Enhanced Animations
+
+**તારીખ:** 25 May 2026
+
+### User request
+- Hero fullscreen area: multiple images with scrolling/sliding (not single image)
+- More smooth, better animations
+
+### Implemented
+- **5-slide hero carousel** with fade + Ken Burns zoom per slide
+- Auto-play (~5.5s), pause on hover
+- Prev/Next arrows, dot navigation
+- Touch swipe (mobile)
+- Progress bar animation per slide
+- Per-slide captions (Gold, Bridal, Diamonds, etc.)
+- HD images: `public/images/hero/slide-01.jpg` … `slide-05.jpg`
+- `public/js/modules/hero-slider.js`
+- `prefers-reduced-motion`: autoplay off
+
+---
+
+## Prompt 4 — Jordaar Scroll Animations + True Hero Slide
+
+### Changes
+- Hero: **horizontal track slide** (translateX) — 0.88s spring easing, 4.5s autoplay
+- **Bidirectional scroll reveals** — scroll up/down, sections re-animate
+- Animation types: blur, scale, rotate, left/right, stagger grids
+- Section dividers + parallax on images
+- Speed tuned: ~0.72s (not too slow)
+
+---
+
+## Prompt 5 — Slower Smooth Animations + Fly-In Images
+
+- Durations increased (reveal 1.15s, hero slide 1.35s, autoplay 6.5s)
+- Softer easing (`ease-smooth`, `ease-land` with soft settle)
+- **reveal-fly** — images fly in from distance with rotate + blur, land smoothly
+- Collections, gallery, social, about, shagun, showroom images use fly-in
+- Stagger steps 110–150ms (not rushed)
+
+---
+
 *આગળનો prompt અહીં નીચે add થશે.*
