@@ -1,0 +1,18 @@
+<header class="site-header" id="site-header">
+  <div class="container header-inner">
+    <a href="/" class="logo">
+      <img src="/images/logo/logo.svg" alt="<%= appName %>" class="logo-img" width="160" height="44">
+      <span class="logo-text sr-only"><%= appName %></span>
+    </a>
+    <button type="button" class="nav-toggle" id="nav-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="main-nav">
+      <span class="nav-toggle-bar"></span>
+      <span class="nav-toggle-bar"></span>
+      <span class="nav-toggle-bar"></span>
+    </button>
+    <nav class="nav" id="main-nav" aria-label="Main navigation">
+      <% navItems.forEach(function(item) { %>
+        <a href="<%= item.path %>" class="nav-link<%= typeof page !== 'undefined' && page === item.page ? ' is-active' : '' %>"><%= item.label %></a>
+      <% }); %>
+    </nav>
+  </div>
+</header>

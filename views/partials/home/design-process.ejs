@@ -1,0 +1,21 @@
+<section class="section home-process" id="custom-design">
+  <div class="container">
+    <header class="section-header reveal-up">
+      <span class="section-eyebrow"><%= home.designProcess.eyebrow %></span>
+      <h2><%= home.designProcess.title %></h2>
+      <p><%= home.designProcess.subtitle %></p>
+    </header>
+    <div class="process-steps">
+      <% home.designProcess.steps.forEach(function(step, i) { %>
+        <article class="process-step reveal-up" style="--delay: <%= i * 100 %>ms">
+          <span class="process-step__num"><%= step.num %></span>
+          <h3><%= step.title %></h3>
+          <p><%= step.desc %></p>
+        </article>
+      <% }); %>
+    </div>
+    <div class="section-cta reveal-up">
+      <a href="<%= home.designProcess.cta.href %>" class="btn btn--primary"><%= home.designProcess.cta.label %></a>
+    </div>
+  </div>
+</section>

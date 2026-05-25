@@ -1,0 +1,20 @@
+<section class="section home-gallery" id="signature-gallery">
+  <div class="container">
+    <header class="section-header reveal-up">
+      <span class="section-eyebrow"><%= home.gallery.eyebrow %></span>
+      <h2><%= home.gallery.title %></h2>
+      <p><%= home.gallery.subtitle %></p>
+    </header>
+    <div class="gallery-masonry">
+      <% home.gallery.images.forEach(function(img, i) { %>
+        <figure class="gallery-item reveal-up" style="--delay: <%= i * 60 %>ms">
+          <img src="<%= img.src %>" alt="<%= img.alt %>" loading="lazy" width="400" height="<%= i % 3 === 0 ? 500 : 350 %>">
+          <figcaption class="gallery-item__caption"><%= img.alt %></figcaption>
+        </figure>
+      <% }); %>
+    </div>
+    <div class="section-cta reveal-up">
+      <a href="<%= home.gallery.cta.href %>" class="btn btn--outline"><%= home.gallery.cta.label %></a>
+    </div>
+  </div>
+</section>

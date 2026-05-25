@@ -1,0 +1,22 @@
+<section class="trust-strip" aria-label="Trust certifications">
+  <div class="trust-strip__track">
+    <% home.trust.forEach(function(item) { %>
+      <div class="trust-strip__item">
+        <span class="trust-strip__icon trust-strip__icon--<%= item.icon %>" aria-hidden="true"></span>
+        <div class="trust-strip__text">
+          <strong><%= item.label %></strong>
+          <span><%= item.desc %></span>
+        </div>
+      </div>
+    <% }); %>
+    <% home.trust.forEach(function(item) { %>
+      <div class="trust-strip__item" aria-hidden="true">
+        <span class="trust-strip__icon trust-strip__icon--<%= item.icon %>"></span>
+        <div class="trust-strip__text">
+          <strong><%= item.label %></strong>
+          <span><%= item.desc %></span>
+        </div>
+      </div>
+    <% }); %>
+  </div>
+</section>

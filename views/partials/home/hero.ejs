@@ -1,0 +1,28 @@
+<section class="home-hero" id="home-hero">
+  <div class="home-hero__media" data-parallax="hero">
+    <img
+      src="<%= home.hero.image %>"
+      alt="<%= appName %> — luxury jewellery showcase"
+      class="home-hero__img"
+      fetchpriority="high"
+      width="1920"
+      height="1080"
+    >
+    <div class="home-hero__overlay"></div>
+  </div>
+  <div class="home-hero__content container">
+    <span class="home-hero__eyebrow reveal-up"><%= home.hero.eyebrow %></span>
+    <h1 class="home-hero__title reveal-up reveal-delay-1"><%= home.hero.title %></h1>
+  </div>
+  <div class="home-hero__scroll-hint" aria-hidden="true">
+    <span class="home-hero__scroll-line"></span>
+  </div>
+</section>
+
+<section class="home-intro">
+  <div class="container home-intro__inner reveal-up">
+    <h2 class="home-intro__tagline"><%= home.hero.tagline %></h2>
+    <p class="home-intro__desc">Exquisite gold, certified diamonds & bridal masterpieces — crafted in Mehsana for generations.</p>
+    <a href="<%= home.hero.cta.href %>" class="btn btn--primary btn--magnetic"><%= home.hero.cta.label %></a>
+  </div>
+</section>

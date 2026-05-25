@@ -1,0 +1,19 @@
+<section class="section home-social" id="social">
+  <div class="container">
+    <header class="section-header reveal-up">
+      <span class="section-eyebrow"><%= home.social.eyebrow %></span>
+      <h2><%= home.social.title %></h2>
+      <p class="home-social__handle"><%= home.social.handle %></p>
+    </header>
+    <div class="social-grid">
+      <% home.social.images.forEach(function(src, i) { %>
+        <a href="#" class="social-grid__item reveal-up" style="--delay: <%= i * 50 %>ms" aria-label="Instagram post <%= i + 1 %>">
+          <img src="<%= src %>" alt="Patel Jewellers social gallery <%= i + 1 %>" loading="lazy" width="300" height="300">
+          <span class="social-grid__hover" aria-hidden="true">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><rect x="2" y="2" width="20" height="20" rx="5" stroke="currentColor" stroke-width="1.5"/><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.5"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg>
+          </span>
+        </a>
+      <% }); %>
+    </div>
+  </div>
+</section>

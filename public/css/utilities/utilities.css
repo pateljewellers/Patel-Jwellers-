@@ -1,0 +1,42 @@
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.page-hero {
+  padding-block: var(--space-4xl) var(--space-3xl);
+  text-align: center;
+  background: linear-gradient(
+    180deg,
+    var(--color-white) 0%,
+    var(--color-bg) 100%
+  );
+}
+
+.page-hero h1 {
+  color: var(--color-primary);
+  margin-bottom: var(--space-md);
+}
+
+.page-hero .lead {
+  font-size: 1.15rem;
+  max-width: 560px;
+  margin-inline: auto;
+}
+
+.page-placeholder {
+  text-align: center;
+  padding-block: var(--space-3xl);
+}
+
+.page-placeholder p {
+  max-width: 480px;
+  margin-inline: auto;
+}

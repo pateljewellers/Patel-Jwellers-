@@ -1,0 +1,26 @@
+<footer class="site-footer">
+  <div class="container footer-inner">
+    <div class="footer-brand">
+      <a href="/" class="logo">
+        <img src="/images/logo/logo.svg" alt="<%= appName %>" class="logo-img logo-img--footer" width="160" height="44">
+      </a>
+      <p><%= appName %> — Timeless elegance in gold, diamonds & bridal jewellery. Mehsanawala heritage since generations.</p>
+    </div>
+    <div class="footer-links">
+      <h4>Explore</h4>
+      <% navItems.slice(1, 6).forEach(function(item) { %>
+        <a href="<%= item.path %>"><%= item.label %></a>
+      <% }); %>
+    </div>
+    <div class="footer-contact">
+      <h4>Visit Us</h4>
+      <p>Mehsanawala, Mehsana, Gujarat</p>
+      <p><a href="tel:+919876543210">+91 98765 43210</a></p>
+      <a href="/contact">Contact Us</a>
+      <a href="/shagun-registration">Shagun Registration</a>
+    </div>
+  </div>
+  <div class="container footer-bottom">
+    <p>&copy; <%= new Date().getFullYear() %> <%= appName %>. All rights reserved.</p>
+  </div>
+</footer>
