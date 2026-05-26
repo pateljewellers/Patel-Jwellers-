@@ -1109,111 +1109,477 @@
   color: var(--color-accent);
 }
 
-/* --- Featured collections --- */
+/* --- Spacious, Boxless Luxury Featured Collections (Section 3) --- */
 .home-collections {
-  background: var(--color-bg);
+  position: relative;
+  background-color: #FBFBFA !important; /* Seamless light Warm Cream backdrop alignment */
+  padding-block: 110px; /* Generous breathing room */
+  overflow: hidden;
+  width: 100%;
+  z-index: 2;
 }
 
+/* Faint visual blueprint guides continuation */
+.collections-blueprint-guides {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0.85;
+}
+
+.collections-motion-canvas {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.blueprint-line--c1 { left: 15%; top: 0; width: 1px; height: 100%; }
+.blueprint-line--c2 { right: 15%; top: 0; width: 1px; height: 100%; }
+
+.home-collections .container {
+  position: relative;
+  z-index: 2;
+}
+
+/* Redesigned Section Header */
+.home-collections .section-header {
+  text-align: center;
+  margin-bottom: var(--space-4xl);
+  max-width: 650px;
+  margin-inline: auto;
+}
+
+.home-collections .section-header .section-eyebrow {
+  color: #D4AF37 !important; /* Champagne gold eyebrow */
+  font-size: 0.72rem;
+  letter-spacing: 0.28em;
+  font-weight: 600;
+  border-left: none;
+  padding-left: 0;
+  margin-bottom: var(--space-xs);
+}
+
+.home-collections .section-header h2 {
+  font-family: var(--font-serif);
+  font-size: clamp(2.2rem, 5vw, 3.2rem);
+  font-weight: 500;
+  line-height: 1.25;
+  color: #500A12; /* Deep burgundy heading */
+  letter-spacing: -0.01em;
+  margin-bottom: var(--space-md);
+}
+
+.home-collections .section-header p {
+  font-family: var(--font-sans);
+  font-size: 1.1rem;
+  font-weight: 300;
+  line-height: 1.7;
+  color: #555555; /* Readable professional dark grey subtitle */
+}
+
+/* Clean, open-air visual grids */
 .collections-grid {
   display: grid;
   grid-template-columns: 1fr;
-  gap: var(--space-lg);
+  gap: var(--space-2xl);
 }
 
 @media (min-width: 600px) {
   .collections-grid {
     grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-xl);
   }
 }
 
 @media (min-width: 1024px) {
   .collections-grid {
     grid-template-columns: repeat(4, 1fr);
-    gap: var(--space-md);
+    gap: var(--space-lg);
   }
 }
 
+/* Boxless & Card-free collection items */
 .collection-card {
   position: relative;
   display: block;
   text-decoration: none;
-  border-radius: var(--radius-md);
-  overflow: hidden;
-  background: var(--color-dark);
-  box-shadow: var(--shadow-md);
-  transition:
-    transform var(--duration-slow) var(--ease-out),
-    box-shadow var(--duration-slow) var(--ease-out);
+  background: transparent !important;
+  box-shadow: none !important;
+  border-radius: 0 !important;
+  border: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  overflow: visible !important;
+  transform-style: preserve-3d;
+  perspective: 1000px;
+  will-change: transform;
 }
 
-.collection-card.is-visible:hover {
-  transform: translateY(-10px) scale(1.02);
-  box-shadow: var(--shadow-lg);
+/* Arch border indicator frame on hover (NO BOXES, JUST AN ARCH LINE) */
+.collection-card::before {
+  content: '';
+  position: absolute;
+  top: -1.5px;
+  left: -1.5px;
+  right: -1.5px;
+  bottom: 60px; /* leaves room for text body below */
+  border-radius: 161.5px 161.5px 0 0;
+  border: 1.5px solid #D4AF37;
+  opacity: 0;
+  transform: scale(0.98);
+  transition: 
+    opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  pointer-events: none;
+  z-index: 2;
 }
 
-.collection-card {
-  opacity: 1;
+.collection-card:hover::before {
+  opacity: 0.85;
+  transform: scale(1.02);
 }
 
-.collection-card .collection-card__img-wrap {
-  overflow: hidden;
-  min-height: 200px;
-  background: var(--color-dark);
-}
-
-.collection-card .collection-card__img-wrap img {
-  opacity: 1;
-  min-height: 100%;
-}
-
+/* Arched image container (Indian Palace Showroom style) */
 .collection-card__img-wrap {
-  aspect-ratio: 4 / 5;
+  border-radius: 160px 160px 0 0 !important; /* Beautiful luxury architectural arch */
   overflow: hidden;
+  aspect-ratio: 4 / 5;
+  position: relative;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.04);
+  transition: 
+    transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), 
+    box-shadow 0.6s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .collection-card__img-wrap img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 1.1s var(--ease-smooth);
-}
-
-.collection-card:hover .collection-card__img-wrap img {
-  transform: scale(1.1);
+  transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .collection-card__overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(to top, rgba(42, 42, 42, 0.85) 0%, transparent 55%);
+  background: linear-gradient(to top, rgba(80, 10, 18, 0.12) 0%, transparent 60%);
   pointer-events: none;
-}
-
-.collection-card__body {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  padding: var(--space-lg);
   z-index: 1;
 }
 
+/* Statically positioned visual body underneath the frameless arch */
+.collection-card__body {
+  position: relative !important;
+  background: transparent !important;
+  padding: var(--space-md) var(--space-xs) 0 var(--space-xs) !important;
+  text-align: center;
+  z-index: 2;
+}
+
 .collection-card__body h3 {
-  font-size: 1.5rem;
-  color: var(--color-white);
+  font-family: var(--font-serif);
+  font-size: 1.55rem;
+  font-weight: 500;
+  color: #500A12; /* Deep burgundy font */
   margin-bottom: var(--space-xs);
+  transition: 
+    color 0.4s ease,
+    transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .collection-card__link {
-  font-size: 0.8rem;
-  letter-spacing: 0.1em;
+  font-family: var(--font-sans);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
   text-transform: uppercase;
-  color: var(--color-accent-light);
-  transition: color var(--duration-normal) var(--ease-out);
+  color: #D4AF37; /* Champagne gold link */
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  position: relative;
+  padding-bottom: 3px;
+  transition: color 0.4s ease;
+}
+
+/* Floating line expansion below the CTA */
+.collection-card__link::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 40px;
+  height: 1px;
+  background-color: rgba(212, 175, 55, 0.4);
+  transform: translateX(-50%) scaleX(0.5);
+  transition: 
+    transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+    background-color 0.4s ease;
+}
+
+/* Hover active overrides */
+.collection-card:hover .collection-card__img-wrap {
+  transform: translateY(-8px);
+  box-shadow: 0 16px 36px rgba(80, 10, 18, 0.08);
+}
+
+.collection-card:hover .collection-card__img-wrap img {
+  transform: scale(1.08);
+}
+
+.collection-card:hover .collection-card__body h3 {
+  color: #D4AF37; /* shifts title to gold on hover */
+  transform: translateY(-2px);
 }
 
 .collection-card:hover .collection-card__link {
-  color: var(--color-bg);
+  color: #500A12; /* shifts link to burgundy on hover */
+}
+
+.collection-card:hover .collection-card__link::after {
+  transform: translateX(-50%) scaleX(1.3);
+  background-color: #D4AF37;
+}
+
+/* =====================================================
+   SECTION 3: AMBIENT FLOATING SHAPES & MOTION ELEMENTS
+   ===================================================== */
+
+/* Floating Diamond shapes container */
+.col-ambient-shapes {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  overflow: hidden;
+}
+
+/* Individual floating diamonds */
+.col-float-diamond {
+  position: absolute;
+  will-change: transform, opacity;
+}
+
+.col-float-diamond svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.col-float-diamond--1 {
+  width: 55px;
+  height: 75px;
+  top: 12%;
+  left: 6%;
+  animation: floatDiamond1 14s ease-in-out infinite;
+  opacity: 0.85;
+}
+.col-float-diamond--2 {
+  width: 45px;
+  height: 60px;
+  top: 25%;
+  right: 5%;
+  animation: floatDiamond2 11s ease-in-out infinite reverse;
+  opacity: 0.7;
+}
+.col-float-diamond--3 {
+  width: 70px;
+  height: 92px;
+  bottom: 18%;
+  left: 3%;
+  animation: floatDiamond3 16s ease-in-out infinite;
+  opacity: 0.8;
+}
+.col-float-diamond--4 {
+  width: 40px;
+  height: 55px;
+  bottom: 22%;
+  right: 7%;
+  animation: floatDiamond4 9s ease-in-out infinite alternate;
+  opacity: 0.65;
+}
+.col-float-diamond--5 {
+  width: 62px;
+  height: 82px;
+  top: 55%;
+  left: 45%;
+  animation: floatDiamond5 18s ease-in-out infinite;
+  opacity: 0.5;
+}
+
+@keyframes floatDiamond1 {
+  0% { transform: translate(0, 0) rotate(0deg) scale(1); }
+  25% { transform: translate(8px, -18px) rotate(8deg) scale(1.05); }
+  50% { transform: translate(14px, -8px) rotate(-5deg) scale(0.95); }
+  75% { transform: translate(4px, 12px) rotate(12deg) scale(1.08); }
+  100% { transform: translate(0, 0) rotate(0deg) scale(1); }
+}
+@keyframes floatDiamond2 {
+  0% { transform: translate(0, 0) rotate(0deg); }
+  33% { transform: translate(-12px, -22px) rotate(-18deg); }
+  66% { transform: translate(10px, -10px) rotate(10deg); }
+  100% { transform: translate(0, 0) rotate(0deg); }
+}
+@keyframes floatDiamond3 {
+  0% { transform: translate(0, 0) rotate(0deg) scale(1); }
+  20% { transform: translate(16px, -14px) rotate(20deg) scale(1.1); }
+  50% { transform: translate(8px, -28px) rotate(-8deg) scale(0.9); }
+  80% { transform: translate(-8px, -12px) rotate(15deg) scale(1.06); }
+  100% { transform: translate(0, 0) rotate(0deg) scale(1); }
+}
+@keyframes floatDiamond4 {
+  0% { transform: translate(0, 0) rotate(0deg); }
+  50% { transform: translate(-14px, -24px) rotate(-25deg) scale(1.12); }
+  100% { transform: translate(0, 0) rotate(0deg); }
+}
+@keyframes floatDiamond5 {
+  0% { transform: translate(0, 0) rotate(0deg) scale(1); opacity: 0.5; }
+  30% { transform: translate(-20px, -15px) rotate(-12deg) scale(1.08); opacity: 0.8; }
+  60% { transform: translate(15px, -30px) rotate(18deg) scale(0.92); opacity: 0.4; }
+  100% { transform: translate(0, 0) rotate(0deg) scale(1); opacity: 0.5; }
+}
+
+/* Floating ring circles */
+.col-float-ring {
+  position: absolute;
+  border-radius: 50%;
+  border: 1px solid rgba(212, 175, 55, 0.12);
+  will-change: transform, opacity;
+  pointer-events: none;
+}
+
+.col-float-ring--1 {
+  width: 180px;
+  height: 180px;
+  top: 8%;
+  right: 15%;
+  animation: floatRing1 20s ease-in-out infinite;
+  opacity: 0.6;
+}
+.col-float-ring--2 {
+  width: 120px;
+  height: 120px;
+  bottom: 10%;
+  left: 18%;
+  border-color: rgba(80, 10, 18, 0.07);
+  animation: floatRing2 15s ease-in-out infinite reverse;
+  opacity: 0.5;
+}
+.col-float-ring--3 {
+  width: 260px;
+  height: 260px;
+  top: 35%;
+  right: -60px;
+  animation: floatRing3 25s linear infinite;
+  opacity: 0.35;
+}
+
+@keyframes floatRing1 {
+  0% { transform: translate(0, 0) scale(1); }
+  25% { transform: translate(-18px, 22px) scale(1.08); }
+  50% { transform: translate(-8px, -18px) scale(0.94); }
+  75% { transform: translate(14px, 10px) scale(1.05); }
+  100% { transform: translate(0, 0) scale(1); }
+}
+@keyframes floatRing2 {
+  0% { transform: translate(0, 0) scale(1) rotate(0deg); }
+  50% { transform: translate(20px, -25px) scale(1.12) rotate(180deg); }
+  100% { transform: translate(0, 0) scale(1) rotate(360deg); }
+}
+@keyframes floatRing3 {
+  0% { transform: translate(0, 0) rotate(0deg) scale(1); }
+  100% { transform: translate(0, 0) rotate(360deg) scale(1); }
+}
+
+/* Section Header Animations */
+.col-eyebrow-animate {
+  animation: eyebrowPulse 4s ease-in-out infinite alternate;
+}
+
+@keyframes eyebrowPulse {
+  0% { letter-spacing: 0.28em; filter: brightness(1); }
+  100% { letter-spacing: 0.34em; filter: brightness(1.3); }
+}
+
+.col-title-animate {
+  position: relative;
+  display: inline-block;
+  animation: titleSway 8s ease-in-out infinite alternate;
+}
+
+@keyframes titleSway {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-4px); }
+}
+
+/* Shimmer sweep on each card */
+.card-shimmer-sweep {
+  position: absolute;
+  inset: 0;
+  z-index: 6;
+  pointer-events: none;
+  border-radius: 160px 160px 0 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.card-shimmer-sweep::after {
+  content: '';
+  position: absolute;
+  top: -100%;
+  left: -75%;
+  width: 50%;
+  height: 300%;
+  background: linear-gradient(
+    105deg,
+    transparent 30%,
+    rgba(212, 175, 55, 0.18) 50%,
+    rgba(255, 255, 255, 0.12) 52%,
+    rgba(212, 175, 55, 0.06) 55%,
+    transparent 70%
+  );
+  transform: skewX(-15deg);
+  animation: shimmerSweep 3s ease-in-out infinite;
+}
+
+@keyframes shimmerSweep {
+  0% { left: -75%; }
+  100% { left: 135%; }
+}
+
+.collection-card:hover .card-shimmer-sweep {
+  opacity: 1;
+}
+
+/* Gold arch glow that pulses inside the arch on hover */
+.card-arch-glow {
+  position: absolute;
+  bottom: 0;
+  left: -5%;
+  width: 110%;
+  height: 60%;
+  border-radius: 0 0 0 0;
+  background: radial-gradient(ellipse at 50% 120%, rgba(212, 175, 55, 0.18) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 2;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: 
+    opacity 0.6s ease,
+    transform 0.6s ease;
+}
+
+.collection-card:hover .card-arch-glow {
+  opacity: 1;
+  transform: translateY(0);
+  animation: archGlowPulse 2.5s ease-in-out infinite;
+}
+
+@keyframes archGlowPulse {
+  0%, 100% { opacity: 0.7; transform: translateY(0) scaleX(1); }
+  50% { opacity: 1; transform: translateY(-6px) scaleX(1.05); }
 }
 
 /* --- About brand --- */

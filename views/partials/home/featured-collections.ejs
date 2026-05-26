@@ -1,17 +1,69 @@
 <section class="section home-collections scroll-section" id="collections">
-  <div class="home-section-divider container" aria-hidden="true"></div>
+  <!-- Full background motion canvas -->
+  <canvas class="collections-motion-canvas" id="collections-motion-canvas"></canvas>
+
+  <!-- Continuously floating ambient diamond shapes -->
+  <div class="col-ambient-shapes" aria-hidden="true">
+    <div class="col-float-diamond col-float-diamond--1">
+      <svg viewBox="0 0 60 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M30 5 L55 30 L30 75 L5 30 Z" stroke="rgba(212,175,55,0.2)" stroke-width="0.9" />
+        <path d="M5 30 L55 30" stroke="rgba(212,175,55,0.12)" stroke-width="0.5" />
+        <path d="M30 5 L30 75" stroke="rgba(212,175,55,0.08)" stroke-width="0.5" />
+      </svg>
+    </div>
+    <div class="col-float-diamond col-float-diamond--2">
+      <svg viewBox="0 0 60 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M30 5 L55 30 L30 75 L5 30 Z" stroke="rgba(80,10,18,0.14)" stroke-width="0.9" />
+        <path d="M5 30 L55 30" stroke="rgba(80,10,18,0.07)" stroke-width="0.5" />
+      </svg>
+    </div>
+    <div class="col-float-diamond col-float-diamond--3">
+      <svg viewBox="0 0 60 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M30 5 L55 30 L30 75 L5 30 Z" stroke="rgba(212,175,55,0.16)" stroke-width="1.1" />
+        <circle cx="30" cy="30" r="3" stroke="rgba(212,175,55,0.3)" stroke-width="0.5" />
+      </svg>
+    </div>
+    <div class="col-float-diamond col-float-diamond--4">
+      <svg viewBox="0 0 60 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M30 5 L55 30 L30 75 L5 30 Z" stroke="rgba(80,10,18,0.1)" stroke-width="0.7" />
+      </svg>
+    </div>
+    <div class="col-float-diamond col-float-diamond--5">
+      <svg viewBox="0 0 60 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M30 5 L55 30 L30 75 L5 30 Z" stroke="rgba(212,175,55,0.22)" stroke-width="1.2" />
+        <path d="M5 30 L55 30" stroke="rgba(212,175,55,0.1)" stroke-width="0.6" />
+        <path d="M30 5 L30 75" stroke="rgba(212,175,55,0.08)" stroke-width="0.4" />
+      </svg>
+    </div>
+
+    <!-- Floating ring circles -->
+    <div class="col-float-ring col-float-ring--1"></div>
+    <div class="col-float-ring col-float-ring--2"></div>
+    <div class="col-float-ring col-float-ring--3"></div>
+  </div>
+
+  <!-- Faint blueprint lines -->
+  <div class="collections-blueprint-guides" aria-hidden="true">
+    <div class="blueprint-line blueprint-line--c1"></div>
+    <div class="blueprint-line blueprint-line--c2"></div>
+  </div>
+
   <div class="container">
-    <header class="section-header reveal-blur">
-      <span class="section-eyebrow">Curated For You</span>
-      <h2>Featured Collections</h2>
+    <header class="section-header collections-section-header reveal-blur">
+      <span class="section-eyebrow col-eyebrow-animate">Curated For You</span>
+      <h2 class="col-title-animate">Featured Collections</h2>
       <p>Discover our signature ranges — each crafted with hallmark purity and timeless design.</p>
     </header>
-    <div class="collections-grid stagger-group" data-stagger="140">
+    <div class="collections-grid" id="collections-grid">
       <% home.collections.forEach(function(col, i) { %>
-        <a href="<%= col.href %>" class="collection-card">
-          <div class="collection-card__img-wrap img-fly" data-parallax="soft">
+        <a href="<%= col.href %>" class="collection-card" data-col-index="<%= i %>">
+          <!-- Shimmer sweep layer -->
+          <div class="card-shimmer-sweep" aria-hidden="true"></div>
+          <div class="collection-card__img-wrap">
             <img src="<%= col.image %>" alt="<%= col.title %> collection" loading="lazy" width="400" height="500">
             <div class="collection-card__overlay"></div>
+            <!-- Arch glow ring (draws on hover) -->
+            <div class="card-arch-glow" aria-hidden="true"></div>
           </div>
           <div class="collection-card__body">
             <h3><%= col.title %></h3>
