@@ -7,12 +7,18 @@
     "start": "node server.js",
     "dev": "node --watch server.js"
   },
-  "keywords": ["jewellers", "patel", "website"],
+  "keywords": [
+    "jewellers",
+    "patel",
+    "website"
+  ],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "dotenv": "^16.4.7",
     "ejs": "^3.1.10",
-    "express": "^4.21.2"
+    "express": "^4.21.2",
+    "jimp": "^1.6.1",
+    "webp-converter": "^2.3.3"
   }
 }
