@@ -632,6 +632,7 @@
 }
 
 /* Transition zone from burgundy hero to home body content (elegant dark red to cream transition) */
+/* Transition zone from burgundy hero to home body content (elegant dark red to cream transition) */
 .bg-dark-transition {
   position: relative;
   background: linear-gradient(to bottom, #4D0912 0%, var(--color-white) 100%) !important;
@@ -673,28 +674,373 @@
     animation: none;
     opacity: 0.6;
   }
+  .intro-artifact {
+    animation: none !important;
+    transform: none !important;
+  }
 }
 
-/* --- Intro tagline --- */
-.home-intro {
-  padding-block: var(--space-4xl);
-  background: var(--color-white);
-  text-align: center;
+/* --- Spacious, Boxless Luxury Brand Intro Section --- */
+.brand-intro-section {
+  position: relative;
+  background-color: #FBFBFA !important; /* Clean, premium luxury Warm Cream backdrop */
+  margin-top: 140px; /* Spacious, professional separation buffer from Hero */
+  padding-block: 120px; /* Generous breathing room */
+  overflow: hidden;
+  width: 100%;
 }
 
-.home-intro__tagline {
+/* Very subtle background ambient glowing highlights */
+.intro-bg-glow {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  filter: blur(120px);
+  -webkit-filter: blur(120px);
+  z-index: 0;
+  opacity: 0.05;
+  will-change: transform;
+}
+
+.intro-bg-glow--champagne {
+  bottom: -5%;
+  right: 5%;
+  width: 450px;
+  height: 450px;
+  background: radial-gradient(circle, #D4AF37 0%, transparent 75%);
+}
+
+.intro-bg-glow--burgundy {
+  top: -5%;
+  left: 5%;
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, #500A12 0%, transparent 75%);
+}
+
+/* Faint, elegant architectural jewelry blueprint drawing guides */
+.intro-blueprint-guides {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0.85;
+}
+
+.blueprint-line {
+  position: absolute;
+  background-color: rgba(212, 175, 55, 0.07); /* Faint gold hairline grid */
+}
+
+.blueprint-line--h1 { top: 20%; left: 0; width: 100%; height: 1px; }
+.blueprint-line--h2 { bottom: 25%; left: 0; width: 100%; height: 1px; }
+.blueprint-line--v1 { left: 25%; top: 0; width: 1px; height: 100%; }
+.blueprint-line--v2 { right: 35%; top: 0; width: 1px; height: 100%; }
+
+.blueprint-compass {
+  position: absolute;
+  right: 28%;
+  top: 35%;
+  width: 160px;
+  height: 160px;
+  border: 1px dashed rgba(80, 10, 18, 0.03); /* Faint burgundy circular compass */
+  border-radius: 50%;
+}
+
+.blueprint-compass::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 220px;
+  height: 1px;
+  background-color: rgba(80, 10, 18, 0.02);
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+
+/* Asymmetric open narrative layout */
+.brand-intro__grid {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-4xl);
+  align-items: center;
+}
+
+@media (min-width: 992px) {
+  .brand-intro__grid {
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: var(--space-5xl);
+  }
+}
+
+/* Left narrative details */
+.brand-intro__content {
+  text-align: left;
+}
+
+.brand-intro__eyebrow {
+  display: inline-block;
+  font-family: var(--font-sans);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: #500A12; /* Deep burgundy eyebrow */
+  margin-bottom: var(--space-md);
+  border-left: 2px solid #D4AF37;
+  padding-left: var(--space-sm);
+}
+
+.brand-intro__title {
   font-family: var(--font-serif);
-  font-size: clamp(1.75rem, 4vw, 2.75rem);
-  color: var(--color-primary);
+  font-size: clamp(2.2rem, 5vw, 3.4rem);
+  font-weight: 500;
+  line-height: 1.2;
+  color: #500A12; /* Deep burgundy heading */
   margin-bottom: var(--space-lg);
+  letter-spacing: -0.01em;
 }
 
-.home-intro__desc {
-  font-size: 1.1rem;
-  max-width: 520px;
-  margin: 0 auto var(--space-2xl);
-  color: var(--color-text-muted);
+.brand-intro__gold-gradient {
+  color: #D4AF37;
+  background: linear-gradient(135deg, #B09855 0%, #D4AF37 50%, #CBB067 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: inline-block;
 }
+
+.brand-intro__description {
+  font-family: var(--font-sans);
+  font-size: clamp(1.05rem, 2vw, 1.25rem);
+  font-weight: 300;
+  line-height: 1.85;
+  color: #222222; /* High-contrast professional dark charcoal text */
+  margin-bottom: var(--space-3xl);
+  max-width: 620px;
+}
+
+/* Interactive narrative triggers */
+.text-trigger {
+  font-weight: 500;
+  color: #500A12;
+  border-bottom: 1.5px dashed rgba(212, 175, 55, 0.45);
+  cursor: pointer;
+  padding-bottom: 1px;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.text-trigger::after {
+  content: '';
+  position: absolute;
+  bottom: -1.5px;
+  left: 0;
+  width: 100%;
+  height: 1.5px;
+  background-color: #D4AF37;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s ease;
+}
+
+.text-trigger:hover {
+  color: #D4AF37;
+}
+
+.text-trigger:hover::after {
+  transform: scaleX(1);
+}
+
+/* Monogram-style borderless CTA */
+.brand-intro__cta {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-md);
+  text-decoration: none;
+  position: relative;
+  padding-block: var(--space-xs);
+  transition: transform 0.3s var(--ease-smooth);
+}
+
+.brand-intro__cta-text {
+  font-family: var(--font-sans);
+  font-size: 0.88rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #500A12;
+  transition: color 0.3s ease;
+}
+
+.brand-intro__cta-line {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background-color: rgba(80, 10, 18, 0.25);
+}
+
+.brand-intro__cta-line::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-color: #D4AF37;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.4s var(--ease-smooth);
+}
+
+.brand-intro__cta-arrow {
+  font-size: 1.1rem;
+  color: #D4AF37;
+  transition: transform 0.35s var(--ease-smooth);
+}
+
+.brand-intro__cta:hover {
+  transform: translateX(4px);
+}
+
+.brand-intro__cta:hover .brand-intro__cta-text {
+  color: #D4AF37;
+}
+
+.brand-intro__cta:hover .brand-intro__cta-line::after {
+  transform: scaleX(1);
+}
+
+.brand-intro__cta:hover .brand-intro__cta-arrow {
+  transform: translateX(4px);
+}
+
+/* Right Column: Visual Showcase Container */
+.brand-intro__visual-container {
+  position: relative;
+  width: 100%;
+  height: 380px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+}
+
+@media (min-width: 768px) {
+  .brand-intro__visual-container {
+    height: 460px;
+  }
+}
+
+.intro-dust-canvas {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* 3D Visual display window */
+.brand-intro__visual {
+  position: relative;
+  width: 280px;
+  height: 280px;
+  transform-style: preserve-3d;
+  perspective: 1000px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+}
+
+@media (min-width: 768px) {
+  .brand-intro__visual {
+    width: 340px;
+    height: 340px;
+  }
+}
+
+/* Floating vector sketch artifacts (NO BOXES, NO CARDS) */
+.intro-artifact {
+  position: absolute;
+  width: 170px;
+  height: 170px;
+  will-change: transform, opacity, filter;
+  transition: 
+    transform 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+    opacity 0.8s ease,
+    filter 0.8s ease;
+  filter: drop-shadow(0 10px 25px rgba(0, 0, 0, 0.08));
+}
+
+@media (min-width: 768px) {
+  .intro-artifact {
+    width: 220px;
+    height: 220px;
+  }
+}
+
+.intro-artifact svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* Default Positioning & 3D Layering */
+.intro-artifact--gold {
+  transform: translate3d(-35px, -30px, 30px) rotate(-8deg);
+  z-index: 3;
+  animation: artifactFloatGold 9s ease-in-out infinite alternate;
+}
+
+.intro-artifact--diamond {
+  transform: translate3d(40px, 15px, 60px) rotate(12deg);
+  z-index: 5;
+  animation: artifactFloatDiamond 7s ease-in-out infinite alternate-reverse;
+}
+
+.intro-artifact--bridal {
+  transform: translate3d(-20px, 50px, 10px) rotate(-15deg);
+  z-index: 4;
+  animation: artifactFloatBridal 11s ease-in-out infinite alternate;
+}
+
+/* Floating Animations */
+@keyframes artifactFloatGold {
+  0% { transform: translate3d(-35px, -30px, 30px) rotate(-8deg); }
+  100% { transform: translate3d(-30px, -45px, 45px) rotate(-4deg); }
+}
+
+@keyframes artifactFloatDiamond {
+  0% { transform: translate3d(40px, 15px, 60px) rotate(12deg); }
+  100% { transform: translate3d(35px, 5px, 75px) rotate(15deg); }
+}
+
+@keyframes artifactFloatBridal {
+  0% { transform: translate3d(-20px, 50px, 10px) rotate(-15deg); }
+  100% { transform: translate3d(-25px, 35px, 20px) rotate(-10deg); }
+}
+
+/* Interactive Highlight Focus & Blur states */
+.intro-artifact.is-focused {
+  opacity: 1 !important;
+  filter: drop-shadow(0 15px 35px rgba(212, 175, 55, 0.25)) !important;
+  transform: scale(1.15) translate3d(var(--tx, 0), var(--ty, 0), 120px) !important;
+  z-index: 10 !important;
+  animation-play-state: paused !important;
+}
+
+.intro-artifact.is-blurred {
+  opacity: 0.25 !important;
+  filter: blur(3.5px) grayscale(40%) drop-shadow(0 2px 10px rgba(0, 0, 0, 0.02)) !important;
+  transform: scale(0.9) translate3d(var(--tx, 0), var(--ty, 0), -20px) !important;
+  animation-play-state: paused !important;
+}
+
+/* --- Legacy home-intro styling overrides to prevent collisions --- */
+.home-intro {
+  display: none !important; /* Hide old home-intro section if it is still rendered anywhere */
+}
+
 
 /* --- Trust strip --- */
 .trust-strip {
