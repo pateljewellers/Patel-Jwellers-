@@ -7,6 +7,7 @@ router.get('/', pagesController.getHomePage);
 router.get('/about', pagesController.getAboutPage);
 router.get('/collection', pagesController.getCollectionPage);
 router.get('/shagun-registration', pagesController.getShagunPage);
+router.post('/shagun-registration/submit', pagesController.submitShagunRegistration);
 router.get('/gallery', pagesController.getGalleryPage);
 router.get('/custom-design', pagesController.getCustomDesignPage);
 router.get('/testimonials', pagesController.getTestimonialsPage);

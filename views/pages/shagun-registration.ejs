@@ -1,8 +1,221 @@
 <%- include('../partials/layout-start') %>
 <%- include('../partials/header') %>
-<main class="main-content">
-  <%- include('../partials/page-hero') %>
-  <%- include('../partials/page-placeholder') %>
+<main class="main-content page-shagun">
+  <section class="section page-hero animate-fade-in">
+    <div class="container">
+      <span class="section-eyebrow">REGISTRATION</span>
+      <h1 class="shagun-title">Shagun 2026</h1>
+      <p class="lead">Register & receive your gift</p>
+    </div>
+  </section>
+
+  <section class="section shagun-banner">
+    <div class="container shagun-banner__inner">
+      <div class="shagun-banner__content reveal-left">
+        <span class="section-eyebrow">Shagun Bridal Registration</span>
+        <h2>Begin your bridal journey with personalised Shagun planning</h2>
+        <p>Register for a premium bridal experience that blends consultation, jewellery planning, and exclusive privileges tailored for your wedding season.</p>
+      </div>
+      <div class="shagun-banner__visual reveal-right">
+        <div class="shagun-banner__image-frame">
+          <img src="/images/about/shagun.jpg" alt="Shagun Bridal Registration" loading="lazy" width="640" height="800">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section shagun-intro">
+    <div class="container">
+      <div class="shagun-intro__grid">
+        <div class="shagun-intro__text reveal-up">
+          <span class="section-eyebrow">What is Shagun Registration?</span>
+          <h2>It is a dedicated bridal registration experience for your wedding jewellery journey</h2>
+          <p>Our Shagun Registration helps brides plan every detail with confidence. From first registration to consultation and jewellery planning, the process is crafted to be simple, beautiful, and fully focused on your bridal celebration.</p>
+        </div>
+        <div class="shagun-intro__cards reveal-up">
+          <div class="shagun-intro-card">
+            <h3>Curated bridal service</h3>
+            <p>Secure access to personalised bridal jewellery guidance along with exclusive wedding benefits.</p>
+          </div>
+          <div class="shagun-intro-card">
+            <h3>Expert consultation</h3>
+            <p>Work with our jewellery specialists to choose the perfect set for your wedding, reception and ceremonies.</p>
+          </div>
+          <div class="shagun-intro-card">
+            <h3>Complete planning</h3>
+            <p>Register your details once, then move through the process with a single elegant registration workflow.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section shagun-process">
+    <div class="container shagun-process__inner">
+      <div class="process-step reveal-up">
+        <div class="process-step__marker">1</div>
+        <h3>Registration</h3>
+        <p>Share your bridal details so our team can begin your Shagun journey with the right consultation.</p>
+      </div>
+      <div class="process-step reveal-up">
+        <div class="process-step__marker">2</div>
+        <h3>Consultation</h3>
+        <p>Meet our jewellery experts, review designs, and choose the ideal pieces for your wedding wardrobe.</p>
+      </div>
+      <div class="process-step reveal-up">
+        <div class="process-step__marker">3</div>
+        <h3>Jewellery planning</h3>
+        <p>Finalize your bridal jewellery plan with confidence and receive personalised support every step of the way.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section shagun-registration">
+    <div class="shagun-registration__wrapper">
+      <div class="container">
+        <div class="shagun-registration__header">
+          <span class="section-eyebrow">REGISTRATION</span>
+          <h2 class="shagun-section-title">Shagun 2026</h2>
+    
+        </div>
+
+        <div class="shagun-progress" aria-label="Registration steps">
+          <div class="shagun-progress__item is-active" role="listitem" data-step="1">
+            <strong>Step 1</strong>
+            Personal
+          </div>
+          <div class="shagun-progress__item is-complete" role="listitem" data-step="2">
+            <strong>Step 2</strong>
+            Wedding
+          </div>
+          <div class="shagun-progress__item" role="listitem" data-step="3">
+            <strong>Step 3</strong>
+            Documents
+          </div>
+        </div>
+
+        <form id="shagun-registration-form" class="shagun-form" novalidate>
+          <div class="shagun-form-step" data-step="0">
+            <div class="form-card">
+              <div class="form-group">
+                <label class="form-label" for="brideName">Bride's full name</label>
+                <input class="form-control" type="text" id="brideName" name="brideName" data-required="true" placeholder="Enter full name">
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="mobileNumber">Mobile number</label>
+                <input class="form-control" type="tel" id="mobileNumber" name="mobileNumber" data-required="true" placeholder="Enter mobile number">
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="dateOfBirth">Date of birth</label>
+                <input class="form-control" type="date" id="dateOfBirth" name="dateOfBirth" data-required="true">
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="fullAddress">Full address</label>
+                <textarea class="form-control" id="fullAddress" name="fullAddress" data-required="true" rows="4" placeholder="Enter address"></textarea>
+              </div>
+              <div class="form-row two-col">
+                <div class="form-group">
+                  <label class="form-label" for="pinCode">PIN code</label>
+                  <input class="form-control" type="text" id="pinCode" name="pinCode" data-required="true" placeholder="PIN code">
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="city">City</label>
+                  <input class="form-control" type="text" id="city" name="city" data-required="true" placeholder="City">
+                </div>
+              </div>
+            </div>
+            <div class="shagun-form-actions">
+              <button class="btn btn--outline" data-action="next-step">Continue</button>
+            </div>
+          </div>
+
+          <div class="shagun-form-step" data-step="1">
+            <div class="form-card">
+              <div class="form-group">
+                <label class="form-label" for="weddingDate">Wedding date</label>
+                <input class="form-control" type="date" id="weddingDate" name="weddingDate" data-required="true">
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="weddingVenue">Wedding venue</label>
+                <input class="form-control" type="text" id="weddingVenue" name="weddingVenue" data-required="true" placeholder="Venue name or address">
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="referenceName">Reference name (optional)</label>
+                <input class="form-control" type="text" id="referenceName" name="referenceName" placeholder="Who referred you?">
+              </div>
+            </div>
+            <div class="shagun-form-actions">
+              <button class="btn btn--outline" data-action="prev-step">Back</button>
+              <button class="btn btn--primary" data-action="next-step">Continue</button>
+            </div>
+          </div>
+
+          <div class="shagun-form-step" data-step="2">
+            <div class="form-card">
+              <div class="form-group">
+                <label class="form-label">Identity proof</label>
+                <div class="radio-group">
+                  <label class="radio-field">
+                    <input type="radio" name="identityProofType" value="Aadhar card" checked>
+                    Aadhar card
+                  </label>
+                  <label class="radio-field">
+                    <input type="radio" name="identityProofType" value="Voter ID">
+                    Voter ID
+                  </label>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="identityProof">Upload identity document</label>
+                <div class="file-upload">
+                  <input class="form-control" type="file" id="identityProof" name="identityProof" accept="image/*,.pdf">
+                  <p>Choose JPG, PNG, WebP or PDF up to 5 MB.</p>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Wedding proof</label>
+                <div class="radio-group">
+                  <label class="radio-field">
+                    <input type="radio" name="weddingProofType" value="Venue booking receipt" checked>
+                    Venue booking receipt
+                  </label>
+                  <label class="radio-field">
+                    <input type="radio" name="weddingProofType" value="Wedding invitation card">
+                    Wedding invitation card
+                  </label>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="weddingProof">Upload wedding proof</label>
+                <div class="file-upload">
+                  <input class="form-control" type="file" id="weddingProof" name="weddingProof" accept="image/*,.pdf">
+                  <p>Choose JPG, PNG, WebP or PDF up to 5 MB.</p>
+                </div>
+              </div>
+              <div class="terms-card">
+                <h3>Terms & Conditions</h3>
+                <div class="terms-text">
+                  <p>1. Eligibility: Exclusively for brides whose weddings are scheduled during the upcoming season. All details must be accurate and complete.</p>
+                  <p>2. Mandatory Registration: Online registration is required to reserve Shagun consultation and bridal privileges.</p>
+                  <p>3. Verification: Aadhar or approved identity proof and wedding proof must be provided for registration approval.</p>
+                  <p>4. Privacy: Your information is handled securely and only used for registration and consultation.</p>
+                </div>
+                <label class="form-group" style="margin-top: var(--space-lg);">
+                  <input type="checkbox" id="agreeTerms" name="agreeTerms" data-required="true" style="margin-right: 0.75rem;">
+                  I agree to the Terms & Conditions
+                </label>
+              </div>
+            </div>
+            <div class="shagun-form-actions">
+              <button class="btn btn--outline" data-action="prev-step">Back</button>
+              <button class="btn btn--primary" type="submit">Submit registration</button>
+            </div>
+            <p class="shagun-submit-note" id="shagun-submit-note"></p>
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
 </main>
 <%- include('../partials/footer') %>
 <%- include('../partials/layout-end') %>

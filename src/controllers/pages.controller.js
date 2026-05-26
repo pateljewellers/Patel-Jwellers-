@@ -1,7 +1,11 @@
+const fs = require('fs');
+const path = require('path');
 const { getPageMeta } = require('../config/navigation');
 const homeContent = require('../config/home-content');
 const aboutContent = require('../config/about-content');
 const collectionContent = require('../config/collection-content');
+
+const registrationFile = path.join(__dirname, '../..', 'data', 'shagun-registrations.json');
 
 function renderPage(pageId, viewName) {
   return function pageHandler(req, res) {
@@ -54,11 +58,37 @@ function getCollectionPage(req, res) {
   });
 }
 
+function submitShagunRegistration(req, res) {
+  try {
+    const registration = {
+      ...req.body,
+      ip: req.ip,
+      receivedAt: new Date().toISOString(),
+    };
+
+    if (!fs.existsSync(registrationFile)) {
+      fs.mkdirSync(path.dirname(registrationFile), { recursive: true });
+      fs.writeFileSync(registrationFile, '[]', 'utf8');
+    }
+
+    const rawData = fs.readFileSync(registrationFile, 'utf8');
+    const items = Array.isArray(JSON.parse(rawData)) ? JSON.parse(rawData) : [];
+    items.push(registration);
+    fs.writeFileSync(registrationFile, JSON.stringify(items, null, 2), 'utf8');
+
+    res.json({ success: true });
+  } catch (error) {
+    console.error('Shagun registration save failed:', error);
+    res.status(500).json({ success: false, message: 'Unable to save registration.' });
+  }
+}
+
 module.exports = {
   getHomePage,
   getAboutPage,
   getCollectionPage,
   getShagunPage: renderPage('shagun', 'pages/shagun-registration'),
+  submitShagunRegistration,
   getGalleryPage: renderPage('gallery', 'pages/gallery'),
   getCustomDesignPage: renderPage('custom-design', 'pages/custom-design'),
   getTestimonialsPage: renderPage('testimonials', 'pages/testimonials'),
