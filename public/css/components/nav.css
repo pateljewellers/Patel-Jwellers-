@@ -7,7 +7,7 @@
   justify-content: flex-start;
   gap: var(--space-sm);
   padding: var(--space-2xl) var(--space-lg);
-  background-color: var(--color-bg);
+  background-color: var(--color-dark); /* Dark dropdown background */
   transform: translateX(100%);
   opacity: 0;
   visibility: hidden;
@@ -29,7 +29,7 @@
   font-weight: 500;
   letter-spacing: 0.03em;
   text-decoration: none;
-  color: var(--color-text-muted);
+  color: rgba(237, 237, 236, 0.85); /* Cream text */
   padding: var(--space-sm) var(--space-md);
   position: relative;
   transition: color var(--duration-normal) var(--ease-out);
@@ -42,7 +42,7 @@
   left: 50%;
   width: 0;
   height: 2px;
-  background-color: var(--color-primary);
+  background-color: var(--color-accent-light); /* Golden underscore */
   transition:
     width var(--duration-normal) var(--ease-out),
     left var(--duration-normal) var(--ease-out);
@@ -50,7 +50,7 @@
 
 .nav-link:hover,
 .nav-link.is-active {
-  color: var(--color-primary);
+  color: var(--color-accent-light); /* Golden active/hover text */
 }
 
 .nav-link:hover::after,

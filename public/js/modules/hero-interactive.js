@@ -1,7 +1,7 @@
 /**
  * Patel Jewellers Mehsanawala
- * Enhanced Custom Interactive Hero Engine (Vanilla JS Canvas & Interaction)
- * High-performance, responsive particle systems, gold silk wave tracks, and 3D wireframe parallax.
+ * Enhanced Custom Interactive Hero Engine (Burgundy Luxury Theme Optimized)
+ * High-performance, responsive particle systems, golden waves, and 3D cursor-reactive ring centerpiece.
  */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -12,17 +12,57 @@ document.addEventListener('DOMContentLoaded', () => {
   const ctx = canvas.getContext('2d');
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  // Configuration
+  // Dynamic Background Chroma-Key Removal for the Centerpiece Ring PNG
+  // Deletes solid black backgrounds on page load and replaces it with true Alpha transparency.
+  const ringImg = document.getElementById('floating-ring-img');
+  if (ringImg) {
+    const tempImg = new Image();
+    tempImg.src = ringImg.src;
+    tempImg.onload = () => {
+      const offCanvas = document.createElement('canvas');
+      offCanvas.width = tempImg.naturalWidth;
+      offCanvas.height = tempImg.naturalHeight;
+      const offCtx = offCanvas.getContext('2d');
+      offCtx.drawImage(tempImg, 0, 0);
+
+      const imgData = offCtx.getImageData(0, 0, offCanvas.width, offCanvas.height);
+      const data = imgData.data;
+
+      // Key out any near-black background pixels with a soft, feathering edge
+      for (let i = 0; i < data.length; i += 4) {
+        const r = data[i];
+        const g = data[i + 1];
+        const b = data[i + 2];
+
+        // Check the maximum brightness channel
+        const maxVal = Math.max(r, g, b);
+
+        if (maxVal < 40) {
+          // Fully black background pixels -> transparent
+          data[i + 3] = 0;
+        } else if (maxVal < 70) {
+          // Semi-dark shadow/feathering border pixels -> soft transition
+          const factor = (maxVal - 40) / (70 - 40);
+          data[i + 3] = Math.round(data[i + 3] * factor);
+        }
+      }
+
+      offCtx.putImageData(imgData, 0, 0);
+      ringImg.src = offCanvas.toDataURL('image/png');
+    };
+  }
+
+  // Configuration (Optimized for Deep Burgundy Background)
   const CONFIG = {
     particleCount: window.innerWidth < 768 ? 40 : 80,
     connectDistance: 110,
     mouseRadius: 160,
     colors: {
-      gold: 'rgba(176, 168, 154, 0.45)',      // Warm luxury gold / accent
-      goldBright: 'rgba(212, 175, 55, 0.95)',  // Bright gold sparkle
-      ruby: 'rgba(155, 27, 42, 0.55)',         // Burgundy brand red
-      rubyBright: 'rgba(184, 45, 61, 0.95)',   // Bright burgundy
-      sparkle: 'rgba(255, 255, 255, 0.85)'     // Pure white light shine
+      gold: 'rgba(212, 175, 55, 0.6)',          // Rich golden sparkles
+      goldBright: 'rgba(255, 223, 128, 0.95)',  // Bright champagne gold
+      ruby: 'rgba(184, 45, 61, 0.55)',          // Ruby red sparks
+      rubyBright: 'rgba(255, 87, 107, 0.95)',   // Bright pinkish ruby
+      sparkle: 'rgba(255, 255, 255, 0.85)'      // Brilliant white diamond stars
     }
   };
 
@@ -33,9 +73,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
   let particles = [];
   let clickSparkles = [];
+  let shockwaves = [];
+  let ringSparkles = [];
   let mouse = { x: width / 2, y: height / 2, targetX: width / 2, targetY: height / 2, active: false };
   let time = 0;
   let frameCounter = 0;
+
+  // 3D Ring Tilt & Continuous Spin variables
+  let ringTiltX = 0;
+  let ringTiltY = 0;
+  let ringSpinY = 0;
 
   // LERP for ultra-smooth transition
   const lerp = (start, end, amt) => (1 - amt) * start + amt * end;
@@ -77,7 +124,7 @@ document.addEventListener('DOMContentLoaded', () => {
       this.baseOpacity = this.opacity;
       this.twinkleSpeed = Math.random() * 0.02 + 0.005;
       this.twinklePhase = Math.random() * Math.PI * 2;
-      this.type = Math.random() > 0.4 ? 'gold' : 'diamond'; // Types
+      this.type = Math.random() > 0.45 ? 'gold' : 'diamond'; // Types
     }
 
     update() {
@@ -122,12 +169,11 @@ document.addEventListener('DOMContentLoaded', () => {
       ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
       
       if (this.type === 'diamond') {
-        ctx.fillStyle = `rgba(255, 255, 255, ${this.opacity})`;
-        // Diamond sparkles have a subtle glow
-        ctx.shadowColor = 'rgba(255, 255, 255, 0.4)';
+        ctx.fillStyle = `rgba(255, 255, 255, ${this.opacity})`; // Brilliant white diamond sparks
+        ctx.shadowColor = 'rgba(255, 255, 255, 0.5)';
         ctx.shadowBlur = 6;
       } else {
-        ctx.fillStyle = `rgba(176, 168, 154, ${this.opacity})`;
+        ctx.fillStyle = `rgba(212, 175, 55, ${this.opacity})`; // Golden stardust dots
         ctx.shadowBlur = 0;
       }
       ctx.fill();
@@ -157,7 +203,7 @@ document.addEventListener('DOMContentLoaded', () => {
       } else if (colorType === 'gold') {
         this.color = CONFIG.colors.goldBright;
       } else {
-        this.color = Math.random() > 0.4 ? CONFIG.colors.goldBright : CONFIG.colors.sparkle;
+        this.color = Math.random() > 0.45 ? CONFIG.colors.goldBright : CONFIG.colors.sparkle;
       }
     }
 
@@ -195,6 +241,101 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
+  // Class representing expanding shockwaves pushed out by clicks/interaction
+  class Shockwave {
+    constructor(x, y) {
+      this.x = x;
+      this.y = y;
+      this.radius = 0;
+      this.maxRadius = 380;
+      this.speed = 8.5; // Expands fast
+      this.opacity = 1.0;
+      this.decay = 0.022; // Fades out in about 45 frames
+      this.width = 1.5;
+    }
+
+    update() {
+      this.radius += this.speed;
+      this.opacity -= this.decay;
+    }
+
+    draw() {
+      ctx.save();
+      ctx.globalAlpha = this.opacity;
+      
+      // Draw outer gold ring with shadow glow
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+      ctx.strokeStyle = 'rgba(212, 175, 55, 0.65)';
+      ctx.lineWidth = this.width;
+      ctx.shadowColor = 'rgba(212, 175, 55, 0.85)';
+      ctx.shadowBlur = 15;
+      ctx.stroke();
+
+      // Double outer faint white ring
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.radius + 6, 0, Math.PI * 2);
+      ctx.strokeStyle = 'rgba(255, 255, 255, 0.2)';
+      ctx.lineWidth = 0.5;
+      ctx.shadowBlur = 0;
+      ctx.stroke();
+
+      ctx.restore();
+    }
+  }
+
+  // Class representing stardust halo particles orbiting and floating away from the rings
+  class RingHaloSparkle {
+    constructor(cx, cy) {
+      this.cx = cx;
+      this.cy = cy;
+      this.angle = Math.random() * Math.PI * 2;
+      this.radius = Math.random() * 35 + 10; // Start close to the ring center
+      this.orbitSpeed = (Math.random() * 0.015 + 0.005) * (Math.random() > 0.5 ? 1 : -1);
+      this.expandSpeed = Math.random() * 1.6 + 0.4; // Slowly floats outward
+      
+      this.x = this.cx + Math.cos(this.angle) * this.radius;
+      this.y = this.cy + Math.sin(this.angle) * this.radius;
+      
+      this.size = Math.random() * 2.2 + 0.6;
+      this.life = 1.0;
+      this.decay = Math.random() * 0.012 + 0.006; // Fades out slowly
+      this.color = Math.random() > 0.4 ? CONFIG.colors.goldBright : CONFIG.colors.sparkle;
+    }
+    
+    update() {
+      this.angle += this.orbitSpeed;
+      this.radius += this.expandSpeed;
+      this.x = this.cx + Math.cos(this.angle) * this.radius;
+      this.y = this.cy + Math.sin(this.angle) * this.radius;
+      this.life -= this.decay;
+    }
+    
+    draw() {
+      ctx.save();
+      ctx.globalAlpha = this.life;
+      ctx.beginPath();
+      
+      // Draw elegant microscopic diamond spark star shape
+      const s = this.size;
+      ctx.moveTo(this.x, this.y - s);
+      ctx.lineTo(this.x + s * 0.4, this.y - s * 0.4);
+      ctx.lineTo(this.x + s, this.y);
+      ctx.lineTo(this.x + s * 0.4, this.y + s * 0.4);
+      ctx.lineTo(this.x, this.y + s);
+      ctx.lineTo(this.x - s * 0.4, this.y + s * 0.4);
+      ctx.lineTo(this.x - s, this.y);
+      ctx.lineTo(this.x - s * 0.4, this.y - s * 0.4);
+      ctx.closePath();
+      
+      ctx.fillStyle = this.color;
+      ctx.shadowColor = this.color;
+      ctx.shadowBlur = 6;
+      ctx.fill();
+      ctx.restore();
+    }
+  }
+
   function initParticles() {
     particles = [];
     for (let i = 0; i < CONFIG.particleCount; i++) {
@@ -216,8 +357,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (dist < CONFIG.connectDistance) {
           // Calculate line opacity based on distance (fades out when far)
-          const opacity = (1 - dist / CONFIG.connectDistance) * 0.07;
-          ctx.strokeStyle = `rgba(176, 168, 154, ${opacity})`;
+          const opacity = (1 - dist / CONFIG.connectDistance) * 0.08;
+          ctx.strokeStyle = `rgba(212, 175, 55, ${opacity})`; // Elegant golden lines
           ctx.lineWidth = 0.5;
           ctx.beginPath();
           ctx.moveTo(p1.x, p1.y);
@@ -238,9 +379,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // We will draw 3 fine, weaving golden threads
     const waveConfigs = [
-      { frequency: 0.003, amplitude: 30, speed: 0.005, color: 'rgba(176, 168, 154, 0.12)', heightOffset: 0.45 },
-      { frequency: 0.005, amplitude: 18, speed: -0.007, color: 'rgba(212, 175, 55, 0.07)', heightOffset: 0.52 },
-      { frequency: 0.002, amplitude: 45, speed: 0.003, color: 'rgba(155, 27, 42, 0.05)', heightOffset: 0.38 }
+      { frequency: 0.003, amplitude: 30, speed: 0.005, color: 'rgba(212, 175, 55, 0.18)', heightOffset: 0.45 },
+      { frequency: 0.005, amplitude: 18, speed: -0.007, color: 'rgba(255, 223, 128, 0.12)', heightOffset: 0.52 },
+      { frequency: 0.002, amplitude: 45, speed: 0.003, color: 'rgba(255, 255, 255, 0.06)', heightOffset: 0.38 }
     ];
 
     waveConfigs.forEach(w => {
@@ -276,7 +417,7 @@ document.addEventListener('DOMContentLoaded', () => {
     ctx.restore();
   }
 
-  // 6. Update Background Glowing Orbs and Floating Parallax Rings/Diamonds
+  // 6. Update Background Glowing Orbs and Floating Parallax Rings/Centerpiece
   const orbBurgundy = document.querySelector('.glow-orb--burgundy');
   const orbGold = document.querySelector('.glow-orb--gold');
   const ringOuter = document.querySelector('.parallax-ring--outer');
@@ -284,6 +425,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const diamond1 = document.querySelector('.floating-diamond--1');
   const diamond2 = document.querySelector('.floating-diamond--2');
   const diamond3 = document.querySelector('.floating-diamond--3');
+  const ringWrapper = document.getElementById('ring-3d-wrapper');
+  const centerpiece = document.querySelector('.hero-centerpiece');
 
   function updateParallaxElements() {
     if (reducedMotion) return;
@@ -349,6 +492,37 @@ document.addEventListener('DOMContentLoaded', () => {
       const rot = time * 0.09;
       diamond3.style.transform = `translate3d(${dx}px, ${dy}px, 0) rotate(${rot}deg)`;
     }
+
+    // Dynamic 3D Perspective Tilt & Continuous 360-degree Spin on the Solitaire Ring centerpiece!
+    if (ringWrapper) {
+      // Calculate mouse displacement relative to screen center
+      const centerX = width / 2;
+      const centerY = height / 2;
+      
+      // Calculate target 3D tilts based on mouse position (maximum 16 degrees tilt)
+      const targetTiltX = (mouse.y - centerY) * -0.045;
+      const targetTiltY = (mouse.x - centerX) * 0.045;
+      
+      // LERP the tilts for smooth motion
+      ringTiltX = lerp(ringTiltX, targetTiltX, 0.07);
+      ringTiltY = lerp(ringTiltY, targetTiltY, 0.07);
+      
+      // Increment continuous turntable Y-spin (slow, graceful 360 rotation)
+      ringSpinY = (ringSpinY + 0.35) % 360;
+      
+      // Breathe scale pulsing (slow-motion Z-depth expansion)
+      const breatheScale = 1.0 + Math.sin(time * 0.015) * 0.055;
+      
+      // Apply 3D perspective rotation and breathing scale transform on wrapper (spin + tilt + scale combined)
+      ringWrapper.style.transform = `rotateX(${ringTiltX}deg) rotateY(${ringTiltY + ringSpinY}deg) scale(${breatheScale})`;
+    }
+
+    // Add extra parallax shift to the centerpiece block container
+    if (centerpiece) {
+      const cx = (mouse.x - width / 2) * 0.025;
+      const cy = (mouse.y - height / 2) * 0.025;
+      centerpiece.style.transform = `translate3d(${cx}px, ${cy}px, 0)`;
+    }
   }
 
   // 7. Primary Animation Loop (High-Performance RequestAnimationFrame)
@@ -386,6 +560,59 @@ document.addEventListener('DOMContentLoaded', () => {
         clickSparkles.splice(i, 1);
       } else {
         sp.draw();
+      }
+    }
+
+    // Calculate ring centerpiece coordinates dynamically
+    let ringCenterX = width * 0.78;
+    let ringCenterY = height * 0.5;
+    if (centerpiece) {
+      const centerRect = centerpiece.getBoundingClientRect();
+      const heroRect = hero.getBoundingClientRect();
+      ringCenterX = centerRect.left - heroRect.left + centerRect.width / 2;
+      ringCenterY = centerRect.top - heroRect.top + centerRect.height / 2;
+    }
+
+    // Spawn and update stardust halo sparkles orbiting the rings centerpiece
+    if (!reducedMotion && frameCounter % 6 === 0) {
+      ringSparkles.push(new RingHaloSparkle(ringCenterX, ringCenterY));
+    }
+
+    for (let i = ringSparkles.length - 1; i >= 0; i--) {
+      const s = ringSparkles[i];
+      s.update();
+      if (s.life <= 0) {
+        ringSparkles.splice(i, 1);
+      } else {
+        s.draw();
+      }
+    }
+
+    // Update and draw expanding physical text click shockwaves
+    for (let i = shockwaves.length - 1; i >= 0; i--) {
+      const sw = shockwaves[i];
+      sw.update();
+      if (sw.opacity <= 0) {
+        shockwaves.splice(i, 1);
+      } else {
+        sw.draw();
+        
+        // Physics push force field: Ripple through standard particles
+        if (!reducedMotion) {
+          particles.forEach(p => {
+            const dx = p.x - sw.x;
+            const dy = p.y - sw.y;
+            const dist = Math.hypot(dx, dy);
+            
+            // If particle is riding the expanding shockwave front
+            if (dist < sw.radius + 15 && dist > sw.radius - 15) {
+              const angle = Math.atan2(dy, dx);
+              const pushForce = sw.opacity * 14;
+              p.x += Math.cos(angle) * pushForce;
+              p.y += Math.sin(angle) * pushForce;
+            }
+          });
+        }
       }
     }
 
@@ -485,6 +712,58 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
+  // 10. Split text into individual kinetic interactive characters
+  const heroTitle = document.querySelector('.home-hero__title');
+  const heroTagline = document.querySelector('.home-hero__tagline');
+
+  function makeTextInteractive(element) {
+    if (!element) return;
+    const text = element.innerText;
+    element.innerHTML = '';
+    
+    [...text].forEach(char => {
+      const span = document.createElement('span');
+      if (char === ' ') {
+        span.innerHTML = '&nbsp;';
+        span.className = 'interactive-space';
+      } else {
+        span.textContent = char;
+        span.className = 'interactive-char';
+        
+        // Character click event (spring-bounce animation & canvas stardust shockwave)
+        span.addEventListener('click', (e) => {
+          e.stopPropagation(); // Avoid triggering full hero click sparks in addition
+          
+          span.classList.add('clicked');
+          setTimeout(() => span.classList.remove('clicked'), 600);
+          
+          // Calculate span center coordinates relative to canvas
+          const charRect = span.getBoundingClientRect();
+          const heroRect = hero.getBoundingClientRect();
+          const clickX = charRect.left - heroRect.left + charRect.width / 2;
+          const clickY = charRect.top - heroRect.top + charRect.height / 2;
+          
+          // Spawn expanding golden physical ripple force field
+          shockwaves.push(new Shockwave(clickX, clickY));
+          
+          // Shoot elegant high-velocity fireworks of sparkling diamond flares
+          const themeClass = hero.className.match(/theme-(\w+)/);
+          const currentTheme = themeClass ? themeClass[1] : 'gold';
+          
+          for (let i = 0; i < 24; i++) {
+            const col = Math.random() > 0.5 ? currentTheme : 'diamond';
+            clickSparkles.push(new Sparkle(clickX + (Math.random() * 12 - 6), clickY + (Math.random() * 12 - 6), col));
+          }
+        });
+      }
+      element.appendChild(span);
+    });
+  }
+
+  // Convert the static title and tagline into kinetic spans
+  makeTextInteractive(heroTitle);
+  makeTextInteractive(heroTagline);
+ 
   // Initialization
   window.addEventListener('resize', resize);
   resize();

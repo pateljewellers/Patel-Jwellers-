@@ -34,18 +34,30 @@
       <path d="M30 5 L55 30 L30 75 L5 30 Z" stroke="rgba(155, 27, 42, 0.15)" stroke-width="0.8" />
       <path d="M30 5 L18 30 L30 75 L42 30 Z" stroke="rgba(155, 27, 42, 0.08)" stroke-width="0.5" />
     </svg>
+
   </div>
 
-  <!-- Hero Main Content Layout -->
-  <div class="home-hero__content container">
-    <span class="home-hero__eyebrow reveal-blur"><%= home.hero.eyebrow %></span>
-    <h1 class="home-hero__title reveal-up reveal-delay-1"><%= home.hero.title %></h1>
-    <p class="home-hero__tagline reveal-up reveal-delay-2"><%= home.hero.tagline %></p>
-    <div class="home-hero__actions reveal-up reveal-delay-3">
-      <a href="<%= home.hero.cta.href %>" class="btn btn--primary btn--magnetic btn--glow-gold">
-        <%= home.hero.cta.label %>
-        <span class="btn__arrow">→</span>
-      </a>
+  <!-- Hero Main Flex Grid Layout Wrapper (Combines left text and right rings centerpiece) -->
+  <div class="container hero-grid-wrapper">
+    <!-- Left Side: Hero Main Content -->
+    <div class="home-hero__content">
+      <span class="home-hero__eyebrow reveal-blur"><%= home.hero.eyebrow %></span>
+      <h1 class="home-hero__title reveal-up reveal-delay-1"><%= home.hero.title %></h1>
+      <p class="home-hero__tagline reveal-up reveal-delay-2"><%= home.hero.tagline %></p>
+      <div class="home-hero__actions reveal-up reveal-delay-3">
+        <a href="<%= home.hero.cta.href %>" class="btn btn--primary btn--magnetic btn--glow-gold">
+          <%= home.hero.cta.label %>
+          <span class="btn__arrow">→</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- Right Side: Floating Luxury Ring Centerpiece with 3D Parallax & Spotlight Aura -->
+    <div class="hero-centerpiece reveal-scale">
+      <div class="ring-3d-wrapper" id="ring-3d-wrapper">
+        <div class="ring-glow-back"></div>
+        <img src="/images/hero/luxury-ring.png" alt="Patel Jewellers Luxury Couple Rings" class="floating-ring-img" id="floating-ring-img" fetchpriority="high">
+      </div>
     </div>
   </div>
 

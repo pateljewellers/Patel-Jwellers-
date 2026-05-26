@@ -6,10 +6,10 @@
   width: 100%;
   z-index: 100;
   height: var(--header-height);
-  background-color: rgba(237, 237, 236, 0.92);
+  background-color: rgba(42, 42, 42, 0.94); /* Dark brand color navbar */
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  border-bottom: 1px solid var(--color-border);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08); /* Subtle dark mode border */
   transition:
     box-shadow var(--duration-normal) var(--ease-out),
     background-color var(--duration-normal) var(--ease-out);
@@ -17,7 +17,8 @@
 
 .site-header.is-scrolled {
   box-shadow: var(--shadow-sm);
-  background-color: rgba(255, 255, 255, 0.95);
+  background-color: rgba(30, 30, 30, 0.96); /* Deeper charcoal scrolled background */
+  border-bottom-color: rgba(255, 255, 255, 0.05);
 }
 
 .header-inner {
@@ -65,7 +66,9 @@
   background-color: var(--color-bg);
 }
 
-.page-home .site-header:not(.is-scrolled):not(.is-solid) .logo-img {
+.page-home .site-header .logo-img,
+.site-header.is-scrolled .logo-img,
+.site-header.is-solid .logo-img {
   filter: brightness(0) invert(1) drop-shadow(0 1px 4px rgba(0, 0, 0, 0.3));
 }
 
