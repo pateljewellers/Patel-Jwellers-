@@ -1,18 +1,147 @@
-<section class="section home-about scroll-section" id="about-brand">
-  <div class="home-section-divider container" aria-hidden="true"></div>
-  <div class="container home-about__grid">
-    <div class="home-about__media">
-      <div class="home-about__img-frame img-fly" data-fly="far" data-parallax="soft">
-        <img src="<%= home.about.image %>" alt="Patel Jewellers heritage craftsmanship" loading="lazy" width="600" height="700">
+<section class="home-about scroll-section" id="about-brand">
+  <!-- Background decorative canvas -->
+  <canvas class="about-motion-canvas" id="about-motion-canvas"></canvas>
+
+  <!-- Ambient decorative elements -->
+  <div class="about-ambient" aria-hidden="true">
+    <div class="about-orb about-orb--burgundy"></div>
+    <div class="about-orb about-orb--gold"></div>
+    <div class="about-filigree about-filigree--tl">
+      <svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="100" cy="100" r="90" stroke="rgba(212,175,55,0.1)" stroke-width="0.75" stroke-dasharray="6 8"/>
+        <circle cx="100" cy="100" r="68" stroke="rgba(212,175,55,0.07)" stroke-width="0.5"/>
+        <path d="M100 10 L100 190 M10 100 L190 100" stroke="rgba(212,175,55,0.05)" stroke-width="0.5"/>
+        <path d="M29 29 L171 171 M171 29 L29 171" stroke="rgba(212,175,55,0.04)" stroke-width="0.5"/>
+      </svg>
+    </div>
+    <div class="about-filigree about-filigree--br">
+      <svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="100" cy="100" r="90" stroke="rgba(80,10,18,0.08)" stroke-width="0.75" stroke-dasharray="4 6"/>
+        <circle cx="100" cy="100" r="60" stroke="rgba(80,10,18,0.05)" stroke-width="0.5"/>
+      </svg>
+    </div>
+  </div>
+
+  <div class="container about-grid">
+
+    <!-- ===== LEFT: Falling / Stacking Image Deck ===== -->
+    <div class="about-deck-wrapper" id="about-deck-wrapper">
+      <!-- Floating label badge -->
+      <div class="about-deck-badge">
+        <span class="about-deck-badge__dot"></span>
+        <span class="about-deck-badge__text">Since Generations</span>
+      </div>
+
+      <!-- Image deck — 4 images stacked & auto-rotating -->
+      <div class="about-deck" id="about-deck">
+        <div class="deck-card deck-card--0 is-active" data-idx="0">
+          <img src="/images/about/model-hero.jpg" alt="Patel Jewellers bridal heritage" loading="lazy">
+          <div class="deck-card__overlay"></div>
+          <div class="deck-card__caption">
+            <span>Bridal Heritage</span>
+          </div>
+        </div>
+        <div class="deck-card deck-card--1" data-idx="1">
+          <img src="/images/about/model-01.jpg" alt="Patel Jewellers gold craftsmanship" loading="lazy">
+          <div class="deck-card__overlay"></div>
+          <div class="deck-card__caption">
+            <span>Gold Craftsmanship</span>
+          </div>
+        </div>
+        <div class="deck-card deck-card--2" data-idx="2">
+          <img src="/images/about/model-02.jpg" alt="Patel Jewellers diamond collections" loading="lazy">
+          <div class="deck-card__overlay"></div>
+          <div class="deck-card__caption">
+            <span>Diamond Collections</span>
+          </div>
+        </div>
+        <div class="deck-card deck-card--3" data-idx="3">
+          <img src="/images/about/store-model.jpg" alt="Patel Jewellers showroom experience" loading="lazy">
+          <div class="deck-card__overlay"></div>
+          <div class="deck-card__caption">
+            <span>Showroom Experience</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Dot nav -->
+      <div class="deck-dots" id="deck-dots">
+        <button class="deck-dot is-active" data-target="0" aria-label="Image 1"></button>
+        <button class="deck-dot" data-target="1" aria-label="Image 2"></button>
+        <button class="deck-dot" data-target="2" aria-label="Image 3"></button>
+        <button class="deck-dot" data-target="3" aria-label="Image 4"></button>
+      </div>
+
+      <!-- Gold measurement line accent -->
+      <div class="about-measure-line" aria-hidden="true">
+        <span class="measure-line__tick"></span>
+        <span class="measure-line__line"></span>
+        <span class="measure-line__tick"></span>
       </div>
     </div>
-    <div class="home-about__content reveal-right">
-      <span class="section-eyebrow"><%= home.about.eyebrow %></span>
-      <h2><%= home.about.title %></h2>
-      <% home.about.paragraphs.forEach(function(p, i) { %>
-        <p class="reveal-up" style="--delay: <%= i * 60 %>ms"><%= p %></p>
-      <% }); %>
-      <a href="<%= home.about.cta.href %>" class="btn btn--outline btn--magnetic reveal-up reveal-delay-2"><%= home.about.cta.label %></a>
+
+    <!-- ===== RIGHT: Animated Typography & Content ===== -->
+    <div class="about-content" id="about-content">
+      <!-- Eyebrow with animated gold underline -->
+      <div class="about-eyebrow-wrap reveal-up">
+        <span class="about-eyebrow"><%= home.about.eyebrow %></span>
+        <span class="about-eyebrow__line" aria-hidden="true"></span>
+      </div>
+
+      <!-- Kinetic title: each word drops in on scroll -->
+      <h2 class="about-title reveal-up reveal-delay-1">
+        <span class="about-word-wrap"><em class="about-word">Brand</em></span>
+        <span class="about-word-wrap"><em class="about-word">Story</em></span>
+        <span class="about-word-wrap about-word-wrap--gold"><em class="about-word">& Heritage</em></span>
+      </h2>
+
+      <!-- Animated stat counters row -->
+      <div class="about-stats reveal-up reveal-delay-2">
+        <div class="about-stat">
+          <span class="about-stat__num" data-target="50">0</span>
+          <span class="about-stat__suffix">+</span>
+          <span class="about-stat__label">Years of Legacy</span>
+        </div>
+        <div class="about-stat-divider" aria-hidden="true"></div>
+        <div class="about-stat">
+          <span class="about-stat__num" data-target="10000">0</span>
+          <span class="about-stat__suffix">+</span>
+          <span class="about-stat__label">Happy Families</span>
+        </div>
+        <div class="about-stat-divider" aria-hidden="true"></div>
+        <div class="about-stat">
+          <span class="about-stat__num" data-target="100">0</span>
+          <span class="about-stat__suffix">%</span>
+          <span class="about-stat__label">Hallmark Certified</span>
+        </div>
+      </div>
+
+      <!-- Paragraphs with line-by-line reveal -->
+      <div class="about-paragraphs">
+        <% home.about.paragraphs.forEach(function(p, i) { %>
+          <p class="about-paragraph reveal-up" style="--delay: <%= i * 80 %>ms"><%= p %></p>
+        <% }); %>
+      </div>
+
+      <!-- Gold accent quote -->
+      <blockquote class="about-quote reveal-up reveal-delay-3">
+        <span class="about-quote__mark">"</span>
+        <span class="about-quote__text">Crafted with love, worn through generations.</span>
+      </blockquote>
+
+      <!-- CTA row -->
+      <div class="about-cta-row reveal-up reveal-delay-3">
+        <a href="<%= home.about.cta.href %>" class="about-cta btn--magnetic" id="about-cta-btn">
+          <span class="about-cta__text"><%= home.about.cta.label %></span>
+          <span class="about-cta__arrow" aria-hidden="true">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+              <path d="M4 10H16M10 4l6 6-6 6" stroke="#D4AF37" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </span>
+          <span class="about-cta__underline" aria-hidden="true"></span>
+        </a>
+      </div>
     </div>
+
   </div>
 </section>
