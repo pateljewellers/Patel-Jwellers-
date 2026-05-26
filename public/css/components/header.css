@@ -5,27 +5,30 @@
   right: 0;
   width: 100%;
   z-index: 100;
+  --header-height: 80px; /* Scoped header height base */
   height: var(--header-height);
-  background-color: rgba(42, 42, 42, 0.94); /* Dark brand color navbar */
+  background-color: rgba(18, 18, 18, 0.95); /* Deep elegant brand charcoal */
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08); /* Subtle dark mode border */
+  border-bottom: 1px solid rgba(212, 175, 55, 0.12); /* Subtle luxury gold divider */
   transition:
     box-shadow var(--duration-normal) var(--ease-out),
-    background-color var(--duration-normal) var(--ease-out);
+    background-color var(--duration-normal) var(--ease-out),
+    height var(--duration-normal) var(--ease-out);
 }
 
 .site-header.is-scrolled {
-  box-shadow: var(--shadow-sm);
-  background-color: rgba(30, 30, 30, 0.96); /* Deeper charcoal scrolled background */
-  border-bottom-color: rgba(255, 255, 255, 0.05);
+  --header-height: 64px; /* Dynamic compact shrink */
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.4);
+  background-color: rgba(12, 12, 12, 0.97); /* Deeper charcoal scrolled background */
+  border-bottom-color: rgba(212, 175, 55, 0.22); /* Brighter gold bottom border on scroll */
 }
 
 .header-inner {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  height: var(--header-height);
+  height: 100%; /* Fill container height dynamically */
   gap: var(--space-lg);
 }
 
@@ -89,11 +92,16 @@
   display: block;
   width: 100%;
   height: 2px;
-  background-color: var(--color-dark);
+  background-color: rgba(237, 237, 236, 0.92); /* High legibility cream hamburger bars */
   border-radius: 2px;
   transition:
     transform var(--duration-normal) var(--ease-out),
-    opacity var(--duration-normal) var(--ease-out);
+    opacity var(--duration-normal) var(--ease-out),
+    background-color var(--duration-normal) var(--ease-out);
+}
+
+.nav-toggle:hover .nav-toggle-bar {
+  background-color: var(--color-accent-light); /* Interactive gold glow on hover */
 }
 
 .nav-toggle.is-active .nav-toggle-bar:nth-child(1) {

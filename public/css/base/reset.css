@@ -57,3 +57,13 @@ ul,
 ol {
   list-style: none;
 }
+
+/* Premium luxury scrollbar hiding - keeps the page fully scrollable but hides the visual scrollbar widget */
+::-webkit-scrollbar {
+  display: none; /* Hide scrollbar for Chrome, Safari, Edge and Opera */
+}
+
+html {
+  -ms-overflow-style: none;  /* Hide scrollbar for IE and Edge */
+  scrollbar-width: none;  /* Hide scrollbar for Firefox */
+}
