@@ -1,13 +1,103 @@
-<section class="section home-shagun scroll-section" id="shagun">
-  <div class="container home-shagun__inner">
-    <div class="home-shagun__content reveal-left">
-      <span class="section-eyebrow section-eyebrow--light"><%= home.shagun.eyebrow %></span>
-      <h2><%= home.shagun.title %></h2>
-      <p class="home-shagun__desc"><%= home.shagun.description %></p>
-      <a href="<%= home.shagun.cta.href %>" class="btn btn--primary btn--magnetic"><%= home.shagun.cta.label %></a>
+<section class="home-shagun scroll-section" id="shagun">
+  <!-- Background decorative canvas -->
+  <canvas class="shagun-motion-canvas" id="shagun-motion-canvas"></canvas>
+
+  <!-- Ambient decorative elements -->
+  <div class="shagun-ambient" aria-hidden="true">
+    <div class="shagun-orb shagun-orb--burgundy"></div>
+    <div class="shagun-orb shagun-orb--gold"></div>
+    <div class="shagun-mandala">
+      <svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="100" cy="100" r="92" stroke="rgba(176,168,154,0.06)" stroke-width="0.75" stroke-dasharray="6 8"/>
+        <circle cx="100" cy="100" r="70" stroke="rgba(176,168,154,0.04)" stroke-width="0.5"/>
+        <path d="M100 10 C100 10, 106 32, 100 50 C94 32, 100 10, 100 10 Z" fill="rgba(176,168,154,0.02)" stroke="rgba(176,168,154,0.05)" stroke-width="0.5"/>
+        <path d="M100 190 C100 190, 106 168, 100 150 C94 168, 100 190, 100 190 Z" fill="rgba(176,168,154,0.02)" stroke="rgba(176,168,154,0.05)" stroke-width="0.5"/>
+        <path d="M10 100 C10 100, 32 106, 50 100 C32 94, 10 100, 10 100 Z" fill="rgba(176,168,154,0.02)" stroke="rgba(176,168,154,0.05)" stroke-width="0.5"/>
+        <path d="M190 100 C190 100, 168 106, 150 100 C168 94, 190 100, 190 100 Z" fill="rgba(176,168,154,0.02)" stroke="rgba(176,168,154,0.05)" stroke-width="0.5"/>
+      </svg>
     </div>
-    <div class="home-shagun__media img-fly" data-fly="right">
-      <img src="<%= home.shagun.image %>" alt="Bridal Shagun Registration" loading="lazy" width="520" height="620">
+  </div>
+
+  <div class="container shagun-grid">
+
+    <!-- ===== LEFT: Animated Typography & Content ===== -->
+    <div class="shagun-content" id="shagun-content">
+      <!-- Eyebrow with animated gold underline -->
+      <div class="shagun-eyebrow-wrap reveal-up">
+        <span class="shagun-eyebrow"><%= home.shagun.eyebrow %></span>
+        <span class="shagun-eyebrow__line" aria-hidden="true"></span>
+      </div>
+
+      <!-- Kinetic title: each word slides in -->
+      <h2 class="shagun-title reveal-up reveal-delay-1">
+        <span class="shagun-word-wrap"><em class="shagun-word">Register</em></span>
+        <span class="shagun-word-wrap"><em class="shagun-word">Your</em></span>
+        <span class="shagun-word-wrap"><em class="shagun-word">Bridal</em></span>
+        <span class="shagun-word-wrap shagun-word-wrap--gold"><em class="shagun-word">Shagun</em></span>
+      </h2>
+
+      <!-- Description paragraph -->
+      <p class="shagun-desc reveal-up reveal-delay-1"><%= home.shagun.description %></p>
+
+      <!-- Privilege Items linked to the 3D Cards -->
+      <div class="shagun-privileges reveal-up reveal-delay-2" id="shagun-privileges-list">
+        <% home.shagun.privileges.forEach(function(priv, i) { %>
+          <div class="shagun-privilege-item<%= i === 0 ? ' is-active' : '' %>" data-target="<%= i %>">
+            <div class="privilege-num-wrap">
+              <span class="privilege-num"><%= priv.num %></span>
+              <span class="privilege-dot"></span>
+            </div>
+            <div class="privilege-text">
+              <h3><%= priv.title %></h3>
+              <p><%= priv.desc %></p>
+            </div>
+          </div>
+        <% }); %>
+      </div>
+
+      <!-- Gold accent quote -->
+      <blockquote class="shagun-quote reveal-up reveal-delay-3">
+        <span class="shagun-quote__mark">"</span>
+        <span class="shagun-quote__text">A golden step toward your eternal beginning.</span>
+      </blockquote>
+
+      <!-- CTA row -->
+      <div class="shagun-cta-row reveal-up reveal-delay-3">
+        <a href="<%= home.shagun.cta.href %>" class="shagun-cta btn--magnetic" id="shagun-cta-btn">
+          <span class="shagun-cta__text"><%= home.shagun.cta.label %></span>
+          <span class="shagun-cta__arrow" aria-hidden="true">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+              <path d="M4 10H16M10 4l6 6-6 6" stroke="var(--color-accent)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </span>
+          <span class="shagun-cta__underline" aria-hidden="true"></span>
+        </a>
+      </div>
     </div>
+
+    <!-- ===== RIGHT: 3D Parallax Staggered Showcase ===== -->
+    <div class="shagun-showcase-wrapper" id="shagun-showcase-wrapper">
+      <!-- Staggered Deck -->
+      <div class="shagun-showcase-deck" id="shagun-showcase-deck">
+        <% home.shagun.cards.forEach(function(card, idx) { %>
+          <div class="shagun-card shagun-card--<%= idx %><%= idx === 0 ? ' is-active' : '' %>" data-idx="<%= idx %>">
+            <img src="<%= card.image %>" alt="<%= card.alt %>" loading="lazy">
+            <div class="shagun-card__overlay"></div>
+            <div class="shagun-card__caption">
+              <span><%= card.caption %></span>
+            </div>
+            <div class="shagun-card__shimmer" aria-hidden="true"></div>
+          </div>
+        <% }); %>
+      </div>
+
+      <!-- Gold measurement line accent -->
+      <div class="shagun-measure-line" aria-hidden="true">
+        <span class="shagun-measure-tick"></span>
+        <span class="shagun-measure-bar"></span>
+        <span class="shagun-measure-tick"></span>
+      </div>
+    </div>
+
   </div>
 </section>

@@ -1,21 +1,70 @@
-<section class="section home-gallery scroll-section" id="signature-gallery">
-  <div class="home-section-divider container" aria-hidden="true"></div>
+<section class="home-gallery scroll-section" id="signature-gallery">
+  <!-- Background decorative canvas -->
+  <canvas class="gallery-motion-canvas" id="gallery-motion-canvas"></canvas>
+
+  <!-- Ambient decorative elements -->
+  <div class="gallery-ambient" aria-hidden="true">
+    <div class="gallery-orb gallery-orb--burgundy"></div>
+    <div class="gallery-orb gallery-orb--gold"></div>
+  </div>
+
   <div class="container">
-    <header class="section-header reveal-blur">
-      <span class="section-eyebrow"><%= home.gallery.eyebrow %></span>
-      <h2><%= home.gallery.title %></h2>
-      <p><%= home.gallery.subtitle %></p>
+    <!-- Header with animated kinetic word titles -->
+    <header class="gallery-header">
+      <div class="gallery-eyebrow-wrap reveal-up">
+        <span class="gallery-eyebrow"><%= home.gallery.eyebrow %></span>
+        <span class="gallery-eyebrow__line" aria-hidden="true"></span>
+      </div>
+
+      <h2 class="gallery-title reveal-up reveal-delay-1" id="gallery-3d-title">
+        <span class="gallery-word-wrap"><em class="gallery-word" style="display: inline-block;">Signature</em></span>
+        <span class="gallery-word-wrap gallery-word-wrap--gold"><em class="gallery-word" style="display: inline-block;">Creations</em></span>
+      </h2>
+      <p class="gallery-subtitle reveal-up reveal-delay-1"><%= home.gallery.subtitle %></p>
     </header>
-    <div class="gallery-masonry stagger-group" data-stagger="120">
+
+    <!-- Staggered 3D Perspective Gallery Grid -->
+    <div class="gallery-3d-grid stagger-group" id="gallery-3d-grid" data-stagger="100">
       <% home.gallery.images.forEach(function(img, i) { %>
-        <figure class="gallery-item">
-          <img src="<%= img.src %>" alt="<%= img.alt %>" loading="lazy" width="400" height="<%= i % 3 === 0 ? 500 : 350 %>">
-          <figcaption class="gallery-item__caption"><%= img.alt %></figcaption>
-        </figure>
+        <div class="gallery-3d-card gallery-3d-card--<%= i %>" data-idx="<%= i %>" style="--card-idx: <%= i %>;">
+          <div class="gallery-3d-card__inner">
+            <img src="<%= img.src %>" alt="<%= img.alt %>" loading="lazy">
+            <!-- Dynamic 3D spotlight shine reflection -->
+            <div class="gallery-3d-card__shine" aria-hidden="true"></div>
+            <div class="gallery-3d-card__overlay"></div>
+            <figcaption class="gallery-3d-card__caption">
+              <span class="card-caption-category">Signature Creation</span>
+              <h3><%= img.alt %></h3>
+            </figcaption>
+            <!-- Floating 3D brand logo motif above product image -->
+            <div class="gallery-3d-card__emblem" aria-hidden="true">
+              <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="50" cy="50" r="40" stroke="var(--color-primary)" stroke-width="0.75" stroke-dasharray="3 4" opacity="0.45" />
+                <path d="M50 15 C58 35 65 35 73 15" stroke="var(--color-primary)" stroke-width="1.25" stroke-linecap="round" />
+                <path d="M50 85 C58 65 65 65 73 85" stroke="var(--color-primary)" stroke-width="1.25" stroke-linecap="round" />
+                <!-- Central diamond facet shape -->
+                <path d="M50 32 L62 50 L50 68 L38 50 Z" fill="rgba(155, 27, 42, 0.18)" stroke="var(--color-primary)" stroke-width="1" />
+                <circle cx="50" cy="50" r="3" fill="var(--color-accent)" />
+              </svg>
+            </div>
+            <!-- Shimmer sweep on card hover -->
+            <div class="gallery-3d-card__shimmer" aria-hidden="true"></div>
+          </div>
+        </div>
       <% }); %>
     </div>
-    <div class="section-cta reveal-up">
-      <a href="<%= home.gallery.cta.href %>" class="btn btn--outline btn--magnetic"><%= home.gallery.cta.label %></a>
+
+    <!-- Magnetic Accent CTA Link -->
+    <div class="gallery-cta-row reveal-up reveal-delay-3">
+      <a href="<%= home.gallery.cta.href %>" class="gallery-cta btn--magnetic" id="gallery-cta-btn">
+        <span class="gallery-cta__text"><%= home.gallery.cta.label %></span>
+        <span class="gallery-cta__arrow" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+            <path d="M4 10H16M10 4l6 6-6 6" stroke="var(--color-accent)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </span>
+        <span class="gallery-cta__underline" aria-hidden="true"></span>
+      </a>
     </div>
   </div>
 </section>

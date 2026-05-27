@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   document.querySelectorAll('.stagger-group').forEach((group) => {
     const children = group.querySelectorAll(
-      '.collection-card, .gallery-item, .process-step, .testimonial-card, .social-grid__item'
+      '.collection-card, .gallery-item, .gallery-3d-card, .process-step, .testimonial-card, .social-grid__item'
     );
     const step = parseInt(group.dataset.stagger, 10) || 130;
     children.forEach((child, i) => {
@@ -28,7 +28,11 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!child.classList.contains('reveal-up')) {
           child.classList.add('reveal-up');
         }
-      } else if (child.classList.contains('gallery-item') || child.classList.contains('social-grid__item')) {
+      } else if (
+        child.classList.contains('gallery-item') ||
+        child.classList.contains('gallery-3d-card') ||
+        child.classList.contains('social-grid__item')
+      ) {
         child.classList.add('reveal-up');
       } else if (!child.classList.contains('reveal-up')) {
         child.classList.add('reveal-up');

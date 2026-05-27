@@ -65,8 +65,17 @@ module.exports = {
     title: 'Register Your Bridal Shagun Journey',
     description:
       'Celebrate your wedding with our exclusive Shagun Registration — curated bridal sets, personalised consultations, and special privileges for your big day.',
-    image: '/images/about/shagun.jpg',
     cta: { label: 'Register Now', href: '/shagun-registration' },
+    cards: [
+      { image: '/images/shagun/bridal-gold.jpg', caption: 'Heritage Curation', alt: 'Premium heavy gold bridal necklace set' },
+      { image: '/images/shagun/artisan-sketch.jpg', caption: 'Artisan Consultation', alt: 'Artisan designer sketching bespoke bridal jewellery' },
+      { image: '/images/shagun/blessing-box.jpg', caption: 'Shagun Blessings', alt: 'Gilded Shagun gold coin blessing keepsake box' }
+    ],
+    privileges: [
+      { num: '01', title: 'Curated Bridal Trousseau', desc: 'VIP access to exclusive handcrafted antique and gold bridal sets.' },
+      { num: '02', title: 'Artisan Consultation', desc: 'One-on-one session with our master designers to sketch your bespoke dream pieces.' },
+      { num: '03', title: 'Royal Shagun Privileges', desc: 'Special blessings including guaranteed savings and personalized keepsake boxes.' }
+    ]
   },
 
   gallery: {
@@ -74,12 +83,12 @@ module.exports = {
     title: 'Signature Jewellery Gallery',
     subtitle: 'A curated glimpse of our finest handcrafted pieces',
     images: [
-      { src: '/images/gallery/01.jpg', alt: 'Gold necklace collection' },
-      { src: '/images/gallery/02.jpg', alt: 'Diamond ring craftsmanship' },
-      { src: '/images/gallery/03.jpg', alt: 'Bridal jewellery set' },
-      { src: '/images/gallery/04.jpg', alt: 'Traditional gold bangles' },
-      { src: '/images/gallery/05.jpg', alt: 'Antique heritage piece' },
-      { src: '/images/gallery/06.jpg', alt: 'Designer diamond pendant' },
+      { src: '/images/gallery/gold-choker.jpg', alt: 'Majestic Royal Kundan Gold Choker Set' },
+      { src: '/images/gallery/ruby-ring.jpg', alt: 'Cinematic Diamond & Ruby Bridal Ring' },
+      { src: '/images/gallery/diamond-earrings.jpg', alt: 'Handcrafted Gold Filigree Diamond Hanging Earrings' },
+      { src: '/images/gallery/gold-bangles.jpg', alt: 'Handcrafted Antique Temple Gold Kada Bangles' },
+      { src: '/images/gallery/solitaire-ring.jpg', alt: 'Luxury Platinum Diamond Solitaire Ring' },
+      { src: '/images/gallery/emerald-pendant.jpg', alt: 'Royal Heritage Emerald & Pearl Necklace Pendant' }
     ],
     cta: { label: 'View Full Gallery', href: '/gallery' },
   },
