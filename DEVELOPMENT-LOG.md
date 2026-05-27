@@ -574,4 +574,32 @@ Downloaded to `public/images/` — hero, collection (4), gallery (6), about, soc
 
 ---
 
+## Prompt 12 — Showroom Experience Palace Archway & 3D Interactive Redesign
+
+**તારીખ:** 27 May 2026
+
+### User request
+- "now i want to create the 'Showroom Experience' this section again with this backgorund color but the different design , 3d animations , backgorund and moving effects , attractive , proffesional , and beautiful with my existing backgorund color wich already exist in this se4ctiona and also change the image and add my showroom's image Patel Jwellers Mehsanawala ...."
+
+### Implemented
+- **Luxury Palace-Style Arch Image Showcase**:
+  - Replaced flat image container with a gorgeous, high-end dome arch frame designed in traditional luxury Indian palace aesthetic, complete with elegant double gold borders and glowing shadow vectors.
+  - Set up 3D perspective layers (`perspective: 1200px`) and hardware-accelerated transforms to support depth rotations.
+- **Advanced Interactive 3D Mouse Tilt & Parallax**:
+  - Implemented 3D card tilt tracing the user's cursor movements (pitch, yaw, scale magnification) with smooth spring-like recovery.
+  - Layered multi-depth parallax shifts causing the showroom image and hanging "Est. 1990" brand tag to move at varying speeds, creating a true holographic 3D illusion.
+- **Canvas Particle Field & Slowly Rotating Mandala**:
+  - Added a responsive 2D background `<canvas>` generating drifting warm-gold dust particles and warm cream orbs. Particles dynamically drift upwards and respond to mouse velocity (magnetic gravity wind).
+  - Designed an intricate geometric gold jaali outline mandala (`0.12` opacity) rotating slowly in the background and reacting to scroll speed via scroll parallax.
+- **2x2 Premium Feature Grid & Custom SVG Icons**:
+  - Redesigned flat list into a 2x2 grid of glassmorphic interactive cards: Bridal Styling Suites, Artisanal Consultation, Live Purity Display, and Heritage Gallery.
+  - Crafted highly refined SVG icons (Royal Crown, Diamond Gem, Shield Award, Temple Columns) that animate and reverse-color on hover with soft glowing halos.
+- **Magnetic Brand CTA Button**:
+  - Programmed magnetic cursor attraction on the "Schedule Private Visit" button, letting the CTA stretch slightly toward the pointer with an animated sliding golden arrow.
+- **Showroom Image Update**:
+  - Configured the main visual to load the newly uploaded showroom storefront image `patel-jewellers-mehsanawala.png`.
+
+---
+
 *આગળનો prompt અહીં નીચે add થશે.*
+

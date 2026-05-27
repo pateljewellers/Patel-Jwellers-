@@ -130,16 +130,32 @@ module.exports = {
   },
 
   showroom: {
-    eyebrow: 'Visit Us',
-    title: 'Showroom Experience',
-    image: '/images/about/showroom.jpg',
+    eyebrow: 'Visit Our Sanctuary',
+    title: 'Patel Jewellers Mehsanawala',
+    image: '/images/about/patel-jewellers-mehsanawala.png',
     features: [
-      'Luxury private consultation lounges',
-      'Live gold rate transparency board',
-      'Bridal preview rooms with styling',
-      'Complimentary jewellery care guidance',
+      {
+        title: 'Bridal Styling Suites',
+        desc: 'Indulge in private consultations within our silk-clad bridal suites.',
+        icon: 'crown'
+      },
+      {
+        title: 'Artisanal Consultation',
+        desc: 'Co-create customized heritage heirlooms directly with master design consultants.',
+        icon: 'gem'
+      },
+      {
+        title: 'Live Purity Display',
+        desc: 'Ultimate transparency with 100% certified gold rate screens and karatmeters.',
+        icon: 'award'
+      },
+      {
+        title: 'Heritage Gallery',
+        desc: 'Explore North Gujarat\'s finest collections of traditional and contemporary ornaments.',
+        icon: 'temple'
+      }
     ],
-    cta: { label: 'Plan Your Visit', href: '/contact' },
+    cta: { label: 'Schedule Private Visit', href: '/contact' },
   },
 
   social: {
