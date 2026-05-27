@@ -13,5 +13,6 @@ router.get('/custom-design', pagesController.getCustomDesignPage);
 router.get('/testimonials', pagesController.getTestimonialsPage);
 router.get('/blog', pagesController.getBlogPage);
 router.get('/contact', pagesController.getContactPage);
+router.post('/contact/submit', pagesController.submitContactInquiry);
 
 module.exports = router;

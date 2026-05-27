@@ -6,6 +6,7 @@ const aboutContent = require('../config/about-content');
 const collectionContent = require('../config/collection-content');
 
 const registrationFile = path.join(__dirname, '../..', 'data', 'shagun-registrations.json');
+const inquiriesFile = path.join(__dirname, '../..', 'data', 'contact-inquiries.json');
 
 function renderPage(pageId, viewName) {
   return function pageHandler(req, res) {
@@ -83,12 +84,38 @@ function submitShagunRegistration(req, res) {
   }
 }
 
+function submitContactInquiry(req, res) {
+  try {
+    const inquiry = {
+      ...req.body,
+      ip: req.ip,
+      receivedAt: new Date().toISOString(),
+    };
+
+    if (!fs.existsSync(inquiriesFile)) {
+      fs.mkdirSync(path.dirname(inquiriesFile), { recursive: true });
+      fs.writeFileSync(inquiriesFile, '[]', 'utf8');
+    }
+
+    const rawData = fs.readFileSync(inquiriesFile, 'utf8');
+    const items = Array.isArray(JSON.parse(rawData)) ? JSON.parse(rawData) : [];
+    items.push(inquiry);
+    fs.writeFileSync(inquiriesFile, JSON.stringify(items, null, 2), 'utf8');
+
+    res.json({ success: true });
+  } catch (error) {
+    console.error('Contact inquiry save failed:', error);
+    res.status(500).json({ success: false, message: 'Unable to save inquiry.' });
+  }
+}
+
 module.exports = {
   getHomePage,
   getAboutPage,
   getCollectionPage,
   getShagunPage: renderPage('shagun', 'pages/shagun-registration'),
   submitShagunRegistration,
+  submitContactInquiry,
   getGalleryPage: renderPage('gallery', 'pages/gallery'),
   getCustomDesignPage: renderPage('custom-design', 'pages/custom-design'),
   getTestimonialsPage: renderPage('testimonials', 'pages/testimonials'),
