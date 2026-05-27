@@ -1,21 +1,119 @@
-<section class="section home-testimonials scroll-section" id="testimonials">
-  <div class="home-section-divider container" aria-hidden="true"></div>
-  <div class="container">
-    <header class="section-header reveal-blur">
-      <span class="section-eyebrow"><%= home.testimonials.eyebrow %></span>
-      <h2><%= home.testimonials.title %></h2>
+<section class="home-testimonials scroll-section" id="testimonials" aria-labelledby="testimonials-title">
+
+  <!-- Animated background canvas -->
+  <canvas class="testi-canvas" id="testi-canvas" aria-hidden="true"></canvas>
+
+  <!-- Ambient floating orbs -->
+  <div class="testi-ambient" aria-hidden="true">
+    <div class="testi-orb testi-orb--1"></div>
+    <div class="testi-orb testi-orb--2"></div>
+    <div class="testi-orb testi-orb--3"></div>
+  </div>
+
+  <!-- Large decorative quote mark floating in background -->
+  <div class="testi-bg-quote" aria-hidden="true">❝</div>
+
+  <!-- Decorative concentric rings -->
+  <div class="testi-rings" aria-hidden="true">
+    <div class="testi-ring testi-ring--1"></div>
+    <div class="testi-ring testi-ring--2"></div>
+    <div class="testi-ring testi-ring--3"></div>
+  </div>
+
+  <div class="container testi-container">
+
+    <!-- Section Header -->
+    <header class="testi-header reveal-up">
+      <div class="testi-eyebrow-wrap">
+        <span class="testi-eyebrow-line" aria-hidden="true"></span>
+        <span class="testi-eyebrow"><%= home.testimonials.eyebrow %></span>
+        <span class="testi-eyebrow-line" aria-hidden="true"></span>
+      </div>
+      <h2 class="testi-title" id="testimonials-title">
+        <span class="testi-title-word">What Our</span>
+        <em class="testi-title-accent">Customers Say</em>
+      </h2>
+      <div class="testi-title-underline" aria-hidden="true"></div>
     </header>
-    <div class="testimonials-track stagger-group" data-stagger="150">
-      <% home.testimonials.items.forEach(function(t, i) { %>
-        <blockquote class="testimonial-card reveal-rotate">
-          <div class="testimonial-card__stars" aria-hidden="true">★★★★★</div>
-          <p class="testimonial-card__quote">"<%= t.quote %>"</p>
-          <footer>
-            <cite><%= t.name %></cite>
-            <span><%= t.role %></span>
-          </footer>
-        </blockquote>
-      <% }); %>
+
+    <!-- 3D Carousel Track -->
+    <div class="testi-stage" id="testi-stage" aria-label="Customer testimonials">
+      <div class="testi-track" id="testi-track">
+        <% home.testimonials.items.forEach(function(t, i) { %>
+          <blockquote class="testi-card reveal-up" data-idx="<%= i %>" style="--card-i: <%= i %>;">
+
+            <!-- Glassmorphic shine layer -->
+            <div class="testi-card__glass" aria-hidden="true"></div>
+
+            <!-- Top decorative accent bar -->
+            <div class="testi-card__accent-bar" aria-hidden="true"></div>
+
+            <!-- Quote icon -->
+            <div class="testi-card__quote-icon" aria-hidden="true">
+              <svg width="36" height="28" viewBox="0 0 36 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M0 28V17.6C0 12.693 1.387 8.773 4.16 5.84 6.933 2.907 10.88 1.12 16 0.48L17.12 3.04C14.453 3.68 12.32 4.907 10.72 6.72 9.12 8.533 8.267 10.56 8.16 12.8H14.4V28H0ZM19.2 28V17.6C19.2 12.693 20.587 8.773 23.36 5.84 26.133 2.907 30.08 1.12 35.2 0.48L36.32 3.04C33.653 3.68 31.52 4.907 29.92 6.72 28.32 8.533 27.467 10.56 27.36 12.8H33.6V28H19.2Z" fill="currentColor"/>
+              </svg>
+            </div>
+
+            <!-- Stars -->
+            <div class="testi-card__stars" aria-label="5 stars">
+              <% for(var s = 0; s < 5; s++) { %>
+                <span class="testi-star" style="--star-i: <%= s %>;" aria-hidden="true">★</span>
+              <% } %>
+            </div>
+
+            <!-- Quote text -->
+            <p class="testi-card__quote">"<%= t.quote %>"</p>
+
+            <!-- Divider -->
+            <div class="testi-card__divider" aria-hidden="true">
+              <span class="testi-card__divider-gem">◆</span>
+            </div>
+
+            <!-- Author -->
+            <footer class="testi-card__footer">
+              <!-- Avatar initials circle -->
+              <div class="testi-card__avatar" aria-hidden="true">
+                <span><%= t.name.charAt(0) %></span>
+              </div>
+              <div class="testi-card__author">
+                <cite class="testi-card__name"><%= t.name %></cite>
+                <span class="testi-card__role"><%= t.role %></span>
+              </div>
+            </footer>
+
+            <!-- Bottom glow bar -->
+            <div class="testi-card__glow" aria-hidden="true"></div>
+
+          </blockquote>
+        <% }); %>
+      </div>
+
+      <!-- Carousel navigation dots -->
+      <div class="testi-dots" role="tablist" aria-label="Testimonial navigation" id="testi-dots">
+        <% home.testimonials.items.forEach(function(t, i) { %>
+          <button class="testi-dot <%= i === 0 ? 'testi-dot--active' : '' %>" role="tab" aria-label="Testimonial <%= i + 1 %>" data-dot="<%= i %>" id="testi-dot-<%= i %>"></button>
+        <% }); %>
+      </div>
     </div>
+
+    <!-- Floating trust stats row -->
+    <div class="testi-stats reveal-up">
+      <div class="testi-stat">
+        <span class="testi-stat__num">500<span class="testi-stat__plus">+</span></span>
+        <span class="testi-stat__label">Happy Families</span>
+      </div>
+      <div class="testi-stat__sep" aria-hidden="true">◆</div>
+      <div class="testi-stat">
+        <span class="testi-stat__num">25<span class="testi-stat__plus">+</span></span>
+        <span class="testi-stat__label">Years of Trust</span>
+      </div>
+      <div class="testi-stat__sep" aria-hidden="true">◆</div>
+      <div class="testi-stat">
+        <span class="testi-stat__num">5★</span>
+        <span class="testi-stat__label">Average Rating</span>
+      </div>
+    </div>
+
   </div>
 </section>
