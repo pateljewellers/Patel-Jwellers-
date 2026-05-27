@@ -3160,61 +3160,482 @@
 
 /* --- Design process --- */
 .home-process {
-  background: var(--color-white);
+  position: relative;
+  background: linear-gradient(180deg, #fbfbfa 0%, #ededec 50%, #f6f6f5 100%);
+  padding-block: 100px 90px;
+  overflow: hidden;
+  width: 100%;
+}
+
+/* Background Ambient Blur Orbs */
+.process-ambient {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.process-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(130px);
+  opacity: 0.06;
+  will-change: transform;
+}
+
+.process-orb--burgundy {
+  width: 440px;
+  height: 440px;
+  top: -60px;
+  right: -80px;
+  background: radial-gradient(circle, rgba(155, 27, 42, 0.06) 0%, transparent 70%);
+  animation: orbFloat1 20s ease-in-out infinite alternate;
+}
+
+.process-orb--gold {
+  width: 380px;
+  height: 380px;
+  bottom: -80px;
+  left: -60px;
+  background: radial-gradient(circle, rgba(176, 168, 154, 0.08) 0%, transparent 70%);
+  animation: orbFloat2 16s ease-in-out infinite alternate-reverse;
+}
+
+/* ===== HEADER ===== */
+.process-header {
+  text-align: center;
+  margin-bottom: var(--space-2xl);
+  position: relative;
+  z-index: 2;
+}
+
+.process-eyebrow-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-md);
+  margin-bottom: var(--space-sm);
+}
+
+.process-eyebrow {
+  font-family: var(--font-sans);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--color-primary);
+}
+
+.process-eyebrow__line {
+  width: 80px;
+  height: 1px;
+  background: linear-gradient(to right, rgba(155, 27, 42, 0.4), transparent);
+  position: relative;
+  overflow: hidden;
+}
+
+.process-eyebrow__line::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to right, transparent, var(--color-primary), transparent);
+  animation: lineShimmer 3.5s ease-in-out infinite;
+}
+
+.process-title {
+  font-family: var(--font-serif);
+  font-size: clamp(2.2rem, 4.8vw, 3.4rem);
+  font-weight: 500;
+  line-height: 1.15;
+  color: var(--color-dark);
+  margin-bottom: var(--space-sm);
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.18em;
+}
+
+.process-title em {
+  font-style: normal;
+}
+
+.process-word-wrap {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: top;
+}
+
+.process-word-wrap--gold em {
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-accent) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.process-subtitle {
+  font-family: var(--font-sans);
+  font-size: clamp(0.9rem, 1.6vw, 1.05rem);
+  font-weight: 300;
+  line-height: 1.8;
+  color: rgba(42, 42, 42, 0.72);
+  max-width: 580px;
+  margin-inline: auto;
+}
+
+/* ===== TIMELINE WRAPPER & GRID ===== */
+.process-steps-wrapper {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  margin-bottom: 40px;
+}
+
+/* Extremely thin dashed timeline line, hidden behind the solid card borders */
+.process-timeline-track {
+  position: absolute;
+  background: transparent;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.process-timeline-progress {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: var(--color-primary);
+  will-change: width, height;
+}
+
+/* Responsive Positions for Timeline track */
+@media (max-width: 1023px) {
+  .process-timeline-track {
+    top: 30px;
+    left: 45px;
+    width: 1px;
+    height: calc(100% - 60px);
+    border-top: none;
+    border-left: 1px dashed rgba(176, 168, 154, 0.28);
+  }
+  .process-timeline-progress {
+    top: 0;
+    left: -1px;
+    background: var(--color-primary);
+    width: 1px;
+    height: 0%;
+  }
+}
+
+@media (min-width: 1024px) {
+  .process-timeline-track {
+    top: 71px; /* Centers directly behind the smaller emblems */
+    left: 12%;
+    right: 12%;
+    height: 1px;
+    width: 76%;
+    border-top: 1px dashed rgba(176, 168, 154, 0.28);
+  }
+  .process-timeline-progress {
+    top: -1px;
+    height: 1px;
+    width: 0%;
+    box-shadow: 0 0 8px rgba(155, 27, 42, 0.35);
+  }
 }
 
 .process-steps {
+  position: relative;
+  z-index: 2; /* Renders steps grid ON TOP of the timeline line track to cover it */
   display: grid;
-  gap: var(--space-lg);
+  grid-template-columns: 1fr;
+  gap: 30px;
+  perspective: 1000px;
+  transform-style: preserve-3d;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 768px) and (max-width: 1023px) {
   .process-steps {
     grid-template-columns: repeat(2, 1fr);
+    gap: 35px;
   }
 }
 
 @media (min-width: 1024px) {
   .process-steps {
     grid-template-columns: repeat(4, 1fr);
+    gap: 25px;
   }
 }
 
+/* ===== TIMELINE CARDS ===== */
 .process-step {
-  padding: var(--space-xl);
-  background: var(--color-bg);
-  border-radius: var(--radius-md);
-  border: 1px solid var(--color-border);
+  position: relative;
+  perspective: 1000px;
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+.process-step__inner {
+  position: relative;
+  padding: 30px 24px 28px 24px; /* Reduced vertical padding for highly compact layout */
+  background: #ffffff; /* Crisp white background covers connection lines */
+  border: 1px solid rgba(176, 168, 154, 0.22);
+  border-radius: 20px;
+  box-shadow: 0 8px 24px rgba(42, 42, 42, 0.03);
+  transform-style: preserve-3d;
+  will-change: transform, border-color, box-shadow;
   transition:
-    transform 1s var(--ease-land),
-    border-color var(--duration-normal) var(--ease-smooth),
-    box-shadow 1s var(--ease-smooth);
+    transform 0.5s cubic-bezier(0.25, 1, 0.5, 1),
+    border-color 0.5s ease,
+    box-shadow 0.5s ease;
+  z-index: 2;
+  cursor: pointer;
 }
 
-.process-step.is-visible:hover {
-  transform: translateY(-10px) scale(1.02);
-  border-color: var(--color-border-accent);
-  box-shadow: var(--shadow-md);
+/* Alignment adjusting for vertical timeline on mobile */
+@media (max-width: 1023px) {
+  .process-step {
+    padding-left: 25px;
+  }
 }
 
-.process-step__num {
-  display: block;
+/* Giant Subtle Background Watermark Number centered behind content */
+.process-step__watermark {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) translateZ(4px);
   font-family: var(--font-serif);
-  font-size: 2rem;
+  font-size: clamp(5.5rem, 8vw, 7.5rem);
+  font-weight: 600;
   color: var(--color-primary);
-  opacity: 0.5;
-  margin-bottom: var(--space-md);
+  opacity: 0.025; /* Extremely subtle luxury watermark */
+  pointer-events: none;
+  z-index: 0;
+  user-select: none;
+  transition: opacity 0.5s ease, transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+/* Dynamic Spotlight Reflection Glow overlay */
+.process-step__shine {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  border-radius: 20px;
+  z-index: 3;
+  background: radial-gradient(circle 120px at var(--mx, 50%) var(--my, 50%), rgba(176, 168, 154, 0.1) 0%, transparent 85%);
+  opacity: 0;
+  mix-blend-mode: overlay;
+  transition: opacity 0.4s ease;
+}
+
+.process-step:hover .process-step__shine {
+  opacity: 1;
+}
+
+/* Compact Vector SVG Illustration Emblem centered horizontally */
+.process-step__emblem {
+  width: 60px;
+  height: 60px;
+  background: rgba(155, 27, 42, 0.02);
+  border: 1px solid rgba(176, 168, 154, 0.18);
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-inline: auto; /* Centers the emblem perfectly */
+  margin-bottom: 20px;
+  padding: 10px;
+  z-index: 2;
+  transform-style: preserve-3d;
+  transform: translateZ(15px);
+  transition:
+    transform 0.6s cubic-bezier(0.25, 1, 0.5, 1),
+    border-color 0.5s ease,
+    background-color 0.5s ease,
+    box-shadow 0.5s ease;
+}
+
+.process-step__emblem svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* SVG Line Dasharray Animation on active */
+.process-step__emblem svg circle,
+.process-step__emblem svg path,
+.process-step__emblem svg rect {
+  transition: stroke-dashoffset 2s ease-in-out, fill 0.6s ease;
+}
+
+/* Card Content details */
+.process-step__content {
+  position: relative;
+  z-index: 2;
+  transform: translateZ(15px);
+  transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.process-step__badge {
+  display: inline-block;
+  font-family: var(--font-sans);
+  font-size: 0.66rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+  margin-bottom: 6px;
+  transition: color 0.5s ease;
 }
 
 .process-step h3 {
-  font-size: 1.15rem;
-  margin-bottom: var(--space-sm);
+  font-family: var(--font-serif);
+  font-size: 1.2rem;
+  font-weight: 500;
+  color: var(--color-dark);
+  margin-bottom: 10px;
+  line-height: 1.3;
 }
 
 .process-step p {
-  font-size: 0.9rem;
+  font-family: var(--font-sans);
+  font-size: 0.88rem;
+  font-weight: 300;
   line-height: 1.6;
+  color: rgba(42, 42, 42, 0.72);
 }
+
+/* Shimmer Sweep Sweep Overlay on hover */
+.process-step__shimmer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  border-radius: 20px;
+  z-index: 4;
+  background: linear-gradient(135deg, transparent 40%, rgba(155, 27, 42, 0.03) 50%, transparent 60%);
+  transform: translateX(-100%);
+  transition: transform 0.6s ease;
+}
+
+/* ===== DYNAMIC INTERACTIVE TIMELINE ACTIVE STATE ===== */
+.process-step.is-timeline-active .process-step__inner {
+  border-color: rgba(155, 27, 42, 0.15);
+  box-shadow: 0 10px 30px rgba(155, 27, 42, 0.04);
+}
+
+.process-step.is-timeline-active .process-step__emblem {
+  background: rgba(155, 27, 42, 0.04);
+  border-color: rgba(155, 27, 42, 0.22);
+}
+
+.process-step.is-timeline-active .process-step__badge {
+  color: var(--color-primary);
+}
+
+.process-step.is-timeline-active .process-step__watermark {
+  opacity: 0.05; /* Lights up slightly when active */
+}
+
+/* ===== CARD HOVER STATES (3D DEPTH LEAP) ===== */
+.process-step:hover .process-step__inner {
+  transform: translateY(-5px) scale(1.015) !important;
+  border-color: rgba(155, 27, 42, 0.24);
+  box-shadow: 
+    0 18px 45px rgba(42, 42, 42, 0.08),
+    0 0 20px rgba(155, 27, 42, 0.03);
+}
+
+.process-step:hover .process-step__emblem {
+  transform: translateZ(35px) rotate(6deg);
+  background: var(--color-white);
+  border-color: rgba(155, 27, 42, 0.24);
+  box-shadow: 0 6px 18px rgba(155, 27, 42, 0.06);
+}
+
+.process-step:hover .process-step__content {
+  transform: translateZ(22px);
+}
+
+.process-step:hover .process-step__watermark {
+  opacity: 0.07;
+  transform: translate(-50%, -50%) translateZ(28px) scale(1.04);
+}
+
+.process-step:hover .process-step__shimmer {
+  animation: cardShimmerSweep 1.5s ease-in-out forwards;
+}
+
+/* ===== CTA ROW ===== */
+.process-cta-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: var(--space-2xl);
+  position: relative;
+  z-index: 2;
+}
+
+.process-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-md);
+  text-decoration: none;
+  position: relative;
+  padding-block: var(--space-xs);
+  transition: transform 0.35s var(--ease-smooth);
+}
+
+.process-cta__text {
+  font-family: var(--font-sans);
+  font-size: 0.88rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-dark);
+  transition: color 0.35s ease;
+}
+
+.process-cta__arrow {
+  display: flex;
+  align-items: center;
+  transition: transform 0.4s var(--ease-smooth);
+}
+
+.process-cta__underline {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background: rgba(42, 42, 42, 0.12);
+}
+
+.process-cta__underline::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--color-primary);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.5s var(--ease-smooth);
+}
+
+.process-cta:hover {
+  transform: translateX(5px);
+}
+
+.process-cta:hover .process-cta__text {
+  color: var(--color-primary);
+}
+
+.process-cta:hover .process-cta__arrow {
+  transform: translateX(5px);
+}
+
+.process-cta:hover .process-cta__underline::after {
+  transform: scaleX(1);
+}
+
+/* --- Testimonials --- */
 
 /* --- Testimonials --- */
 .home-testimonials {

@@ -526,4 +526,30 @@ Downloaded to `public/images/` — hero, collection (4), gallery (6), about, soc
 
 ---
 
+## Prompt 10 — Custom Design Process 3D & Scrolling Timeline Redesign
+
+**તારીખ:** 27 May 2026
+
+### User request
+- "Please add 3D effects, transition animations, and moving effects to this 'Custom Design Process' section to make the UI look amazing—completely professional and attractive."
+
+### Implemented
+- **Premium Glassmorphic 3D Card Timeline**:
+  - Re-engineered `views/partials/home/design-process.ejs` steps grid into luxury glassmorphic panels with depth transforms (`perspective(1000px)`).
+  - Floating 3D layered offsets configured: the watermark numbers `01`–`04` float at `translateZ(15px)`, content badges at `translateZ(20px)`, and vector emblems at `translateZ(22px)`. Hover lifts elements to separate depths (emblem to `translateZ(48px)` and watermark to `translateZ(35px)`).
+  - Configured coordinate-specific spotlight shine overlays (`--mx`, `--my`) inside each card following the user's cursor.
+- **Scroll-Driven Active Progress Timeline Track**:
+  - Built an animated CSS/JS timeline thread connecting the steps (`.process-timeline-progress`) running horizontally on desktop (`min-width: 1024px`) and vertically along the left on mobile (`max-width: 1023px`).
+  - Animated progress levels (`height`/`width` from `0%` to `100%`) using frame-interpolated LERP scroll progress in `design-process-interactive.js`.
+  - Sequentially activates and highlights step cards (`is-timeline-active` class) as the timeline progress line sweeps past their boundaries, lighting up diamond nodes and triggering SVG line animations in real-time.
+- **Custom Designed SVG Illustration Emblems**:
+  - Coded four beautiful, highly detailed custom vectors in EJS:
+    - **Step 1 (Consultation)**: Interlocking consulting diamond rings with decorative dash lines.
+    - **Step 2 (Design Sketch)**: Stylized glowing drafting ring layout with grid coordinates and technical stylus.
+    - **Step 3 (Craftsmanship)**: Artisan goldsmith anvil setting carrying a central brilliant diamond facet.
+    - **Step 4 (Delivery)**: Luxurious silk ribbon-wrapped velvet gift box representing final certified handovers.
+
+---
+
 *આગળનો prompt અહીં નીચે add થશે.*
+

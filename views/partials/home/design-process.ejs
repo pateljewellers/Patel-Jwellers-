@@ -1,22 +1,125 @@
 <section class="section home-process scroll-section" id="custom-design">
-  <div class="home-section-divider container" aria-hidden="true"></div>
+  <!-- Background Ambient Blur Orbs -->
+  <div class="process-ambient" aria-hidden="true">
+    <div class="process-orb process-orb--burgundy"></div>
+    <div class="process-orb process-orb--gold"></div>
+  </div>
+
   <div class="container">
-    <header class="section-header reveal-blur">
-      <span class="section-eyebrow"><%= home.designProcess.eyebrow %></span>
-      <h2><%= home.designProcess.title %></h2>
-      <p><%= home.designProcess.subtitle %></p>
+    <!-- Header with animated kinetic typography titles -->
+    <header class="process-header reveal-blur">
+      <div class="process-eyebrow-wrap">
+        <span class="process-eyebrow"><%= home.designProcess.eyebrow %></span>
+        <span class="process-eyebrow__line" aria-hidden="true"></span>
+      </div>
+      <h2 class="process-title" id="process-title">
+        <span class="process-word-wrap"><em><%= home.designProcess.title.split(' ')[0] %></em></span>
+        <span class="process-word-wrap process-word-wrap--gold"><em><%= home.designProcess.title.split(' ').slice(1).join(' ') %></em></span>
+      </h2>
+      <p class="process-subtitle"><%= home.designProcess.subtitle %></p>
     </header>
-    <div class="process-steps stagger-group" data-stagger="130">
-      <% home.designProcess.steps.forEach(function(step, i) { %>
-        <article class="process-step reveal-up">
-          <span class="process-step__num"><%= step.num %></span>
-          <h3><%= step.title %></h3>
-          <p><%= step.desc %></p>
-        </article>
-      <% }); %>
+
+    <div class="process-steps-wrapper">
+      <!-- Dynamic Scroll-Driven timeline track -->
+      <div class="process-timeline-track" aria-hidden="true">
+        <div class="process-timeline-progress" id="process-timeline-progress"></div>
+      </div>
+
+      <!-- Process Staggered Cards Grid -->
+      <div class="process-steps stagger-group" id="process-steps-grid" data-stagger="150">
+        <% home.designProcess.steps.forEach(function(step, i) { %>
+          <article class="process-step process-step--<%= i %> reveal-up" data-idx="<%= i %>" style="--step-idx: <%= i %>;">
+            <div class="process-step__inner">
+              <!-- Giant 3D Watermark number behind content -->
+              <span class="process-step__watermark"><%= step.num %></span>
+
+              <!-- Dynamic spotlight shine coordinate glow -->
+              <div class="process-step__shine" aria-hidden="true"></div>
+
+              <!-- Premium custom-crafted SVG illustration emblem -->
+              <div class="process-step__emblem" aria-hidden="true">
+                <% if (i === 0) { %>
+                  <!-- Step 1: Consultation (Diamond-Meeting Rings) -->
+                  <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="50" cy="50" r="42" stroke="var(--color-primary)" stroke-width="0.75" stroke-dasharray="3 3" opacity="0.4" />
+                    <circle cx="50" cy="50" r="32" stroke="var(--color-accent)" stroke-width="0.5" opacity="0.3" />
+                    <!-- Interlocking consulting diamond panels -->
+                    <path d="M42 50 L50 40 L58 50 L50 60 Z" fill="rgba(155, 27, 42, 0.12)" stroke="var(--color-primary)" stroke-width="1.2" />
+                    <path d="M50 50 L58 40 L66 50 L58 60 Z" fill="rgba(176, 168, 154, 0.18)" stroke="var(--color-accent)" stroke-width="1" />
+                    <circle cx="50" cy="50" r="3" fill="var(--color-primary)" />
+                    <circle cx="58" cy="50" r="3" fill="var(--color-accent)" />
+                  </svg>
+                <% } else if (i === 1) { %>
+                  <!-- Step 2: Design Sketch (Glowing grid & sketching layout) -->
+                  <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="50" cy="50" r="42" stroke="var(--color-primary)" stroke-width="0.75" stroke-dasharray="3 3" opacity="0.4" />
+                    <line x1="22" y1="50" x2="78" y2="50" stroke="var(--color-accent)" stroke-width="0.5" opacity="0.25" />
+                    <line x1="50" y1="22" x2="50" y2="78" stroke="var(--color-accent)" stroke-width="0.5" opacity="0.25" />
+                    <!-- Drawing ring draft -->
+                    <circle cx="50" cy="50" r="22" stroke="var(--color-primary)" stroke-width="1.2" stroke-dasharray="100" stroke-dashoffset="15" />
+                    <path d="M50 28 L54 36 L50 44 L46 36 Z" fill="rgba(155, 27, 42, 0.2)" stroke="var(--color-primary)" stroke-width="0.75" />
+                    <circle cx="50" cy="28" r="2" fill="var(--color-accent)" />
+                    <!-- Sketch stylus pen -->
+                    <path d="M68 32 L56 44 L58 46 L70 34 Z" fill="var(--color-accent)" stroke="var(--color-accent)" stroke-width="0.5" />
+                    <path d="M56 44 L53 47 L55 45 Z" fill="var(--color-primary)" />
+                  </svg>
+                <% } else if (i === 2) { %>
+                  <!-- Step 3: Craftsmanship (Artisan jewel filigree setting) -->
+                  <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="50" cy="50" r="42" stroke="var(--color-primary)" stroke-width="0.75" stroke-dasharray="3 3" opacity="0.4" />
+                    <circle cx="50" cy="50" r="16" stroke="var(--color-accent)" stroke-width="0.5" stroke-dasharray="2 2" opacity="0.35" />
+                    <!-- Crown jewel setting vector -->
+                    <path d="M50 24 L65 40 L58 45 L50 32 L42 45 L35 40 Z" fill="rgba(155, 27, 42, 0.15)" stroke="var(--color-primary)" stroke-width="1.2" />
+                    <!-- Intricate base ring filigrees -->
+                    <path d="M28 66 C38 56 62 56 72 66" stroke="var(--color-accent)" stroke-width="1.25" stroke-linecap="round" />
+                    <path d="M36 58 C42 50 58 50 64 58" stroke="var(--color-primary)" stroke-width="0.8" />
+                    <!-- Central brilliant diamond facet -->
+                    <path d="M50 42 L55 50 L50 58 L45 50 Z" fill="var(--color-white)" stroke="var(--color-primary)" stroke-width="0.75" />
+                    <circle cx="50" cy="50" r="3" fill="var(--color-accent)" />
+                  </svg>
+                <% } else if (i === 3) { %>
+                  <!-- Step 4: Delivery (Certified luxury shagun gift box) -->
+                  <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="50" cy="50" r="42" stroke="var(--color-primary)" stroke-width="0.75" stroke-dasharray="3 3" opacity="0.4" />
+                    <!-- Velvet Gift box bottom -->
+                    <rect x="34" y="44" width="32" height="26" rx="2.5" fill="rgba(155, 27, 42, 0.12)" stroke="var(--color-primary)" stroke-width="1.2" />
+                    <!-- Box Lid -->
+                    <rect x="31" y="38" width="38" height="7" rx="1.5" fill="var(--color-bg)" stroke="var(--color-primary)" stroke-width="1.2" />
+                    <!-- Ribbon tying line -->
+                    <line x1="50" y1="38" x2="50" y2="70" stroke="var(--color-accent)" stroke-width="1.5" />
+                    <!-- Ribbon silk bow -->
+                    <path d="M50 38 C42 30 40 38 50 38 C60 38 58 30 50 38" fill="rgba(176, 168, 154, 0.2)" stroke="var(--color-accent)" stroke-width="1.2" />
+                    <circle cx="50" cy="38" r="3" fill="var(--color-primary)" />
+                  </svg>
+                <% } %>
+              </div>
+
+              <!-- Card Content details -->
+              <div class="process-step__content">
+                <span class="process-step__badge">Step <%= step.num %></span>
+                <h3><%= step.title %></h3>
+                <p><%= step.desc %></p>
+              </div>
+
+              <!-- Shimmer sweeping hover highlight -->
+              <div class="process-step__shimmer" aria-hidden="true"></div>
+            </div>
+          </article>
+        <% }); %>
+      </div>
     </div>
-    <div class="section-cta reveal-scale">
-      <a href="<%= home.designProcess.cta.href %>" class="btn btn--primary btn--magnetic"><%= home.designProcess.cta.label %></a>
+
+    <!-- Timeline Action Call -->
+    <div class="process-cta-row reveal-scale">
+      <a href="<%= home.designProcess.cta.href %>" class="process-cta btn--magnetic" id="process-cta-btn">
+        <span class="process-cta__text"><%= home.designProcess.cta.label %></span>
+        <span class="process-cta__arrow" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+            <path d="M4 10H16M10 4l6 6-6 6" stroke="var(--color-accent)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </span>
+        <span class="process-cta__underline" aria-hidden="true"></span>
+      </a>
     </div>
   </div>
 </section>
