@@ -159,3 +159,76 @@ document.addEventListener('DOMContentLoaded', () => {
   updateProgress();
   showStep(state.currentStep);
 });
+
+document.addEventListener('DOMContentLoaded', () => {
+  if (!document.querySelector('.page-shagun')) return;
+
+  // --- 1. DYNAMIC GOLD DUST BACKGROUND ENGINE ---
+  const particlesContainer = document.getElementById('hero-particles');
+  if (particlesContainer) {
+    const particleCount = 25; // Number of active floating gold dots
+    
+    for (let i = 0; i < particleCount; i++) {
+      createGoldParticle(particlesContainer);
+    }
+  }
+
+  function createGoldParticle(container) {
+    const particle = document.createElement('div');
+    particle.classList.add('gold-dust-particle');
+    
+    // Randomize specs for a natural 3D depth feeling
+    const size = Math.random() * 5 + 2; // Size between 2px and 7px
+    const duration = Math.random() * 12 + 8; // Speed between 8s and 20s
+    const delay = Math.random() * -20; // Pre-fill screen instantly
+    const initialLeft = Math.random() * 100; // X position percentage
+
+    particle.style.width = `${size}px`;
+    particle.style.height = `${size}px`;
+    particle.style.left = `${initialLeft}%`;
+    particle.style.animationDuration = `${duration}s`;
+    particle.style.animationDelay = `${delay}s`;
+    
+    // Add subtle variation in glow intensity
+    particle.style.opacity = Math.random() * 0.6 + 0.2;
+
+    container.appendChild(particle);
+
+    // Recycle particle after animation completes to keep it memory clean
+    particle.addEventListener('animationend', () => {
+      particle.remove();
+      createGoldParticle(container);
+    });
+  }
+
+
+  // --- 2. INTERACTIVE 3D CARD MOUSE TRACKING ---
+  const cardWrapper = document.querySelector('.shagun-card-3d-wrapper');
+  const cardFront = document.querySelector('.shagun-card-3d-front');
+
+  if (cardWrapper && cardFront) {
+    window.addEventListener('mousemove', (e) => {
+      // Calculate depth rotation based on center window vectors
+      const xAxis = (window.innerWidth / 2 - e.pageX) / 40;
+      const yAxis = (window.innerHeight / 2 - e.pageY) / 40;
+      
+      cardWrapper.style.transform = `rotateY(${xAxis}deg) rotateX(${yAxis}deg) translateY(-6px)`;
+    });
+
+    cardFront.addEventListener('mousemove', (e) => {
+      const rect = cardFront.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      
+      cardFront.style.setProperty('--mouse-x', `${x}px`);
+      cardFront.style.setProperty('--mouse-y', `${y}px`);
+    });
+    
+    window.addEventListener('mouseleave', () => {
+      // Return smoothly to idle state animations
+      cardWrapper.style.transform = `rotateY(0deg) rotateX(0deg) translateY(0px)`;
+    });
+  }
+
+  // ... (તમારો બાકીનો ફોર્મ સ્ટેપ્સ અને સબમિશનનો કોડ અહીં નીચે એમનેમ જ રહેશે)
+});

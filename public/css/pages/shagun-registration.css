@@ -1,3 +1,233 @@
+/* --- PREMIUM LUXURY OVERHAUL WITH LIVE BACKGROUNDS --- */
+
+:root {
+  --color-crimson-velvet: linear-gradient(135deg, #3d0008 0%, #170003 100%);
+  --color-liquid-gold: linear-gradient(135deg, #bf953f 0%, #fcf6ba 25%, #b38728 50%, #fbf5b7 75%, #aa771c 100%);
+  --glass-bg: rgba(255, 255, 255, 0.03);
+  --glass-border: rgba(202, 161, 90, 0.15);
+}
+
+.premium-shagun-hero {
+  position: relative;
+  background: var(--color-crimson-velvet) !important;
+  min-height: 540px;
+  padding: var(--space-4xl) 0;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  box-shadow: inset 0 -30px 100px rgba(0,0,0,0.6);
+}
+
+/* Moving Background Particles Container */
+.hero-particles-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+  overflow: hidden;
+}
+
+/* Individual Floating Gold Dust Particle Style */
+.gold-dust-particle {
+  position: absolute;
+  background: radial-gradient(circle, rgba(252,246,186,0.8) 0%, rgba(179,135,40,0) 70%);
+  border-radius: 50%;
+  pointer-events: none;
+  animation: floatGoldDust linear infinite;
+}
+
+/* Background Ambient Glow */
+.hero-overlay-glow {
+  position: absolute;
+  top: -10%;
+  left: -10%;
+  width: 60%;
+  height: 80%;
+  background: radial-gradient(circle, rgba(202, 161, 90, 0.09) 0%, transparent 60%);
+  pointer-events: none;
+  z-index: 1;
+  animation: pulsingAura 8s ease-in-out infinite alternate;
+}
+
+.hero-split-container {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-3xl);
+  align-items: center;
+  position: relative;
+  z-index: 2;
+}
+
+@media (min-width: 960px) {
+  .hero-split-container {
+    grid-template-columns: 0.9fr 1.1fr;
+  }
+}
+
+/* --- RIGHT SIDE --- */
+.hero-content-premium {
+  text-align: left;
+}
+
+.shagun-title-luxury {
+  font-family: var(--font-serif);
+  font-size: clamp(3rem, 5vw, 4.5rem);
+  font-weight: 700;
+  color: #fffdf9;
+  line-height: 1.1;
+  margin: var(--space-xs) 0 var(--space-md);
+}
+
+.shagun-title-luxury span {
+  background: var(--color-liquid-gold);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: inline-block;
+}
+
+.lead-premium {
+  color: #d1c7bd;
+  font-size: 1.15rem;
+  line-height: 1.7;
+  max-width: 34rem;
+  margin-bottom: var(--space-lg);
+}
+
+.hero-badges {
+  display: flex;
+  gap: var(--space-md);
+}
+
+.badge-item {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  backdrop-filter: blur(8px);
+  padding: 0.5rem 1rem;
+  border-radius: 30px;
+  color: #fbf5b7;
+  font-size: 0.85rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.gold-dot {
+  width: 6px;
+  height: 6px;
+  background: #caa15a;
+  border-radius: 50%;
+}
+
+/* --- LEFT SIDE: 3D CARD --- */
+.hero-visual-3d {
+  display: grid;
+  place-items: center;
+  perspective: 1200px;
+}
+
+.shagun-card-3d-wrapper {
+  width: min(100%, 360px);
+  height: 230px;
+  transform-style: preserve-3d;
+  animation: floatLevitate 5s ease-in-out infinite;
+  transition: transform 0.2s ease-out;
+  cursor: pointer;
+}
+
+.shagun-card-3d-front {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #a81c2e 0%, #5c0510 100%);
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 40px 80px rgba(0, 0, 0, 0.5), 
+              inset 0 0 30px rgba(0, 0, 0, 0.4);
+  padding: var(--space-lg);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: hidden;
+}
+
+.gold-filigree-border {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  right: 12px;
+  bottom: 12px;
+  border: 1px dashed rgba(202, 161, 90, 0.4);
+  border-radius: 12px;
+  pointer-events: none;
+}
+
+.brand-logo-stamp {
+  width: 64px;
+  height: 64px;
+  background: var(--color-liquid-gold);
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.4);
+}
+
+.hero-stamp-img {
+  width: 38px;
+  height: 38px;
+  object-fit: contain;
+}
+
+.card-tag {
+  color: #fbf5b7;
+  font-size: 0.75rem;
+  letter-spacing: 2px;
+  font-weight: 700;
+  display: block;
+}
+
+.card-year {
+  color: #fffdf9;
+  font-family: var(--font-serif);
+  font-size: 2rem;
+  margin: 0;
+}
+
+.shagun-card-glow {
+  position: absolute;
+  top: 0; left: 0; width: 100%; height: 100%;
+  background: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(255,255,255,0.18) 0%, transparent 60%);
+  pointer-events: none;
+}
+
+/* --- LIVE KEYFRAMES FOR BACKGROUND AND CARD --- */
+@keyframes floatLevitate {
+  0% { transform: translateY(0px) rotateX(2px) rotateY(-5px); }
+  50% { transform: translateY(-12px) rotateX(-2px) rotateY(3px); }
+  100% { transform: translateY(0px) rotateX(2px) rotateY(-5px); }
+}
+
+@keyframes floatGoldDust {
+  0% {
+    transform: translateY(105vh) translateX(0px) rotate(0deg);
+    opacity: 0;
+  }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% {
+    transform: translateY(-10vh) translateX(50px) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+@keyframes pulsingAura {
+  0% { transform: scale(1) translate(0, 0); opacity: 0.7; }
+  100% { transform: scale(1.15) translate(3%, 2%); opacity: 1; }
+}
+
 .page-shagun {
   background: transparent;
 }
