@@ -15,6 +15,61 @@ document.addEventListener('DOMContentLoaded', () => {
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   // =====================================================
+  // 0. WHEEL-FIRST REVEAL SEQUENCE
+  // Mandala spins one full turn, then cards cascade in
+  // =====================================================
+  const SPIN_DURATION = 1800; // ms — matches the CSS mandalaDramaticSpin duration
+  let spinTimer = null; // guard against double-firing mid-animation
+
+  const revealSequence = () => {
+    if (prefersReducedMotion) {
+      // Skip theatrical spin for reduced-motion users — just show cards
+      section.classList.add('gallery--spinning', 'gallery--revealed');
+      return;
+    }
+
+    // Phase 1: trigger the fast mandala spin
+    section.classList.add('gallery--spinning');
+    section.classList.remove('gallery--revealed');
+
+    // Phase 2: after spin completes, unblock the cards with staggered cascade
+    spinTimer = setTimeout(() => {
+      section.classList.add('gallery--revealed');
+      spinTimer = null;
+    }, SPIN_DURATION);
+  };
+
+  const resetSequence = () => {
+    // Clear any pending timer so re-entry doesn't overlap
+    if (spinTimer) {
+      clearTimeout(spinTimer);
+      spinTimer = null;
+    }
+    // Remove both classes so the full effect replays on next scroll-in
+    section.classList.remove('gallery--spinning', 'gallery--revealed');
+  };
+
+  // Re-trigger EVERY TIME the section enters the viewport
+  const revealObserver = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          // Only start if not already mid-spin
+          if (!spinTimer && !section.classList.contains('gallery--spinning')) {
+            revealSequence();
+          }
+        } else {
+          // Section scrolled out — reset so it replays on next visit
+          resetSequence();
+        }
+      });
+    },
+    { rootMargin: '0px 0px -10% 0px', threshold: 0.15 }
+  );
+  revealObserver.observe(section);
+
+
+  // =====================================================
   // 1. 3D SCROLL STACKED-TO-GRID VECTOR SCATTER ENGINE
   // =====================================================
   const grid   = document.getElementById('gallery-3d-grid');
@@ -156,10 +211,10 @@ document.addEventListener('DOMContentLoaded', () => {
         // 3D Depth coordinate (z-axis layer: 0.4 = far background, 2.5 = close foreground)
         this.z  = Math.random() * 2.1 + 0.4;
         
-        // Velocity scaled by 3D depth layer
-        this.vy = -(Math.random() * 0.28 + 0.12) * this.z;
-        this.size  = (Math.random() * 1.8 + 0.6) * this.z;
-        this.alpha = (Math.random() * 0.4 + 0.12) * (this.z / 2.5);
+        // Velocity scaled by 3D depth layer (slightly faster continuous drifting)
+        this.vy = -(Math.random() * 0.42 + 0.18) * this.z;
+        this.size  = (Math.random() * 2.3 + 0.7) * this.z;
+        this.alpha = (Math.random() * 0.45 + 0.15) * (this.z / 2.5);
         
         // Star color selections
         const rand = Math.random();
@@ -229,9 +284,95 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     }
 
-    // Initialize 45 3D Perspective Nodes
-    for (let i = 0; i < 45; i++) {
+    // 3D Diagonal Shooting Star Class
+    class ShootingStar {
+      constructor(init = false) {
+        this.reset(init);
+      }
+
+      reset(init = false) {
+        // Start from top or left edge, or if init is true, stagger initial coordinates anywhere on screen
+        if (init) {
+          this.x = Math.random() * canvas.width;
+          this.y = Math.random() * (canvas.height * 0.8);
+          this.alpha = Math.random() * 0.8 + 0.2; // Staggered initial opacities
+        } else {
+          if (Math.random() > 0.5) {
+            this.x = Math.random() * canvas.width;
+            this.y = -40;
+          } else {
+            this.x = -40;
+            this.y = Math.random() * (canvas.height * 0.6);
+          }
+          this.alpha = 1.0;
+        }
+
+        this.speed = Math.random() * 5 + 3.5; // Swift sweeping motion
+        this.angle = Math.PI / 4 + (Math.random() - 0.5) * 0.15; // Diagonal sweep angle (~45 degrees)
+        this.dx = Math.cos(this.angle) * this.speed;
+        this.dy = Math.sin(this.angle) * this.speed;
+
+        this.length = Math.random() * 110 + 60; // Deep luxury trailing gold-burgundy meteor trail
+        this.decay = Math.random() * 0.007 + 0.004; // Graceful decay rate for background continuity
+        this.size = Math.random() * 1.5 + 0.8;
+      }
+
+      update() {
+        this.x += this.dx;
+        this.y += this.dy;
+        this.alpha -= this.decay;
+
+        // Reset if completely faded or runs far out of canvas coordinates
+        if (this.alpha <= 0 || this.x > canvas.width + 100 || this.y > canvas.height + 100) {
+          this.reset(false);
+        }
+      }
+
+      draw() {
+        if (!ctx || this.alpha <= 0) return;
+        ctx.save();
+
+        // Calculate tail coordinate points along heading vector
+        const tailX = this.x - Math.cos(this.angle) * this.length;
+        const tailY = this.y - Math.sin(this.angle) * this.length;
+
+        // Custom multi-stop luxury brand metallic gradient along the meteor's trail
+        const gradient = ctx.createLinearGradient(this.x, this.y, tailX, tailY);
+        gradient.addColorStop(0, `rgba(255, 255, 255, ${this.alpha * 0.95})`); // Shimmering white head flare
+        gradient.addColorStop(0.25, `rgba(176, 168, 154, ${this.alpha * 0.7})`); // Luxury Warm Taupe / Gold center
+        gradient.addColorStop(0.7, `rgba(155, 27, 42, ${this.alpha * 0.35})`); // Royal Brand Burgundy transition
+        gradient.addColorStop(1, `rgba(155, 27, 42, 0)`); // Tail completely dissolves
+
+        ctx.strokeStyle = gradient;
+        ctx.lineWidth = this.size;
+        ctx.lineCap = 'round';
+
+        ctx.beginPath();
+        ctx.moveTo(this.x, this.y);
+        ctx.lineTo(tailX, tailY);
+        ctx.stroke();
+
+        // Glowing hot focal head light flare
+        ctx.shadowBlur = 12;
+        ctx.shadowColor = '#ffffff';
+        ctx.fillStyle = `rgba(255, 255, 255, ${this.alpha * 0.9})`;
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size * 1.35, 0, Math.PI * 2);
+        ctx.fill();
+
+        ctx.restore();
+      }
+    }
+
+    // Initialize 75 3D Perspective Nodes for rich background constellation web density
+    for (let i = 0; i < 75; i++) {
       stars.push(new Star());
+    }
+
+    // Initialize 4 highly-visible luxury shooting stars for continuous background running effect
+    let shootingStars = [];
+    for (let i = 0; i < 4; i++) {
+      shootingStars.push(new ShootingStar(true));
     }
 
     // Connect close constellation nodes (only matching 3D layers)
@@ -323,6 +464,11 @@ document.addEventListener('DOMContentLoaded', () => {
         stars.forEach(s => s.update(canvasTime));
         stars.forEach(s => s.draw());
         drawConstellations();
+
+        // Draw and update luxury shooting stars continuously
+        shootingStars.forEach(s => s.update());
+        shootingStars.forEach(s => s.draw());
+
         drawShockwave();
       }
 
@@ -389,8 +535,8 @@ document.addEventListener('DOMContentLoaded', () => {
             const ty = (card.vectorY || 0) * scatterFactor;
             const tz = (idx * 6.5) * scatterFactor;
 
-            // Fan rotation angles
-            const baseRotZ = [-11, -6.5, -2, 2, 6.5, 11][idx] || 0;
+            // Fan rotation angles (7 cards)
+            const baseRotZ = [-12, -8, -4, 0, 4, 8, 12][idx] || 0;
             const rotZ = baseRotZ * scatterFactor;
             const rotX = -5.5 * scatterFactor;
 

@@ -551,5 +551,27 @@ Downloaded to `public/images/` — hero, collection (4), gallery (6), about, soc
 
 ---
 
-*આગળનો prompt અહીં નીચે add થશે.*
+## Prompt 11 — Signature Creations Gallery Luxury Dark Theme Redesign
 
+**તારીખ:** 27 May 2026
+
+### User request
+- "now i want little bit slightly dark theme from our theme color ..... in the Signature Creations this section"
+
+### Implemented
+- **Luxury Charcoal-to-Burgundy Dark Gradient Backdrop**:
+  - Converted `.home-gallery` background to a rich dark linear gradient (`linear-gradient(180deg, #2a2a2a 0%, #1e1e1e 50%, #120304 100%)`) blending brand Charcoal (`#2A2A2A`) with deep burgundy accents.
+  - Increased background canvas particle network and constellation line opacity (`0.85` opacity) to glow beautifully.
+  - Enhanced ambient blur orbs (`.gallery-orb`) to cast an elegant deep burgundy (`rgba(155, 27, 42, 0.16)`) and gold-taupe (`rgba(176, 168, 154, 0.15)`) atmospheric glow behind the cards.
+- **High-Contrast Dark Typography & Accents**:
+  - Swapped heading typography color to crisp off-white Warm Cream (`#EDEDEC`) for stunning contrast.
+  - Formatted the title word highlights (`Creations`) with a shimmery white-gold-taupe gradient (`linear-gradient(135deg, #ffffff 0%, var(--color-accent) 100%)`).
+  - Swapped descriptions and subtitles to a light grey (`rgba(237, 236, 236, 0.72)`).
+- **Refined Premium Card Elements**:
+  - Updated card overlays to a dark translucent charcoal shadow (`linear-gradient(to top, rgba(15, 15, 15, 0.85) 0%, transparent 65%)`) that centers focus on product imagery.
+  - Added gold-taupe stroke overrides on SVG brand emblems (`var(--color-accent) !important`), drawing beautiful fine line filigrees on the dark backgrounds.
+  - Adjusted interactive shine reflections and hover staggers to fit dark theme values, with lightened CTA underline tracks (`rgba(237, 236, 236, 0.15)`) and warm-gold hover effects.
+
+---
+
+*આગળનો prompt અહીં નીચે add થશે.*

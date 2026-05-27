@@ -88,7 +88,8 @@ module.exports = {
       { src: '/images/gallery/diamond-earrings.jpg', alt: 'Handcrafted Gold Filigree Diamond Hanging Earrings' },
       { src: '/images/gallery/gold-bangles.jpg', alt: 'Handcrafted Antique Temple Gold Kada Bangles' },
       { src: '/images/gallery/solitaire-ring.jpg', alt: 'Luxury Platinum Diamond Solitaire Ring' },
-      { src: '/images/gallery/emerald-pendant.jpg', alt: 'Royal Heritage Emerald & Pearl Necklace Pendant' }
+      { src: '/images/gallery/emerald-pendant.jpg', alt: 'Royal Heritage Emerald & Pearl Necklace Pendant' },
+      { src: '/images/gallery/model-01.jpg', alt: 'Exquisite Bridal Gold Necklace Set' }
     ],
     cta: { label: 'View Full Gallery', href: '/gallery' },
   },
