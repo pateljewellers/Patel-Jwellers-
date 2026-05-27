@@ -1,10 +1,81 @@
+/* ========== SITE FOOTER — Deep Burgundy & Static Blueprint Redesign ========== */
+
 .site-footer {
-  background-color: var(--color-dark);
-  color: var(--color-accent-light);
+  position: relative;
+  background: linear-gradient(135deg, #120305 0%, #20050a 50%, #4a0910 100%) !important;
+  color: rgba(237, 237, 236, 0.92);
   padding-block: var(--space-3xl);
+  overflow: hidden;
+  border-top: 1px solid rgba(212, 175, 55, 0.22);
+}
+
+/* Static Ambient Radial Glow */
+.footer-ambient-glow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 520px;
+  height: 520px;
+  background: radial-gradient(circle, rgba(212, 175, 55, 0.08) 0%, rgba(255, 255, 255, 0) 70%);
+  pointer-events: none;
+  z-index: 1;
+  filter: blur(45px);
+}
+
+/* Static Luxury Jaali Lattice backdrop (No motion) */
+.footer-jaali-wrap {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 620px;
+  height: 620px;
+  opacity: 0.07;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.footer-jaali {
+  position: absolute;
+  inset: 0;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath d='M50 0 A50 50 0 1 0 100 50 A50 50 0 0 0 50 0 Z M50 90 A40 40 0 1 1 90 50 A40 40 0 0 1 50 90 Z M50 15 A35 35 0 1 0 85 50 A35 35 0 0 0 50 15 Z' fill='%23d4af37' fill-opacity='0.45'/%3E%3Ccircle cx='50' cy='50' r='9' fill='none' stroke='%23d4af37' stroke-width='1.2'/%3E%3Cpath d='M50 10 L50 90 M10 50 L90 50 M21.7 21.7 L78.3 78.3 M21.7 78.3 L78.3 21.7' stroke='%23d4af37' stroke-width='0.6'/%3E%3C/svg%3E") no-repeat center/contain;
+  width: 100%;
+  height: 100%;
+}
+
+/* Symmetrical blueprint guides (No motion) */
+.footer-blueprint-line {
+  position: absolute;
+  background-color: rgba(212, 175, 55, 0.06);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.footer-blueprint-line--h {
+  top: 18%;
+  left: 0;
+  width: 100%;
+  height: 1px;
+}
+
+.footer-blueprint-line--v1 {
+  left: 22%;
+  top: 0;
+  width: 1px;
+  height: 100%;
+}
+
+.footer-blueprint-line--v2 {
+  right: 22%;
+  top: 0;
+  width: 1px;
+  height: 100%;
 }
 
 .footer-inner {
+  position: relative;
+  z-index: 3;
   display: grid;
   gap: var(--space-2xl);
 }
@@ -12,64 +83,100 @@
 .footer-brand .logo {
   display: inline-block;
   margin-bottom: var(--space-md);
+  transition: transform 0.4s var(--ease-out);
+}
+
+.footer-brand .logo:hover {
+  transform: scale(1.03);
 }
 
 .logo-img--footer {
+  /* Crisp white logo to contrast beautifully on the deep burgundy background */
   filter: brightness(0) invert(1);
   opacity: 0.95;
-  height: 44px;
+  height: 70px;
 }
 
 .footer-brand p {
-  color: var(--color-accent);
+  color: rgba(237, 237, 236, 0.78);
+  font-family: var(--font-sans);
   font-size: 0.9rem;
-  max-width: 280px;
+  max-width: 290px;
+  line-height: 1.6;
 }
 
 .footer-links h4,
 .footer-contact h4 {
-  font-family: var(--font-sans);
-  font-size: 0.75rem;
-  font-weight: 600;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--color-bg);
+  font-family: var(--font-serif);
+  font-size: 1.15rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  color: var(--color-accent-light);
+  /* Luxurious soft champagne gold headers */
   margin-bottom: var(--space-lg);
 }
 
 .footer-links a {
   display: block;
+  font-family: var(--font-sans);
   font-size: 0.9rem;
-  color: var(--color-accent);
+  font-weight: 500;
+  color: rgba(237, 237, 236, 0.85);
   text-decoration: none;
   margin-bottom: var(--space-sm);
-  transition: color var(--duration-normal) var(--ease-out);
+  transition: color 0.35s var(--ease-out), padding-left 0.35s var(--ease-out);
 }
 
 .footer-links a:hover {
-  color: var(--color-bg);
+  color: var(--color-accent-light);
+  padding-left: 6px;
 }
 
 .footer-contact p,
 .footer-contact a {
+  font-family: var(--font-sans);
   font-size: 0.9rem;
-  color: var(--color-accent);
+  font-weight: 500;
+  color: rgba(237, 237, 236, 0.85);
   margin-bottom: var(--space-sm);
   text-decoration: none;
-  transition: color var(--duration-normal) var(--ease-out);
+  transition: color 0.35s var(--ease-out);
+}
+
+.footer-contact a {
+  display: inline-block;
+  position: relative;
+}
+
+.footer-contact a::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background-color: var(--color-accent-light);
+  transition: width 0.35s var(--ease-out);
 }
 
 .footer-contact a:hover {
-  color: var(--color-bg);
+  color: var(--color-accent-light);
+}
+
+.footer-contact a:hover::after {
+  width: 100%;
 }
 
 .footer-bottom {
+  position: relative;
+  z-index: 3;
   margin-top: var(--space-2xl);
   padding-top: var(--space-lg);
-  border-top: 1px solid rgba(237, 237, 236, 0.1);
+  border-top: 1px solid rgba(237, 237, 236, 0.12);
   text-align: center;
+  font-family: var(--font-sans);
   font-size: 0.8rem;
-  color: var(--color-accent);
+  color: rgba(237, 237, 236, 0.55);
 }
 
 @media (min-width: 768px) {
