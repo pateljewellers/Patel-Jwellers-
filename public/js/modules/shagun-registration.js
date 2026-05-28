@@ -167,7 +167,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const particlesContainer = document.getElementById('hero-particles');
   if (particlesContainer) {
     const particleCount = 25; // Number of active floating gold dots
-    
+
     for (let i = 0; i < particleCount; i++) {
       createGoldParticle(particlesContainer);
     }
@@ -176,7 +176,7 @@ document.addEventListener('DOMContentLoaded', () => {
   function createGoldParticle(container) {
     const particle = document.createElement('div');
     particle.classList.add('gold-dust-particle');
-    
+
     // Randomize specs for a natural 3D depth feeling
     const size = Math.random() * 5 + 2; // Size between 2px and 7px
     const duration = Math.random() * 12 + 8; // Speed between 8s and 20s
@@ -188,7 +188,7 @@ document.addEventListener('DOMContentLoaded', () => {
     particle.style.left = `${initialLeft}%`;
     particle.style.animationDuration = `${duration}s`;
     particle.style.animationDelay = `${delay}s`;
-    
+
     // Add subtle variation in glow intensity
     particle.style.opacity = Math.random() * 0.6 + 0.2;
 
@@ -211,7 +211,7 @@ document.addEventListener('DOMContentLoaded', () => {
       // Calculate depth rotation based on center window vectors
       const xAxis = (window.innerWidth / 2 - e.pageX) / 40;
       const yAxis = (window.innerHeight / 2 - e.pageY) / 40;
-      
+
       cardWrapper.style.transform = `rotateY(${xAxis}deg) rotateX(${yAxis}deg) translateY(-6px)`;
     });
 
@@ -219,11 +219,11 @@ document.addEventListener('DOMContentLoaded', () => {
       const rect = cardFront.getBoundingClientRect();
       const x = e.clientX - rect.left;
       const y = e.clientY - rect.top;
-      
+
       cardFront.style.setProperty('--mouse-x', `${x}px`);
       cardFront.style.setProperty('--mouse-y', `${y}px`);
     });
-    
+
     window.addEventListener('mouseleave', () => {
       // Return smoothly to idle state animations
       cardWrapper.style.transform = `rotateY(0deg) rotateX(0deg) translateY(0px)`;
@@ -239,7 +239,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // --- 1. BACKGROUND GOLD PARTICLES ENGINE ---
   const particlesContainer = document.getElementById('hero-particles');
   if (particlesContainer) {
-    const particleCount = 20; 
+    const particleCount = 20;
     for (let i = 0; i < particleCount; i++) {
       createGoldParticle(particlesContainer);
     }
@@ -248,10 +248,10 @@ document.addEventListener('DOMContentLoaded', () => {
   function createGoldParticle(container) {
     const particle = document.createElement('div');
     particle.classList.add('gold-dust-particle');
-    const size = Math.random() * 5 + 2; 
-    const duration = Math.random() * 12 + 8; 
-    const delay = Math.random() * -20; 
-    const initialLeft = Math.random() * 100; 
+    const size = Math.random() * 5 + 2;
+    const duration = Math.random() * 12 + 8;
+    const delay = Math.random() * -20;
+    const initialLeft = Math.random() * 100;
 
     particle.style.width = `${size}px`;
     particle.style.height = `${size}px`;
@@ -275,9 +275,9 @@ document.addEventListener('DOMContentLoaded', () => {
   if (sanctuaryRoom && logo3D) {
     let isDragging = false;
     let previousMousePosition = { x: 0, y: 0 };
-    
+
     // Core Rotation variables (Set up starting cinematic angle)
-    let rotationY = -15; 
+    let rotationY = -15;
     let rotationX = 10;
 
     // Auto slow inertia rotation variables
@@ -291,7 +291,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // Apply passive physics when user is not touching it
         rotationY += velocityY;
         rotationX += velocityX;
-        
+
         // Decay speed smoothly over time
         velocityY *= friction;
         velocityX *= friction;
@@ -319,7 +319,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Dragging / Moving Event
     const handleDrag = (e) => {
       if (!isDragging) return;
-      
+
       const clientX = e.touches ? e.touches[0].clientX : e.clientX;
       const clientY = e.touches ? e.touches[0].clientY : e.clientY;
 
@@ -513,23 +513,23 @@ document.addEventListener('DOMContentLoaded', () => {
   introCards.forEach(cardWrapper => {
     const card = cardWrapper.querySelector('.shagun-intro-card-3d');
     if (!card) return;
-    
+
     cardWrapper.addEventListener('mousemove', (e) => {
       const rect = cardWrapper.getBoundingClientRect();
       const x = e.clientX - rect.left; // x coordinate within the element
       const y = e.clientY - rect.top;  // y coordinate within the element
-      
+
       const px = x / rect.width;  // percentage X (0 to 1)
       const py = y / rect.height; // percentage Y (0 to 1)
-      
+
       // Calculate tilt degrees (range: -14 to 14 deg)
-      const tiltX = (0.5 - py) * 28; 
+      const tiltX = (0.5 - py) * 28;
       const tiltY = (px - 0.5) * 28;
-      
+
       // Bind exact tilt angles as CSS variables for internal layer shifts
       cardWrapper.style.setProperty('--card-tilt-x', tiltX.toFixed(2));
       cardWrapper.style.setProperty('--card-tilt-y', tiltY.toFixed(2));
-      
+
       // Apply 3D perspective rotation on the wrapper itself
       const idx = cardWrapper.getAttribute('data-tilt-card');
       let defaultXShift = '0px';
@@ -538,9 +538,9 @@ document.addEventListener('DOMContentLoaded', () => {
         else if (idx === '1') defaultXShift = '35px';
         else if (idx === '2') defaultXShift = '-5px';
       }
-      
+
       cardWrapper.style.transform = `perspective(1200px) rotateX(${tiltX.toFixed(2)}deg) rotateY(${tiltY.toFixed(2)}deg) translateX(${defaultXShift}) scale3d(1.02, 1.02, 1.02)`;
-      
+
       // Update mouse coordinate CSS variables inside the card for the glowing reflection
       card.style.setProperty('--card-mouse-x', `${x.toFixed(1)}px`);
       card.style.setProperty('--card-mouse-y', `${y.toFixed(1)}px`);
@@ -550,7 +550,7 @@ document.addEventListener('DOMContentLoaded', () => {
       // Smoothly reset CSS variables and revert transformations
       cardWrapper.style.setProperty('--card-tilt-x', '0');
       cardWrapper.style.setProperty('--card-tilt-y', '0');
-      
+
       const idx = cardWrapper.getAttribute('data-tilt-card');
       let defaultTransform = 'translateX(0px)';
       if (window.innerWidth >= 768) {
@@ -558,7 +558,7 @@ document.addEventListener('DOMContentLoaded', () => {
         else if (idx === '1') defaultTransform = 'translateX(35px)';
         else if (idx === '2') defaultTransform = 'translateX(-5px)';
       }
-      
+
       cardWrapper.style.transform = `perspective(1200px) rotateX(0deg) rotateY(0deg) ${defaultTransform}`;
       card.style.setProperty('--card-mouse-x', '50%');
       card.style.setProperty('--card-mouse-y', '50%');
@@ -584,4 +584,266 @@ document.addEventListener('DOMContentLoaded', () => {
   introCards.forEach(cardWrapper => {
     introObserver.observe(cardWrapper);
   });
+
+  // ==========================================================
+  // --- 6. SHAGUN REGISTRATION INTERACTIVE PREMIUM CONSOLE ---
+  // ==========================================================
+  const regSection = document.getElementById('shagun-registration-section');
+  const regConsole = document.getElementById('shagun-registration-console');
+
+  if (regSection && regConsole) {
+    // A. FLOATING CANVAS BACKGROUND SYSTEM (Warm rising gold sparks)
+    const regCanvas = document.getElementById('shagun-registration-canvas');
+    if (regCanvas) {
+      const rctx = regCanvas.getContext('2d');
+      let regParticles = [];
+      let rWidth = (regCanvas.width = regSection.offsetWidth);
+      let rHeight = (regCanvas.height = regSection.offsetHeight);
+      let rMouse = { x: null, y: null, active: false };
+
+      const resizeRegCanvas = () => {
+        if (!regCanvas || !regSection) return;
+        rWidth = regCanvas.width = regSection.offsetWidth;
+        rHeight = regCanvas.height = regSection.offsetHeight;
+        initRegParticles();
+      };
+
+      const rResizeObserver = new ResizeObserver((entries) => {
+        resizeRegCanvas();
+      });
+      rResizeObserver.observe(regSection);
+
+      class LuxuryRegSpark {
+        constructor() {
+          this.reset();
+        }
+        reset() {
+          this.x = Math.random() * rWidth;
+          this.y = Math.random() * rHeight + rHeight; // Spawn below
+          this.size = Math.random() * 3.8 + 1.2;
+          this.speedY = -(Math.random() * 0.5 + 0.15); // Rising slowly
+          this.speedX = Math.random() * 0.24 - 0.12;
+          this.opacity = Math.random() * 0.45 + 0.2;
+          this.angle = Math.random() * Math.PI * 2;
+          this.waveSpeed = Math.random() * 0.012 + 0.002;
+          this.waveAmp = Math.random() * 1.0;
+          this.color = Math.random() > 0.55 ? 'rgba(202, 161, 90,' : 'rgba(255, 255, 255,'; // Gold or white
+        }
+        update() {
+          this.y += this.speedY;
+          this.angle += this.waveSpeed;
+          this.x += this.speedX + Math.sin(this.angle) * this.waveAmp * 0.08;
+
+          if (rMouse.active && rMouse.x !== null) {
+            const dx = rMouse.x - this.x;
+            const dy = rMouse.y - this.y;
+            const dist = Math.sqrt(dx * dx + dy * dy);
+            if (dist < 200) {
+              const force = (200 - dist) / 200;
+              this.x += (dx / dist) * force * 0.28;
+              this.y += (dy / dist) * force * 0.28;
+            }
+          }
+
+          if (this.y < -15 || this.x < -15 || this.x > rWidth + 15) {
+            this.reset();
+            this.y = rHeight + 10;
+          }
+        }
+        draw() {
+          if (!rctx) return;
+          rctx.beginPath();
+          rctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+          rctx.fillStyle = this.color + this.opacity + ')';
+          rctx.fill();
+        }
+      }
+
+      function initRegParticles() {
+        regParticles = [];
+        const pCount = Math.min(Math.floor(rWidth / 50), 30);
+        for (let i = 0; i < pCount; i++) {
+          const p = new LuxuryRegSpark();
+          p.y = Math.random() * rHeight;
+          regParticles.push(p);
+        }
+      }
+
+      let regAnimId;
+      function animateReg() {
+        if (!regCanvas || !rctx) return;
+        rctx.clearRect(0, 0, rWidth, rHeight);
+
+        if (rMouse.active && rMouse.x !== null) {
+          const aura = rctx.createRadialGradient(rMouse.x, rMouse.y, 5, rMouse.x, rMouse.y, 220);
+          aura.addColorStop(0, 'rgba(202, 161, 90, 0.03)');
+          aura.addColorStop(1, 'rgba(255, 255, 255, 0)');
+          rctx.fillStyle = aura;
+          rctx.fillRect(0, 0, rWidth, rHeight);
+        }
+
+        regParticles.forEach((p) => {
+          p.update();
+          p.draw();
+        });
+        regAnimId = requestAnimationFrame(animateReg);
+      }
+
+      regSection.addEventListener('mousemove', (e) => {
+        const rect = regSection.getBoundingClientRect();
+        rMouse.x = e.clientX - rect.left;
+        rMouse.y = e.clientY - rect.top;
+        rMouse.active = true;
+      }, { passive: true });
+
+      regSection.addEventListener('mouseleave', () => {
+        rMouse.active = false;
+      }, { passive: true });
+
+      initRegParticles();
+      animateReg();
+    }
+
+    // B. 3D CONSOLE TILT & COORDINATES SPOTLIGHT GLOW
+    const spotlight = regConsole.querySelector('.console-spotlight');
+    const logoWrap = regConsole.querySelector('.concierge-logo-wrap');
+    const brandSide = regConsole.querySelector('.console-brand-side');
+    const formSide = regConsole.querySelector('.console-form-side');
+
+    const handleConsoleMove = (e) => {
+      const rect = regConsole.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+
+      if (spotlight) {
+        spotlight.style.left = `${x}px`;
+        spotlight.style.top = `${y}px`;
+      }
+
+      if (window.innerWidth < 960) return;
+
+      const xc = (x - rect.width / 2) / (rect.width / 2);
+      const yc = (y - rect.height / 2) / (rect.height / 2);
+
+      const rotX = (-yc * 4.0).toFixed(2);
+      const rotY = (xc * 4.0).toFixed(2);
+
+      // regConsole.style.transform = `perspective(1600px) rotateX(${rotX}deg) rotateY(${rotY}deg) scale3d(1.008, 1.008, 1.008)`;
+
+      if (logoWrap) {
+        logoWrap.style.transform = `translate3d(${xc * 10}px, ${yc * 10}px, 20px)`;
+      }
+      if (brandSide) {
+        const title = brandSide.querySelector('.concierge-title');
+        const subtitle = brandSide.querySelector('.concierge-subtitle');
+        const lead = brandSide.querySelector('.concierge-lead');
+        const details = brandSide.querySelector('.concierge-details');
+
+        if (title) title.style.transform = `translate3d(${xc * 5}px, ${yc * 5}px, 15px)`;
+        if (subtitle) subtitle.style.transform = `translate3d(${xc * 3}px, ${yc * 3}px, 12px)`;
+        if (lead) lead.style.transform = `translate3d(${xc * 1.5}px, ${yc * 1.5}px, 8px)`;
+        if (details) details.style.transform = `translate3d(${xc * 4}px, ${yc * 4}px, 10px)`;
+      }
+      if (formSide) {
+        const titleDesk = formSide.querySelector('.form-title-desk');
+        const progress = formSide.querySelector('.shagun-progress');
+        const activeStep = formSide.querySelector('.shagun-form-step.is-active');
+
+        if (titleDesk) titleDesk.style.transform = `translate3d(${xc * 4}px, ${yc * 4}px, 15px)`;
+        if (progress) progress.style.transform = `translate3d(${xc * 3}px, ${yc * 3}px, 10px)`;
+        if (activeStep) activeStep.style.transform = `translate3d(${xc * 2}px, ${yc * 2}px, 5px)`;
+      }
+    };
+
+    const handleConsoleLeave = () => {
+      regConsole.style.transform = 'perspective(1600px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)';
+      regConsole.style.transition = 'transform 0.6s cubic-bezier(0.25, 1, 0.5, 1)';
+
+      const resetTr = 'transform 0.6s cubic-bezier(0.25, 1, 0.5, 1)';
+
+      if (logoWrap) {
+        logoWrap.style.transform = 'translateZ(20px)';
+        logoWrap.style.transition = resetTr;
+      }
+      if (brandSide) {
+        const elements = brandSide.querySelectorAll('.concierge-title, .concierge-subtitle, .concierge-lead, .concierge-details');
+        elements.forEach(el => {
+          el.style.transform = 'translateZ(10px)';
+          el.style.transition = resetTr;
+        });
+      }
+      if (formSide) {
+        const elements = formSide.querySelectorAll('.form-title-desk, .shagun-progress, .shagun-form-step');
+        elements.forEach(el => {
+          el.style.transform = 'translateZ(0px)';
+          el.style.transition = resetTr;
+        });
+      }
+    };
+
+    const handleConsoleEnter = () => {
+      regConsole.style.transition = 'none';
+      if (logoWrap) logoWrap.style.transition = 'none';
+      if (brandSide) {
+        const elements = brandSide.querySelectorAll('.concierge-title, .concierge-subtitle, .concierge-lead, .concierge-details');
+        elements.forEach(el => el.style.transition = 'none');
+      }
+      if (formSide) {
+        const elements = formSide.querySelectorAll('.form-title-desk, .shagun-progress, .shagun-form-step');
+        elements.forEach(el => el.style.transition = 'none');
+      }
+    };
+
+    regConsole.addEventListener('mousemove', handleConsoleMove);
+    regConsole.addEventListener('mouseenter', handleConsoleEnter);
+    regConsole.addEventListener('mouseleave', handleConsoleLeave);
+
+    // C. SMOOTH SCROLL ANCHORING FOR CONSOLE STEPS TRANSITIONS
+    const stepButtons = regConsole.querySelectorAll('[data-action="next-step"], [data-action="prev-step"]');
+    stepButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        // Delay slightly for validation and class toggles, then scroll cleanly to console top
+        setTimeout(() => {
+          window.scrollTo({
+            top: regConsole.offsetTop - 80,
+            behavior: 'smooth'
+          });
+        }, 150);
+      });
+    });
+
+    // D. MAGNETIC BUTTON BOUND EFFECTS
+    const magneticBtns = regConsole.querySelectorAll('.btn--magnetic');
+    magneticBtns.forEach(btn => {
+      btn.addEventListener('mousemove', (e) => {
+        const rect = btn.getBoundingClientRect();
+        const x = e.clientX - rect.left - rect.width / 2;
+        const y = e.clientY - rect.top - rect.height / 2;
+
+        btn.style.transform = `translate3d(${x * 0.22}px, ${y * 0.22}px, 0)`;
+
+        const arrow = btn.querySelector('.btn-arrow');
+        if (arrow) {
+          arrow.style.transform = `translate3d(${x * 0.12}px, ${y * 0.08}px, 0) scale(1.08)`;
+        }
+      });
+
+      btn.addEventListener('mouseleave', () => {
+        btn.style.transition = 'transform 0.4s cubic-bezier(0.23, 1, 0.32, 1)';
+        btn.style.transform = 'translate3d(0, 0, 0)';
+
+        const arrow = btn.querySelector('.btn-arrow');
+        if (arrow) {
+          arrow.style.transition = 'transform 0.4s cubic-bezier(0.23, 1, 0.32, 1)';
+          arrow.style.transform = '';
+        }
+      });
+
+      btn.addEventListener('mouseenter', () => {
+        btn.style.transition = 'none';
+        const arrow = btn.querySelector('.btn-arrow');
+        if (arrow) arrow.style.transition = 'none';
+      });
+    });
+  }
 });

@@ -323,165 +323,257 @@
         </div>
       </section>
 
+      <section class="section shagun-registration scroll-section" id="shagun-registration-section" aria-labelledby="registration-heading">
+        <!-- Interactive Gold Dust and Star Canvas Backdrop -->
+        <canvas class="contact-canvas" id="shagun-registration-canvas" aria-hidden="true"></canvas>
 
+        <!-- Ambient Radial Glow and Stencil Pattern -->
+        <div class="contact-ambient-glow" aria-hidden="true"></div>
+        <div class="contact-jaali-wrap" aria-hidden="true">
+          <div class="contact-jaali"></div>
+        </div>
 
-      <section class="section shagun-registration">
-        <div class="shagun-registration__wrapper">
-          <div class="container">
-            <div class="shagun-registration__header">
-              <span class="section-eyebrow">REGISTRATION</span>
-              <h2 class="shagun-section-title">Shagun 2026</h2>
+        <div class="container shagun-registration__wrapper">
+          <header class="section-header reveal-blur text-center" style="margin-bottom: 50px;">
+            <span class="section-eyebrow">REGISTRATION</span>
+            <h2 id="registration-heading" class="shagun-section-title">Shagun 2026</h2>
+          </header>
+
+          <!-- Unified Symmetrical 3D Horizontal Luxury Console -->
+          <div class="contact-luxury-console reveal-scale" id="shagun-registration-console">
+            <!-- Outer Double Border Ornaments -->
+            <div class="console-brass-filigree filigree--top-left" aria-hidden="true"></div>
+            <div class="console-brass-filigree filigree--top-right" aria-hidden="true"></div>
+            <div class="console-brass-filigree filigree--bottom-left" aria-hidden="true"></div>
+            <div class="console-brass-filigree filigree--bottom-right" aria-hidden="true"></div>
+            
+            <!-- Spotlight shine coordinates -->
+            <div class="console-spotlight" aria-hidden="true"></div>
+
+            <!-- Inner Double Border Spacer Grid -->
+            <div class="console-inner-frame">
+              
+              <!-- Left Column: Branding & Symmetrical Concierge Info -->
+              <div class="console-brand-side">
+                <!-- Transparent Gujarati flourish-free Logo -->
+                <div class="concierge-logo-wrap" aria-hidden="true" style="margin-bottom: 30px;">
+                  <img src="/images/logo/shagun-logo.png" alt="Pahalu Shagun logo" class="concierge-logo-img" style="filter: none; max-width: 230px; width: 100%; height: auto; display: block; margin: 0 auto;">
+                </div>
+
+                <h3 class="concierge-title">Shagun Bridal</h3>
+                <span class="concierge-subtitle">Exclusive Privileges</span>
+                <p class="concierge-lead">Your noble wedding journey deserves an extraordinary beginning. Register to co-create your bespoke bridal and signature creations with priority consultations and seasonal gift privileges.</p>
+
+                <div class="concierge-details">
+                  <div class="concierge-item">
+                    <span class="concierge-label">Bridal Privilege Gift</span>
+                    <p class="concierge-text">Exclusive Shagun Kit</p>
+                  </div>
+                  
+                  <div class="concierge-hairline" aria-hidden="true"></div>
+
+                  <div class="concierge-item">
+                    <span class="concierge-label">Priority Sanctuary</span>
+                    <p class="concierge-text">VIP Suite Styling Lounge</p>
+                  </div>
+
+                  <div class="concierge-hairline" aria-hidden="true"></div>
+
+                  <div class="concierge-item">
+                    <span class="concierge-label">Bespoke Design Desk</span>
+                    <p class="concierge-text">Direct with Master Artisans</p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Symmetrical Gold Vertical Separator Rule -->
+              <div class="console-divider-vertical" aria-hidden="true"></div>
+
+              <!-- Right Column: Symmetrical Calligraphy Multi-Step Inquiry Desk -->
+              <div class="console-form-side">
+                <form id="shagun-registration-form" class="shagun-form-premium" novalidate>
+                  <h4 class="form-title-desk" style="margin-bottom: 12px; font-weight: 500;">Shagun <span class="gold-gradient-text">2026</span></h4>
+                  <p class="form-subtitle-desk" style="margin-bottom: 30px; font-size: 0.88rem; color: rgba(42, 42, 42, 0.6); line-height: 1.5;">Share your details, wedding dates, and identity proofs with our luxury styling team to complete your Shagun registration.</p>
+                  
+                  <!-- Form Progress Indicator -->
+                  <div class="shagun-progress" aria-label="Registration steps" style="margin-bottom: 30px;">
+                    <div class="shagun-progress__item is-active" data-step="1">
+                      <strong>Step 1</strong> Personal
+                    </div>
+                    <div class="shagun-progress__item" data-step="2">
+                      <strong>Step 2</strong> Wedding
+                    </div>
+                    <div class="shagun-progress__item" data-step="3">
+                      <strong>Step 3</strong> Documents
+                    </div>
+                  </div>
+
+                  <!-- Step 1: Personal Details -->
+                  <div class="shagun-form-step is-active" data-step="0">
+                    <div class="form-group-premium">
+                      <input type="text" id="brideName" name="brideName" class="form-input-premium" required placeholder=" " autocomplete="name" data-required="true">
+                      <label for="brideName" class="form-label-premium">Bride's Noble Name</label>
+                      <span class="focus-line-glow" aria-hidden="true"></span>
+                    </div>
+
+                    <div class="form-group-premium">
+                      <input type="tel" id="mobileNumber" name="mobileNumber" class="form-input-premium" required placeholder=" " autocomplete="tel" data-required="true">
+                      <label for="mobileNumber" class="form-label-premium">Mobile Number</label>
+                      <span class="focus-line-glow" aria-hidden="true"></span>
+                    </div>
+
+                    <div class="form-group-premium date-group">
+                      <input type="date" id="dateOfBirth" name="dateOfBirth" class="form-input-premium" required data-required="true" placeholder=" ">
+                      <label for="dateOfBirth" class="form-label-premium">Date of Birth</label>
+                      <span class="focus-line-glow" aria-hidden="true"></span>
+                    </div>
+
+                    <div class="form-group-premium textarea-group">
+                      <textarea id="fullAddress" name="fullAddress" class="form-input-premium form-textarea-premium" required rows="3" placeholder=" " data-required="true"></textarea>
+                      <label for="fullAddress" class="form-label-premium">Boutique Delivery Address</label>
+                      <span class="focus-line-glow" aria-hidden="true"></span>
+                    </div>
+
+                    <div class="form-row two-col" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px;">
+                      <div class="form-group-premium">
+                        <input type="text" id="pinCode" name="pinCode" class="form-input-premium" required placeholder=" " data-required="true">
+                        <label for="pinCode" class="form-label-premium">PIN Code</label>
+                        <span class="focus-line-glow" aria-hidden="true"></span>
+                      </div>
+                      <div class="form-group-premium">
+                        <input type="text" id="city" name="city" class="form-input-premium" required placeholder=" " data-required="true">
+                        <label for="city" class="form-label-premium">City</label>
+                        <span class="focus-line-glow" aria-hidden="true"></span>
+                      </div>
+                    </div>
+
+                    <div class="shagun-form-actions" style="margin-top: 30px; display: flex; justify-content: flex-end; gap: 15px;">
+                      <button class="btn btn--primary btn--magnetic contact-submit-btn btn-next-premium" data-action="next-step" style="border-radius: 50px;">
+                        <span>Continue</span>
+                        <svg viewBox="0 0 24 24" class="btn-arrow" aria-hidden="true">
+                          <path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                        </svg>
+                      </button>
+                    </div>
+                  </div>
+
+                  <!-- Step 2: Wedding Details -->
+                  <div class="shagun-form-step" data-step="1">
+                    <div class="form-group-premium date-group">
+                      <input type="date" id="weddingDate" name="weddingDate" class="form-input-premium" required data-required="true" placeholder=" ">
+                      <label for="weddingDate" class="form-label-premium">Auspicious Wedding Date</label>
+                      <span class="focus-line-glow" aria-hidden="true"></span>
+                    </div>
+
+                    <div class="form-group-premium">
+                      <input type="text" id="weddingVenue" name="weddingVenue" class="form-input-premium" required placeholder=" " data-required="true">
+                      <label for="weddingVenue" class="form-label-premium">Wedding Venue</label>
+                      <span class="focus-line-glow" aria-hidden="true"></span>
+                    </div>
+
+                    <div class="form-group-premium">
+                      <input type="text" id="referenceName" name="referenceName" class="form-input-premium" placeholder=" ">
+                      <label for="referenceName" class="form-label-premium">Reference Name (Optional)</label>
+                      <span class="focus-line-glow" aria-hidden="true"></span>
+                    </div>
+
+                    <div class="shagun-form-actions" style="margin-top: 30px; display: flex; justify-content: flex-end; gap: 15px;">
+                      <button class="btn btn--outline btn--magnetic btn-prev-premium" data-action="prev-step" style="border-radius: 50px; min-width: 140px;">Back</button>
+                      <button class="btn btn--primary btn--magnetic contact-submit-btn btn-next-premium" data-action="next-step" style="border-radius: 50px;">
+                        <span>Continue</span>
+                        <svg viewBox="0 0 24 24" class="btn-arrow" aria-hidden="true">
+                          <path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                        </svg>
+                      </button>
+                    </div>
+                  </div>
+
+                  <!-- Step 3: Documents & Verification -->
+                  <div class="shagun-form-step" data-step="2">
+                    <div class="form-group-premium radio-group-premium" style="margin-bottom: 25px;">
+                      <span class="group-label-premium" style="display: block; font-size: 0.76rem; font-weight: 700; color: var(--color-accent); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 10px;">Identity Proof Type</span>
+                      <div class="radio-options-premium" style="display: flex; gap: 20px;">
+                        <label class="radio-field-premium" style="display: flex; align-items: center; gap: 8px; cursor: pointer; font-size: 0.94rem; color: var(--color-dark);">
+                          <input type="radio" name="identityProofType" value="Aadhar card" checked style="accent-color: var(--color-primary);">
+                          Aadhar Card
+                        </label>
+                        <label class="radio-field-premium" style="display: flex; align-items: center; gap: 8px; cursor: pointer; font-size: 0.94rem; color: var(--color-dark);">
+                          <input type="radio" name="identityProofType" value="Voter ID" style="accent-color: var(--color-primary);">
+                          Voter ID
+                        </label>
+                      </div>
+                    </div>
+
+                    <div class="form-group-premium file-group-premium" style="margin-bottom: 25px;">
+                      <label for="identityProof" class="form-label-premium" style="position: static; font-size: 0.76rem; font-weight: 700; color: var(--color-accent); text-transform: uppercase; letter-spacing: 0.08em; display: block; margin-bottom: 10px; pointer-events: auto;">Upload Identity Document</label>
+                      <div class="file-upload-premium" style="position: relative; border: 1px dashed rgba(212, 175, 55, 0.4); border-radius: 8px; padding: 20px; background: rgba(212, 175, 55, 0.02); text-align: center; cursor: pointer; transition: background 0.3s ease;">
+                        <input class="form-input-premium file-input-premium" type="file" id="identityProof" name="identityProof" accept="image/*,.pdf" style="position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; z-index: 2;">
+                        <div class="file-upload-placeholder" style="display: flex; flex-direction: column; align-items: center; gap: 8px;">
+                          <svg class="upload-icon" viewBox="0 0 24 24" fill="none" stroke="#9b1b2a" stroke-width="1.8" style="width: 28px; height: 28px;">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12"/>
+                          </svg>
+                          <span style="font-size: 0.85rem; color: rgba(42, 42, 42, 0.65);">Choose JPG, PNG, WebP or PDF (Max 5MB)</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="form-group-premium radio-group-premium" style="margin-bottom: 25px;">
+                      <span class="group-label-premium" style="display: block; font-size: 0.76rem; font-weight: 700; color: var(--color-accent); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 10px;">Wedding Proof Type</span>
+                      <div class="radio-options-premium" style="display: flex; gap: 20px;">
+                        <label class="radio-field-premium" style="display: flex; align-items: center; gap: 8px; cursor: pointer; font-size: 0.94rem; color: var(--color-dark);">
+                          <input type="radio" name="weddingProofType" value="Venue booking receipt" checked style="accent-color: var(--color-primary);">
+                          Venue Receipt
+                        </label>
+                        <label class="radio-field-premium" style="display: flex; align-items: center; gap: 8px; cursor: pointer; font-size: 0.94rem; color: var(--color-dark);">
+                          <input type="radio" name="weddingProofType" value="Wedding invitation card" style="accent-color: var(--color-primary);">
+                          Invitation Card
+                        </label>
+                      </div>
+                    </div>
+
+                    <div class="form-group-premium file-group-premium" style="margin-bottom: 25px;">
+                      <label for="weddingProof" class="form-label-premium" style="position: static; font-size: 0.76rem; font-weight: 700; color: var(--color-accent); text-transform: uppercase; letter-spacing: 0.08em; display: block; margin-bottom: 10px; pointer-events: auto;">Upload Wedding Proof</label>
+                      <div class="file-upload-premium" style="position: relative; border: 1px dashed rgba(212, 175, 55, 0.4); border-radius: 8px; padding: 20px; background: rgba(212, 175, 55, 0.02); text-align: center; cursor: pointer; transition: background 0.3s ease;">
+                        <input class="form-input-premium file-input-premium" type="file" id="weddingProof" name="weddingProof" accept="image/*,.pdf" style="position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; z-index: 2;">
+                        <div class="file-upload-placeholder" style="display: flex; flex-direction: column; align-items: center; gap: 8px;">
+                          <svg class="upload-icon" viewBox="0 0 24 24" fill="none" stroke="#9b1b2a" stroke-width="1.8" style="width: 28px; height: 28px;">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12"/>
+                          </svg>
+                          <span style="font-size: 0.85rem; color: rgba(42, 42, 42, 0.65);">Choose JPG, PNG, WebP or PDF (Max 5MB)</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="terms-card-premium" style="margin-top: 30px; border: 1px solid rgba(212, 175, 55, 0.2); border-radius: 8px; padding: 20px; background: rgba(255, 255, 255, 0.7); backdrop-filter: blur(10px);">
+                      <h4 class="terms-title-premium" style="font-family: var(--font-serif); font-size: 1.15rem; color: var(--color-dark); margin: 0 0 12px; font-weight: 500;">Terms & Conditions</h4>
+                      <div class="terms-text-premium" style="max-height: 180px; overflow-y: auto; padding-right: 10px; font-size: 0.86rem; color: rgba(42, 42, 42, 0.7); line-height: 1.65; display: flex; flex-direction: column; gap: 10px;">
+                        <p>1. Eligibility: Exclusively for brides whose weddings are scheduled during the upcoming season. All details must be accurate and complete.</p>
+                        <p>2. Mandatory Registration: Online registration is required to reserve Shagun bridal styling consultation and seasonal gift privileges.</p>
+                        <p>3. Verification: Aadhar/Voter ID and official wedding proof must be uploaded for registration verification and approval.</p>
+                        <p>4. Privacy: Your shared information is secured with advanced encryption and only used for registration validation.</p>
+                      </div>
+                      <label class="agree-label-premium" style="display: flex; align-items: center; gap: 10px; cursor: pointer; font-size: 0.94rem; color: var(--color-dark); margin-top: 15px; font-weight: 600;">
+                        <input type="checkbox" id="agreeTerms" name="agreeTerms" data-required="true" style="accent-color: var(--color-primary); width: 16px; height: 16px;">
+                        I agree to the Terms & Conditions
+                      </label>
+                    </div>
+
+                    <div class="shagun-form-actions" style="margin-top: 30px; display: flex; justify-content: flex-end; gap: 15px;">
+                      <button class="btn btn--outline btn--magnetic btn-prev-premium" data-action="prev-step" style="border-radius: 50px; min-width: 140px;">Back</button>
+                      <button class="btn btn--primary btn--magnetic contact-submit-btn btn-submit-premium" type="submit" style="border-radius: 50px;">
+                        <span>Submit Registration</span>
+                        <svg viewBox="0 0 24 24" class="btn-arrow" aria-hidden="true">
+                          <path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                        </svg>
+                      </button>
+                    </div>
+                  </div>
+
+                  <p class="shagun-submit-note" id="shagun-submit-note" style="margin-top: 15px; text-align: right; font-weight: 600; min-height: 24px; color: var(--color-primary);"></p>
+                </form>
+              </div>
 
             </div>
-
-            <div class="shagun-progress" aria-label="Registration steps">
-              <div class="shagun-progress__item is-active" role="listitem" data-step="1">
-                <strong>Step 1</strong>
-                Personal
-              </div>
-              <div class="shagun-progress__item is-complete" role="listitem" data-step="2">
-                <strong>Step 2</strong>
-                Wedding
-              </div>
-              <div class="shagun-progress__item" role="listitem" data-step="3">
-                <strong>Step 3</strong>
-                Documents
-              </div>
-            </div>
-
-            <form id="shagun-registration-form" class="shagun-form" novalidate>
-              <div class="shagun-form-step" data-step="0">
-                <div class="form-card">
-                  <div class="form-group">
-                    <label class="form-label" for="brideName">Bride's full name</label>
-                    <input class="form-control" type="text" id="brideName" name="brideName" data-required="true"
-                      placeholder="Enter full name">
-                  </div>
-                  <div class="form-group">
-                    <label class="form-label" for="mobileNumber">Mobile number</label>
-                    <input class="form-control" type="tel" id="mobileNumber" name="mobileNumber" data-required="true"
-                      placeholder="Enter mobile number">
-                  </div>
-                  <div class="form-group">
-                    <label class="form-label" for="dateOfBirth">Date of birth</label>
-                    <input class="form-control" type="date" id="dateOfBirth" name="dateOfBirth" data-required="true">
-                  </div>
-                  <div class="form-group">
-                    <label class="form-label" for="fullAddress">Full address</label>
-                    <textarea class="form-control" id="fullAddress" name="fullAddress" data-required="true" rows="4"
-                      placeholder="Enter address"></textarea>
-                  </div>
-                  <div class="form-row two-col">
-                    <div class="form-group">
-                      <label class="form-label" for="pinCode">PIN code</label>
-                      <input class="form-control" type="text" id="pinCode" name="pinCode" data-required="true"
-                        placeholder="PIN code">
-                    </div>
-                    <div class="form-group">
-                      <label class="form-label" for="city">City</label>
-                      <input class="form-control" type="text" id="city" name="city" data-required="true"
-                        placeholder="City">
-                    </div>
-                  </div>
-                </div>
-                <div class="shagun-form-actions">
-                  <button class="btn btn--outline" data-action="next-step">Continue</button>
-                </div>
-              </div>
-
-              <div class="shagun-form-step" data-step="1">
-                <div class="form-card">
-                  <div class="form-group">
-                    <label class="form-label" for="weddingDate">Wedding date</label>
-                    <input class="form-control" type="date" id="weddingDate" name="weddingDate" data-required="true">
-                  </div>
-                  <div class="form-group">
-                    <label class="form-label" for="weddingVenue">Wedding venue</label>
-                    <input class="form-control" type="text" id="weddingVenue" name="weddingVenue" data-required="true"
-                      placeholder="Venue name or address">
-                  </div>
-                  <div class="form-group">
-                    <label class="form-label" for="referenceName">Reference name (optional)</label>
-                    <input class="form-control" type="text" id="referenceName" name="referenceName"
-                      placeholder="Who referred you?">
-                  </div>
-                </div>
-                <div class="shagun-form-actions">
-                  <button class="btn btn--outline" data-action="prev-step">Back</button>
-                  <button class="btn btn--primary" data-action="next-step">Continue</button>
-                </div>
-              </div>
-
-              <div class="shagun-form-step" data-step="2">
-                <div class="form-card">
-                  <div class="form-group">
-                    <label class="form-label">Identity proof</label>
-                    <div class="radio-group">
-                      <label class="radio-field">
-                        <input type="radio" name="identityProofType" value="Aadhar card" checked>
-                        Aadhar card
-                      </label>
-                      <label class="radio-field">
-                        <input type="radio" name="identityProofType" value="Voter ID">
-                        Voter ID
-                      </label>
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <label class="form-label" for="identityProof">Upload identity document</label>
-                    <div class="file-upload">
-                      <input class="form-control" type="file" id="identityProof" name="identityProof"
-                        accept="image/*,.pdf">
-                      <p>Choose JPG, PNG, WebP or PDF up to 5 MB.</p>
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <label class="form-label">Wedding proof</label>
-                    <div class="radio-group">
-                      <label class="radio-field">
-                        <input type="radio" name="weddingProofType" value="Venue booking receipt" checked>
-                        Venue booking receipt
-                      </label>
-                      <label class="radio-field">
-                        <input type="radio" name="weddingProofType" value="Wedding invitation card">
-                        Wedding invitation card
-                      </label>
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <label class="form-label" for="weddingProof">Upload wedding proof</label>
-                    <div class="file-upload">
-                      <input class="form-control" type="file" id="weddingProof" name="weddingProof"
-                        accept="image/*,.pdf">
-                      <p>Choose JPG, PNG, WebP or PDF up to 5 MB.</p>
-                    </div>
-                  </div>
-                  <div class="terms-card">
-                    <h3>Terms & Conditions</h3>
-                    <div class="terms-text">
-                      <p>1. Eligibility: Exclusively for brides whose weddings are scheduled during the upcoming season.
-                        All details must be accurate and complete.</p>
-                      <p>2. Mandatory Registration: Online registration is required to reserve Shagun consultation and
-                        bridal privileges.</p>
-                      <p>3. Verification: Aadhar or approved identity proof and wedding proof must be provided for
-                        registration approval.</p>
-                      <p>4. Privacy: Your information is handled securely and only used for registration and
-                        consultation.</p>
-                    </div>
-                    <label class="form-group" style="margin-top: var(--space-lg);">
-                      <input type="checkbox" id="agreeTerms" name="agreeTerms" data-required="true"
-                        style="margin-right: 0.75rem;">
-                      I agree to the Terms & Conditions
-                    </label>
-                  </div>
-                </div>
-                <div class="shagun-form-actions">
-                  <button class="btn btn--outline" data-action="prev-step">Back</button>
-                  <button class="btn btn--primary" type="submit">Submit registration</button>
-                </div>
-                <p class="shagun-submit-note" id="shagun-submit-note"></p>
-              </div>
-            </form>
           </div>
         </div>
       </section>
