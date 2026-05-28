@@ -1,27 +1,23 @@
 <section class="section collection-hero scroll-section" id="collection-hero">
-  <div class="container collection-hero__inner">
-    <div class="collection-hero__content reveal-right">
-      <span class="section-eyebrow"><%= isCategoryView ? category.intro.eyebrow : collection.hero.eyebrow %></span>
-      <h1><%= isCategoryView ? category.intro.title : collection.hero.title %></h1>
-      <p class="collection-hero__intro"><%= isCategoryView ? category.intro.paragraphs[0] : collection.hero.description %></p>
-      <% if (!isCategoryView) { %>
-        <ul class="collection-hero__feature-list">
-          <% collection.hero.features.forEach(function(feature) { %>
-            <li><%= feature %></li>
-          <% }); %>
-        </ul>
-      <% } %>
-      <div class="collection-hero__actions">
-        <a href="<%= isCategoryView ? category.intro.cta.href : collection.hero.cta.href %>" class="btn btn--primary btn--magnetic"><%= isCategoryView ? category.intro.cta.label : collection.hero.cta.label %></a>
+  <!-- Interactive Gold Dust Canvas backdrop -->
+  <canvas class="hero-canvas" id="collection-hero-canvas" aria-hidden="true"
+    style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1;"></canvas>
+
+  <!-- Ambient Radial Glow and Lighting -->
+  <div class="collection-hero-glow" aria-hidden="true"></div>
+
+  <div class="container collection-hero__wrapper">
+    <div class="collection-hero-main">
+
+
+      <!-- Centered Interactive Floating 3D Image Asset -->
+      <div class="collection-hero-asset reveal-scale">
+        <div class="asset-3d-wrapper" id="collection-interactive-3d">
+          <img src="/images/collections/3d-sanctuary.png?v=3.2" alt="3D Sanctuary Jewel" class="asset-3d-img">
+        </div>
+        <div class="asset-3d-shadow" aria-hidden="true"></div>
       </div>
-      <div class="collection-hero__filters">
-        <% collection.filters.forEach(function(filter) { %>
-          <a href="/collection?category=<%= filter.id %>" class="category-pill <%= selectedCategory === filter.id ? 'is-active' : '' %>"><%= filter.label %></a>
-        <% }); %>
-      </div>
-    </div>
-    <div class="collection-hero__media reveal-left">
-      <img src="<%= isCategoryView ? category.heroImage : collection.hero.image %>" alt="<%= isCategoryView ? category.title : 'Collection' %> hero image" loading="eager" width="1200" height="900">
+
     </div>
   </div>
 </section>

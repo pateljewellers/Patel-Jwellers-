@@ -33,7 +33,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const resizeCanvas = () => {
     if (!canvas) return;
     const r = section.getBoundingClientRect();
-    canvas.width  = r.width;
+    canvas.width = r.width;
     canvas.height = r.height;
   };
   if (canvas) {
@@ -107,7 +107,7 @@ document.addEventListener('DOMContentLoaded', () => {
           ? `rgba(212,175,55,${(Math.random() * 0.6 + 0.4).toFixed(2)})`
           : `rgba(255,255,255,${(Math.random() * 0.5 + 0.2).toFixed(2)})`;
         this.swingFreq = Math.random() * 0.04 + 0.01;
-        this.swingAmp  = Math.random() * 0.5 + 0.1;
+        this.swingAmp = Math.random() * 0.5 + 0.1;
         this.swingPhase = Math.random() * Math.PI * 2;
       }
     }
@@ -130,9 +130,9 @@ document.addEventListener('DOMContentLoaded', () => {
       if (!ctx) return;
       ctx.save();
       ctx.globalAlpha = Math.max(this.alpha, 0);
-      ctx.shadowBlur  = 6;
+      ctx.shadowBlur = 6;
       ctx.shadowColor = '#D4AF37';
-      ctx.fillStyle   = this.color;
+      ctx.fillStyle = this.color;
       ctx.beginPath();
       ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
       ctx.fill();
@@ -175,28 +175,28 @@ document.addEventListener('DOMContentLoaded', () => {
 
     update() {
       this.radius += this.speed;
-      this.alpha   = 0.8 * (1 - this.radius / this.maxRadius);
+      this.alpha = 0.8 * (1 - this.radius / this.maxRadius);
       this.thickness = 2.5 * (1 - this.radius / this.maxRadius) + 0.5;
-      this.speed  *= 0.98;
+      this.speed *= 0.98;
     }
 
     draw() {
       if (!ctx) return;
       ctx.save();
-      ctx.globalAlpha    = Math.max(this.alpha, 0);
-      ctx.strokeStyle    = '#D4AF37';
-      ctx.lineWidth      = this.thickness;
-      ctx.shadowBlur     = 12;
-      ctx.shadowColor    = '#D4AF37';
+      ctx.globalAlpha = Math.max(this.alpha, 0);
+      ctx.strokeStyle = '#D4AF37';
+      ctx.lineWidth = this.thickness;
+      ctx.shadowBlur = 12;
+      ctx.shadowColor = '#D4AF37';
       ctx.beginPath();
       ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
       ctx.stroke();
 
       // Second inner ripple ring
       if (this.radius > 30) {
-        ctx.globalAlpha  = Math.max(this.alpha * 0.4, 0);
-        ctx.strokeStyle  = 'rgba(80,10,18,0.5)';
-        ctx.lineWidth    = this.thickness * 0.5;
+        ctx.globalAlpha = Math.max(this.alpha * 0.4, 0);
+        ctx.strokeStyle = 'rgba(80,10,18,0.5)';
+        ctx.lineWidth = this.thickness * 0.5;
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.radius * 0.72, 0, Math.PI * 2);
         ctx.stroke();
@@ -215,11 +215,11 @@ document.addEventListener('DOMContentLoaded', () => {
   // BACKGROUND SPIROGRAPH SYSTEM
   // =====================================================
   const spirographHubs = [
-    { xFrac: 0.12, yFrac: 0.30, R: 90, speed:  0.0007, color: 'gold' },
+    { xFrac: 0.12, yFrac: 0.30, R: 90, speed: 0.0007, color: 'gold' },
     { xFrac: 0.88, yFrac: 0.70, R: 120, speed: -0.0005, color: 'burgundy' },
-    { xFrac: 0.50, yFrac: 0.50, R: 100, speed:  0.0006, color: 'gold' },
-    { xFrac: 0.25, yFrac: 0.80, R: 70,  speed: -0.0009, color: 'gold' },
-    { xFrac: 0.78, yFrac: 0.22, R: 80,  speed:  0.0008, color: 'burgundy' },
+    { xFrac: 0.50, yFrac: 0.50, R: 100, speed: 0.0006, color: 'gold' },
+    { xFrac: 0.25, yFrac: 0.80, R: 70, speed: -0.0009, color: 'gold' },
+    { xFrac: 0.78, yFrac: 0.22, R: 80, speed: 0.0008, color: 'burgundy' },
   ];
 
   const waveBands = [
@@ -233,15 +233,15 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!ctx || !canvas) return;
     const cx = hub.xFrac * canvas.width;
     const cy = hub.yFrac * canvas.height;
-    const R  = hub.R + Math.sin(t * 0.003) * 18;
-    const r  = R * 0.42;
-    const d  = R * 0.62 + Math.cos(t * 0.002) * 14;
+    const R = hub.R + Math.sin(t * 0.003) * 18;
+    const r = R * 0.42;
+    const d = R * 0.62 + Math.cos(t * 0.002) * 14;
 
     const baseAlpha = hub.color === 'gold' ? 0.07 : 0.035;
     ctx.save();
     ctx.translate(cx, cy);
     ctx.rotate(t * hub.speed * speedMultiplier);
-    ctx.lineWidth   = 0.7;
+    ctx.lineWidth = 0.7;
     ctx.strokeStyle = hub.color === 'gold'
       ? `rgba(212,175,55,${baseAlpha})`
       : `rgba(80,10,18,${baseAlpha})`;
@@ -282,7 +282,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
 
       if (theta === 0) ctx.moveTo(px, py);
-      else             ctx.lineTo(px, py);
+      else ctx.lineTo(px, py);
     }
     ctx.stroke();
     ctx.restore();
@@ -293,7 +293,7 @@ document.addEventListener('DOMContentLoaded', () => {
     waveBands.forEach((band, bi) => {
       const y0 = band.yFrac * canvas.height;
       ctx.save();
-      ctx.lineWidth   = bi === 0 ? 0.9 : 0.6;
+      ctx.lineWidth = bi === 0 ? 0.9 : 0.6;
       ctx.strokeStyle = bi % 2 === 0
         ? 'rgba(212,175,55,0.07)'
         : 'rgba(80,10,18,0.03)';
@@ -343,10 +343,10 @@ document.addEventListener('DOMContentLoaded', () => {
     cards.forEach((card, idx) => {
       card.addEventListener('mousemove', (e) => {
         const r = card.getBoundingClientRect();
-        const normX = ((e.clientX - r.left) / r.width  - 0.5) * 2;
-        const normY = ((e.clientY - r.top)  / r.height - 0.5) * 2;
+        const normX = ((e.clientX - r.left) / r.width - 0.5) * 2;
+        const normY = ((e.clientY - r.top) / r.height - 0.5) * 2;
         cardStates[idx].targetTiltX = normY * -12; // rotateX
-        cardStates[idx].targetTiltY = normX *  12; // rotateY
+        cardStates[idx].targetTiltY = normX * 12; // rotateY
       }, { passive: true });
 
       card.addEventListener('mouseleave', () => {
@@ -441,3 +441,174 @@ document.addEventListener('DOMContentLoaded', () => {
     if (rafId) cancelAnimationFrame(rafId);
   });
 });
+
+// ==========================================================
+// --- COLLECTION HERO INTERACTIVE LUXURY 3D SPOTLIGHT ENGINE ---
+// ==========================================================
+document.addEventListener('DOMContentLoaded', () => {
+  const heroSection = document.getElementById('collection-hero');
+  const heroCanvas = document.getElementById('collection-hero-canvas');
+  const assetWrapper = document.getElementById('collection-interactive-3d');
+
+  if (!heroSection) return;
+
+  // 1. FLOATING CANVAS BACKGROUND SYSTEM (Warm rising gold sparks)
+  if (heroCanvas) {
+    const hctx = heroCanvas.getContext('2d');
+    let sparkList = [];
+    let hWidth = (heroCanvas.width = heroSection.offsetWidth);
+    let hHeight = (heroCanvas.height = heroSection.offsetHeight);
+    let hMouse = { x: null, y: null, active: false };
+
+    const resizeHeroCanvas = () => {
+      if (!heroCanvas || !heroSection) return;
+      hWidth = heroCanvas.width = heroSection.offsetWidth;
+      hHeight = heroCanvas.height = heroSection.offsetHeight;
+      initHeroSparks();
+    };
+
+    const hResizeObserver = new ResizeObserver((entries) => {
+      resizeHeroCanvas();
+    });
+    hResizeObserver.observe(heroSection);
+
+    class LuxuryHeroSpark {
+      constructor() {
+        this.reset();
+      }
+      reset() {
+        this.x = Math.random() * hWidth;
+        this.y = Math.random() * hHeight + hHeight; // Spawn below bottom
+        this.size = Math.random() * 3.5 + 1.0;
+        this.speedY = -(Math.random() * 0.6 + 0.15); // Rising slowly
+        this.speedX = Math.random() * 0.28 - 0.14;
+        this.opacity = Math.random() * 0.5 + 0.2;
+        this.angle = Math.random() * Math.PI * 2;
+        this.waveSpeed = Math.random() * 0.01 + 0.002;
+        this.waveAmp = Math.random() * 0.8;
+        this.color = Math.random() > 0.6 ? 'rgba(202, 161, 90,' : 'rgba(255, 255, 255,'; // Gold or white
+      }
+      update() {
+        this.y += this.speedY;
+        this.angle += this.waveSpeed;
+        this.x += this.speedX + Math.sin(this.angle) * this.waveAmp * 0.1;
+
+        if (hMouse.active && hMouse.x !== null) {
+          const dx = hMouse.x - this.x;
+          const dy = hMouse.y - this.y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+          if (dist < 180) {
+            const force = (180 - dist) / 180;
+            this.x += (dx / dist) * force * 0.25;
+            this.y += (dy / dist) * force * 0.25;
+          }
+        }
+
+        if (this.y < -15 || this.x < -15 || this.x > hWidth + 15) {
+          this.reset();
+          this.y = hHeight + 10;
+        }
+      }
+      draw() {
+        if (!hctx) return;
+        hctx.beginPath();
+        hctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        hctx.fillStyle = this.color + this.opacity + ')';
+        hctx.fill();
+      }
+    }
+
+    function initHeroSparks() {
+      sparkList = [];
+      const sparkCount = Math.min(Math.floor(hWidth / 45), 35);
+      for (let i = 0; i < sparkCount; i++) {
+        const p = new LuxuryHeroSpark();
+        p.y = Math.random() * hHeight; // Stagger initial heights
+        sparkList.push(p);
+      }
+    }
+
+    let heroAnimId;
+    function animateHeroCanvas() {
+      if (!heroCanvas || !hctx) return;
+      hctx.clearRect(0, 0, hWidth, hHeight);
+
+      // Subtle mouse spotlight aura behind sparks
+      if (hMouse.active && hMouse.x !== null) {
+        const aura = hctx.createRadialGradient(hMouse.x, hMouse.y, 5, hMouse.x, hMouse.y, 180);
+        aura.addColorStop(0, 'rgba(202, 161, 90, 0.04)');
+        aura.addColorStop(1, 'rgba(255, 255, 255, 0)');
+        hctx.fillStyle = aura;
+        hctx.fillRect(0, 0, hWidth, hHeight);
+      }
+
+      sparkList.forEach((p) => {
+        p.update();
+        p.draw();
+      });
+      heroAnimId = requestAnimationFrame(animateHeroCanvas);
+    }
+
+    heroSection.addEventListener('mousemove', (e) => {
+      const rect = heroSection.getBoundingClientRect();
+      hMouse.x = e.clientX - rect.left;
+      hMouse.y = e.clientY - rect.top;
+      hMouse.active = true;
+    }, { passive: true });
+
+    heroSection.addEventListener('mouseleave', () => {
+      hMouse.active = false;
+    }, { passive: true });
+
+    initHeroSparks();
+    animateHeroCanvas();
+  }
+
+  // 2. 3D INTERACTIVE TILT FOR CENTERED IMAGE
+  if (assetWrapper) {
+    const handleHeroMouseMove = (e) => {
+      const rect = heroSection.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+
+      const xc = (x - rect.width / 2) / (rect.width / 2);
+      const yc = (y - rect.height / 2) / (rect.height / 2);
+
+      // Tilt angles (range: -10 to 10 deg)
+      const rotX = (-yc * 10.0).toFixed(2);
+      const rotY = (xc * 10.0).toFixed(2);
+
+      // Adjust image 3D transform dynamically
+      assetWrapper.style.transform = `perspective(1200px) rotateX(${rotX}deg) rotateY(${rotY}deg) scale3d(1.02, 1.02, 1.02)`;
+
+      // Shift floor shadow organically based on tilt direction
+      const shadow = heroSection.querySelector('.asset-3d-shadow');
+      if (shadow) {
+        shadow.style.transform = `translate3d(${-xc * 15}px, 0, 0) scale(${1 - Math.abs(yc) * 0.08})`;
+      }
+    };
+
+    const handleHeroMouseLeave = () => {
+      // Revert smoothly to levitating animation frame
+      assetWrapper.style.transform = 'perspective(1200px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)';
+      assetWrapper.style.transition = 'transform 0.8s cubic-bezier(0.25, 1, 0.5, 1)';
+
+      const shadow = heroSection.querySelector('.asset-3d-shadow');
+      if (shadow) {
+        shadow.style.transform = 'translate3d(0, 0, 0) scale(1)';
+        shadow.style.transition = 'transform 0.8s cubic-bezier(0.25, 1, 0.5, 1)';
+      }
+    };
+
+    const handleHeroMouseEnter = () => {
+      assetWrapper.style.transition = 'none';
+      const shadow = heroSection.querySelector('.asset-3d-shadow');
+      if (shadow) shadow.style.transition = 'none';
+    };
+
+    heroSection.addEventListener('mousemove', handleHeroMouseMove, { passive: true });
+    heroSection.addEventListener('mouseenter', handleHeroMouseEnter, { passive: true });
+    heroSection.addEventListener('mouseleave', handleHeroMouseLeave, { passive: true });
+  }
+});
+
