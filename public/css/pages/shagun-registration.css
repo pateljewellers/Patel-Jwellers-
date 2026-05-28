@@ -294,6 +294,91 @@
   margin-top: 34px;
 }
 
+/* --- PURE 3D INTERACTIVE SANCTUARY CSS --- */
+
+.pure-3d-sanctuary {
+  position: relative;
+  width: 100%;
+  max-width: 400px;
+  height: 350px;
+  display: grid;
+  place-items: center;
+  /* Creates high depth field for 3D rotations */
+  perspective: 1500px; 
+  cursor: grab;
+  user-select: none;
+}
+
+.pure-3d-sanctuary:active {
+  cursor: grabbing;
+}
+
+/* The actual 3D Logo Object Container */
+.logo-3d-object {
+  position: relative;
+  width: 220px;
+  height: 220px;
+  transform-style: preserve-3d;
+  /* Default idle subtle floating rotation */
+  transform: rotateY(0deg) rotateX(0deg);
+  transition: transform 0.1s ease-out;
+  z-index: 10;
+}
+
+/* Setting up individual sides of the 3D object */
+.logo-face {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  display: grid;
+  place-items: center;
+}
+
+/* Front Face */
+.logo-face.face-front {
+  transform: translateZ(8px); /* Gives forward thickness */
+}
+
+/* Back Face rotated to face the other side */
+.logo-face.face-back {
+  transform: rotateY(180deg) translateZ(8px);
+}
+
+/* Makes the logo image look premium white with a soft gold drop shadow */
+.sanctuary-pure-logo {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: brightness(0) invert(1) drop-shadow(0 10px 20px rgba(0,0,0,0.3));
+  pointer-events: none;
+}
+
+/* Extrusion edge effect to give a solid 3D metal look when spinning */
+.logo-edge {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #bf953f 0%, #b38728 50%, #aa771c 100%);
+  border-radius: 50%;
+  transform: translateZ(0px);
+  box-shadow: 0 0 30px rgba(202, 161, 90, 0.2);
+  opacity: 0.3;
+  pointer-events: none;
+}
+
+/* Luxury core light behind the spinning logo */
+.sanctuary-core-glow {
+  position: absolute;
+  width: 280px;
+  height: 280px;
+  background: radial-gradient(circle, rgba(202, 161, 90, 0.14) 0%, transparent 70%);
+  z-index: 1;
+  pointer-events: none;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
 .shagun-title {
   font-family: var(--font-serif);
   font-weight: 700;

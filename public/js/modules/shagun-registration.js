@@ -232,3 +232,125 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // ... (તમારો બાકીનો ફોર્મ સ્ટેપ્સ અને સબમિશનનો કોડ અહીં નીચે એમનેમ જ રહેશે)
 });
+
+document.addEventListener('DOMContentLoaded', () => {
+  if (!document.querySelector('.page-shagun')) return;
+
+  // --- 1. BACKGROUND GOLD PARTICLES ENGINE ---
+  const particlesContainer = document.getElementById('hero-particles');
+  if (particlesContainer) {
+    const particleCount = 20; 
+    for (let i = 0; i < particleCount; i++) {
+      createGoldParticle(particlesContainer);
+    }
+  }
+
+  function createGoldParticle(container) {
+    const particle = document.createElement('div');
+    particle.classList.add('gold-dust-particle');
+    const size = Math.random() * 5 + 2; 
+    const duration = Math.random() * 12 + 8; 
+    const delay = Math.random() * -20; 
+    const initialLeft = Math.random() * 100; 
+
+    particle.style.width = `${size}px`;
+    particle.style.height = `${size}px`;
+    particle.style.left = `${initialLeft}%`;
+    particle.style.animationDuration = `${duration}s`;
+    particle.style.animationDelay = `${delay}s`;
+    particle.style.opacity = Math.random() * 0.5 + 0.2;
+
+    container.appendChild(particle);
+    particle.addEventListener('animationend', () => {
+      particle.remove();
+      createGoldParticle(container);
+    });
+  }
+
+
+  // --- 2. ADVANCED INTERACTIVE 360° 3D LOGO ROTATION ENGINE ---
+  const sanctuaryRoom = document.getElementById('3d-sanctuary-room');
+  const logo3D = document.getElementById('interactive-3d-logo');
+
+  if (sanctuaryRoom && logo3D) {
+    let isDragging = false;
+    let previousMousePosition = { x: 0, y: 0 };
+    
+    // Core Rotation variables (Set up starting cinematic angle)
+    let rotationY = -15; 
+    let rotationX = 10;
+
+    // Auto slow inertia rotation variables
+    let velocityY = 0.15; // Makes it slowly spin on idle state
+    let velocityX = 0;
+    const friction = 0.95; // Smooth slowdown physics
+
+    // Continuous Animation loop for smooth realistic physics
+    function update3DPhysicsLoop() {
+      if (!isDragging) {
+        // Apply passive physics when user is not touching it
+        rotationY += velocityY;
+        rotationX += velocityX;
+        
+        // Decay speed smoothly over time
+        velocityY *= friction;
+        velocityX *= friction;
+
+        // Keep a minimum auto idle spin alive so it never looks completely dead
+        if (Math.abs(velocityY) < 0.05) velocityY = 0.08;
+      }
+
+      // Render the current angles onto the matrix
+      logo3D.style.transform = `rotateY(${rotationY}deg) rotateX(${rotationX}deg)`;
+      requestAnimationFrame(update3DPhysicsLoop);
+    }
+
+    // Start the physics cycle instantly
+    requestAnimationFrame(update3DPhysicsLoop);
+
+    // Mouse & Touch Down Event
+    const startDrag = (e) => {
+      isDragging = true;
+      const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+      const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+      previousMousePosition = { x: clientX, y: clientY };
+    };
+
+    // Dragging / Moving Event
+    const handleDrag = (e) => {
+      if (!isDragging) return;
+      
+      const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+      const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+
+      const deltaX = clientX - previousMousePosition.x;
+      const deltaY = clientY - previousMousePosition.y;
+
+      // Adjust rotation calculation maps
+      rotationY += deltaX * 0.5;
+      rotationX -= deltaY * 0.5;
+
+      // Capture momentum speeds to animate inertia when released
+      velocityY = deltaX * 0.3;
+      velocityX = -deltaY * 0.3;
+
+      previousMousePosition = { x: clientX, y: clientY };
+    };
+
+    // Stop Dragging Event
+    const stopDrag = () => {
+      isDragging = false;
+    };
+
+    // Bind all desktop and mobile listeners to the Sanctuary Area
+    sanctuaryRoom.addEventListener('mousedown', startDrag);
+    window.addEventListener('mousemove', handleDrag);
+    window.addEventListener('mouseup', stopDrag);
+
+    sanctuaryRoom.addEventListener('touchstart', startDrag, { passive: true });
+    window.addEventListener('touchmove', handleDrag, { passive: false });
+    window.addEventListener('touchend', stopDrag);
+  }
+
+  // ... (તમારો બાકીનો ફોર્મ સ્ટેપ્સ અને સબમિશનનો કોડ અહીં નીચે એમનેમ જ રહેશે)
+});
