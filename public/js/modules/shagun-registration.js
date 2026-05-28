@@ -352,5 +352,236 @@ document.addEventListener('DOMContentLoaded', () => {
     window.addEventListener('touchend', stopDrag);
   }
 
-  // ... (તમારો બાકીનો ફોર્મ સ્ટેપ્સ અને સબમિશનનો કોડ અહીં નીચે એમનેમ જ રહેશે)
+  // --- 3. SHAGUN INTRO CANVAS PARTICLE ENGINE ---
+  const introCanvas = document.getElementById('shagun-intro-canvas');
+  if (introCanvas) {
+    const introSection = document.getElementById('shagun-intro-section');
+    const ictx = introCanvas.getContext('2d');
+    let introParticles = [];
+    let introBokehs = [];
+    let introTime = 0;
+    let introRafId = null;
+    let introMouse = { x: 0, y: 0, tx: 0, ty: 0, active: false };
+
+    const resizeIntroCanvas = () => {
+      if (!introCanvas || !introSection) return;
+      const rect = introSection.getBoundingClientRect();
+      introCanvas.width = rect.width;
+      introCanvas.height = rect.height;
+    };
+    resizeIntroCanvas();
+    window.addEventListener('resize', resizeIntroCanvas, { passive: true });
+
+    // Track mouse inside shagun-intro
+    introSection.addEventListener('mousemove', (e) => {
+      const rect = introSection.getBoundingClientRect();
+      introMouse.tx = e.clientX - rect.left;
+      introMouse.ty = e.clientY - rect.top;
+      introMouse.active = true;
+    }, { passive: true });
+
+    introSection.addEventListener('mouseleave', () => {
+      introMouse.active = false;
+    }, { passive: true });
+
+    class IntroSparkle {
+      constructor(init = false) {
+        this.reset(init);
+      }
+      reset(init = false) {
+        this.x = Math.random() * (introCanvas ? introCanvas.width : 500);
+        this.y = init ? Math.random() * (introCanvas ? introCanvas.height : 500) : (introCanvas ? introCanvas.height : 500) + 10;
+        this.vy = -(Math.random() * 0.5 + 0.15); // Slow rise
+        this.vx = (Math.random() - 0.5) * 0.2;
+        this.size = Math.random() * 1.6 + 0.4;
+        this.alpha = Math.random() * 0.55 + 0.1;
+        this.fade = Math.random() * 0.0012 + 0.0004;
+        this.color = Math.random() > 0.45 ? 'rgba(202, 161, 90,' : 'rgba(255, 255, 255,'; // Gold or white
+        this.swingSpeed = Math.random() * 0.015 + 0.004;
+        this.swingAmp = Math.random() * 0.35 + 0.15;
+        this.phase = Math.random() * Math.PI * 2;
+      }
+      update(t) {
+        this.x += this.vx + Math.sin(t * this.swingSpeed + this.phase) * this.swingAmp;
+        this.y += this.vy;
+        this.alpha -= this.fade;
+
+        // Attracted slightly to mouse
+        if (introMouse.active) {
+          const dx = introMouse.x - this.x;
+          const dy = introMouse.y - this.y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+          if (dist < 150) {
+            const force = (150 - dist) / 150;
+            this.x += (dx / dist) * force * 0.22;
+            this.y += (dy / dist) * force * 0.22;
+          }
+        }
+
+        if (this.alpha <= 0 || this.y < -10 || this.x < -10 || this.x > (introCanvas ? introCanvas.width : 500) + 10) {
+          this.reset(false);
+        }
+      }
+      draw() {
+        if (!ictx) return;
+        ictx.save();
+        ictx.globalAlpha = Math.max(this.alpha, 0);
+        ictx.fillStyle = this.color + this.alpha.toFixed(2) + ')';
+        ictx.beginPath();
+        if (this.size > 1.1) {
+          // Sparkle diamond shape
+          ictx.moveTo(this.x, this.y - this.size);
+          ictx.lineTo(this.x + this.size, this.y);
+          ictx.lineTo(this.x, this.y + this.size);
+          ictx.lineTo(this.x - this.size, this.y);
+          ictx.closePath();
+          ictx.fill();
+        } else {
+          ictx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+          ictx.fill();
+        }
+        ictx.restore();
+      }
+    }
+
+    class IntroBokeh {
+      constructor() {
+        this.reset(true);
+      }
+      reset(init = false) {
+        this.x = Math.random() * (introCanvas ? introCanvas.width : 500);
+        this.y = init ? Math.random() * (introCanvas ? introCanvas.height : 500) : (introCanvas ? introCanvas.height : 500) + 40;
+        this.vy = -(Math.random() * 0.12 + 0.04); // slow rising
+        this.vx = (Math.random() - 0.5) * 0.08;
+        this.radius = Math.random() * 25 + 8;
+        this.alpha = Math.random() * 0.015 + 0.002; // very faint
+        this.fade = Math.random() * 0.00012 + 0.00004;
+        this.color = Math.random() > 0.4 ? '202, 161, 90' : '155, 27, 42'; // gold or deep red
+      }
+      update() {
+        this.x += this.vx;
+        this.y += this.vy;
+        this.alpha -= this.fade;
+        if (this.alpha <= 0 || this.y < -this.radius) {
+          this.reset(false);
+        }
+      }
+      draw() {
+        if (!ictx) return;
+        ictx.save();
+        ictx.beginPath();
+        const grad = ictx.createRadialGradient(this.x, this.y, 0, this.x, this.y, this.radius);
+        grad.addColorStop(0, `rgba(${this.color}, ${this.alpha})`);
+        grad.addColorStop(0.7, `rgba(${this.color}, ${this.alpha * 0.3})`);
+        grad.addColorStop(1, 'rgba(0,0,0,0)');
+        ictx.fillStyle = grad;
+        ictx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+        ictx.fill();
+        ictx.restore();
+      }
+    }
+
+    for (let i = 0; i < 30; i++) {
+      introParticles.push(new IntroSparkle(true));
+    }
+    for (let i = 0; i < 5; i++) {
+      introBokehs.push(new IntroBokeh());
+    }
+
+    const tickIntro = () => {
+      introTime++;
+      if (!introCanvas || !ictx) return;
+      ictx.clearRect(0, 0, introCanvas.width, introCanvas.height);
+
+      introMouse.x += (introMouse.tx - introMouse.x) * 0.08;
+      introMouse.y += (introMouse.ty - introMouse.y) * 0.08;
+
+      introBokehs.forEach(b => { b.update(); b.draw(); });
+      introParticles.forEach(p => { p.update(introTime); p.draw(); });
+
+      introRafId = requestAnimationFrame(tickIntro);
+    };
+    tickIntro();
+
+    window.addEventListener('beforeunload', () => {
+      if (introRafId) cancelAnimationFrame(introRafId);
+    });
+  }
+
+  // --- 4. 3D CARD HOVER PERSPECTIVE TILT & PARALLAX ---
+  const introCards = document.querySelectorAll('.shagun-intro-card-3d-wrapper');
+  introCards.forEach(cardWrapper => {
+    const card = cardWrapper.querySelector('.shagun-intro-card-3d');
+    if (!card) return;
+    
+    cardWrapper.addEventListener('mousemove', (e) => {
+      const rect = cardWrapper.getBoundingClientRect();
+      const x = e.clientX - rect.left; // x coordinate within the element
+      const y = e.clientY - rect.top;  // y coordinate within the element
+      
+      const px = x / rect.width;  // percentage X (0 to 1)
+      const py = y / rect.height; // percentage Y (0 to 1)
+      
+      // Calculate tilt degrees (range: -14 to 14 deg)
+      const tiltX = (0.5 - py) * 28; 
+      const tiltY = (px - 0.5) * 28;
+      
+      // Bind exact tilt angles as CSS variables for internal layer shifts
+      cardWrapper.style.setProperty('--card-tilt-x', tiltX.toFixed(2));
+      cardWrapper.style.setProperty('--card-tilt-y', tiltY.toFixed(2));
+      
+      // Apply 3D perspective rotation on the wrapper itself
+      const idx = cardWrapper.getAttribute('data-tilt-card');
+      let defaultXShift = '0px';
+      if (window.innerWidth >= 768) {
+        if (idx === '0') defaultXShift = '-15px';
+        else if (idx === '1') defaultXShift = '35px';
+        else if (idx === '2') defaultXShift = '-5px';
+      }
+      
+      cardWrapper.style.transform = `perspective(1200px) rotateX(${tiltX.toFixed(2)}deg) rotateY(${tiltY.toFixed(2)}deg) translateX(${defaultXShift}) scale3d(1.02, 1.02, 1.02)`;
+      
+      // Update mouse coordinate CSS variables inside the card for the glowing reflection
+      card.style.setProperty('--card-mouse-x', `${x.toFixed(1)}px`);
+      card.style.setProperty('--card-mouse-y', `${y.toFixed(1)}px`);
+    });
+
+    cardWrapper.addEventListener('mouseleave', () => {
+      // Smoothly reset CSS variables and revert transformations
+      cardWrapper.style.setProperty('--card-tilt-x', '0');
+      cardWrapper.style.setProperty('--card-tilt-y', '0');
+      
+      const idx = cardWrapper.getAttribute('data-tilt-card');
+      let defaultTransform = 'translateX(0px)';
+      if (window.innerWidth >= 768) {
+        if (idx === '0') defaultTransform = 'translateX(-15px)';
+        else if (idx === '1') defaultTransform = 'translateX(35px)';
+        else if (idx === '2') defaultTransform = 'translateX(-5px)';
+      }
+      
+      cardWrapper.style.transform = `perspective(1200px) rotateX(0deg) rotateY(0deg) ${defaultTransform}`;
+      card.style.setProperty('--card-mouse-x', '50%');
+      card.style.setProperty('--card-mouse-y', '50%');
+    });
+  });
+
+  // --- 5. CINEMATIC staggered 3D SCROLL ENTRANCES ---
+  const introObserverOptions = {
+    root: null,
+    threshold: 0.15,
+    rootMargin: '0px 0px -60px 0px'
+  };
+
+  const introObserver = new IntersectionObserver((entries, observer) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('reveal-3d-active');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, introObserverOptions);
+
+  introCards.forEach(cardWrapper => {
+    introObserver.observe(cardWrapper);
+  });
 });
