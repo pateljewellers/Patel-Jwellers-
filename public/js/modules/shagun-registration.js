@@ -393,8 +393,8 @@ document.addEventListener('DOMContentLoaded', () => {
         this.y = init ? Math.random() * (introCanvas ? introCanvas.height : 500) : (introCanvas ? introCanvas.height : 500) + 10;
         this.vy = -(Math.random() * 0.5 + 0.15); // Slow rise
         this.vx = (Math.random() - 0.5) * 0.2;
-        this.size = Math.random() * 1.6 + 0.4;
-        this.alpha = Math.random() * 0.55 + 0.1;
+        this.size = Math.random() * 2.2 + 0.6; // Slightly larger sparkles
+        this.alpha = Math.random() * 0.65 + 0.25; // Higher minimum visibility
         this.fade = Math.random() * 0.0012 + 0.0004;
         this.color = Math.random() > 0.45 ? 'rgba(202, 161, 90,' : 'rgba(255, 255, 255,'; // Gold or white
         this.swingSpeed = Math.random() * 0.015 + 0.004;
@@ -428,7 +428,7 @@ document.addEventListener('DOMContentLoaded', () => {
         ictx.globalAlpha = Math.max(this.alpha, 0);
         ictx.fillStyle = this.color + this.alpha.toFixed(2) + ')';
         ictx.beginPath();
-        if (this.size > 1.1) {
+        if (this.size > 1.3) {
           // Sparkle diamond shape
           ictx.moveTo(this.x, this.y - this.size);
           ictx.lineTo(this.x + this.size, this.y);
@@ -453,8 +453,8 @@ document.addEventListener('DOMContentLoaded', () => {
         this.y = init ? Math.random() * (introCanvas ? introCanvas.height : 500) : (introCanvas ? introCanvas.height : 500) + 40;
         this.vy = -(Math.random() * 0.12 + 0.04); // slow rising
         this.vx = (Math.random() - 0.5) * 0.08;
-        this.radius = Math.random() * 25 + 8;
-        this.alpha = Math.random() * 0.015 + 0.002; // very faint
+        this.radius = Math.random() * 32 + 12; // Larger bubbles
+        this.alpha = Math.random() * 0.045 + 0.015; // Higher contrast bokehs
         this.fade = Math.random() * 0.00012 + 0.00004;
         this.color = Math.random() > 0.4 ? '202, 161, 90' : '155, 27, 42'; // gold or deep red
       }
@@ -481,10 +481,10 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     }
 
-    for (let i = 0; i < 30; i++) {
+    for (let i = 0; i < 45; i++) { // Increased particle count
       introParticles.push(new IntroSparkle(true));
     }
-    for (let i = 0; i < 5; i++) {
+    for (let i = 0; i < 8; i++) { // Increased bokeh count
       introBokehs.push(new IntroBokeh());
     }
 

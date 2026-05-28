@@ -1,7 +1,7 @@
 <%- include('../partials/layout-start') %>
-<%- include('../partials/header') %>
-<main class="main-content page-shagun">
-  <!-- <section class="section page-hero animate-fade-in">
+  <%- include('../partials/header') %>
+    <main class="main-content page-shagun">
+      <!-- <section class="section page-hero animate-fade-in">
     <div class="container">
       <span class="section-eyebrow">REGISTRATION</span>
       <h1 class="shagun-title">Shagun 2026</h1>
@@ -25,342 +25,466 @@
   </section> -->
 
 
-  <section class="section page-hero premium-shagun-hero">
-    <div class="hero-particles-container" id="hero-particles"></div>
-    <div class="hero-overlay-glow"></div>
-    
-    <div class="container hero-split-container">
-      
-      <div class="hero-visual-3d">
-        <div class="pure-3d-sanctuary" id="3d-sanctuary-room">
-          <div class="logo-3d-object" id="interactive-3d-logo">
-            <div class="logo-face face-front">
-              <img src="/images/logo/logo.png?v=2.2" alt="Patel Jewellers" class="sanctuary-pure-logo">
-            </div>
-            <div class="logo-face face-back">
-              <img src="/images/logo/logo.png?v=2.2" alt="Patel Jewellers" class="sanctuary-pure-logo">
+      <section class="section page-hero premium-shagun-hero">
+        <div class="hero-particles-container" id="hero-particles"></div>
+        <div class="hero-overlay-glow"></div>
+
+        <div class="container hero-split-container">
+
+          <div class="hero-visual-3d">
+            <div class="pure-3d-sanctuary" id="3d-sanctuary-room">
+              <div class="logo-3d-object" id="interactive-3d-logo">
+                <div class="logo-face face-front">
+                  <img src="/images/logo/logo.png?v=2.2" alt="Patel Jewellers" class="sanctuary-pure-logo">
+                </div>
+                <div class="logo-face face-back">
+                  <img src="/images/logo/logo.png?v=2.2" alt="Patel Jewellers" class="sanctuary-pure-logo">
+                </div>
+              </div>
+              <div class="sanctuary-core-glow"></div>
             </div>
           </div>
-          <div class="sanctuary-core-glow"></div>
-        </div>
-      </div>
-  
-      <div class="hero-content-premium">
-        <span class="section-eyebrow animate-track">PATEL JEWELLERS</span>
-        <h1 class="shagun-title-luxury">Shagun <span>2026</span></h1>
-        <p class="lead-premium">Register for an ultra-exclusive bridal experience. Unlock customized jewellery planning, priority consultations, and elite wedding season privileges.</p>
-        
-        <div class="hero-badges">
-          <div class="badge-item"><span class="gold-dot"></span> Royal Consultation</div>
-          <div class="badge-item"><span class="gold-dot"></span> Season Privileges</div>
-        </div>
-      </div>
-  
-    </div>
-  </section>
-  
- 
 
+          <div class="hero-content-premium">
+            <span class="section-eyebrow animate-track">PATEL JEWELLERS</span>
+            <h1 class="shagun-title-luxury">Shagun <span>2026</span></h1>
+            <p class="lead-premium">Register for an ultra-exclusive bridal experience. Unlock customized jewellery
+              planning, priority consultations, and elite wedding season privileges.</p>
 
-  <section class="section shagun-intro" id="shagun-intro-section">
-    <!-- Animated background particles canvas -->
-    <canvas class="shagun-intro-canvas" id="shagun-intro-canvas"></canvas>
-
-    <!-- Faint background ambient decorative elements -->
-    <div class="shagun-intro-ambient" aria-hidden="true">
-      <div class="shagun-intro-orb shagun-intro-orb--gold"></div>
-      <div class="shagun-intro-orb shagun-intro-orb--burgundy"></div>
-      <div class="shagun-intro-mandala">
-        <svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="100" cy="100" r="92" stroke="rgba(155,27,42,0.03)" stroke-width="0.75" stroke-dasharray="6 8"/>
-          <circle cx="100" cy="100" r="70" stroke="rgba(155,27,42,0.02)" stroke-width="0.5"/>
-          <path d="M100 10 C100 10, 106 32, 100 50 C94 32, 100 10, 100 10 Z" fill="rgba(176,168,154,0.01)" stroke="rgba(155,27,42,0.03)" stroke-width="0.5"/>
-          <path d="M100 190 C100 190, 106 168, 100 150 C94 168, 100 190, 100 190 Z" fill="rgba(176,168,154,0.01)" stroke="rgba(155,27,42,0.03)" stroke-width="0.5"/>
-          <path d="M10 100 C10 100, 32 106, 50 100 C32 94, 10 100, 10 100 Z" fill="rgba(176,168,154,0.01)" stroke="rgba(155,27,42,0.03)" stroke-width="0.5"/>
-          <path d="M190 100 C190 100, 168 106, 150 100 C168 94, 190 100, 190 100 Z" fill="rgba(176,168,154,0.01)" stroke="rgba(155,27,42,0.03)" stroke-width="0.5"/>
-        </svg>
-      </div>
-    </div>
-
-    <div class="container">
-      <div class="shagun-intro__grid">
-        <!-- ===== LEFT SIDE: Typography & Main Copy ===== -->
-        <div class="shagun-intro__text reveal-up">
-          <div class="intro-eyebrow-wrap">
-            <span class="section-eyebrow">What is Shagun Registration?</span>
-            <span class="intro-eyebrow__line" aria-hidden="true"></span>
+            <div class="hero-badges">
+              <div class="badge-item"><span class="gold-dot"></span> Royal Consultation</div>
+              <div class="badge-item"><span class="gold-dot"></span> Season Privileges</div>
+            </div>
           </div>
-          <h2 class="intro-luxury-title">It is a dedicated <span class="gold-gradient-text">bridal registration</span> experience for your wedding jewellery journey</h2>
-          <p class="intro-desc">Our Shagun Registration helps brides plan every detail with confidence. From first registration to consultation and jewellery planning, the process is crafted to be simple, beautiful, and fully focused on your bridal celebration.</p>
-          
-          <blockquote class="intro-luxury-quote">
-            <span class="intro-quote-mark">“</span>
-            <p class="intro-quote-text">Every bride deserves an absolute sanctuary of planning where wedding dreams are crafted in pristine gold.</p>
-          </blockquote>
+
         </div>
+      </section>
 
-        <!-- ===== RIGHT SIDE: 3D Mouse Tilt Staggered Card Grid ===== -->
-        <div class="shagun-intro__showcase">
-          <div class="shagun-intro-cards-3d" id="shagun-intro-cards-container">
-            
-            <!-- Card 1 -->
-            <div class="shagun-intro-card-3d-wrapper" data-tilt-card="0">
-              <div class="shagun-intro-card-3d">
-                <div class="card-filigree-border"></div>
-                <div class="card-glow-reflection"></div>
-                <div class="card-shimmer-sweep"></div>
-                
-                <div class="card-icon-wrap">
-                  <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M16 29C23.1797 29 29 23.1797 29 16C29 8.8203 23.1797 3 16 3C8.8203 3 3 8.8203 3 16C3 23.1797 8.8203 29 16 29Z" stroke="url(#introGoldGrad1)" stroke-width="1.5" stroke-linecap="round"/>
-                    <path d="M12 16C12 13.7909 13.7909 12 16 12C18.2091 12 20 13.7909 20 16C20 18.2091 18.2091 20 16 20C13.7909 20 12 18.2091 12 16Z" stroke="url(#introGoldGrad1)" stroke-width="1.5"/>
-                    <path d="M16 6V10M16 22V26M6 16H10M22 16H26" stroke="url(#introGoldGrad1)" stroke-width="1.5" stroke-linecap="round"/>
-                    <defs>
-                      <linearGradient id="introGoldGrad1" x1="3" y1="3" x2="29" y2="29" gradientUnits="userSpaceOnUse">
-                        <stop stop-color="#bf953f"/>
-                        <stop offset="0.5" stop-color="#fcf6ba"/>
-                        <stop offset="1" stop-color="#aa771c"/>
-                      </linearGradient>
-                    </defs>
-                  </svg>
-                </div>
-                
-                <div class="card-content-wrap">
-                  <h3>Curated bridal service</h3>
-                  <p>Secure access to personalised bridal jewellery guidance along with exclusive wedding benefits.</p>
-                </div>
-              </div>
-            </div>
 
-            <!-- Card 2 -->
-            <div class="shagun-intro-card-3d-wrapper" data-tilt-card="1">
-              <div class="shagun-intro-card-3d">
-                <div class="card-filigree-border"></div>
-                <div class="card-glow-reflection"></div>
-                <div class="card-shimmer-sweep"></div>
-                
-                <div class="card-icon-wrap">
-                  <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M16 29C23.1797 29 29 23.1797 29 16C29 8.8203 23.1797 3 16 3C8.8203 3 3 8.8203 3 16C3 23.1797 8.8203 29 16 29Z" stroke="url(#introGoldGrad2)" stroke-width="1.5"/>
-                    <path d="M21 11L11 21M11 11L21 21" stroke="url(#introGoldGrad2)" stroke-width="1.5" stroke-linecap="round"/>
-                    <defs>
-                      <linearGradient id="introGoldGrad2" x1="3" y1="3" x2="29" y2="29" gradientUnits="userSpaceOnUse">
-                        <stop stop-color="#bf953f"/>
-                        <stop offset="0.5" stop-color="#fcf6ba"/>
-                        <stop offset="1" stop-color="#aa771c"/>
-                      </linearGradient>
-                    </defs>
-                  </svg>
-                </div>
-                
-                <div class="card-content-wrap">
-                  <h3>Expert consultation</h3>
-                  <p>Work with our jewellery specialists to choose the perfect set for your wedding, reception and ceremonies.</p>
-                </div>
-              </div>
-            </div>
 
-            <!-- Card 3 -->
-            <div class="shagun-intro-card-3d-wrapper" data-tilt-card="2">
-              <div class="shagun-intro-card-3d">
-                <div class="card-filigree-border"></div>
-                <div class="card-glow-reflection"></div>
-                <div class="card-shimmer-sweep"></div>
-                
-                <div class="card-icon-wrap">
-                  <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M16 29C23.1797 29 29 23.1797 29 16C29 8.8203 23.1797 3 16 3C8.8203 3 3 8.8203 3 16C3 23.1797 8.8203 29 16 29Z" stroke="url(#introGoldGrad3)" stroke-width="1.5"/>
-                    <path d="M10 16L14 20L22 12" stroke="url(#introGoldGrad3)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                    <defs>
-                      <linearGradient id="introGoldGrad3" x1="3" y1="3" x2="29" y2="29" gradientUnits="userSpaceOnUse">
-                        <stop stop-color="#bf953f"/>
-                        <stop offset="0.5" stop-color="#fcf6ba"/>
-                        <stop offset="1" stop-color="#aa771c"/>
-                      </linearGradient>
-                    </defs>
-                  </svg>
-                </div>
-                
-                <div class="card-content-wrap">
-                  <h3>Complete planning</h3>
-                  <p>Register your details once, then move through the process with a single elegant registration workflow.</p>
-                </div>
-              </div>
-            </div>
 
+      <section class="section shagun-intro" id="shagun-intro-section">
+        <!-- Animated background particles canvas -->
+        <canvas class="shagun-intro-canvas" id="shagun-intro-canvas"></canvas>
+
+        <!-- Faint background ambient decorative elements -->
+        <div class="shagun-intro-ambient" aria-hidden="true">
+          <div class="shagun-intro-orb shagun-intro-orb--gold"></div>
+          <div class="shagun-intro-orb shagun-intro-orb--burgundy"></div>
+
+          <!-- Hanging Garland (Toran) Elements -->
+          <div class="intro-garland garland--left">
+            <svg viewBox="0 0 30 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="15" cy="15" r="5" fill="url(#toranGold)" />
+              <line x1="15" y1="20" x2="15" y2="40" stroke="rgba(202,161,90,0.35)" stroke-width="1.2" />
+              <circle cx="15" cy="48" r="8" fill="url(#toranGold)" />
+              <line x1="15" y1="56" x2="15" y2="85" stroke="rgba(202,161,90,0.35)" stroke-width="1.2" />
+              <circle cx="15" cy="95" r="10" fill="url(#toranGold)" />
+              <line x1="15" y1="105" x2="15" y2="140" stroke="rgba(202,161,90,0.35)" stroke-width="1.2" />
+              <circle cx="15" cy="150" r="8" fill="url(#toranGold)" />
+              <line x1="15" y1="158" x2="15" y2="200" stroke="rgba(202,161,90,0.35)" stroke-width="1.2" />
+              <path d="M7 210 C7 210, 15 240, 15 240 C15 240, 23 210, 23 210 Z" fill="url(#toranGold)" />
+              <defs>
+                <linearGradient id="toranGold" x1="0" y1="0" x2="30" y2="300" gradientUnits="userSpaceOnUse">
+                  <stop stop-color="#7a1522" stop-opacity="0.2" />
+                  <stop offset="0.5" stop-color="#9b1b2a" stop-opacity="0.36" />
+                  <stop offset="1" stop-color="#3d0008" stop-opacity="0.25" />
+                </linearGradient>
+              </defs>
+            </svg>
+          </div>
+          <div class="intro-garland garland--right">
+            <svg viewBox="0 0 30 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="15" cy="15" r="5" fill="url(#toranGold)" />
+              <line x1="15" y1="20" x2="15" y2="40" stroke="rgba(202,161,90,0.35)" stroke-width="1.2" />
+              <circle cx="15" cy="48" r="8" fill="url(#toranGold)" />
+              <line x1="15" y1="56" x2="15" y2="85" stroke="rgba(202,161,90,0.35)" stroke-width="1.2" />
+              <circle cx="15" cy="95" r="10" fill="url(#toranGold)" />
+              <line x1="15" y1="105" x2="15" y2="140" stroke="rgba(202,161,90,0.35)" stroke-width="1.2" />
+              <circle cx="15" cy="150" r="8" fill="url(#toranGold)" />
+              <line x1="15" y1="158" x2="15" y2="200" stroke="rgba(202,161,90,0.35)" stroke-width="1.2" />
+              <path d="M7 210 C7 210, 15 240, 15 240 C15 240, 23 210, 23 210 Z" fill="url(#toranGold)" />
+            </svg>
+          </div>
+
+          <!-- Scattered Floating Gold Flowers ("Much Flowers" spread across FULL background) -->
+
+          <!-- Design 1: Royal Blooming Lotus (Flower 1, 5, 7) -->
+          <div class="intro-floating-flower flower--1">
+            <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M50 15 C42 35, 12 45, 50 82 C88 45, 58 35, 50 15 Z" fill="url(#flowerGoldGrad)" />
+              <path d="M50 32 C43 45, 25 50, 50 78 C75 50, 57 45, 50 32 Z" fill="url(#flowerGoldGrad)" opacity="0.85" />
+              <path d="M50 48 C46 55, 38 58, 50 72 C62 58, 54 55, 50 48 Z" fill="url(#flowerGoldGrad)" opacity="0.65" />
+              <defs>
+                <linearGradient id="flowerGoldGrad" x1="0" y1="0" x2="100" y2="100" gradientUnits="userSpaceOnUse">
+                  <stop stop-color="#7a1522" stop-opacity="0.16" />
+                  <stop offset="0.5" stop-color="#9b1b2a" stop-opacity="0.26" />
+                  <stop offset="1" stop-color="#3d0008" stop-opacity="0.18" />
+                </linearGradient>
+              </defs>
+            </svg>
+          </div>
+          <div class="intro-floating-flower flower--5">
+            <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M50 15 C42 35, 12 45, 50 82 C88 45, 58 35, 50 15 Z" fill="url(#flowerGoldGrad)" />
+              <path d="M50 32 C43 45, 25 50, 50 78 C75 50, 57 45, 50 32 Z" fill="url(#flowerGoldGrad)" opacity="0.85" />
+            </svg>
+          </div>
+          <div class="intro-floating-flower flower--7">
+            <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M50 15 C42 35, 12 45, 50 82 C88 45, 58 35, 50 15 Z" fill="url(#flowerGoldGrad)" />
+              <path d="M50 32 C43 45, 25 50, 50 78 C75 50, 57 45, 50 32 Z" fill="url(#flowerGoldGrad)" opacity="0.85" />
+            </svg>
+          </div>
+
+          <!-- Design 2: Traditional 8-Petal Marigold Bloom (Flower 2, 4, 8) -->
+          <div class="intro-floating-flower flower--2">
+            <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="50" cy="50" r="6" fill="url(#flowerGoldGrad)" />
+              <path d="M50 35 C42 18, 58 18, 50 35" fill="url(#flowerGoldGrad)" />
+              <path d="M50 65 C42 82, 58 82, 50 65" fill="url(#flowerGoldGrad)" />
+              <path d="M35 50 C18 42, 18 58, 35 50" fill="url(#flowerGoldGrad)" />
+              <path d="M65 50 C82 42, 82 58, 65 50" fill="url(#flowerGoldGrad)" />
+              <path d="M39.4 39.4 C28 28, 39.4 16, 39.4 39.4" fill="url(#flowerGoldGrad)" />
+              <path d="M60.6 60.6 C72 72, 60.6 84, 60.6 60.6" fill="url(#flowerGoldGrad)" />
+              <path d="M60.6 39.4 C72 28, 84 39.4, 60.6 39.4" fill="url(#flowerGoldGrad)" />
+              <path d="M39.4 60.6 C28 72, 16 60.6, 39.4 60.6" fill="url(#flowerGoldGrad)" />
+              <circle cx="50" cy="50" r="22" stroke="url(#flowerGoldGrad)" stroke-width="0.5" stroke-dasharray="2 2" />
+            </svg>
+          </div>
+          <div class="intro-floating-flower flower--4">
+            <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="50" cy="50" r="6" fill="url(#flowerGoldGrad)" />
+              <path d="M50 35 C42 18, 58 18, 50 35" fill="url(#flowerGoldGrad)" />
+              <path d="M50 65 C42 82, 58 82, 50 65" fill="url(#flowerGoldGrad)" />
+              <path d="M35 50 C18 42, 18 58, 35 50" fill="url(#flowerGoldGrad)" />
+              <path d="M65 50 C82 42, 82 58, 65 50" fill="url(#flowerGoldGrad)" />
+              <circle cx="50" cy="50" r="18" stroke="url(#flowerGoldGrad)" stroke-width="0.5" stroke-dasharray="2 2" />
+            </svg>
+          </div>
+          <div class="intro-floating-flower flower--8">
+            <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="50" cy="50" r="6" fill="url(#flowerGoldGrad)" />
+              <path d="M50 35 C42 18, 58 18, 50 35" fill="url(#flowerGoldGrad)" />
+              <path d="M50 65 C42 82, 58 82, 50 65" fill="url(#flowerGoldGrad)" />
+              <path d="M35 50 C18 42, 18 58, 35 50" fill="url(#flowerGoldGrad)" />
+              <path d="M65 50 C82 42, 82 58, 65 50" fill="url(#flowerGoldGrad)" />
+              <circle cx="50" cy="50" r="18" stroke="url(#flowerGoldGrad)" stroke-width="0.5" stroke-dasharray="2 2" />
+            </svg>
+          </div>
+
+          <!-- Design 3: Beautiful Jasmine Floral Bud (Flower 3, 6) -->
+          <div class="intro-floating-flower flower--3">
+            <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M50 15 C32 38, 32 62, 50 85 C68 62, 68 38, 50 15 Z" fill="url(#flowerGoldGrad)" />
+              <path d="M50 32 C38 48, 38 62, 50 78 C62 62, 62 48, 50 32 Z" fill="url(#flowerGoldGrad)" opacity="0.8" />
+              <path d="M50 48 C42 58, 42 66, 50 72 C58 66, 58 58, 50 48 Z" fill="url(#flowerGoldGrad)" opacity="0.5" />
+            </svg>
+          </div>
+          <div class="intro-floating-flower flower--6">
+            <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M50 15 C32 38, 32 62, 50 85 C68 62, 68 38, 50 15 Z" fill="url(#flowerGoldGrad)" />
+              <path d="M50 32 C38 48, 38 62, 50 78 C62 62, 62 48, 50 32 Z" fill="url(#flowerGoldGrad)" opacity="0.8" />
+            </svg>
           </div>
         </div>
 
-      </div>
-    </div>
-  </section>
+        <div class="container">
+          <div class="shagun-intro__grid">
+            <!-- ===== LEFT SIDE: Typography & Main Copy ===== -->
+            <div class="shagun-intro__text reveal-up">
+              <div class="intro-eyebrow-wrap">
+                <span class="section-eyebrow">What is Shagun Registration?</span>
+                <span class="intro-eyebrow__line" aria-hidden="true"></span>
+              </div>
+              <h2 class="intro-luxury-title">It is a dedicated <span class="gold-gradient-text">bridal
+                  registration</span> experience for your wedding jewellery journey</h2>
+              <p class="intro-desc">Our Shagun Registration helps brides plan every detail with confidence. From first
+                registration to consultation and jewellery planning, the process is crafted to be simple, beautiful, and
+                fully focused on your bridal celebration.</p>
 
-  <section class="section shagun-process">
-    <div class="container shagun-process__inner">
-      <div class="process-step reveal-up">
-        <div class="process-step__marker">1</div>
-        <h3>Registration</h3>
-        <p>Share your bridal details so our team can begin your Shagun journey with the right consultation.</p>
-      </div>
-      <div class="process-step reveal-up">
-        <div class="process-step__marker">2</div>
-        <h3>Consultation</h3>
-        <p>Meet our jewellery experts, review designs, and choose the ideal pieces for your wedding wardrobe.</p>
-      </div>
-      <div class="process-step reveal-up">
-        <div class="process-step__marker">3</div>
-        <h3>Jewellery planning</h3>
-        <p>Finalize your bridal jewellery plan with confidence and receive personalised support every step of the way.</p>
-      </div>
-    </div>
-  </section>
+              <blockquote class="intro-luxury-quote">
+                <span class="intro-quote-mark">“</span>
+                <p class="intro-quote-text">Every bride deserves an absolute sanctuary of planning where wedding dreams
+                  are crafted in pristine gold.</p>
+              </blockquote>
+            </div>
 
-  <section class="section shagun-registration">
-    <div class="shagun-registration__wrapper">
-      <div class="container">
-        <div class="shagun-registration__header">
-          <span class="section-eyebrow">REGISTRATION</span>
-          <h2 class="shagun-section-title">Shagun 2026</h2>
-    
+            <!-- ===== RIGHT SIDE: 3D Mouse Tilt Staggered Card Grid ===== -->
+            <div class="shagun-intro__showcase">
+              <div class="shagun-intro-cards-3d" id="shagun-intro-cards-container">
+
+                <!-- Card 1 -->
+                <div class="shagun-intro-card-3d-wrapper" data-tilt-card="0">
+                  <div class="shagun-intro-card-3d">
+                    <div class="card-filigree-border"></div>
+                    <div class="card-glow-reflection"></div>
+                    <div class="card-shimmer-sweep"></div>
+
+                    <div class="card-icon-wrap">
+                      <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                          d="M16 29C23.1797 29 29 23.1797 29 16C29 8.8203 23.1797 3 16 3C8.8203 3 3 8.8203 3 16C3 23.1797 8.8203 29 16 29Z"
+                          stroke="url(#introGoldGrad1)" stroke-width="1.5" stroke-linecap="round" />
+                        <path
+                          d="M12 16C12 13.7909 13.7909 12 16 12C18.2091 12 20 13.7909 20 16C20 18.2091 18.2091 20 16 20C13.7909 20 12 18.2091 12 16Z"
+                          stroke="url(#introGoldGrad1)" stroke-width="1.5" />
+                        <path d="M16 6V10M16 22V26M6 16H10M22 16H26" stroke="url(#introGoldGrad1)" stroke-width="1.5"
+                          stroke-linecap="round" />
+                        <defs>
+                          <linearGradient id="introGoldGrad1" x1="3" y1="3" x2="29" y2="29"
+                            gradientUnits="userSpaceOnUse">
+                            <stop stop-color="#bf953f" />
+                            <stop offset="0.5" stop-color="#fcf6ba" />
+                            <stop offset="1" stop-color="#aa771c" />
+                          </linearGradient>
+                        </defs>
+                      </svg>
+                    </div>
+
+                    <div class="card-content-wrap">
+                      <h3>Curated bridal service</h3>
+                      <p>Secure access to personalised bridal jewellery guidance along with exclusive wedding benefits.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="shagun-intro-card-3d-wrapper" data-tilt-card="1">
+                  <div class="shagun-intro-card-3d">
+                    <div class="card-filigree-border"></div>
+                    <div class="card-glow-reflection"></div>
+                    <div class="card-shimmer-sweep"></div>
+
+                    <div class="card-icon-wrap">
+                      <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                          d="M16 29C23.1797 29 29 23.1797 29 16C29 8.8203 23.1797 3 16 3C8.8203 3 3 8.8203 3 16C3 23.1797 8.8203 29 16 29Z"
+                          stroke="url(#introGoldGrad2)" stroke-width="1.5" />
+                        <path d="M21 11L11 21M11 11L21 21" stroke="url(#introGoldGrad2)" stroke-width="1.5"
+                          stroke-linecap="round" />
+                        <defs>
+                          <linearGradient id="introGoldGrad2" x1="3" y1="3" x2="29" y2="29"
+                            gradientUnits="userSpaceOnUse">
+                            <stop stop-color="#bf953f" />
+                            <stop offset="0.5" stop-color="#fcf6ba" />
+                            <stop offset="1" stop-color="#aa771c" />
+                          </linearGradient>
+                        </defs>
+                      </svg>
+                    </div>
+
+                    <div class="card-content-wrap">
+                      <h3>Expert consultation</h3>
+                      <p>Work with our jewellery specialists to choose the perfect set for your wedding, reception and
+                        ceremonies.</p>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="shagun-intro-card-3d-wrapper" data-tilt-card="2">
+                  <div class="shagun-intro-card-3d">
+                    <div class="card-filigree-border"></div>
+                    <div class="card-glow-reflection"></div>
+                    <div class="card-shimmer-sweep"></div>
+
+                    <div class="card-icon-wrap">
+                      <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                          d="M16 29C23.1797 29 29 23.1797 29 16C29 8.8203 23.1797 3 16 3C8.8203 3 3 8.8203 3 16C3 23.1797 8.8203 29 16 29Z"
+                          stroke="url(#introGoldGrad3)" stroke-width="1.5" />
+                        <path d="M10 16L14 20L22 12" stroke="url(#introGoldGrad3)" stroke-width="1.5"
+                          stroke-linecap="round" stroke-linejoin="round" />
+                        <defs>
+                          <linearGradient id="introGoldGrad3" x1="3" y1="3" x2="29" y2="29"
+                            gradientUnits="userSpaceOnUse">
+                            <stop stop-color="#bf953f" />
+                            <stop offset="0.5" stop-color="#fcf6ba" />
+                            <stop offset="1" stop-color="#aa771c" />
+                          </linearGradient>
+                        </defs>
+                      </svg>
+                    </div>
+
+                    <div class="card-content-wrap">
+                      <h3>Complete planning</h3>
+                      <p>Register your details once, then move through the process with a single elegant registration
+                        workflow.</p>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+          </div>
         </div>
+      </section>
 
-        <div class="shagun-progress" aria-label="Registration steps">
-          <div class="shagun-progress__item is-active" role="listitem" data-step="1">
-            <strong>Step 1</strong>
-            Personal
-          </div>
-          <div class="shagun-progress__item is-complete" role="listitem" data-step="2">
-            <strong>Step 2</strong>
-            Wedding
-          </div>
-          <div class="shagun-progress__item" role="listitem" data-step="3">
-            <strong>Step 3</strong>
-            Documents
+
+
+      <section class="section shagun-registration">
+        <div class="shagun-registration__wrapper">
+          <div class="container">
+            <div class="shagun-registration__header">
+              <span class="section-eyebrow">REGISTRATION</span>
+              <h2 class="shagun-section-title">Shagun 2026</h2>
+
+            </div>
+
+            <div class="shagun-progress" aria-label="Registration steps">
+              <div class="shagun-progress__item is-active" role="listitem" data-step="1">
+                <strong>Step 1</strong>
+                Personal
+              </div>
+              <div class="shagun-progress__item is-complete" role="listitem" data-step="2">
+                <strong>Step 2</strong>
+                Wedding
+              </div>
+              <div class="shagun-progress__item" role="listitem" data-step="3">
+                <strong>Step 3</strong>
+                Documents
+              </div>
+            </div>
+
+            <form id="shagun-registration-form" class="shagun-form" novalidate>
+              <div class="shagun-form-step" data-step="0">
+                <div class="form-card">
+                  <div class="form-group">
+                    <label class="form-label" for="brideName">Bride's full name</label>
+                    <input class="form-control" type="text" id="brideName" name="brideName" data-required="true"
+                      placeholder="Enter full name">
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label" for="mobileNumber">Mobile number</label>
+                    <input class="form-control" type="tel" id="mobileNumber" name="mobileNumber" data-required="true"
+                      placeholder="Enter mobile number">
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label" for="dateOfBirth">Date of birth</label>
+                    <input class="form-control" type="date" id="dateOfBirth" name="dateOfBirth" data-required="true">
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label" for="fullAddress">Full address</label>
+                    <textarea class="form-control" id="fullAddress" name="fullAddress" data-required="true" rows="4"
+                      placeholder="Enter address"></textarea>
+                  </div>
+                  <div class="form-row two-col">
+                    <div class="form-group">
+                      <label class="form-label" for="pinCode">PIN code</label>
+                      <input class="form-control" type="text" id="pinCode" name="pinCode" data-required="true"
+                        placeholder="PIN code">
+                    </div>
+                    <div class="form-group">
+                      <label class="form-label" for="city">City</label>
+                      <input class="form-control" type="text" id="city" name="city" data-required="true"
+                        placeholder="City">
+                    </div>
+                  </div>
+                </div>
+                <div class="shagun-form-actions">
+                  <button class="btn btn--outline" data-action="next-step">Continue</button>
+                </div>
+              </div>
+
+              <div class="shagun-form-step" data-step="1">
+                <div class="form-card">
+                  <div class="form-group">
+                    <label class="form-label" for="weddingDate">Wedding date</label>
+                    <input class="form-control" type="date" id="weddingDate" name="weddingDate" data-required="true">
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label" for="weddingVenue">Wedding venue</label>
+                    <input class="form-control" type="text" id="weddingVenue" name="weddingVenue" data-required="true"
+                      placeholder="Venue name or address">
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label" for="referenceName">Reference name (optional)</label>
+                    <input class="form-control" type="text" id="referenceName" name="referenceName"
+                      placeholder="Who referred you?">
+                  </div>
+                </div>
+                <div class="shagun-form-actions">
+                  <button class="btn btn--outline" data-action="prev-step">Back</button>
+                  <button class="btn btn--primary" data-action="next-step">Continue</button>
+                </div>
+              </div>
+
+              <div class="shagun-form-step" data-step="2">
+                <div class="form-card">
+                  <div class="form-group">
+                    <label class="form-label">Identity proof</label>
+                    <div class="radio-group">
+                      <label class="radio-field">
+                        <input type="radio" name="identityProofType" value="Aadhar card" checked>
+                        Aadhar card
+                      </label>
+                      <label class="radio-field">
+                        <input type="radio" name="identityProofType" value="Voter ID">
+                        Voter ID
+                      </label>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label" for="identityProof">Upload identity document</label>
+                    <div class="file-upload">
+                      <input class="form-control" type="file" id="identityProof" name="identityProof"
+                        accept="image/*,.pdf">
+                      <p>Choose JPG, PNG, WebP or PDF up to 5 MB.</p>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label">Wedding proof</label>
+                    <div class="radio-group">
+                      <label class="radio-field">
+                        <input type="radio" name="weddingProofType" value="Venue booking receipt" checked>
+                        Venue booking receipt
+                      </label>
+                      <label class="radio-field">
+                        <input type="radio" name="weddingProofType" value="Wedding invitation card">
+                        Wedding invitation card
+                      </label>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label" for="weddingProof">Upload wedding proof</label>
+                    <div class="file-upload">
+                      <input class="form-control" type="file" id="weddingProof" name="weddingProof"
+                        accept="image/*,.pdf">
+                      <p>Choose JPG, PNG, WebP or PDF up to 5 MB.</p>
+                    </div>
+                  </div>
+                  <div class="terms-card">
+                    <h3>Terms & Conditions</h3>
+                    <div class="terms-text">
+                      <p>1. Eligibility: Exclusively for brides whose weddings are scheduled during the upcoming season.
+                        All details must be accurate and complete.</p>
+                      <p>2. Mandatory Registration: Online registration is required to reserve Shagun consultation and
+                        bridal privileges.</p>
+                      <p>3. Verification: Aadhar or approved identity proof and wedding proof must be provided for
+                        registration approval.</p>
+                      <p>4. Privacy: Your information is handled securely and only used for registration and
+                        consultation.</p>
+                    </div>
+                    <label class="form-group" style="margin-top: var(--space-lg);">
+                      <input type="checkbox" id="agreeTerms" name="agreeTerms" data-required="true"
+                        style="margin-right: 0.75rem;">
+                      I agree to the Terms & Conditions
+                    </label>
+                  </div>
+                </div>
+                <div class="shagun-form-actions">
+                  <button class="btn btn--outline" data-action="prev-step">Back</button>
+                  <button class="btn btn--primary" type="submit">Submit registration</button>
+                </div>
+                <p class="shagun-submit-note" id="shagun-submit-note"></p>
+              </div>
+            </form>
           </div>
         </div>
-
-        <form id="shagun-registration-form" class="shagun-form" novalidate>
-          <div class="shagun-form-step" data-step="0">
-            <div class="form-card">
-              <div class="form-group">
-                <label class="form-label" for="brideName">Bride's full name</label>
-                <input class="form-control" type="text" id="brideName" name="brideName" data-required="true" placeholder="Enter full name">
-              </div>
-              <div class="form-group">
-                <label class="form-label" for="mobileNumber">Mobile number</label>
-                <input class="form-control" type="tel" id="mobileNumber" name="mobileNumber" data-required="true" placeholder="Enter mobile number">
-              </div>
-              <div class="form-group">
-                <label class="form-label" for="dateOfBirth">Date of birth</label>
-                <input class="form-control" type="date" id="dateOfBirth" name="dateOfBirth" data-required="true">
-              </div>
-              <div class="form-group">
-                <label class="form-label" for="fullAddress">Full address</label>
-                <textarea class="form-control" id="fullAddress" name="fullAddress" data-required="true" rows="4" placeholder="Enter address"></textarea>
-              </div>
-              <div class="form-row two-col">
-                <div class="form-group">
-                  <label class="form-label" for="pinCode">PIN code</label>
-                  <input class="form-control" type="text" id="pinCode" name="pinCode" data-required="true" placeholder="PIN code">
-                </div>
-                <div class="form-group">
-                  <label class="form-label" for="city">City</label>
-                  <input class="form-control" type="text" id="city" name="city" data-required="true" placeholder="City">
-                </div>
-              </div>
-            </div>
-            <div class="shagun-form-actions">
-              <button class="btn btn--outline" data-action="next-step">Continue</button>
-            </div>
-          </div>
-
-          <div class="shagun-form-step" data-step="1">
-            <div class="form-card">
-              <div class="form-group">
-                <label class="form-label" for="weddingDate">Wedding date</label>
-                <input class="form-control" type="date" id="weddingDate" name="weddingDate" data-required="true">
-              </div>
-              <div class="form-group">
-                <label class="form-label" for="weddingVenue">Wedding venue</label>
-                <input class="form-control" type="text" id="weddingVenue" name="weddingVenue" data-required="true" placeholder="Venue name or address">
-              </div>
-              <div class="form-group">
-                <label class="form-label" for="referenceName">Reference name (optional)</label>
-                <input class="form-control" type="text" id="referenceName" name="referenceName" placeholder="Who referred you?">
-              </div>
-            </div>
-            <div class="shagun-form-actions">
-              <button class="btn btn--outline" data-action="prev-step">Back</button>
-              <button class="btn btn--primary" data-action="next-step">Continue</button>
-            </div>
-          </div>
-
-          <div class="shagun-form-step" data-step="2">
-            <div class="form-card">
-              <div class="form-group">
-                <label class="form-label">Identity proof</label>
-                <div class="radio-group">
-                  <label class="radio-field">
-                    <input type="radio" name="identityProofType" value="Aadhar card" checked>
-                    Aadhar card
-                  </label>
-                  <label class="radio-field">
-                    <input type="radio" name="identityProofType" value="Voter ID">
-                    Voter ID
-                  </label>
-                </div>
-              </div>
-              <div class="form-group">
-                <label class="form-label" for="identityProof">Upload identity document</label>
-                <div class="file-upload">
-                  <input class="form-control" type="file" id="identityProof" name="identityProof" accept="image/*,.pdf">
-                  <p>Choose JPG, PNG, WebP or PDF up to 5 MB.</p>
-                </div>
-              </div>
-              <div class="form-group">
-                <label class="form-label">Wedding proof</label>
-                <div class="radio-group">
-                  <label class="radio-field">
-                    <input type="radio" name="weddingProofType" value="Venue booking receipt" checked>
-                    Venue booking receipt
-                  </label>
-                  <label class="radio-field">
-                    <input type="radio" name="weddingProofType" value="Wedding invitation card">
-                    Wedding invitation card
-                  </label>
-                </div>
-              </div>
-              <div class="form-group">
-                <label class="form-label" for="weddingProof">Upload wedding proof</label>
-                <div class="file-upload">
-                  <input class="form-control" type="file" id="weddingProof" name="weddingProof" accept="image/*,.pdf">
-                  <p>Choose JPG, PNG, WebP or PDF up to 5 MB.</p>
-                </div>
-              </div>
-              <div class="terms-card">
-                <h3>Terms & Conditions</h3>
-                <div class="terms-text">
-                  <p>1. Eligibility: Exclusively for brides whose weddings are scheduled during the upcoming season. All details must be accurate and complete.</p>
-                  <p>2. Mandatory Registration: Online registration is required to reserve Shagun consultation and bridal privileges.</p>
-                  <p>3. Verification: Aadhar or approved identity proof and wedding proof must be provided for registration approval.</p>
-                  <p>4. Privacy: Your information is handled securely and only used for registration and consultation.</p>
-                </div>
-                <label class="form-group" style="margin-top: var(--space-lg);">
-                  <input type="checkbox" id="agreeTerms" name="agreeTerms" data-required="true" style="margin-right: 0.75rem;">
-                  I agree to the Terms & Conditions
-                </label>
-              </div>
-            </div>
-            <div class="shagun-form-actions">
-              <button class="btn btn--outline" data-action="prev-step">Back</button>
-              <button class="btn btn--primary" type="submit">Submit registration</button>
-            </div>
-            <p class="shagun-submit-note" id="shagun-submit-note"></p>
-          </div>
-        </form>
-      </div>
-    </div>
-  </section>
-</main>
-<%- include('../partials/footer') %>
-<%- include('../partials/layout-end') %>
+      </section>
+    </main>
+    <%- include('../partials/footer') %>
+      <%- include('../partials/layout-end') %>
