@@ -449,10 +449,14 @@ document.addEventListener('DOMContentLoaded', () => {
   const heroSection = document.getElementById('collection-hero');
   const heroCanvas = document.getElementById('collection-hero-canvas');
   const assetWrapper = document.getElementById('collection-interactive-3d');
+  const zoomContainer = document.getElementById('collection-zoom-container');
+  const thrownPage = document.getElementById('thrown-page');
 
   if (!heroSection) return;
 
-  // 1. FLOATING CANVAS BACKGROUND SYSTEM (Warm rising gold sparks)
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // 1. FLOATING CANVAS BACKGROUND SYSTEM (Luxury brand red and gold rising sparks)
   if (heroCanvas) {
     const hctx = heroCanvas.getContext('2d');
     let sparkList = [];
@@ -482,11 +486,12 @@ document.addEventListener('DOMContentLoaded', () => {
         this.size = Math.random() * 3.5 + 1.0;
         this.speedY = -(Math.random() * 0.6 + 0.15); // Rising slowly
         this.speedX = Math.random() * 0.28 - 0.14;
-        this.opacity = Math.random() * 0.5 + 0.2;
+        this.opacity = Math.random() * 0.5 + 0.25;
         this.angle = Math.random() * Math.PI * 2;
         this.waveSpeed = Math.random() * 0.01 + 0.002;
         this.waveAmp = Math.random() * 0.8;
-        this.color = Math.random() > 0.6 ? 'rgba(202, 161, 90,' : 'rgba(255, 255, 255,'; // Gold or white
+        // Adapted colors for light theme: Luxury Burgundy (#9b1b2a) or Gold (#caa15a)
+        this.color = Math.random() > 0.55 ? 'rgba(202, 161, 90,' : 'rgba(155, 27, 42,';
       }
       update() {
         this.y += this.speedY;
@@ -533,11 +538,12 @@ document.addEventListener('DOMContentLoaded', () => {
       if (!heroCanvas || !hctx) return;
       hctx.clearRect(0, 0, hWidth, hHeight);
 
-      // Subtle mouse spotlight aura behind sparks
+      // Subtle mouse spotlight radial aura (Burgundy-to-Gold soft gradients for light background)
       if (hMouse.active && hMouse.x !== null) {
         const aura = hctx.createRadialGradient(hMouse.x, hMouse.y, 5, hMouse.x, hMouse.y, 180);
-        aura.addColorStop(0, 'rgba(202, 161, 90, 0.04)');
-        aura.addColorStop(1, 'rgba(255, 255, 255, 0)');
+        aura.addColorStop(0, 'rgba(155, 27, 42, 0.04)');
+        aura.addColorStop(0.5, 'rgba(202, 161, 90, 0.02)');
+        aura.addColorStop(1, 'rgba(237, 236, 236, 0)');
         hctx.fillStyle = aura;
         hctx.fillRect(0, 0, hWidth, hHeight);
       }
@@ -564,7 +570,7 @@ document.addEventListener('DOMContentLoaded', () => {
     animateHeroCanvas();
   }
 
-  // 2. 3D INTERACTIVE TILT FOR CENTERED IMAGE
+  // 2. 3D INTERACTIVE TILT FOR CENTERED IMAGE (Wrapper level)
   if (assetWrapper) {
     const handleHeroMouseMove = (e) => {
       const rect = heroSection.getBoundingClientRect();
@@ -610,5 +616,515 @@ document.addEventListener('DOMContentLoaded', () => {
     heroSection.addEventListener('mouseenter', handleHeroMouseEnter, { passive: true });
     heroSection.addEventListener('mouseleave', handleHeroMouseLeave, { passive: true });
   }
+
+  // 3. GSAP SCROLL-TRIGGER ZOOM & "THROWN FROM AFAR" OVERLAY TRANSITION
+  // 3. GSAP SCROLL-TRIGGER PINNED ZOOM & CRYSTAL-CLEAR INNER SHOWROOM PAGE
+  if (!prefersReducedMotion && zoomContainer && thrownPage && typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
+    gsap.registerPlugin(ScrollTrigger);
+
+    // Set initial card states for slide-in (keeping meta/inner static or pre-placed)
+    const innerCards = thrownPage.querySelectorAll('.editorial-panel');
+    gsap.set(innerCards, {
+      y: 40,
+      opacity: 0
+    });
+
+    gsap.set(thrownPage, {
+      opacity: 0,
+      display: 'none',
+      pointerEvents: 'none'
+    });
+
+    const innerContainer = thrownPage.querySelector('.thrown-page-inner');
+    if (innerContainer) {
+      gsap.set(innerContainer, {
+        opacity: 0
+      });
+    }
+
+    // ScrollTrigger Pinned Timeline configuration
+    const timeline = gsap.timeline({
+      scrollTrigger: {
+        trigger: heroSection,
+        start: 'top top',
+        end: '+=150%', // Pinned scroll track
+        scrub: 1.0, // Scrub perfectly maps timeline to scroll coordinates
+        pin: true, // Lock page scroll in place
+        anticipatePin: 1,
+        invalidateOnRefresh: true,
+        onLeave: () => {
+          thrownPage.classList.add('is-active');
+        },
+        onEnterBack: () => {
+          thrownPage.classList.remove('is-active');
+        }
+      }
+    });
+
+    // 1. Immersive 3D Zoom on the centered necklace (scrubs over the first 75% of scroll progress)
+    timeline.to(zoomContainer, {
+      scale: 26,
+      ease: 'power2.in' // Exponential zoom inward
+    }, 0);
+
+    // 2. Concurrently fade out editorial components
+    timeline.to('.asset-3d-shadow', {
+      opacity: 0,
+      scale: 2.2,
+      filter: 'blur(16px)',
+      ease: 'power1.out'
+    }, 0);
+
+    timeline.to('.collection-hero-editorial', {
+      opacity: 0,
+      x: -60,
+      ease: 'power1.out'
+    }, 0);
+
+    timeline.to('.hero-sidebar-indicator', {
+      opacity: 0,
+      x: -30,
+      ease: 'power1.out'
+    }, 0);
+
+    timeline.to('.hero-watermark', {
+      opacity: 0,
+      y: 50,
+      scale: 1.12,
+      ease: 'power1.out'
+    }, 0);
+
+    if (heroCanvas) {
+      timeline.to(heroCanvas, {
+        opacity: 0,
+        scale: 1.3,
+        ease: 'power1.out'
+      }, 0);
+    }
+
+    // 3. Fade in overlay using pure opacity (no parent scale/rotation/translation to ensure text stays sharp!)
+    // Scrubbed from 65% to 85% of scroll progress
+    timeline.to(thrownPage, {
+      display: 'block', /* Changed from flex to block */
+      opacity: 1,
+      pointerEvents: 'auto',
+      ease: 'power2.out'
+    }, 0.65);
+
+    // 4. Fade in the inner page container using pure opacity (protect headers from blur)
+    // Scrubbed from 75% to 90% of scroll progress
+    if (innerContainer) {
+      timeline.to(innerContainer, {
+        opacity: 1,
+        ease: 'power2.out'
+      }, 0.75);
+    }
+
+    // 5. Stagger slide up the image cards only (stagger from 80% to 100% of scroll progress)
+    if (innerCards.length > 0) {
+      timeline.to(innerCards, {
+        y: 0,
+        opacity: 1,
+        stagger: 0.08,
+        ease: 'power2.out',
+        force3D: false // Prevent 3D transform bitmap caching on text grids
+      }, 0.8);
+    }
+  } else if (prefersReducedMotion && thrownPage) {
+    // Fallback path if user prefers reduced motion or no scroll scripts are active
+    window.addEventListener('scroll', () => {
+      const top = heroSection.getBoundingClientRect().top;
+      if (top <= 0) {
+        gsap.to(thrownPage, {
+          display: 'block', /* Changed from flex to block */
+          opacity: 1,
+          pointerEvents: 'auto',
+          duration: 0.5
+        });
+      } else {
+        gsap.to(thrownPage, {
+          opacity: 0,
+          pointerEvents: 'none',
+          duration: 0.5,
+          onComplete: () => {
+            thrownPage.style.display = 'none';
+          }
+        });
+      }
+    }, { passive: true });
+  }
+
+  // Elegant back/return button action to reset scroll triggers and exit lookbook (optional if present)
+  const backBtn = document.getElementById('thrown-page-back');
+  if (backBtn && thrownPage) {
+    backBtn.addEventListener('click', () => {
+      // Smoothly scroll the thrown page overlay back to top
+      thrownPage.scrollTo({ top: 0, behavior: 'smooth' });
+      // Smoothly scroll the window back to top
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  }
+
+  if (thrownPage) {
+    // Master-level UX: scrolling up when already at the top of the lookbook page zooms back out smoothly to hero
+    // We use a direct scroll forwarding with a 3.0x speed multiplier to allow a single, continuous, snappy flick to exit!
+    thrownPage.addEventListener('wheel', (e) => {
+      if (thrownPage.scrollTop <= 8 && e.deltaY < 0 && window.scrollY > 0) {
+        if (e.cancelable) e.preventDefault();
+        thrownPage.scrollTop = 0; // Force lookbook cleanly to top
+        window.scrollBy(0, e.deltaY * 3.0);
+      }
+    }, { passive: false });
+
+    // Touch Swipe gesture for mobile devices: swiping down at the top of the page zooms back out smoothly
+    let touchStartY = 0;
+    let lastTouchY = 0;
+    thrownPage.addEventListener('touchstart', (e) => {
+      touchStartY = e.touches[0].clientY;
+      lastTouchY = touchStartY;
+    }, { passive: true });
+
+    thrownPage.addEventListener('touchmove', (e) => {
+      const touchY = e.touches[0].clientY;
+      const diffY = touchY - touchStartY; // positive means swipe down (natural scroll up)
+      const deltaY = touchY - lastTouchY; // change since last touchmove
+      lastTouchY = touchY;
+      
+      if (thrownPage.scrollTop <= 8 && diffY > 8 && window.scrollY > 0) {
+        if (e.cancelable) e.preventDefault();
+        thrownPage.scrollTop = 0; // Force lookbook cleanly to top
+        window.scrollBy(0, -deltaY * 3.0);
+      }
+    }, { passive: false });
+  }
+
+  // ==========================================================
+  // --- 3D INTERACTIVE TILT FOR ALTERNATING EDITORIAL PANELS ---
+  // ==========================================================
+  const editorialPanels = thrownPage.querySelectorAll('.editorial-panel');
+  editorialPanels.forEach((panel) => {
+    panel.addEventListener('mousemove', (e) => {
+      const rect = panel.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+
+      // Set coordinate custom variables on the panel for spotlight shines
+      panel.style.setProperty('--mx', `${x}px`);
+      panel.style.setProperty('--my', `${y}px`);
+
+      if (prefersReducedMotion) return;
+
+      // Calculate normalized coordinates (-1 to 1)
+      const xc = (x / rect.width - 0.5) * 2;
+      const yc = (y / rect.height - 0.5) * 2;
+
+      // 3D rotations on the image wrapper only (max tilt: 10 degrees)
+      const rotX = -yc * 10;
+      const rotY = xc * 10;
+
+      // Shift images and caption elements dynamically in 3D parallax offsets
+      const img = panel.querySelector('.panel-card-img');
+      const imgWrapper = panel.querySelector('.panel-image-wrapper');
+      const info = panel.querySelector('.panel-info-container');
+
+      if (img) {
+        img.style.transform = `scale(1.06) translate3d(${-xc * 8}px, ${-yc * 8}px, 0)`;
+      }
+      if (imgWrapper) {
+        imgWrapper.style.transform = `rotateX(${rotX}deg) rotateY(${rotY}deg) scale(1.02)`;
+        imgWrapper.style.transition = 'none';
+      }
+      if (info) {
+        info.style.transform = `translate3d(${xc * 12}px, ${yc * 12}px, 40px)`;
+        info.style.transition = 'none';
+      }
+    });
+
+    panel.addEventListener('mouseleave', () => {
+      const img = panel.querySelector('.panel-card-img');
+      const imgWrapper = panel.querySelector('.panel-image-wrapper');
+      const info = panel.querySelector('.panel-info-container');
+
+      if (imgWrapper) {
+        imgWrapper.style.transform = 'rotateX(0deg) rotateY(0deg) scale(1)';
+        imgWrapper.style.transition = 'transform 0.6s cubic-bezier(0.25, 1, 0.5, 1)';
+      }
+      if (img) {
+        img.style.transform = 'scale(1) translate3d(0, 0, 0)';
+        img.style.transition = 'transform 0.6s cubic-bezier(0.25, 1, 0.5, 1)';
+      }
+      if (info) {
+        info.style.transform = 'translate3d(0, 0, 0)';
+        info.style.transition = 'transform 0.6s cubic-bezier(0.25, 1, 0.5, 1)';
+      }
+    });
+  });
+
+  // ==========================================================
+  // --- THE "SLAM-DOWN" PHYSICAL BOUNCE GALLERY PAGE ---
+  // ==========================================================
+  const slamDownPage = document.getElementById('slam-down-page');
+  const slamDownCloseBtn = document.getElementById('slam-down-close');
+  let activeSlideIdx = 0;
+
+  // Add click listeners to launch gallery inspector
+  editorialPanels.forEach((panel) => {
+    panel.addEventListener('click', () => {
+      const idx = parseInt(panel.getAttribute('data-index'), 10) || 0;
+      openSlamDownGallery(idx);
+    });
+  });
+
+  function openSlamDownGallery(index) {
+    if (!slamDownPage) return;
+    activeSlideIdx = index;
+
+    // Instantly sync slider state without animation before showing the dropped page
+    goToSlide(activeSlideIdx, false);
+
+    // Initial state setup for the drop down animation
+    gsap.set(slamDownPage, {
+      display: 'flex',
+      y: '-100%',
+      opacity: 0,
+      pointerEvents: 'none'
+    });
+
+    // Drop down timeline with gravity weight and bounce settle
+    const tl = gsap.timeline({
+      onComplete: () => {
+        slamDownPage.classList.add('is-active');
+
+        // Secondary screen physical vibration shake to simulate heavy landing impact ("dhdaam" shockwave!)
+        if (!prefersReducedMotion) {
+          gsap.to('.slam-down-content', {
+            y: '+=14',
+            duration: 0.06,
+            yoyo: true,
+            repeat: 5,
+            ease: 'power1.inOut',
+            onComplete: () => {
+              // Settle back cleanly
+              gsap.to('.slam-down-content', { y: 0, duration: 0.2 });
+            }
+          });
+
+          // Soft elastic wobble on the Close button to match drop impulse
+          gsap.fromTo('#slam-down-close',
+            { rotation: -4, scale: 0.95 },
+            { rotation: 0, scale: 1, duration: 0.5, ease: 'elastic.out(1.2, 0.4)' }
+          );
+        }
+      }
+    });
+
+    tl.to(slamDownPage, {
+      y: '0%',
+      opacity: 1,
+      pointerEvents: 'auto',
+      duration: 1.15,
+      ease: prefersReducedMotion ? 'power2.out' : 'bounce.out(1.1)' // Elastic heavy physical drop ease
+    });
+  }
+
+  // Close gallery trigger
+  if (slamDownCloseBtn) {
+    slamDownCloseBtn.addEventListener('click', () => {
+      closeSlamDownGallery();
+    });
+  }
+
+  function closeSlamDownGallery() {
+    if (!slamDownPage) return;
+    slamDownPage.classList.remove('is-active');
+
+    // Retract gallery overlay back upward smoothly
+    gsap.to(slamDownPage, {
+      y: '-100%',
+      opacity: 0,
+      duration: 0.65,
+      ease: 'power3.in',
+      onComplete: () => {
+        slamDownPage.style.display = 'none';
+      }
+    });
+  }
+
+  // ==========================================================
+  // --- THE MANUAL LUXURY SLIDER CONTROL SYSTEM ---
+  // ==========================================================
+  const sliderTrack = document.getElementById('slider-track');
+  const sliderPrevBtn = document.getElementById('slider-prev');
+  const sliderNextBtn = document.getElementById('slider-next');
+  const sliderDots = document.querySelectorAll('.slider-dot');
+  const thumbnailItems = document.querySelectorAll('.thumbnail-item');
+  const totalSlides = 4;
+
+  function goToSlide(idx, animate = true) {
+    if (!sliderTrack) return;
+
+    // Boundary circular wrap
+    if (idx < 0) idx = totalSlides - 1;
+    if (idx >= totalSlides) idx = 0;
+
+    activeSlideIdx = idx;
+
+    // Shift percentage translation (each slide occupies 25% of the 400% track width)
+    const translatePercent = -idx * 25;
+
+    if (animate) {
+      sliderTrack.style.transition = 'transform 0.8s cubic-bezier(0.25, 1, 0.33, 1)';
+    } else {
+      sliderTrack.style.transition = 'none';
+    }
+    sliderTrack.style.transform = `translateX(${translatePercent}%)`;
+
+    // Sync Dots active classes
+    sliderDots.forEach((dot, dIdx) => {
+      dot.classList.toggle('active', dIdx === activeSlideIdx);
+    });
+
+    // Sync Thumbnail Strip active classes
+    thumbnailItems.forEach((thumb, tIdx) => {
+      thumb.classList.toggle('active', tIdx === activeSlideIdx);
+    });
+
+    // Zoom/Fade micro-interaction for high-res details upon slide settle
+    if (animate && !prefersReducedMotion) {
+      const activeSlide = sliderTrack.querySelector(`.slider-slide[data-index="${activeSlideIdx}"]`);
+      if (activeSlide) {
+        const slideImg = activeSlide.querySelector('.slider-slide-img');
+        const slideCaption = activeSlide.querySelector('.slide-caption');
+        if (slideImg) {
+          gsap.fromTo(slideImg,
+            { scale: 0.88, opacity: 0 },
+            { scale: 1, opacity: 1, duration: 0.8, ease: 'power2.out' }
+          );
+        }
+        if (slideCaption) {
+          gsap.fromTo(slideCaption,
+            { y: 22, opacity: 0 },
+            { y: 0, opacity: 1, duration: 0.7, delay: 0.15, ease: 'power2.out' }
+          );
+        }
+      }
+    }
+  }
+
+  // Dots indicators click navigation
+  sliderDots.forEach((dot) => {
+    dot.addEventListener('click', () => {
+      const idx = parseInt(dot.getAttribute('data-index'), 10) || 0;
+      goToSlide(idx);
+    });
+  });
+
+  // Thumbnail strip click navigation
+  thumbnailItems.forEach((thumb) => {
+    thumb.addEventListener('click', () => {
+      const idx = parseInt(thumb.getAttribute('data-index'), 10) || 0;
+      goToSlide(idx);
+    });
+  });
+
+  // Arrows click triggers
+  if (sliderPrevBtn) {
+    sliderPrevBtn.addEventListener('click', () => {
+      goToSlide(activeSlideIdx - 1);
+    });
+  }
+
+  if (sliderNextBtn) {
+    sliderNextBtn.addEventListener('click', () => {
+      goToSlide(activeSlideIdx + 1);
+    });
+  }
+
+  // Keyboard accessibility triggers
+  document.addEventListener('keydown', (e) => {
+    if (slamDownPage && slamDownPage.classList.contains('is-active')) {
+      if (e.key === 'ArrowLeft') {
+        goToSlide(activeSlideIdx - 1);
+      } else if (e.key === 'ArrowRight') {
+        goToSlide(activeSlideIdx + 1);
+      } else if (e.key === 'Escape') {
+        closeSlamDownGallery();
+      }
+    }
+  });
+
+  // ==========================================================
+  // --- TOUCH SWIPE & MOUSE DRAG PHYSICS ---
+  // ==========================================================
+  let isDragging = false;
+  let startX = 0;
+  let prevTranslate = 0;
+
+  if (sliderTrack) {
+    // Mouse Event Registrations
+    sliderTrack.addEventListener('mousedown', dragStart);
+    sliderTrack.addEventListener('mousemove', dragMove);
+    sliderTrack.addEventListener('mouseup', dragEnd);
+    sliderTrack.addEventListener('mouseleave', dragEnd);
+
+    // Native Touch Event Registrations
+    sliderTrack.addEventListener('touchstart', dragStart, { passive: true });
+    sliderTrack.addEventListener('touchmove', dragMove, { passive: true });
+    sliderTrack.addEventListener('touchend', dragEnd);
+  }
+
+  function getPositionX(e) {
+    return e.type.includes('mouse') ? e.clientX : e.touches[0].clientX;
+  }
+
+  function dragStart(e) {
+    isDragging = true;
+    startX = getPositionX(e);
+    sliderTrack.style.transition = 'none';
+
+    // Compute starting translate absolute pixels from transform matrix
+    const style = window.getComputedStyle(sliderTrack);
+    const matrix = new WebKitCSSMatrix(style.transform);
+    prevTranslate = matrix.m41;
+  }
+
+  function dragMove(e) {
+    if (!isDragging) return;
+    const currentX = getPositionX(e);
+    const diffX = currentX - startX;
+
+    // Horizontal shifts with dampened end limits
+    let newTranslate = prevTranslate + diffX;
+
+    const trackWidth = sliderTrack.offsetWidth;
+    const maxScroll = -(totalSlides - 1) * (trackWidth / totalSlides);
+
+    if (newTranslate > 0) {
+      newTranslate = diffX * 0.35; // Rubber banding at beginning
+    } else if (newTranslate < maxScroll) {
+      newTranslate = maxScroll + (newTranslate - maxScroll) * 0.35; // Rubber banding at ending
+    }
+
+    sliderTrack.style.transform = `translateX(${newTranslate}px)`;
+  }
+
+  function dragEnd(e) {
+    if (!isDragging) return;
+    isDragging = false;
+
+    const trackWidth = sliderTrack.offsetWidth;
+    const slideWidth = trackWidth / totalSlides;
+    const currentTranslate = new WebKitCSSMatrix(window.getComputedStyle(sliderTrack)).m41;
+
+    // Snap selection index from drag coordinates offset
+    let closestIndex = Math.round(-currentTranslate / slideWidth);
+
+    // Boundary lockups
+    if (closestIndex < 0) closestIndex = 0;
+    if (closestIndex >= totalSlides) closestIndex = totalSlides - 1;
+
+    goToSlide(closestIndex);
+  }
 });
+
 
