@@ -1,0 +1,368 @@
+<%- include('../partials/layout-start') %>
+
+  <!-- distraction-free header controls -->
+  <header class="temple-portal-header" aria-label="Portal Navigation" style="justify-content: center;">
+    <div class="portal-brand-logo">PATEL JEWELLERS</div>
+  </header>
+
+  <main class="temple-portal-main">
+
+    <!-- 1. Spinning Mandala Intro Loader -->
+    <div id="temple-loader" class="temple-loader-overlay" role="progressbar" aria-valuemin="0" aria-valuemax="100"
+      aria-valuenow="0">
+      <div class="temple-loader-content">
+        <!-- Detailed Double-Spinning Sacred Mandala SVG -->
+        <div class="mandala-container">
+          <!-- Outer Crown Ring (Spins Clockwise) -->
+          <svg class="mandala-svg outer-spin" viewBox="0 0 100 100" aria-hidden="true">
+            <circle cx="50" cy="50" r="46" stroke="var(--color-accent)" stroke-width="0.5" fill="none"
+              stroke-dasharray="1 3" />
+            <circle cx="50" cy="50" r="42" stroke="var(--color-accent)" stroke-width="1.5" fill="none"
+              stroke-dasharray="8 6 4 6" />
+            <path d="M 50 4 A 46 46 0 0 1 96 50" stroke="var(--color-primary)" stroke-width="1" fill="none" />
+            <path d="M 50 96 A 46 46 0 0 1 4 50" stroke="var(--color-primary)" stroke-width="1" fill="none" />
+          </svg>
+
+          <!-- Inner Petal Ring (Spins Counter-Clockwise) -->
+          <svg class="mandala-svg inner-spin" viewBox="0 0 100 100" aria-hidden="true">
+            <circle cx="50" cy="50" r="34" stroke="var(--color-accent-light)" stroke-width="0.75" fill="none"
+              stroke-dasharray="4 4" />
+            <circle cx="50" cy="50" r="28" stroke="var(--color-accent)" stroke-width="1" fill="none"
+              stroke-dasharray="20 10 5 10" />
+            <!-- Radiating floral nodes -->
+            <g stroke="var(--color-accent)" stroke-width="0.5">
+              <line x1="50" y1="50" x2="50" y2="20" />
+              <line x1="50" y1="50" x2="50" y2="80" />
+              <line x1="50" y1="50" x2="20" y2="50" />
+              <line x1="50" y1="50" x2="80" y2="50" />
+              <line x1="50" y1="50" x2="29" y2="29" />
+              <line x1="50" y1="50" x2="71" y2="71" />
+              <line x1="50" y1="50" x2="29" y2="71" />
+              <line x1="50" y1="50" x2="71" y2="29" />
+            </g>
+            <circle cx="50" cy="50" r="10" stroke="var(--color-primary)" stroke-width="1" fill="none" />
+          </svg>
+
+          <!-- Center Glowing Core Emblem -->
+          <div class="mandala-core">PM</div>
+        </div>
+
+        <!-- Simulated Progress and Crafting Script -->
+        <div class="loader-status-container">
+          <div id="loader-percentage" class="loader-percentage">00%</div>
+          <div class="loader-divider"></div>
+          <div id="loader-status-text" class="loader-status-text">MELTING 22K GOLD ORE...</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2. Dynamic WebGL Cosmic Fire-Portal Background -->
+    <canvas id="fire-vortex-canvas" class="vortex-canvas" aria-hidden="true"></canvas>
+
+    <!-- 3. Central Editorial Typography Layout (Styled exactly like reference screenshot) -->
+    <div id="portal-hero-content" class="portal-hero-container">
+      <div class="portal-hero-inner">
+        <!-- Floating Sacred Bangle Hologram inside the portal center -->
+        <div class="portal-floating-artifact-wrapper" id="portal-hologram-artifact">
+          <div class="portal-artifact-glow" aria-hidden="true"></div>
+          <div class="portal-artifact-frame">
+            <img src="/images/collections/C.jpg" alt="Sacred Temple Bangle" class="portal-artifact-img">
+          </div>
+        </div>
+
+        <span class="hero-eyebrow">— THE SACRED LEGEND OF —</span>
+        <h1 class="hero-title">TEMPLE BANGLES</h1>
+        <p class="hero-subtitle">ECHOES OF DIVINE ARTISTRY & ROYAL GRACE</p>
+
+        <!-- Interactive Main Buttons -->
+        <div class="hero-cta-group">
+          <button id="btn-start-experience" class="portal-btn-primary">
+            <span class="btn-glow-border"></span>
+            <span class="btn-text">START THE EXPERIENCE</span>
+          </button>
+        </div>
+
+        <div class="hero-skip-group"
+          style="display: flex; flex-direction: column; align-items: center; gap: 0.5rem; margin-top: 0.5rem;">
+          <button id="btn-explore-catalogue" class="portal-link-skip">EXPLORE THE DESIGN CATALOGUE</button>
+          <a href="/collection" class="portal-link-back">BACK TO COLLECTIONS</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- 4. Interactive Immersive Showcase Overlay -->
+    <div id="immersive-experience-overlay" class="immersive-overlay" aria-hidden="true">
+      <!-- Overlay Glow Backdrop -->
+      <div class="overlay-radial-glow" aria-hidden="true"></div>
+
+      <!-- Close button for overlay -->
+      <button id="btn-close-experience" class="portal-close-btn" aria-label="Close Experience">
+        <div class="close-btn-circle">
+          <svg viewBox="0 0 24 24" class="close-svg" aria-hidden="true">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </div>
+        <span class="close-lbl">CLOSE EXPERIENCE</span>
+      </button>
+
+      <div class="immersive-content-wrapper">
+        <div class="immersive-grid">
+
+          <!-- Left Column: The Interactive 3D Hotspot Image Card -->
+          <div class="immersive-asset-view">
+            <div class="asset-frame-royal">
+              <div class="asset-interactive-wrapper" id="zoom-interactive-bangle">
+                <img src="/images/collections/C.jpg" alt="Temple Bangle Masterpiece" class="bangle-showcase-img">
+
+                <!-- Hotspots on Bangle -->
+                <button class="hotspot-trigger hs-deity" data-hotspot="deity" aria-label="Inspect Detail A" id="hs-1">
+                  <span class="hotspot-pulse"></span>
+                </button>
+                <button class="hotspot-trigger hs-gajra" data-hotspot="gajra" aria-label="Inspect Detail B" id="hs-2">
+                  <span class="hotspot-pulse"></span>
+                </button>
+                <button class="hotspot-trigger hs-kundan" data-hotspot="kundan" aria-label="Inspect Detail C" id="hs-3">
+                  <span class="hotspot-pulse"></span>
+                </button>
+              </div>
+
+              <!-- Dynamic instructions label -->
+              <div class="inspect-instructions">
+                <svg viewBox="0 0 24 24" class="hand-icon-svg" aria-hidden="true">
+                  <path
+                    d="M9 11.24V7.5a2.5 2.5 0 0 1 5 0v3.74c1.21-.81 2-2.18 2-3.74C16 4.46 13.54 2 10.5 2S5 4.46 5 7.5c0 1.56.79 2.93 2 3.74zm9.84 4.63l-4.54-2.26c-.17-.07-.35-.11-.54-.11H13v-6a1 1 0 0 0-2 0v10.54l-4.12-.87a1.012 1.012 0 0 0-.68.18c-.28.23-.37.6-.22.92l1.66 3.51c.3.63.93 1.03 1.63 1.03h6.58c.88 0 1.66-.64 1.81-1.51l.73-4.22c.11-.64-.17-1.28-.75-1.51z" />
+                </svg>
+                <span>CLICK THE PULSING NODES TO INSPECT ARTISTRY</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right Column: Interactive Detail Cards -->
+          <div class="immersive-details-panel">
+            <!-- Luxury thumbnail selectors to switch Kada designs -->
+            <div class="kada-selector-strip">
+              <span class="selector-label">— SELECT DESIGN ARCHIVE —</span>
+              <div class="kada-thumbnails">
+                <button class="kada-thumb-btn active" data-kada="lakshmi" aria-label="Gaja Lakshmi Kada">
+                  <div class="kada-thumb-frame">
+                    <img src="/images/collections/C.jpg" alt="Lakshmi Kada">
+                  </div>
+                  <span>LAKSHMI</span>
+                </button>
+                <button class="kada-thumb-btn" data-kada="peacock" aria-label="Mayura Peacock Kada">
+                  <div class="kada-thumb-frame">
+                    <img src="/images/collections/peacock_kada.png" alt="Peacock Kada">
+                  </div>
+                  <span>PEACOCK</span>
+                </button>
+                <button class="kada-thumb-btn" data-kada="lion" aria-label="Simha Vyala Kada">
+                  <div class="kada-thumb-frame">
+                    <img src="/images/collections/lion_kada.png" alt="Lion Kada">
+                  </div>
+                  <span>LION HEAD</span>
+                </button>
+                <button class="kada-thumb-btn" data-kada="floral" aria-label="Devi Floral Kada">
+                  <div class="kada-thumb-frame">
+                    <img src="/images/gallery/gold-bangles.jpg" alt="Floral Bangle">
+                  </div>
+                  <span>DEVI FLORAL</span>
+                </button>
+              </div>
+            </div>
+
+            <div class="details-panel-header">
+              <span class="details-eyebrow" id="panel-eyebrow">— SIGNATURE KADA MASTERPIECE</span>
+              <h2 class="details-title" id="panel-title">Gaja Lakshmi Kada</h2>
+              <div class="details-divider"></div>
+            </div>
+
+            <!-- Hotspot description cards (Interactive toggling) -->
+            <div class="detail-cards-container">
+
+              <!-- Default General Info Card -->
+              <div id="card-default" class="detail-card active">
+                <h3 class="card-title">Divine Legacy in 22K Gold</h3>
+                <p class="card-desc">Handcrafted for brides carrying ancient royal heritage, this Kada is forged by
+                  master goldsmiths over 120 hours. It depicts sacred motifs surrounded by intricate filigree and floral
+                  embellishments that embody fertility and wealth.</p>
+                <div class="card-meta">
+                  <div class="meta-item"><span class="meta-lbl">Purity</span><span class="meta-val">22K BIS
+                      Hallmarked</span></div>
+                  <div class="meta-item"><span class="meta-lbl">Craft</span><span class="meta-val">Nakashi
+                      Repousse</span></div>
+                </div>
+              </div>
+
+              <!-- Deity Hotspot Card -->
+              <div id="card-deity" class="detail-card">
+                <h3 class="card-title">Goddess Lakshmi Nakashi</h3>
+                <p class="card-desc">The central panel features a detailed repousse carving of Goddess Lakshmi seated on
+                  a lotus (Nakashi craft). Hand-chiselled from pure gold sheet, the sculpture captures perfect
+                  anatomical symmetry and divine posture, offering blessings of abundance.</p>
+                <div class="card-meta">
+                  <div class="meta-item"><span class="meta-lbl">Craft</span><span class="meta-val">Nakashi
+                      Hand-Chiselling</span></div>
+                  <div class="meta-item"><span class="meta-lbl">Deity</span><span class="meta-val">Gaja Lakshmi</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Gajra Hotspot Card -->
+              <div id="card-gajra" class="detail-card">
+                <h3 class="card-title">Gajra Beaded Borders</h3>
+                <p class="card-desc">The outer borders are reinforced with micro-soldered gold beads forming a
+                  traditional Gajra pattern. Every individual gold sphere is fused to the main rim using historical
+                  granular techniques, ensuring a rich texture that captures ambient light.</p>
+                <div class="card-meta">
+                  <div class="meta-item"><span class="meta-lbl">Border</span><span class="meta-val">Gajra
+                      Granules</span></div>
+                  <div class="meta-item"><span class="meta-lbl">Symmetry</span><span class="meta-val">Dual Rim
+                      Alignment</span></div>
+                </div>
+              </div>
+
+              <!-- Kundan Hotspot Card -->
+              <div id="card-kundan" class="detail-card">
+                <h3 class="card-title">Kundan & Polki Gem Inlay</h3>
+                <p class="card-desc">Sparsely decorated with select uncut gemstones bedded in premium refined clay
+                  (Kundan). The settings protect the antique polki diamonds and rubies, giving them their historical
+                  royal crimson glow, complementing the pure gold luster.</p>
+                <div class="card-meta">
+                  <div class="meta-item"><span class="meta-lbl">Gems</span><span class="meta-val">Kundan Rubies &
+                      Polki</span></div>
+                  <div class="meta-item"><span class="meta-lbl">Setting</span><span class="meta-val">Pure Gold Foil
+                      Inlay</span></div>
+                </div>
+              </div>
+
+            </div>
+
+            <!-- Bottom Action Buttons inside Showcase -->
+            <div class="details-cta-actions">
+              <a href="/contact?inquiry=temple-bangles" class="details-consultation-btn">
+                <span>BOOK A PRIVATE INQUIRY</span>
+              </a>
+            </div>
+
+          </div>
+
+        </div>
+
+        <!-- Celestial Divider -->
+        <div class="modal-section-divider" aria-hidden="true">
+          <span class="divider-dot"></span>
+          <span class="divider-line"></span>
+          <span class="divider-dot"></span>
+        </div>
+
+        <!-- Vedic Astrological Aura & Gemstone Chamber Section -->
+        <div class="modal-astral-chamber" id="modal-astral-chamber">
+          <div class="astral-header">
+            <span class="astral-eyebrow">— COSMIC ALIGNMENT CHAMBER —</span>
+            <h3 class="astral-title">Sacred Vedic Aura Alignment</h3>
+            <div class="astral-divider"></div>
+            <p class="astral-desc">Select your Vedic rashi (zodiac sign) or ruling celestial gem to project its
+              spiritual light aura and visualize how our sacred temple Kadas harmonize with your cosmic energy.</p>
+          </div>
+
+          <div class="astral-grid">
+
+            <!-- Left Column: Vedic Zodiac Selector Emblems -->
+            <div class="astral-signs-panel">
+              <span class="panel-lbl">— SELECT VEDIC RASHI —</span>
+              <div class="rashi-emblems-grid">
+                <button class="rashi-btn active" data-rashi="mesha" data-gem="ruby"
+                  aria-label="Mesha (Aries) - Ruling Gem: Ruby">
+                  <span class="rashi-symbol">मेष</span>
+                  <span class="rashi-name">MESHA (ARIES)</span>
+                  <span class="rashi-planet">Sun • Ruby</span>
+                </button>
+                <button class="rashi-btn" data-rashi="vrishabha" data-gem="diamond"
+                  aria-label="Vrishabha (Taurus) - Ruling Gem: Polki Diamond">
+                  <span class="rashi-symbol">वृषभ</span>
+                  <span class="rashi-name">VRISHABHA (TAURUS)</span>
+                  <span class="rashi-planet">Venus • Diamond</span>
+                </button>
+                <button class="rashi-btn" data-rashi="mithuna" data-gem="emerald"
+                  aria-label="Mithuna (Gemini) - Ruling Gem: Emerald">
+                  <span class="rashi-symbol">मिथुन</span>
+                  <span class="rashi-name">MITHUNA (GEMINI)</span>
+                  <span class="rashi-planet">Mercury • Emerald</span>
+                </button>
+                <button class="rashi-btn" data-rashi="karka" data-gem="pearl"
+                  aria-label="Karka (Cancer) - Ruling Gem: Pearl">
+                  <span class="rashi-symbol">कर्क</span>
+                  <span class="rashi-name">KARKA (CANCER)</span>
+                  <span class="rashi-planet">Moon • Pearl</span>
+                </button>
+              </div>
+
+              <!-- Dynamic Astro Reading Card -->
+              <div class="astro-reading-card">
+                <h4 class="astro-reading-title" id="astro-title">Mesha (Aries) Cosmic Harmony</h4>
+                <p class="astro-reading-desc" id="astro-desc">Ruled by the vitalizing Sun, the cosmic fire of Mesha
+                  aligns seamlessly with the **Gaja Lakshmi Ruby Kada**. Embedded with premium cabochon rubies, it
+                  activates the Manipura (Solar Plexus) chakra, radiating divine protection, vitalizing energy, and
+                  imperial prosperity.</p>
+                <div class="astro-reading-meta">
+                  <div class="astro-meta-item"><span class="astro-meta-lbl">Chakra</span><span class="astro-meta-val"
+                      id="astro-chakra">Solar Plexus (Manipura)</span></div>
+                  <div class="astro-meta-item"><span class="astro-meta-lbl">Aura Power</span><span
+                      class="astro-meta-val" id="astro-aura">Vitality & Abundance</span></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Right Column: Interactive Aura Bangle Preview -->
+            <div class="astral-preview-panel">
+              <div class="aura-projection-chamber">
+                <!-- Pulsing colorful aura backdrop ripples -->
+                <div class="aura-glow-effect ruby-aura" id="aura-glow" aria-hidden="true"></div>
+
+                <!-- Revolving Celestial Zodiac Constellation Rings -->
+                <div class="zodiac-constellation-rings" aria-hidden="true">
+                  <svg viewBox="0 0 200 200" class="rings-svg">
+                    <circle cx="100" cy="100" r="94" stroke="rgba(176, 168, 154, 0.08)" stroke-width="0.5"
+                      fill="none" />
+                    <circle cx="100" cy="100" r="82" stroke="rgba(176, 168, 154, 0.12)" stroke-width="1"
+                      stroke-dasharray="2 6" fill="none" />
+                    <circle cx="100" cy="100" r="70" stroke="rgba(176, 168, 154, 0.05)" stroke-width="0.5"
+                      fill="none" />
+                    <!-- Rotating alignment markers -->
+                    <line x1="100" y1="6" x2="100" y2="194" stroke="rgba(176, 168, 154, 0.04)" stroke-width="0.5" />
+                    <line x1="6" y1="100" x2="194" y2="100" stroke="rgba(176, 168, 154, 0.04)" stroke-width="0.5" />
+                  </svg>
+                </div>
+
+                <!-- Main Bangle image container -->
+                <div class="aura-bangle-frame">
+                  <img id="aura-bangle-img" src="/images/collections/C.jpg" alt="Cosmic Astro Bangle"
+                    class="aura-showcase-img" style="object-position: center 90%;">
+                </div>
+
+                <!-- Cosmic alignment badge -->
+                <div class="astro-compatibility-badge">
+                  <span class="badge-text" id="astro-badge-txt">98% ASTRAL ALIGNMENT</span>
+                </div>
+              </div>
+
+              <!-- Custom astral consultation button -->
+              <div class="astral-actions">
+                <a href="/contact?inquiry=astro-customization" id="astro-inquiry-btn" class="astral-consult-btn">
+                  <span>ACQUIRE YOUR ASTRAL ALIGNED KADA</span>
+                </a>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+
+
+  </main>
+
+  <%- include('../partials/layout-end') %>

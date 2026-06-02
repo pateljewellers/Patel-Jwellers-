@@ -127,11 +127,22 @@ function getHeritagePage(req, res) {
   });
 }
 
+function getTempleBanglesPage(req, res) {
+  const meta = getPageMeta('temple-bangles');
+  res.render('pages/temple-bangles', {
+    title: meta.title,
+    description: meta.description,
+    page: 'temple-bangles',
+    bodyClass: 'page-temple-bangles',
+  });
+}
+
 module.exports = {
   getHomePage,
   getAboutPage,
   getCollectionPage,
   getHeritagePage,
+  getTempleBanglesPage,
   getShagunPage: renderPage('shagun', 'pages/shagun-registration'),
   submitShagunRegistration,
   submitContactInquiry,
