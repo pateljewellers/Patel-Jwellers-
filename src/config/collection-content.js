@@ -218,7 +218,7 @@ module.exports = {
     { id: 'antique', label: 'Antique' },
   ],
   collectionGrid: [
-    { id: 'bridal', title: 'Bridal Heritage', subtitle: 'Elegant wedding jewellery with luminous craftsmanship.', image: '/images/gallery/model-11.jpg', href: '/collection?category=bridal' },
+    { id: 'bridal', title: 'Bridal Heritage', subtitle: 'Elegant wedding jewellery with luminous craftsmanship.', image: '/images/gallery/model-11.jpg', href: '/collection/heritage' },
     { id: 'diamonds', title: 'Diamond Statements', subtitle: 'Sparkling pieces designed for premiere occasions.', image: '/images/gallery/model-12.jpg', href: '/collection?category=diamonds' },
     { id: 'gold', title: 'Gold Icons', subtitle: 'Bold gold designs with polished luxury.', image: '/images/gallery/model-14.jpg', href: '/collection?category=gold' },
     { id: 'antique', title: 'Antique Elegance', subtitle: 'Vintage-inspired jewellery with heirloom beauty.', image: '/images/gallery/model-17.jpg', href: '/collection?category=antique' },

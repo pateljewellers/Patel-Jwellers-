@@ -1,0 +1,589 @@
+<%- include('../partials/layout-start') %>
+  <%- include('../partials/header') %>
+
+    <main class="main-content page-heritage-jewellery">
+
+      <!-- 1. Fullscreen Hero Section with background and curtain overlay -->
+      <section class="heritage-hero-section">
+
+
+        <!-- Unveiled Background Image -->
+        <div class="heritage-bg-container">
+          <img src="/images/gallery/model-11.jpg" alt="Bridal Heritage Showpiece" class="heritage-bg-image">
+        </div>
+
+        <!-- Pinned Curtain Overlay System -->
+        <div class="heritage-curtain-overlay" id="heritage-curtain">
+          <div class="curtain-gold-glow"></div>
+          <div class="curtain-structural-corners">
+            <div class="curtain-corner tl"></div>
+            <div class="curtain-corner tr"></div>
+            <div class="curtain-corner bl"></div>
+            <div class="curtain-corner br"></div>
+          </div>
+
+          <div class="curtain-content">
+            <div class="heritage-curtain-container">
+              <!-- Left Column: Editorial Text & Unveil Button -->
+              <div class="curtain-editorial-left">
+                <!-- Automatic Text Slider -->
+                <div class="curtain-text-slider" id="curtain-slider">
+                  <div class="slider-slide active">
+                    <span class="slider-eyebrow">THE GRAND LEGACY</span>
+                    <h2 class="slider-title">Bridal Heritage Collection</h2>
+                    <p class="slider-desc">A poetic synthesis of BIS-hallmarked 22K gold, hand-cut diamonds, and heritage
+                      filigree passed down through generations.</p>
+                  </div>
+                  <div class="slider-slide">
+                    <span class="slider-eyebrow">HEIRLOOM CRAFT</span>
+                    <h2 class="slider-title">Master Goldsmith Sculpting</h2>
+                    <p class="slider-desc">Observe the divine temple artistry and light-reflective polish hand-finished by
+                      master artisans with ancestral tools.</p>
+                  </div>
+                  <div class="slider-slide">
+                    <span class="slider-eyebrow">SACRED SYMMETRY</span>
+                    <h2 class="slider-title">Exquisite Wedding Ensembles</h2>
+                    <p class="slider-desc">Luminous, balanced bridal statement chokers, necklaces and payals custom-crafted
+                      for modern royal celebrations.</p>
+                  </div>
+                </div>
+
+                <!-- Snappy Unveil Button -->
+                <button class="curtain-unveil-btn" id="curtain-unveil-trigger" aria-label="Unveil Heritage Details">
+                  <span class="btn-shine-line"></span>
+                  <span class="btn-text">UNVEIL HERITAGE</span>
+                  <div class="btn-gold-arrow">
+                    <svg viewBox="0 0 24 24" class="arrow-svg">
+                      <path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z" />
+                    </svg>
+                  </div>
+                </button>
+              </div>
+
+              <!-- Right Column: Abstract Geometric Back Totem -->
+              <div class="curtain-editorial-right">
+                <div class="heritage-back-totem" id="heritage-back-totem" aria-label="Return to Curated Categories">
+                  <div class="totem-aura"></div>
+                  <div class="totem-sculpture">
+                    <svg class="totem-svg" viewBox="0 0 200 200">
+                      <!-- Circular Rotating Label -->
+                      <path id="textPath-circle" d="M 100, 100 m -62, 0 a 62,62 0 1,1 124,0 a 62,62 0 1,1 -124,0" fill="none"></path>
+                      <text class="totem-orbit-text">
+                        <textPath href="#textPath-circle" startOffset="0%">• RETURN TO CATEGORIES • BACK TO GALLERY •</textPath>
+                      </text>
+                      
+                      <!-- Outer Octagon Frame -->
+                      <polygon class="totem-octagon" points="100,38 144,56 162,100 144,144 100,162 56,144 38,100 56,56" fill="none"></polygon>
+                      
+                      <!-- Sacred Geometry Triangles (Merkaba Lines) -->
+                      <polygon class="totem-triangles-1" points="100,50 143,125 57,125" fill="none"></polygon>
+                      <polygon class="totem-triangles-2" points="100,150 143,75 57,75" fill="none"></polygon>
+                      
+                      <!-- Faceted Rhombus Core -->
+                      <polygon class="totem-rhombus-core" points="100,68 127,100 100,132 73,100"></polygon>
+                      
+                      <!-- Vortex Chevron Arrow -->
+                      <path class="totem-chevron" d="M 94,94 L 86,100 L 94,106 M 86,100 L 114,100" fill="none"></path>
+                    </svg>
+                    <span class="totem-sub-label">RETURN TO GALLERY</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 2. Content below disclosed dynamically -->
+      <section class="heritage-content-section" id="heritage-content">
+        <div class="container">
+
+          <!-- Details Row -->
+          <div class="heritage-details-grid">
+            <div class="details-left reveal-up">
+              <span class="details-eyebrow">— THE ANATOMY OF LEGACY</span>
+              <h3 class="details-title">Heirloom Craft & BIS Hallmarking</h3>
+              <div class="details-divider"></div>
+              <p class="details-desc">Every piece in the Bridal Heritage Collection represents centuries of Gujarati
+                jewelry heritage, sculpted by our master artisans in our Mehsana studio.</p>
+              <div class="details-features">
+                <div class="feature-item">
+                  <span class="feature-title">BIS 22K Yellow Gold</span>
+                  <p class="feature-text">Guaranteed government-certified purity and lifelong gold investment value.</p>
+                </div>
+                <div class="feature-item">
+                  <span class="feature-title">Hand-Set Kundan Polki</span>
+                  <p class="feature-text">Precious uncut diamonds nested meticulously inside gold foils.</p>
+                </div>
+                <div class="feature-item">
+                  <span class="feature-title">Refined Temple Filigree</span>
+                  <p class="feature-text">Delicate hand-twisted gold wires woven into intricate cultural vectors.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="details-right reveal-up">
+              <div class="specifications-card">
+                <h4 class="specs-title">Heritage Certification</h4>
+                <div class="specs-divider"></div>
+                <table class="specs-table">
+                  <tr>
+                    <th>Department</th>
+                    <td>Royal Bridal Heritage</td>
+                  </tr>
+                  <tr>
+                    <th>Metal Purity</th>
+                    <td>BIS 22-Karat Hallmarked Gold</td>
+                  </tr>
+                  <tr>
+                    <th>Gemstones</th>
+                    <td>Certified VVS-VS Brilliant Diamonds</td>
+                  </tr>
+                  <tr>
+                    <th>Weight Range</th>
+                    <td>Bespoke Weight Allocations Available</td>
+                  </tr>
+                  <tr>
+                    <th>Sizing</th>
+                    <td>Tailored to Custom Fit Specifications</td>
+                  </tr>
+                </table>
+                <div class="specs-badge">
+                  <svg viewBox="0 0 24 24" class="shield-svg">
+                    <path
+                      d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 15l-4-4 1.41-1.41L10 13.17l5.59-5.59L17 9l-7 7z" />
+                  </svg>
+                  <span>100% Certified Authentic</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Gallery Showcase -->
+          <div class="heritage-gallery-showcase">
+            <div class="editorial-sec-header reveal-up">
+              <span class="editorial-sec-eyebrow">— THE VISUAL CHRONICLES</span>
+              <h2 class="editorial-sec-title">Exquisite Masterpieces</h2>
+              <p class="editorial-sec-subtitle">A stunning gallery of selected heritage bridal assemblies. Observe the
+                flawless detailing from different perspective frames.</p>
+            </div>
+
+            <div class="heritage-gallery-grid">
+              <!-- Card 1: tall -->
+              <div class="gallery-card reveal-up size-tall">
+                <div class="gallery-card-media">
+                  <img src="/images/collections/A.jpg" alt="Royal Choker Set">
+                </div>
+                <div class="gallery-card-caption">
+                  <h5>Royal Chokers</h5>
+                  <span>Bridal Collarbone Statement</span>
+                </div>
+              </div>
+
+              <!-- Card 2 -->
+              <div class="gallery-card reveal-up">
+                <div class="gallery-card-media">
+                  <img src="/images/collections/C.jpg" alt="Temple Gold Bangles">
+                </div>
+                <div class="gallery-card-caption">
+                  <h5>Temple Bangles</h5>
+                  <span>Carved Gold Kadas</span>
+                </div>
+              </div>
+
+              <!-- Card 3 -->
+              <div class="gallery-card reveal-up">
+                <div class="gallery-card-media">
+                  <img src="/images/collections/D.jpg" alt="Diamond Solitaires">
+                </div>
+                <div class="gallery-card-caption">
+                  <h5>Diamond Solitaires</h5>
+                  <span>VVS Brilliant Cuts</span>
+                </div>
+              </div>
+
+              <!-- Card 4: wide -->
+              <div class="gallery-card reveal-up size-wide">
+                <div class="gallery-card-media">
+                  <img src="/images/collections/E.jpg" alt="Kundan Polki">
+                </div>
+                <div class="gallery-card-caption">
+                  <h5>Kundan Polki</h5>
+                  <span>Uncut Diamond in Royal Clay</span>
+                </div>
+              </div>
+
+              <!-- Card 5 -->
+              <div class="gallery-card reveal-up">
+                <div class="gallery-card-media">
+                  <img src="/images/collections/F.jpg" alt="Heritage Harams">
+                </div>
+                <div class="gallery-card-caption">
+                  <h5>Heritage Harams</h5>
+                  <span>Temple Gold Necklaces</span>
+                </div>
+              </div>
+
+              <!-- Card 6 -->
+              <div class="gallery-card reveal-up">
+                <div class="gallery-card-media">
+                  <img src="/images/collections/G.jpg" alt="Maang Tikkas">
+                </div>
+                <div class="gallery-card-caption">
+                  <h5>Maang Tikkas</h5>
+                  <span>Bridal Headpieces</span>
+                </div>
+              </div>
+
+              <!-- Card 7: tall -->
+              <div class="gallery-card reveal-up size-tall">
+                <div class="gallery-card-media">
+                  <img src="/images/collections/H.jpg" alt="Mangalsutras">
+                </div>
+                <div class="gallery-card-caption">
+                  <h5>Mangalsutras</h5>
+                  <span>Sacred Gold Beads</span>
+                </div>
+              </div>
+
+              <!-- Card 8: wide -->
+              <div class="gallery-card reveal-up size-wide">
+                <div class="gallery-card-media">
+                  <img src="/images/collections/N.jpg" alt="The Sanctuary Collection">
+                </div>
+                <div class="gallery-card-caption">
+                  <h5>The Sanctuary Collection</h5>
+                  <span>Crown Jewels of Patel Jewellers</span>
+                </div>
+              </div>
+
+              <!-- Card 9 -->
+              <div class="gallery-card reveal-up">
+                <div class="gallery-card-media">
+                  <img src="/images/collections/I.jpg" alt="Gemstone Rings">
+                </div>
+                <div class="gallery-card-caption">
+                  <h5>Gemstone Rings</h5>
+                  <span>Natural Rubies &amp; Emeralds</span>
+                </div>
+              </div>
+
+              <!-- Card 10 -->
+              <div class="gallery-card reveal-up">
+                <div class="gallery-card-media">
+                  <img src="/images/collections/J.jpg" alt="Platinum Craft">
+                </div>
+                <div class="gallery-card-caption">
+                  <h5>Platinum Craft</h5>
+                  <span>Sleek Bands of Prestige</span>
+                </div>
+              </div>
+
+              <!-- Card 11 -->
+              <div class="gallery-card reveal-up">
+                <div class="gallery-card-media">
+                  <img src="/images/collections/K.jpg" alt="Vaddanams">
+                </div>
+                <div class="gallery-card-caption">
+                  <h5>Vaddanams</h5>
+                  <span>Imperial Temple Waistbelts</span>
+                </div>
+              </div>
+
+              <!-- Card 12 -->
+              <div class="gallery-card reveal-up">
+                <div class="gallery-card-media">
+                  <img src="/images/collections/L.jpg" alt="Bridal Naths">
+                </div>
+                <div class="gallery-card-caption">
+                  <h5>Bridal Naths</h5>
+                  <span>Pearl &amp; Gold Nose Rings</span>
+                </div>
+              </div>
+
+              <!-- Card 13: wide -->
+              <div class="gallery-card reveal-up size-wide">
+                <div class="gallery-card-media">
+                  <img src="/images/collections/M.jpg" alt="Payals and Anklets">
+                </div>
+                <div class="gallery-card-caption">
+                  <h5>Payals &amp; Anklets</h5>
+                  <span>Fine Silver &amp; Gold Soundpayals</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Inquiry CTA -->
+          <div class="heritage-inquiry-cta reveal-up">
+            <div class="inquiry-glass-card">
+              <div class="inquiry-card-glow"></div>
+              <span class="inquiry-eyebrow">BESPOKE INQUIRIES</span>
+              <h3>Acquire Your Dream Bridal Trousseau</h3>
+              <p>Our bridal concierges are ready to assist you in designing a customized ensemble, resizing, or
+                organizing a private physical preview of our heritage bridal masterpieces in Mehsana.</p>
+              <div class="inquiry-btn-row">
+                <a href="/contact" class="btn-bridal-luxe">Inquire About This Set</a>
+                <a href="/shagun-registration" class="btn-bridal-outline">Register for Shagun Scheme</a>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+    </main>
+
+    <!-- Custom GSAP & Text Slider Scripts for Page-Specific Motion -->
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        const unveilBtn = document.getElementById('curtain-unveil-trigger');
+        const curtain = document.getElementById('heritage-curtain');
+        const heroSection = document.querySelector('.heritage-hero-section');
+        const contentSection = document.getElementById('heritage-content');
+        const slider = document.getElementById('curtain-slider');
+        const backTotem = document.getElementById('heritage-back-totem');
+
+        if (!curtain || !unveilBtn) return;
+
+        // ─── SPIN-WHEEL PAGE TRANSITION ───────────────────────────────────────────
+        if (backTotem) {
+          backTotem.addEventListener('click', () => {
+            // Inject the mandala-wheel overlay
+            const overlay = document.createElement('div');
+            overlay.id = 'spin-exit-overlay';
+            overlay.innerHTML = `
+              <div class="seo-wheel">
+                <div class="seo-ring seo-r1"></div>
+                <div class="seo-ring seo-r2"></div>
+                <div class="seo-ring seo-r3"></div>
+                <div class="seo-ring seo-r4"></div>
+                <div class="seo-spokes">
+                  <div class="seo-spoke"></div>
+                  <div class="seo-spoke"></div>
+                  <div class="seo-spoke"></div>
+                  <div class="seo-spoke"></div>
+                  <div class="seo-spoke"></div>
+                  <div class="seo-spoke"></div>
+                </div>
+                <div class="seo-hub"></div>
+              </div>
+            `;
+            document.body.appendChild(overlay);
+
+            // Also spin the page content out
+            const mainEl = document.querySelector('main');
+            if (mainEl) mainEl.classList.add('page-spin-exit');
+
+            // Trigger animations on next frame
+            requestAnimationFrame(() => {
+              requestAnimationFrame(() => overlay.classList.add('active'));
+            });
+
+            // Navigate after the spin completes straight to the luxury categories
+            setTimeout(() => {
+              window.location.href = '/collection#curated-luxury-categories';
+            }, 950);
+          });
+
+          // ─── 3D PARALLAX TILT FOR BACK TOTEM ────────────────────────────────────
+          backTotem.addEventListener('mousemove', (e) => {
+            const rect = backTotem.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+
+            const xc = (x / rect.width - 0.5) * 2; // range [-1, 1]
+            const yc = (y / rect.height - 0.5) * 2; // range [-1, 1]
+
+            // Totem levitation & tilt
+            backTotem.style.transform = `perspective(1000px) rotateX(${yc * 12}deg) rotateY(${xc * -12}deg) translateY(-8px)`;
+            
+            // Core crystal deeper 3D parallax shift
+            const core = backTotem.querySelector('.totem-rhombus-core');
+            const chevron = backTotem.querySelector('.totem-chevron');
+            if (core) {
+              core.style.transform = `translate(${xc * 6}px, ${yc * 6}px)`;
+            }
+            if (chevron) {
+              chevron.style.transform = `translate(${xc * 9}px, ${yc * 9}px)`;
+            }
+          });
+
+          backTotem.addEventListener('mouseleave', () => {
+            backTotem.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) translateY(0)';
+            const core = backTotem.querySelector('.totem-rhombus-core');
+            const chevron = backTotem.querySelector('.totem-chevron');
+            if (core) {
+              core.style.transform = 'none';
+            }
+            if (chevron) {
+              chevron.style.transform = 'none';
+            }
+          });
+        }
+
+        // ─── SCROLL LOCK ────────────────────────────────────────────────────────────
+        // Prevent ALL scrolling until the user explicitly clicks "Unveil Heritage".
+        // We lock both html and body and also swallow wheel / touch-move events.
+        let scrollLocked = true;
+
+        const lockScroll = () => {
+          document.documentElement.style.overflow = 'hidden';
+          document.body.style.overflow = 'hidden';
+        };
+
+        const unlockScroll = () => {
+          document.documentElement.style.overflow = '';
+          document.body.style.overflow = '';
+          scrollLocked = false;
+        };
+
+        // Swallow wheel and touchmove while locked so inertia scrolling is blocked too
+        const blockWheel = (e) => { if (scrollLocked) e.preventDefault(); };
+        const blockTouch = (e) => { if (scrollLocked) e.preventDefault(); };
+
+        lockScroll();
+        window.addEventListener('wheel', blockWheel, { passive: false });
+        window.addEventListener('touchmove', blockTouch, { passive: false });
+
+        // ─── AUTOMATIC TEXT FADE SLIDER ─────────────────────────────────────────────
+        if (slider) {
+          const slides = Array.from(slider.querySelectorAll('.slider-slide'));
+          let activeIdx = 0;
+
+          setInterval(() => {
+            slides[activeIdx].classList.remove('active');
+            activeIdx = (activeIdx + 1) % slides.length;
+            slides[activeIdx].classList.add('active');
+          }, 4000);
+        }
+
+        // ─── CURTAIN-LIFTING REVEAL ANIMATION ───────────────────────────────────────
+        unveilBtn.addEventListener('click', () => {
+          // 1. Lift the curtain overlay
+          curtain.classList.add('lifted');
+
+          // 2. Scale and brighten the main background image
+          heroSection.classList.add('revealed');
+
+          // 3. Unlock scrolling — do this immediately so the user can scroll down
+          unlockScroll();
+
+          // 4. Remove the initial passive-block listeners (no longer needed)
+          window.removeEventListener('wheel', blockWheel);
+          window.removeEventListener('touchmove', blockTouch);
+
+          // 5. Disclose the content section below
+          contentSection.classList.add('revealed');
+
+          // 6. Gently nudge the viewport to the content after the curtain animation
+          setTimeout(() => {
+            contentSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }, 900);
+
+          // 7. Settle reveal staggers using GSAP
+          if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
+            setTimeout(() => {
+              ScrollTrigger.refresh();
+              const reveals = contentSection.querySelectorAll('.reveal-up');
+              reveals.forEach((el) => {
+                gsap.fromTo(el,
+                  { y: 50, opacity: 0 },
+                  {
+                    y: 0,
+                    opacity: 1,
+                    duration: 1.0,
+                    ease: 'power3.out',
+                    scrollTrigger: {
+                      trigger: el,
+                      start: 'top 85%',
+                      end: 'bottom 20%',
+                      toggleActions: 'play none none none'
+                    }
+                  }
+                );
+              });
+            }, 300);
+          }
+
+          // 8. ─── SHUTTER RE-CLOSE ON SCROLL-BACK-TO-TOP ───────────────────────────
+          // After unveil, watch for the user scrolling back to the very top.
+          // When they do, slide the curtain back down like a shutter and re-lock scroll.
+          let shutterPending = false;
+
+          const onScrollBack = () => {
+            // Only trigger when fully back at the top and shutter not already closing
+            if (window.scrollY <= 0 && !shutterPending) {
+              shutterPending = true;
+
+              // Small delay so snap-scrolling inertia settles first
+              setTimeout(() => {
+                if (window.scrollY > 0) {
+                  // User scrolled away again during the delay — abort
+                  shutterPending = false;
+                  return;
+                }
+
+                // ── Close the shutter ──
+                curtain.classList.remove('lifted');         // curtain slides back down
+                heroSection.classList.remove('revealed');   // image dims back
+                contentSection.classList.remove('revealed');// content hides
+
+                // Re-lock scroll immediately
+                lockScroll();
+                scrollLocked = true;
+
+                // Re-attach the wheel/touch blockers
+                window.addEventListener('wheel', blockWheel, { passive: false });
+                window.addEventListener('touchmove', blockTouch, { passive: false });
+
+                // Stop watching scroll — will be re-attached on next unveil click
+                window.removeEventListener('scroll', onScrollBack);
+
+                // Allow the button to be clicked again after curtain closes
+                setTimeout(() => { shutterPending = false; }, 1800);
+              }, 80);
+            }
+          };
+
+          // Start watching — attach after a short delay so the initial smooth-scroll
+          // nudge (step 6) doesn't accidentally trigger the shutter immediately
+          setTimeout(() => {
+            window.addEventListener('scroll', onScrollBack, { passive: true });
+          }, 1200);
+
+          // Re-clicking unveil after shutter closes: re-attach the scroll watcher
+          unveilBtn.addEventListener('click', function reUnveil() {
+            setTimeout(() => {
+              window.addEventListener('scroll', onScrollBack, { passive: true });
+            }, 1200);
+          });
+        });
+
+        // ─── 3D LEVITATING TILT FOR GALLERY CARDS ───────────────────────────────────
+        const galleryCards = document.querySelectorAll('.gallery-card');
+        galleryCards.forEach((card) => {
+          card.addEventListener('mousemove', (e) => {
+            const rect = card.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+
+            const xc = (x / rect.width - 0.5) * 2;
+            const yc = (y / rect.height - 0.5) * 2;
+
+            const rotX = -yc * 6;
+            const rotY = xc * 6;
+
+            card.style.transform = `perspective(1000px) rotateX(${rotX}deg) rotateY(${rotY}deg) translateY(-8px)`;
+            card.style.transition = 'none';
+          });
+
+          card.addEventListener('mouseleave', () => {
+            card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) translateY(0)';
+            card.style.transition = 'transform 0.6s cubic-bezier(0.25, 1, 0.5, 1)';
+          });
+        });
+      });
+    </script>
+
+    <%- include('../partials/layout-end') %>

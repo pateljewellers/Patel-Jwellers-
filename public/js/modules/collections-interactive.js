@@ -799,6 +799,71 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // ==========================================================
+  // --- 3D INTERACTIVE TILT & SPOTLIGHT FOR CATEGORY CARDS ---
+  // ==========================================================
+  if (thrownPage) {
+    const categoryCards = thrownPage.querySelectorAll('.category-dir-card');
+    categoryCards.forEach((card) => {
+      card.addEventListener('mousemove', (e) => {
+        const rect = card.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+
+        // Set custom variables for metallic spot shine
+        card.style.setProperty('--mx', `${x}px`);
+        card.style.setProperty('--my', `${y}px`);
+
+        if (prefersReducedMotion) return;
+
+        // Normalize coordinates (-1 to 1)
+        const xc = (x / rect.width - 0.5) * 2;
+        const yc = (y / rect.height - 0.5) * 2;
+
+        // 3D rotations on the card (max tilt: 8 degrees)
+        const rotX = -yc * 8;
+        const rotY = xc * 8;
+
+        card.style.transform = `perspective(1000px) rotateX(${rotX}deg) rotateY(${rotY}deg) translateY(-8px) scale(1.01)`;
+        card.style.transition = 'none';
+      });
+
+      card.addEventListener('mouseleave', () => {
+        card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) translateY(0) scale(1)';
+        card.style.transition = 'transform 0.6s cubic-bezier(0.25, 1, 0.5, 1)';
+      });
+    });
+
+    // Native IntersectionObserver reveal animations for elements inside the scrollable thrownPage lookbook
+    // This perfectly bypasses ScrollTrigger limits inside containers starting as display:none!
+    if (typeof IntersectionObserver !== 'undefined') {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            gsap.to(entry.target, {
+              y: 0,
+              opacity: 1,
+              duration: 0.85,
+              ease: 'power2.out',
+              overwrite: 'auto'
+            });
+            observer.unobserve(entry.target); // Trigger only once
+          }
+        });
+      }, {
+        root: thrownPage, // Observe inside the lookbook overlay!
+        threshold: 0.08,   // Trigger when 8% is visible
+        rootMargin: '0px 0px -40px 0px' // Snappy bottom offset
+      });
+
+      const revealElements = thrownPage.querySelectorAll('.reveal-up');
+      revealElements.forEach((el) => {
+        gsap.set(el, { y: 45, opacity: 0 }); // Pre-place below fold
+        observer.observe(el);
+      });
+    }
+  }
+
+  // ==========================================================
   // --- 3D INTERACTIVE TILT FOR ALTERNATING EDITORIAL PANELS ---
   // ==========================================================
   const editorialPanels = thrownPage.querySelectorAll('.editorial-panel');

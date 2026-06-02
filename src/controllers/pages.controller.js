@@ -109,10 +109,29 @@ function submitContactInquiry(req, res) {
   }
 }
 
+function getHeritagePage(req, res) {
+  const meta = getPageMeta('collection');
+  const categorySlug = req.params.category || 'heritage';
+  // Capitalise the slug for a nice title
+  const categoryLabel = categorySlug
+    .replace(/-/g, ' ')
+    .replace(/\b\w/g, (c) => c.toUpperCase());
+  res.render('pages/heritage-jewellery', {
+    title: `${categoryLabel} | Patel Jewellers`,
+    description: 'Immerse yourself in our premium royal gold and handcrafted diamond heritage bridal masterpieces.',
+    page: 'heritage-jewellery',
+    bodyClass: 'page-heritage-jewellery',
+    collection: collectionContent,
+    categorySlug,
+    categoryLabel,
+  });
+}
+
 module.exports = {
   getHomePage,
   getAboutPage,
   getCollectionPage,
+  getHeritagePage,
   getShagunPage: renderPage('shagun', 'pages/shagun-registration'),
   submitShagunRegistration,
   submitContactInquiry,
