@@ -1,13 +1,65 @@
-<section class="about-hero scroll-section" id="about-hero">
-  <div class="container about-hero__inner">
-    <div class="about-hero__content reveal-right">
-      <span class="section-eyebrow section-eyebrow--light"><%= about.hero.eyebrow %></span>
-      <h1><%= about.hero.title %></h1>
-      <p><%= about.hero.description %></p>
-      <a href="<%= about.hero.cta.href %>" class="btn btn--primary btn--magnetic reveal-up reveal-delay-1"><%= about.hero.cta.label %></a>
-    </div>
-    <div class="about-hero__media reveal-left">
-      <img src="<%= about.hero.image %>" alt="About Patel Jewellers" loading="eager" width="1200" height="900">
+<section class="about-hero-immersive scroll-section" id="about-hero" aria-label="Our Story">
+  
+  <!-- Base background (mostly dark and elegant) -->
+  <div class="about-immersive-base-bg"></div>
+
+  <!-- WebGL Liquid-Glass Water Reveal Canvas (replaces CSS spotlight when supported) -->
+  <canvas class="about-water-canvas" id="about-water-canvas" aria-hidden="true"></canvas>
+
+  <!-- CSS spotlight fallback — shown only when WebGL is unavailable -->
+  <div class="about-immersive-reveal-bg" id="about-spotlight-bg" style="background-image: url('/images/about/diamonds_hero.png');"></div>
+  
+  <!-- Fully revealed background image (fades in on click) -->
+  <div class="about-immersive-full-bg" id="about-full-bg" style="background-image: url('/images/about/diamonds_hero.png');"></div>
+
+  <!-- Ambient light orbs for brand color integration -->
+  <div class="about-immersive-ambient" aria-hidden="true">
+    <div class="about-imm-orb about-imm-orb--red"></div>
+    <div class="about-imm-orb about-imm-orb--gold"></div>
+  </div>
+
+  <!-- Smooth cursor glow follow element -->
+  <div class="immersive-cursor-glow" id="about-cursor-glow"></div>
+
+  <div class="container about-immersive-container">
+    <div class="about-immersive-content">
+      
+      <!-- Eyebrow -->
+      <div class="about-immersive-eyebrow-wrap reveal-up">
+        <span class="about-immersive-eyebrow">— OUR STORY —</span>
+      </div>
+
+      <!-- Main Heading -->
+      <h2 class="about-immersive-title reveal-up">
+        Crafting Timeless Luxury
+      </h2>
+
+      <!-- Subtitle -->
+      <p class="about-immersive-subtitle reveal-up">
+        Excellence in Diamonds & Fine Jewelry
+      </p>
+
+      <!-- Center Instruction Hint (replaces the Play button) -->
+      <div class="about-immersive-hint-wrap reveal-up">
+        <span class="about-immersive-hint">HOVER TO ILLUMINATE • CLICK TO REVEAL</span>
+      </div>
+
+      <!-- Subtext (fades/slides in beautifully, initially visible or triggers after play) -->
+      <div class="about-immersive-subtext-wrap reveal-up">
+        <p class="about-immersive-subtext">
+          "For generations, we have been creating exceptional diamond and jewelry pieces that symbolize elegance, craftsmanship, and timeless beauty. Every creation reflects our commitment to quality, trust, and luxury."
+        </p>
+      </div>
+
+      <!-- Extra interactive close or pause button for user convenience to exit the full play mode -->
+      <button class="about-immersive-reset-btn" id="about-reset-btn" aria-label="Close full view" style="opacity: 0; pointer-events: none;">
+        <span>ESC VIEW</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+
     </div>
   </div>
 </section>
