@@ -1,21 +1,21 @@
 /* --- PREMIUM LUXURY OVERHAUL WITH LIVE BACKGROUNDS --- */
 
 :root {
-  --color-crimson-velvet: linear-gradient(135deg, #3d0008 0%, #170003 100%);
+  --color-crimson-velvet: radial-gradient(ellipse at 25% 50%, #1a1612 0%, #0e0c09 55%, #080707 100%);
   --color-liquid-gold: linear-gradient(135deg, #bf953f 0%, #fcf6ba 25%, #b38728 50%, #fbf5b7 75%, #aa771c 100%);
-  --glass-bg: rgba(255, 255, 255, 0.03);
-  --glass-border: rgba(202, 161, 90, 0.15);
+  --glass-bg: rgba(202, 161, 90, 0.05);
+  --glass-border: rgba(202, 161, 90, 0.22);
 }
 
 .premium-shagun-hero {
   position: relative;
-  background: var(--color-crimson-velvet) !important;
+  background: radial-gradient(ellipse at 25% 50%, #1a1612 0%, #0e0c09 55%, #080707 100%) !important;
   min-height: 540px;
   padding: var(--space-4xl) 0;
   display: flex;
   align-items: center;
   overflow: hidden;
-  box-shadow: inset 0 -30px 100px rgba(0, 0, 0, 0.6);
+  box-shadow: inset 0 -40px 120px rgba(0, 0, 0, 0.7), inset 0 0 0 1px rgba(202, 161, 90, 0.06);
 }
 
 /* Moving Background Particles Container */
@@ -33,7 +33,7 @@
 /* Individual Floating Gold Dust Particle Style */
 .gold-dust-particle {
   position: absolute;
-  background: radial-gradient(circle, rgba(252, 246, 186, 0.8) 0%, rgba(179, 135, 40, 0) 70%);
+  background: radial-gradient(circle, rgba(212, 175, 55, 0.75) 0%, rgba(202, 161, 90, 0) 70%);
   border-radius: 50%;
   pointer-events: none;
   animation: floatGoldDust linear infinite;
@@ -44,9 +44,9 @@
   position: absolute;
   top: -10%;
   left: -10%;
-  width: 60%;
-  height: 80%;
-  background: radial-gradient(circle, rgba(202, 161, 90, 0.09) 0%, transparent 60%);
+  width: 65%;
+  height: 85%;
+  background: radial-gradient(circle, rgba(212, 175, 55, 0.13) 0%, rgba(202, 161, 90, 0.04) 40%, transparent 70%);
   pointer-events: none;
   z-index: 1;
   animation: pulsingAura 8s ease-in-out infinite alternate;
@@ -72,6 +72,38 @@
   text-align: left;
 }
 
+/* Hero eyebrow override — gold on dark background */
+.premium-shagun-hero .section-eyebrow {
+  color: #caa15a;
+  letter-spacing: 0.3em;
+  font-size: 0.68rem;
+  opacity: 0.9;
+}
+
+/* Bottom gold separator accent line */
+.premium-shagun-hero::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent 0%, rgba(202, 161, 90, 0.5) 30%, rgba(212, 175, 55, 0.7) 50%, rgba(202, 161, 90, 0.5) 70%, transparent 100%);
+  z-index: 5;
+}
+
+/* Right-side ambient gold glow orb on hero */
+.premium-shagun-hero .hero-overlay-glow-right {
+  position: absolute;
+  top: 15%;
+  right: -5%;
+  width: 45%;
+  height: 70%;
+  background: radial-gradient(circle, rgba(202, 161, 90, 0.07) 0%, transparent 65%);
+  pointer-events: none;
+  z-index: 1;
+}
+
 .shagun-title-luxury {
   font-family: var(--font-serif);
   font-size: clamp(3rem, 5vw, 4.5rem);
@@ -89,7 +121,7 @@
 }
 
 .lead-premium {
-  color: #d1c7bd;
+  color: rgba(237, 237, 236, 0.75);
   font-size: 1.15rem;
   line-height: 1.7;
   max-width: 34rem;
@@ -102,14 +134,16 @@
 }
 
 .badge-item {
-  background: var(--glass-bg);
-  border: 1px solid var(--glass-border);
-  backdrop-filter: blur(8px);
-  padding: 0.5rem 1rem;
+  background: rgba(202, 161, 90, 0.06);
+  border: 1px solid rgba(202, 161, 90, 0.28);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  padding: 0.5rem 1.1rem;
   border-radius: 30px;
-  color: #fbf5b7;
-  font-size: 0.85rem;
-  font-weight: 600;
+  color: #e8d9a0;
+  font-size: 0.82rem;
+  font-weight: 500;
+  letter-spacing: 0.05em;
   display: flex;
   align-items: center;
   gap: 0.5rem;
@@ -142,11 +176,12 @@
   position: absolute;
   width: 100%;
   height: 100%;
-  background: linear-gradient(135deg, #a81c2e 0%, #5c0510 100%);
+  background: linear-gradient(135deg, #1e1a14 0%, #141009 50%, #0a0807 100%);
   border-radius: 20px;
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  box-shadow: 0 40px 80px rgba(0, 0, 0, 0.5),
-    inset 0 0 30px rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(202, 161, 90, 0.28);
+  box-shadow: 0 40px 80px rgba(0, 0, 0, 0.6),
+    inset 0 0 30px rgba(0, 0, 0, 0.5),
+    0 0 0 1px rgba(202, 161, 90, 0.08);
   padding: var(--space-lg);
   display: flex;
   flex-direction: column;
