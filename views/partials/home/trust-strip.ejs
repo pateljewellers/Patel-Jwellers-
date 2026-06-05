@@ -2,7 +2,32 @@
   <div class="trust-strip__track">
     <% home.trust.forEach(function(item) { %>
       <div class="trust-strip__item">
-        <span class="trust-strip__icon trust-strip__icon--<%= item.icon %>" aria-hidden="true"></span>
+        <div class="trust-strip__icon-box trust-strip__icon-box--<%= item.icon %>" aria-hidden="true">
+          <% if (item.icon === 'hallmark') { %>
+            <svg class="trust-strip__svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 3L21 19H3L12 3Z" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M12 8L13.5 11.5H17L14 13.5L15 17L12 15L9 17L10 13.5L7 11.5H10.5L12 8Z" fill="currentColor"/>
+            </svg>
+          <% } else if (item.icon === 'diamond') { %>
+            <svg class="trust-strip__svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" xmlns="http://www.w3.org/2000/svg">
+              <path d="M6 3H18L22 8L12 21L2 8L6 3Z" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M2 8H22" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M6 3L10 8L12 21L14 8L18 3" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M10 8H14" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          <% } else if (item.icon === 'craft') { %>
+            <svg class="trust-strip__svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="12" cy="14" r="6" />
+              <path d="M12 8L14 5H10L12 8Z" stroke-linecap="round" stroke-linejoin="round" />
+              <path d="M5 5L7 7M19 5L17 7M12 2V3" stroke-linecap="round"/>
+            </svg>
+          <% } else if (item.icon === 'trust') { %>
+            <svg class="trust-strip__svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 22C12 22 20 18 20 12V5L12 2L4 5V12C4 18 12 22 12 22Z" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M9 11L11 13L15 9" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          <% } %>
+        </div>
         <div class="trust-strip__text">
           <strong><%= item.label %></strong>
           <span><%= item.desc %></span>
@@ -11,7 +36,32 @@
     <% }); %>
     <% home.trust.forEach(function(item) { %>
       <div class="trust-strip__item" aria-hidden="true">
-        <span class="trust-strip__icon trust-strip__icon--<%= item.icon %>"></span>
+        <div class="trust-strip__icon-box trust-strip__icon-box--<%= item.icon %>">
+          <% if (item.icon === 'hallmark') { %>
+            <svg class="trust-strip__svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 3L21 19H3L12 3Z" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M12 8L13.5 11.5H17L14 13.5L15 17L12 15L9 17L10 13.5L7 11.5H10.5L12 8Z" fill="currentColor"/>
+            </svg>
+          <% } else if (item.icon === 'diamond') { %>
+            <svg class="trust-strip__svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" xmlns="http://www.w3.org/2000/svg">
+              <path d="M6 3H18L22 8L12 21L2 8L6 3Z" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M2 8H22" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M6 3L10 8L12 21L14 8L18 3" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M10 8H14" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          <% } else if (item.icon === 'craft') { %>
+            <svg class="trust-strip__svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="12" cy="14" r="6" />
+              <path d="M12 8L14 5H10L12 8Z" stroke-linecap="round" stroke-linejoin="round" />
+              <path d="M5 5L7 7M19 5L17 7M12 2V3" stroke-linecap="round"/>
+            </svg>
+          <% } else if (item.icon === 'trust') { %>
+            <svg class="trust-strip__svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 22C12 22 20 18 20 12V5L12 2L4 5V12C4 18 12 22 12 22Z" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M9 11L11 13L15 9" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          <% } %>
+        </div>
         <div class="trust-strip__text">
           <strong><%= item.label %></strong>
           <span><%= item.desc %></span>
