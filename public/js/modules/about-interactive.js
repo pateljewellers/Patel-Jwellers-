@@ -237,7 +237,7 @@ function initWaterEffect() {
   let texture = null, texW = 1, texH = 1, texReady = false;
   const bgStyle  = spotBg ? spotBg.style.backgroundImage : '';
   const srcMatch = bgStyle.match(/url\(['"]?(.+?)['"]?\)/);
-  const imgSrc   = srcMatch ? srcMatch[1] : '/images/about/diamonds_hero.png';
+  const imgSrc   = srcMatch ? srcMatch[1] : '/images/about/our_story_bg.png';
 
   const img = new Image();
   img.crossOrigin = 'anonymous';

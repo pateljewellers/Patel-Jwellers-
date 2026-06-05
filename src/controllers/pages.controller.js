@@ -137,6 +137,17 @@ function getTempleBanglesPage(req, res) {
   });
 }
 
+function getContactPage(req, res) {
+  const meta = getPageMeta('contact');
+  res.render('pages/contact', {
+    title: meta.title,
+    description: meta.description,
+    page: 'contact',
+    bodyClass: 'page-contact',
+    contact: homeContent.contact,
+  });
+}
+
 module.exports = {
   getHomePage,
   getAboutPage,
@@ -146,9 +157,5 @@ module.exports = {
   getShagunPage: renderPage('shagun', 'pages/shagun-registration'),
   submitShagunRegistration,
   submitContactInquiry,
-  getGalleryPage: renderPage('gallery', 'pages/gallery'),
-  getCustomDesignPage: renderPage('custom-design', 'pages/custom-design'),
-  getTestimonialsPage: renderPage('testimonials', 'pages/testimonials'),
-  getBlogPage: renderPage('blog', 'pages/blog'),
-  getContactPage: renderPage('contact', 'pages/contact'),
+  getContactPage,
 };

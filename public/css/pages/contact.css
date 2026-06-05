@@ -1,0 +1,458 @@
+/* ========== CONTACT US PAGE — Patel Jewellers Mehsanawala ========== */
+
+.contact-page-section {
+  position: relative;
+  background-color: #0b0a09;
+  background-image:
+    /* Subtle aged paper/fabric noise texture via CSS gradients for dark theme */
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 28px,
+      rgba(212, 175, 55, 0.015) 28px,
+      rgba(212, 175, 55, 0.015) 29px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 38px,
+      rgba(176, 168, 154, 0.02) 38px,
+      rgba(176, 168, 154, 0.02) 39px
+    ),
+    linear-gradient(160deg, #141210 0%, #0b0a09 35%, #0e0d0b 70%, #070706 100%);
+  padding-block: var(--space-4xl);
+  overflow: hidden;
+  min-height: 85vh;
+  display: flex;
+  align-items: center;
+  z-index: 2;
+}
+
+/* Background Canvas Sparks */
+.contact-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Ambient Radial Glow */
+.contact-ambient-glow {
+  position: absolute;
+  top: 30%;
+  right: 12%;
+  width: 650px;
+  height: 650px;
+  background: radial-gradient(circle, rgba(212, 175, 55, 0.08) 0%, rgba(255, 255, 255, 0) 70%);
+  pointer-events: none;
+  z-index: 1;
+  filter: blur(40px);
+}
+
+/* Slow-Rotating Stencil Lattice */
+.contact-jaali-wrap {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 820px;
+  height: 820px;
+  opacity: 0.06;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.contact-jaali {
+  position: absolute;
+  inset: 0;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath d='M50 0 A50 50 0 1 0 100 50 A50 50 0 0 0 50 0 Z M50 90 A40 40 0 1 1 90 50 A40 40 0 0 1 50 90 Z M50 15 A35 35 0 1 0 85 50 A35 35 0 0 0 50 15 Z' fill='%23d4af37' fill-opacity='0.45'/%3E%3Ccircle cx='50' cy='50' r='9' fill='none' stroke='%23d4af37' stroke-width='1.2'/%3E%3Cpath d='M50 10 L50 90 M10 50 L90 50 M21.7 21.7 L78.3 78.3 M21.7 78.3 L78.3 21.7' stroke='%23d4af37' stroke-width='0.6'/%3E%3C/svg%3E") no-repeat center/contain;
+  width: 100%;
+  height: 100%;
+  will-change: transform;
+}
+
+.contact-container {
+  position: relative;
+  z-index: 3;
+  width: 100%;
+}
+
+.contact-luxury-console {
+  position: relative;
+  background: rgba(20, 18, 16, 0.82);
+  backdrop-filter: blur(25px);
+  border: 1px solid rgba(212, 175, 55, 0.22);
+  border-radius: var(--radius-lg);
+  padding: 4px;
+  box-shadow:
+    0 15px 45px rgba(0, 0, 0, 0.6),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  transform-style: preserve-3d;
+  will-change: transform;
+  overflow: hidden;
+}
+
+.console-spotlight {
+  position: absolute;
+  width: 320px;
+  height: 320px;
+  background: radial-gradient(circle, rgba(212, 175, 55, 0.14) 0%, rgba(255, 255, 255, 0) 70%);
+  border-radius: 50%;
+  pointer-events: none;
+  opacity: 0;
+  transform: translate(-50%, -50%);
+  transition: opacity 0.3s ease;
+  z-index: 1;
+}
+
+.contact-luxury-console:hover .console-spotlight {
+  opacity: 1;
+}
+
+.console-inner-frame {
+  position: relative;
+  border: 1px solid rgba(212, 175, 55, 0.18);
+  border-radius: calc(var(--radius-lg) - 4px);
+  padding: 46px 44px;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 40px;
+  align-items: flex-start;
+  z-index: 2;
+  transform: translateZ(10px);
+}
+
+@media (min-width: 960px) {
+  .console-inner-frame {
+    grid-template-columns: 1.2fr auto 1.4fr;
+    gap: 45px;
+  }
+}
+
+/* Palace Corner Filigrees */
+.console-brass-filigree {
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  border: 1.5px solid rgba(212, 175, 55, 0.65);
+  pointer-events: none;
+  z-index: 5;
+}
+
+.console-brass-filigree.filigree--top-left {
+  top: 15px;
+  left: 15px;
+  border-right: none;
+  border-bottom: none;
+  border-radius: 4px 0 0 0;
+}
+
+.console-brass-filigree.filigree--top-right {
+  top: 15px;
+  right: 15px;
+  border-left: none;
+  border-bottom: none;
+  border-radius: 0 4px 0 0;
+}
+
+.console-brass-filigree.filigree--bottom-left {
+  bottom: 15px;
+  left: 15px;
+  border-right: none;
+  border-top: none;
+  border-radius: 0 0 0 4px;
+}
+
+.console-brass-filigree.filigree--bottom-right {
+  bottom: 15px;
+  right: 15px;
+  border-left: none;
+  border-top: none;
+  border-radius: 0 0 4px 0;
+}
+
+/* Symmetrical Gold Vertical Separator Rule */
+.console-divider-vertical {
+  display: none;
+}
+
+@media (min-width: 960px) {
+  .console-divider-vertical {
+    display: block;
+    width: 1px;
+    height: 520px;
+    background: linear-gradient(180deg, transparent, rgba(212, 175, 55, 0.22) 20%, rgba(212, 175, 55, 0.22) 80%, transparent);
+    align-self: center;
+    margin-inline: 10px;
+  }
+}
+
+/* Left Column: Brand & Details */
+.console-brand-side {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  justify-content: center;
+  transform-style: preserve-3d;
+}
+
+.concierge-logo-wrap {
+  margin-bottom: 22px;
+  transform: translateZ(20px);
+  will-change: transform;
+}
+
+.concierge-logo-img {
+  max-width: 195px;
+  height: auto;
+  display: block;
+  /* Shift logo perfectly to gold #d4af37 */
+  filter: brightness(0) saturate(100%) invert(84%) sepia(29%) saturate(836%) hue-rotate(357deg) brightness(92%) contrast(85%);
+}
+
+.concierge-title {
+  font-family: var(--font-serif);
+  font-size: 2.1rem;
+  color: #f5ede0;
+  margin: 0 0 4px;
+  font-weight: 400;
+  transform: translateZ(15px);
+  letter-spacing: 0.02em;
+}
+
+.concierge-subtitle {
+  font-family: var(--font-sans);
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #d4af37;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  margin-bottom: 18px;
+  display: block;
+  transform: translateZ(12px);
+}
+
+.concierge-lead {
+  font-family: var(--font-sans);
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: #c9c2b6;
+  max-width: 340px;
+  margin: 0 0 35px;
+  transform: translateZ(8px);
+}
+
+/* Showrooms Container */
+.concierge-showrooms-list {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  transform: translateZ(10px);
+}
+
+.concierge-showroom-branch {
+  text-align: center;
+}
+
+.concierge-label {
+  display: block;
+  font-family: var(--font-sans);
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: #d4af37;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  margin-bottom: 6px;
+}
+
+.concierge-text {
+  font-family: var(--font-sans);
+  font-size: 0.92rem;
+  font-weight: 500;
+  color: #f5ede0;
+  margin: 0;
+  line-height: 1.5;
+}
+
+.concierge-text--small {
+  font-size: 0.84rem;
+  color: #c9c2b6;
+  margin-top: 4px;
+}
+
+.concierge-text a {
+  color: inherit;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.concierge-text a:hover {
+  color: #d4af37;
+}
+
+.concierge-hairline {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.22), transparent);
+  width: 70%;
+  margin: 0 auto;
+}
+
+/* Right Column: Symmetrical Form */
+.console-form-side {
+  width: 100%;
+  transform-style: preserve-3d;
+}
+
+.form-title-desk {
+  font-family: var(--font-serif);
+  font-size: 1.8rem;
+  font-weight: 400;
+  color: #f5ede0;
+  margin: 0 0 8px;
+  line-height: 1.15;
+}
+
+.form-subtitle-desk {
+  font-family: var(--font-sans);
+  font-size: 0.88rem;
+  color: #c9c2b6;
+  margin: 0 0 35px;
+  line-height: 1.5;
+}
+
+/* Calligraphy Input Elements */
+.form-group-premium {
+  position: relative;
+  margin-bottom: 25px;
+  background: rgba(15, 13, 11, 0.65);
+  border: 1px solid rgba(212, 175, 55, 0.15);
+  border-radius: 8px;
+  padding: 6px 16px;
+  transition: border-color 0.4s var(--ease-out), background-color 0.4s var(--ease-out), box-shadow 0.4s var(--ease-out);
+}
+
+.form-group-premium:focus-within {
+  border-color: #d4af37;
+  background: rgba(25, 22, 18, 0.95);
+  box-shadow: 0 4px 18px rgba(212, 175, 55, 0.08);
+}
+
+.form-input-premium {
+  width: 100%;
+  padding: 12px 0 4px;
+  background: transparent;
+  border: none;
+  font-family: var(--font-sans);
+  font-size: 0.94rem;
+  color: #f5ede0;
+}
+
+.form-input-premium:focus {
+  outline: none;
+}
+
+.form-label-premium {
+  position: absolute;
+  left: 16px;
+  top: 15px;
+  font-family: var(--font-sans);
+  font-size: 0.82rem;
+  color: #b0a89a;
+  pointer-events: none;
+  transition: transform 0.3s var(--ease-out), color 0.3s var(--ease-out), font-size 0.3s var(--ease-out);
+  transform-origin: left top;
+}
+
+.form-input-premium:focus ~ .form-label-premium,
+.form-input-premium:not(:placeholder-shown) ~ .form-label-premium {
+  transform: translateY(-11px) scale(0.78);
+  color: #d4af37;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+}
+
+.focus-line-glow {
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  width: 0%;
+  height: 1.8px;
+  background: linear-gradient(90deg, #9b1b2a 0%, #d4af37 100%);
+  transition: width 0.5s var(--ease-out);
+  border-radius: 0 0 8px 8px;
+}
+
+.form-group-premium:focus-within .focus-line-glow {
+  width: 100%;
+}
+
+.textarea-group {
+  margin-bottom: 28px;
+}
+
+.form-textarea-premium {
+  resize: none;
+  min-height: 95px;
+  padding-top: 12px;
+}
+
+.contact-submit-wrap {
+  perspective: 600px;
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+/* Success Modal 3D overlay styling for Dark Theme */
+.modal-content {
+  background: radial-gradient(circle at center, #1b1916 0%, #0c0a09 100%) !important;
+  border: 1.5px solid rgba(212, 175, 55, 0.42) !important;
+  box-shadow: 0 25px 65px rgba(0, 0, 0, 0.85) !important;
+  color: #f5ede0;
+}
+
+.success-title {
+  color: #f5ede0 !important;
+}
+
+.success-desc {
+  color: #c9c2b6 !important;
+}
+
+.close-modal-btn {
+  background: #d4af37 !important;
+  color: #0b0b0b !important;
+}
+
+.close-modal-btn:hover {
+  background: #ffffff !important;
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.4) !important;
+}
+
+/* SVG Overrides for contact success ring */
+.success-ring circle {
+  stroke: #d4af37 !important;
+}
+.checkmark-svg path {
+  stroke: #d4af37 !important;
+}
+
+/* Confetti blossom styling */
+.confetti-blossom {
+  position: absolute;
+  pointer-events: none;
+  z-index: 99999;
+  opacity: 0.9;
+  will-change: transform, top, left;
+}
+
+/* Style for select option tags in dark theme */
+.form-input-premium option {
+  background-color: #1b1916;
+  color: #f5ede0;
+}

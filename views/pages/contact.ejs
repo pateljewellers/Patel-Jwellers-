@@ -1,8 +1,166 @@
 <%- include('../partials/layout-start') %>
 <%- include('../partials/header') %>
-<main class="main-content">
-  <%- include('../partials/page-hero') %>
-  <%- include('../partials/page-placeholder') %>
+
+<main class="main-content main-content--contact">
+  <section class="contact-page-section" id="contact" aria-labelledby="contact-heading">
+    <!-- Interactive Gold Dust and Star Canvas Backdrop -->
+    <canvas class="contact-canvas" id="contact-canvas" aria-hidden="true"></canvas>
+
+    <!-- Ambient Luxury Gradients and Slow-Rotating Stencil -->
+    <div class="contact-ambient-glow" aria-hidden="true"></div>
+    <div class="contact-jaali-wrap" aria-hidden="true">
+      <div class="contact-jaali"></div>
+    </div>
+
+    <div class="container contact-container">
+      
+      <!-- Unified Symmetrical 3D Horizontal Luxury Console -->
+      <div class="contact-luxury-console reveal-scale" id="contact-luxury-console">
+        <!-- Outer Double Border Ornaments -->
+        <div class="console-brass-filigree filigree--top-left" aria-hidden="true"></div>
+        <div class="console-brass-filigree filigree--top-right" aria-hidden="true"></div>
+        <div class="console-brass-filigree filigree--bottom-left" aria-hidden="true"></div>
+        <div class="console-brass-filigree filigree--bottom-right" aria-hidden="true"></div>
+        
+        <!-- Spotlight shine coordinations -->
+        <div class="console-spotlight" aria-hidden="true"></div>
+
+        <!-- Inner Double Border Spacer Grid -->
+        <div class="console-inner-frame">
+          
+          <!-- Left Column: Branding & Showrooms Details -->
+          <div class="console-brand-side">
+            <!-- Official Brand Logo in Gold filter -->
+            <div class="concierge-logo-wrap" aria-hidden="true">
+              <img src="/images/logo/logo.png?v=2.2" alt="Patel Jewellers logo" class="concierge-logo-img" width="195" height="54">
+            </div>
+
+            <h1 class="concierge-title" id="contact-heading">Get in Touch</h1>
+            <span class="concierge-subtitle">Our Showrooms</span>
+            <p class="concierge-lead">Visit our flagship boutiques or reach out directly to co-create your bespoke bridal and signature creations.</p>
+
+            <div class="concierge-showrooms-list">
+              <!-- Showroom 1: Mehsana (Original) -->
+              <div class="concierge-showroom-branch">
+                <span class="concierge-label">Mehsana (Flagship Boutique)</span>
+                <p class="concierge-text">Radhanpur Road, beside Dr. T.I. Patel Hospital, Mehsana</p>
+                <p class="concierge-text concierge-text--small">
+                  <a href="tel:+919876543210">+91 98765 43210</a> &bull; <a href="mailto:info@pateljewellersmehsana.com">info@pateljewellersmehsana.com</a>
+                </p>
+              </div>
+              
+              <div class="concierge-hairline" aria-hidden="true"></div>
+
+              <!-- Showroom 2: Palanpur (New) -->
+              <div class="concierge-showroom-branch">
+                <span class="concierge-label">Palanpur Showroom</span>
+                <p class="concierge-text">Highway Road, Opposite Cozy Hotel, Palanpur</p>
+                <p class="concierge-text concierge-text--small">
+                  <a href="tel:+919876543211">+91 98765 43211</a> &bull; <a href="mailto:palanpur@pateljewellersmehsana.com">palanpur@pateljewellersmehsana.com</a>
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Symmetrical Gold Vertical Separator Rule -->
+          <div class="console-divider-vertical" aria-hidden="true"></div>
+
+          <!-- Right Column: Calligraphy Inquiry Desk -->
+          <div class="console-form-side">
+            <form class="contact-form-premium" id="premium-contact-form" action="/contact/submit" method="post" aria-label="Bespoke jewelry inquiry form">
+              <h2 class="form-title-desk">Bespoke Request Desk</h2>
+              <p class="form-subtitle-desk">Share your wedding dates, design preferences, or consultation requests with our master designers.</p>
+              
+              <!-- Name Input Group -->
+              <div class="form-group-premium">
+                <input type="text" id="contact-name" name="name" class="form-input-premium" required placeholder=" " autocomplete="name">
+                <label for="contact-name" class="form-label-premium">Your Noble Name</label>
+                <span class="focus-line-glow" aria-hidden="true"></span>
+              </div>
+
+              <!-- Phone Input Group -->
+              <div class="form-group-premium">
+                <input type="tel" id="contact-phone" name="phone" class="form-input-premium" required placeholder=" " autocomplete="tel">
+                <label for="contact-phone" class="form-label-premium">Preferred Phone Number</label>
+                <span class="focus-line-glow" aria-hidden="true"></span>
+              </div>
+
+              <!-- Email Input Group -->
+              <div class="form-group-premium">
+                <input type="email" id="contact-email" name="email" class="form-input-premium" required placeholder=" " autocomplete="email">
+                <label for="contact-email" class="form-label-premium">Your Email Address</label>
+                <span class="focus-line-glow" aria-hidden="true"></span>
+              </div>
+
+              <!-- Service Dropdown Selector -->
+              <div class="form-group-premium">
+                <select id="contact-service" name="service" class="form-input-premium" required>
+                  <option value="" disabled selected hidden></option>
+                  <option value="Bespoke Bridal Customization">Bespoke Bridal Customization</option>
+                  <option value="Shagun Registration Inquiry">Shagun Registration Inquiry</option>
+                  <option value="Showroom Private Appointment">Showroom Private Appointment</option>
+                  <option value="General Inquiry">General Inquiry</option>
+                </select>
+                <label for="contact-service" class="form-label-premium">How Can We Craft Your Dream?</label>
+                <span class="focus-line-glow" aria-hidden="true"></span>
+              </div>
+
+              <!-- Message Textarea Group -->
+              <div class="form-group-premium textarea-group">
+                <textarea id="contact-message" name="message" class="form-input-premium form-textarea-premium" required rows="4" placeholder=" "></textarea>
+                <label for="contact-message" class="form-label-premium">Describe Your Vision...</label>
+                <span class="focus-line-glow" aria-hidden="true"></span>
+              </div>
+
+              <!-- Centered Golden Pill Submit Button -->
+              <div class="contact-submit-wrap">
+                <button type="submit" class="btn btn--primary btn--magnetic contact-submit-btn" id="contact-submit-btn">
+                  <span>Send Message</span>
+                  <svg viewBox="0 0 24 24" class="btn-arrow" aria-hidden="true">
+                    <path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                  </svg>
+                </button>
+              </div>
+            </form>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- Luxury 3D Success Modal Overlay -->
+    <div class="contact-success-modal" id="contact-success-modal" aria-hidden="true" role="dialog" aria-labelledby="modal-title">
+      <div class="modal-backdrop"></div>
+      <div class="modal-content-wrap">
+        <div class="modal-content">
+          <div class="success-glow" aria-hidden="true"></div>
+          
+          <!-- Rotating Gold Medallion with Draw Checkmark -->
+          <div class="success-medallion" aria-hidden="true">
+            <svg viewBox="0 0 100 100" class="success-ring">
+              <circle cx="50" cy="50" r="46" fill="none" stroke="#d4af37" stroke-width="1.5" stroke-dasharray="289" stroke-dashoffset="0" />
+              <circle cx="50" cy="50" r="42" fill="none" stroke="#d4af37" stroke-width="0.5" stroke-dasharray="8 6" />
+            </svg>
+            <div class="medallion-inner">
+              <svg viewBox="0 0 24 24" class="checkmark-svg">
+                <path d="M5 12l5 5L20 7" fill="none" stroke="#d4af37" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+            </div>
+          </div>
+
+          <h3 id="modal-title" class="success-title">Inquiry Received</h3>
+          <p class="success-desc">Thank you for getting in touch with Patel Jewellers. Our luxury design consultants will contact you shortly to coordinate your private styling appointment.</p>
+          
+          <div class="success-action">
+            <button type="button" class="btn btn--primary close-modal-btn" id="close-success-btn">
+              <span>Continue Journey</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 </main>
+
 <%- include('../partials/footer') %>
 <%- include('../partials/layout-end') %>
