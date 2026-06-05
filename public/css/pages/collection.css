@@ -5,15 +5,14 @@
 /* ========== 3D SANCTUARY HERO REDESIGN ========== */
 .collection-hero {
   position: relative;
-  background: linear-gradient(135deg, var(--color-white) 0%, var(--color-bg) 100%) !important;
+  background: radial-gradient(circle at 50% 50%, #170305 0%, #080001 100%) !important;
   min-height: calc(100vh - 80px); /* Height minus header height */
   padding: 60px 0 !important;
   display: flex;
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  box-shadow: inset 0 -30px 100px rgba(42, 42, 42, 0.05),
-    inset 0 30px 100px rgba(42, 42, 42, 0.05);
+  box-shadow: inset 0 0 100px rgba(0, 0, 0, 0.8), inset 0 0 45px rgba(155, 27, 42, 0.2) !important;
   z-index: 10;
 }
 
@@ -44,7 +43,7 @@
   transform: translate(-50%, -50%);
   width: 800px;
   height: 800px;
-  background: radial-gradient(circle, rgba(202, 161, 90, 0.12) 0%, rgba(155, 27, 42, 0.05) 40%, transparent 70%);
+  background: radial-gradient(circle, rgba(202, 161, 90, 0.25) 0%, rgba(155, 27, 42, 0.12) 40%, transparent 70%);
   pointer-events: none;
   z-index: 1;
   filter: blur(50px);
@@ -130,6 +129,7 @@
 }
 
 .asset-3d-wrapper {
+  position: relative;
   width: 100%;
   transform-style: preserve-3d;
   will-change: transform;
@@ -138,6 +138,157 @@
   transition: transform 0.15s ease-out;
   cursor: pointer;
   z-index: 5;
+}
+
+/* ========== LUXURY PORTAL AURA EFFECTS ========== */
+.portal-ring-aura {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.7);
+  width: 110%;
+  height: 110%;
+  border: 1px double rgba(202, 161, 90, 0);
+  border-radius: 50%;
+  pointer-events: none;
+  opacity: 0;
+  transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.8s ease, box-shadow 0.8s ease;
+  box-shadow: 0 0 30px rgba(202, 161, 90, 0), inset 0 0 30px rgba(202, 161, 90, 0);
+  z-index: 1;
+}
+
+/* Double inner ring */
+.portal-ring-aura::before {
+  content: '';
+  position: absolute;
+  inset: 12px;
+  border: 1px dashed rgba(155, 27, 42, 0.2);
+  border-radius: 50%;
+  animation: rotatePortal 24s linear infinite;
+  opacity: 0.6;
+  transition: border-color 0.8s ease;
+}
+
+.portal-ring-aura::after {
+  content: '';
+  position: absolute;
+  inset: -18px;
+  border: 1px solid rgba(202, 161, 90, 0.15);
+  border-radius: 50%;
+  animation: pulsePortal 3.5s ease-in-out infinite;
+  opacity: 0.4;
+  transition: border-color 0.8s ease;
+}
+
+/* Hover effects */
+.asset-3d-wrapper:hover .portal-ring-aura {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1.06);
+  border-color: rgba(202, 161, 90, 0.7);
+  box-shadow: 0 0 50px rgba(202, 161, 90, 0.25), inset 0 0 40px rgba(202, 161, 90, 0.15);
+}
+
+.asset-3d-wrapper:hover .portal-ring-aura::before {
+  border-color: rgba(155, 27, 42, 0.5);
+}
+
+@keyframes rotatePortal {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes pulsePortal {
+  0%, 100% { transform: scale(1); opacity: 0.3; }
+  50% { transform: scale(1.06); opacity: 0.6; }
+}
+
+/* Custom interactive portal cursor hint */
+.portal-hover-active {
+  cursor: none !important;
+}
+
+.portal-custom-cursor {
+  position: fixed;
+  width: 90px;
+  height: 90px;
+  border: 1.5px solid rgba(202, 161, 90, 0.6);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 1000000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform: translate(-50%, -50%) scale(0);
+  opacity: 0;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease;
+  background: rgba(8, 0, 1, 0.8);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4), inset 0 0 15px rgba(202, 161, 90, 0.15);
+}
+
+.portal-custom-cursor::before {
+  content: '✦';
+  font-size: 12px;
+  color: #caa15a;
+  position: absolute;
+  top: 14px;
+  animation: rotatePortal 10s linear infinite;
+}
+
+.portal-custom-cursor-text {
+  font-family: var(--font-sans);
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: 0.25em;
+  color: #fffdf9;
+  text-transform: uppercase;
+  margin-left: 2px;
+}
+
+.portal-custom-cursor.active {
+  transform: translate(-50%, -50%) scale(1);
+  opacity: 1;
+}
+
+/* Flash veil to make the click impact feel bright and magical */
+.portal-flash-veil {
+  position: fixed;
+  inset: 0;
+  background: #fffdf9;
+  z-index: 999999;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.15s ease-out;
+}
+
+/* Transition rules for the hero contents, excluding the absolute overlay */
+.collection-hero .hero-canvas,
+.collection-hero .collection-hero-glow,
+.collection-hero .hero-sidebar-indicator,
+.collection-hero .hero-watermark,
+.collection-hero .hero-royal-frame,
+.collection-hero .collection-hero__wrapper {
+  transition: filter 0.9s cubic-bezier(0.16, 1, 0.3, 1), transform 0.9s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: filter, transform, opacity;
+}
+
+/* When portal is active, blur the background elements and wrapper, not the main section container */
+.collection-hero.portal-blurring .hero-canvas,
+.collection-hero.portal-blurring .collection-hero-glow,
+.collection-hero.portal-blurring .hero-sidebar-indicator,
+.collection-hero.portal-blurring .hero-watermark,
+.collection-hero.portal-blurring .hero-royal-frame {
+  filter: blur(8px);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.collection-hero.portal-blurring .collection-hero__wrapper {
+  filter: blur(12px) brightness(0.4);
+  transform: scale(0.96);
+  opacity: 0.25;
+  pointer-events: none;
 }
 
 .asset-3d-img {
@@ -952,7 +1103,7 @@
   transform: none;
   pointer-events: none;
   transition: none; /* Controlled via GSAP */
-  will-change: auto;
+  will-change: transform, opacity;
   box-shadow: 0 50px 100px rgba(0, 0, 0, 0.25);
   overflow-y: auto; /* Enable natural page vertical scroll */
   overflow-x: hidden;
@@ -1822,7 +1973,7 @@
   font-size: 0.85rem;
   font-weight: 700;
   letter-spacing: 0.3em;
-  color: var(--color-primary);
+  color: #caa15a;
   text-transform: uppercase;
 }
 
@@ -1831,16 +1982,19 @@
   font-size: clamp(3.2rem, 5.5vw, 5.5rem);
   font-weight: 600;
   line-height: 1.05;
-  color: var(--color-dark);
+  background: linear-gradient(135deg, #ffffff 40%, #caa15a 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
   margin: 0;
   letter-spacing: -0.01em;
+  filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.4));
 }
 
 .editorial-desc {
   font-family: var(--font-sans);
   font-size: 1.05rem;
   line-height: 1.8;
-  color: #555555;
+  color: rgba(255, 255, 255, 0.72);
   margin: 0;
   font-weight: 400;
 }
@@ -1858,11 +2012,11 @@
   font-weight: 600;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: var(--color-accent);
+  color: #caa15a;
   padding: 0.4rem 0.9rem;
   border-radius: var(--radius-sm);
-  border: 1px solid var(--color-border);
-  background: rgba(255, 255, 255, 0.4);
+  border: 1px solid rgba(202, 161, 90, 0.3);
+  background: rgba(255, 255, 255, 0.05);
 }
 
 /* Fixed Sidebar Indicator (Scroll to Unveil) */
@@ -1975,7 +2129,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  border: 1px solid rgba(202, 161, 90, 0.28); /* Thin Gold Outer Frame */
+  border: 1px solid rgba(202, 161, 90, 0.45); /* Polished Gold Outer Frame */
 }
 
 .hero-frame-border::after {
@@ -1985,7 +2139,7 @@
   left: 4px;
   right: 4px;
   bottom: 4px;
-  border: 1px solid rgba(155, 27, 42, 0.1); /* Thin Burgundy Inner Frame */
+  border: 1px solid rgba(155, 27, 42, 0.22); /* Thin glowing inner frame */
 }
 
 /* Royal Corner Accents for the frame */
@@ -1993,7 +2147,7 @@
   position: absolute;
   width: 14px;
   height: 14px;
-  border: 2px solid var(--color-primary); /* Royal Burgundy */
+  border: 2px solid #caa15a; /* Polished Royal Gold Corners */
 }
 
 .hero-frame-corner.tl { top: -2px; left: -2px; border-right: none; border-bottom: none; }
@@ -2008,12 +2162,12 @@
   gap: var(--space-sm);
   margin-top: var(--space-lg);
   padding: 10px 22px;
-  background: rgba(255, 255, 255, 0.65);
+  background: rgba(255, 255, 255, 0.06);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
-  border: 1px solid rgba(202, 161, 90, 0.22);
+  border: 1px solid rgba(202, 161, 90, 0.35);
   border-radius: var(--radius-full);
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.03);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
   transition: all 0.4s var(--ease-out);
   cursor: pointer;
   will-change: transform, opacity;
@@ -2023,13 +2177,13 @@
   background: var(--color-primary);
   border-color: var(--color-primary);
   transform: translateY(-2px);
-  box-shadow: 0 15px 30px rgba(155, 27, 42, 0.18);
+  box-shadow: 0 15px 30px rgba(155, 27, 42, 0.35);
 }
 
 .editorial-cta__icon {
   width: 8px;
   height: 8px;
-  background: var(--color-primary);
+  background: #caa15a;
   border-radius: 50%;
   position: relative;
   display: inline-block;
@@ -2047,7 +2201,7 @@
   left: -6px;
   width: 20px;
   height: 20px;
-  border: 1px solid var(--color-primary);
+  border: 1px solid rgba(202, 161, 90, 0.4);
   border-radius: 50%;
   animation: pulseIndicator 1.8s ease-out infinite;
   transition: border-color 0.4s ease;
@@ -2074,8 +2228,8 @@
   font-weight: 700;
   letter-spacing: 0.15em;
   text-transform: uppercase;
-  color: var(--color-accent);
-  transition: color 0.4s ease;
+  color: rgba(255, 255, 255, 0.82);
+  transition: all 0.4s ease;
 }
 
 .editorial-cta:hover .editorial-cta__text {
@@ -2117,7 +2271,7 @@
    --- CURATED LUXURY CATEGORY DIRECTORY REDESIGN ---
    ========================================================== */
 .luxury-category-directory {
-  padding: 120px 4% 80px 4%;
+  padding: 60px 4% 60px 4%;
   background: transparent;
   width: 100%;
   position: relative;
@@ -2127,23 +2281,24 @@
 .category-directory-grid {
   display: grid;
   grid-template-columns: repeat(1, 1fr);
-  gap: 24px;
+  gap: 20px;
   width: 100%;
-  margin-top: 60px;
+  max-width: 1020px;
+  margin: 40px auto 0 auto;
   grid-auto-flow: dense;
 }
 
 @media (min-width: 640px) {
   .category-directory-grid {
     grid-template-columns: repeat(2, 1fr);
-    gap: 30px;
+    gap: 24px;
   }
 }
 
 @media (min-width: 1024px) {
   .category-directory-grid {
-    grid-template-columns: repeat(4, 1fr);
-    gap: 35px;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 28px;
   }
 }
 
@@ -2153,11 +2308,11 @@
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  border-radius: 24px;
+  border-radius: 18px;
   background: var(--color-white);
   border: 1px solid rgba(202, 161, 90, 0.18);
-  box-shadow: 0 15px 45px rgba(0, 0, 0, 0.04);
-  aspect-ratio: 1 / 1;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+  aspect-ratio: 3 / 4;
   transition: transform 0.8s cubic-bezier(0.25, 1, 0.33, 1), 
               box-shadow 0.8s cubic-bezier(0.25, 1, 0.33, 1), 
               border-color 0.8s cubic-bezier(0.25, 1, 0.33, 1);
@@ -2166,12 +2321,11 @@
   transform-style: preserve-3d;
 }
 
-/* Card Size Modifiers for Asymmetric Grid */
+/* Card Size Modifiers */
 @media (min-width: 1024px) {
   .category-dir-card.size-double-height {
-    grid-row: span 2;
-    aspect-ratio: auto;
-    height: 100%;
+    aspect-ratio: unset;
+    height: 340px;
   }
 
   .category-dir-card.size-double-width {

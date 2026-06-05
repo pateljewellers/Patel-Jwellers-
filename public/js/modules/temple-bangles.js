@@ -1,10 +1,10 @@
 /**
- * Temple Bangles Immersive Experience — Core Frontend Script
+ * Pratha Collection Immersive Experience — Core Frontend Script
  * raw WebGL custom fragment shader + EJS interactive page controllers
  */
 
 document.addEventListener('DOMContentLoaded', () => {
-  // Ensure we are on the temple bangles special page
+  // Ensure we are on the pratha collection special page
   if (!document.body.classList.contains('page-temple-bangles')) return;
 
   initLoadingSequence();
@@ -27,11 +27,11 @@ function initLoadingSequence() {
   // Curated premium status script milestones
   const milestones = [
     { limit: 20, text: "MELTING 22-KARAT PURE GOLD ORE..." },
-    { limit: 45, text: "SHAPING SACRED TEMPLE CONTOURS..." },
+    { limit: 45, text: "SHAPING SACRED PRATHA CONTOURS..." },
     { limit: 68, text: "CHISELLING GAJA LAKSHMI DETAILS..." },
     { limit: 85, text: "GRANULATING GAJRA RIMS & EMBELLISHMENTS..." },
     { limit: 98, text: "POLISHING ROYAL ANTIQUE PATINA..." },
-    { limit: 100, text: "UNVEILING THE TEMPLE SANCTUARY..." }
+    { limit: 100, text: "UNVEILING THE PRATHA SANCTUARY..." }
   ];
 
   let currentPercent = 0;

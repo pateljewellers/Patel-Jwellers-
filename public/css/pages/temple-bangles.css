@@ -1,5 +1,5 @@
 /* ==========================================================================
-   Temple Bangles Immersive Experience — Stylesheet
+   Pratha Collection Immersive Experience — Stylesheet
    ========================================================================== */
 
 /* Page-specific variables & context overrides */
@@ -242,19 +242,26 @@
   transition: all 1s var(--ease-out) 1.2s;
 }
 
-.hero-title {
-  font-family: var(--font-sans);
-  font-size: clamp(2.25rem, 7vw, 4.25rem);
-  font-weight: 300;
-  letter-spacing: 0.18em;
-  color: var(--color-primary-dark);
-  line-height: 1.15;
-  margin-bottom: 1rem;
-  margin-left: 0.18em; /* Align center due to letter spacing */
-  text-shadow: 0 0 10px rgba(155, 27, 42, 0.08);
+.hero-logo-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 1.5rem;
   opacity: 0;
   transform: translateY(20px);
   transition: all 1.2s var(--ease-out) 1.4s;
+}
+
+.loaded .hero-logo-container {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.hero-logo-img {
+  max-width: 380px;
+  width: 100%;
+  height: auto;
+  filter: drop-shadow(0 12px 24px rgba(0,0,0,0.1)) drop-shadow(0 2px 5px rgba(0,0,0,0.06));
 }
 
 .hero-subtitle {

@@ -446,6 +446,16 @@ document.addEventListener('DOMContentLoaded', () => {
 // --- COLLECTION HERO INTERACTIVE LUXURY 3D SPOTLIGHT ENGINE ---
 // ==========================================================
 document.addEventListener('DOMContentLoaded', () => {
+  // Prevent browser native hash scroll jump
+  if ('scrollRestoration' in history) {
+    history.scrollRestoration = 'manual';
+  }
+
+  const targetEl = document.getElementById('curated-luxury-categories');
+  if (targetEl && (window.location.hash === '#curated-luxury-categories' || window.location.hash === '#temp-curated-luxury-categories')) {
+    targetEl.id = 'temp-curated-luxury-categories';
+  }
+
   const heroSection = document.getElementById('collection-hero');
   const heroCanvas = document.getElementById('collection-hero-canvas');
   const assetWrapper = document.getElementById('collection-interactive-3d');
@@ -460,6 +470,8 @@ document.addEventListener('DOMContentLoaded', () => {
   if (heroCanvas) {
     const hctx = heroCanvas.getContext('2d');
     let sparkList = [];
+    let heroShockwaves = [];
+    let heroParticles = [];
     let hWidth = (heroCanvas.width = heroSection.offsetWidth);
     let hHeight = (heroCanvas.height = heroSection.offsetHeight);
     let hMouse = { x: null, y: null, active: false };
@@ -523,6 +535,91 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     }
 
+    class HeroClickSpark {
+      constructor(x, y) {
+        this.x = x;
+        this.y = y;
+        const angle = Math.random() * Math.PI * 2;
+        const speed = Math.random() * 7 + 2;
+        this.vx = Math.cos(angle) * speed;
+        this.vy = Math.sin(angle) * speed;
+        this.size = Math.random() * 3.5 + 1.2;
+        this.alpha = 1.0;
+        this.fade = Math.random() * 0.02 + 0.015;
+        this.gravity = 0.08;
+        this.color = Math.random() > 0.45 ? 'rgba(202, 161, 90,' : 'rgba(155, 27, 42,';
+      }
+      update() {
+        this.x += this.vx;
+        this.y += this.vy;
+        this.vy += this.gravity;
+        this.vx *= 0.96;
+        this.vy *= 0.96;
+        this.alpha -= this.fade;
+      }
+      draw() {
+        if (!hctx) return;
+        hctx.save();
+        hctx.globalAlpha = Math.max(this.alpha, 0);
+        hctx.beginPath();
+        hctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        hctx.fillStyle = this.color + this.alpha + ')';
+        hctx.shadowBlur = 8;
+        hctx.shadowColor = '#caa15a';
+        hctx.fill();
+        hctx.restore();
+      }
+      isDead() {
+        return this.alpha <= 0;
+      }
+    }
+
+    class HeroShockwave {
+      constructor(x, y) {
+        this.x = x;
+        this.y = y;
+        this.radius = 0;
+        this.maxRadius = Math.max(hWidth, hHeight) * 1.5;
+        this.alpha = 0.9;
+        this.thickness = 3;
+        this.speed = 18;
+      }
+      update() {
+        this.radius += this.speed;
+        this.alpha -= 0.015; // Fade out linearly per frame
+        this.thickness = 3 * Math.max(1 - this.radius / this.maxRadius, 0) + 0.5;
+        this.speed *= 0.97;
+      }
+      draw() {
+        if (!hctx) return;
+        hctx.save();
+        hctx.globalAlpha = Math.max(this.alpha, 0);
+        hctx.strokeStyle = 'rgba(202, 161, 90, ' + Math.max(this.alpha, 0) + ')';
+        hctx.lineWidth = this.thickness;
+        hctx.shadowBlur = 15;
+        hctx.shadowColor = '#caa15a';
+        hctx.beginPath();
+        hctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+        hctx.stroke();
+        hctx.restore();
+      }
+      isDead() {
+        return this.alpha <= 0;
+      }
+    }
+
+    window.triggerHeroClickPortal = (clickX, clickY) => {
+      heroShockwaves.push(new HeroShockwave(clickX, clickY));
+      for (let i = 0; i < 70; i++) {
+        heroParticles.push(new HeroClickSpark(clickX, clickY));
+      }
+    };
+
+    window.clearHeroClickPortalEffects = () => {
+      heroShockwaves = [];
+      heroParticles = [];
+    };
+
     function initHeroSparks() {
       sparkList = [];
       const sparkCount = Math.min(Math.floor(hWidth / 45), 35);
@@ -534,7 +631,17 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     let heroAnimId;
+    let isHeroCanvasActive = true;
+    window.setHeroCanvasActive = (active) => {
+      if (active === isHeroCanvasActive) return;
+      isHeroCanvasActive = active;
+      if (active) {
+        animateHeroCanvas();
+      }
+    };
+
     function animateHeroCanvas() {
+      if (!isHeroCanvasActive) return;
       if (!heroCanvas || !hctx) return;
       hctx.clearRect(0, 0, hWidth, hHeight);
 
@@ -552,6 +659,19 @@ document.addEventListener('DOMContentLoaded', () => {
         p.update();
         p.draw();
       });
+
+      heroParticles = heroParticles.filter((p) => {
+        p.update();
+        p.draw();
+        return !p.isDead();
+      });
+
+      heroShockwaves = heroShockwaves.filter((sw) => {
+        sw.update();
+        sw.draw();
+        return !sw.isDead();
+      });
+
       heroAnimId = requestAnimationFrame(animateHeroCanvas);
     }
 
@@ -617,185 +737,277 @@ document.addEventListener('DOMContentLoaded', () => {
     heroSection.addEventListener('mouseleave', handleHeroMouseLeave, { passive: true });
   }
 
-  // 3. GSAP SCROLL-TRIGGER ZOOM & "THROWN FROM AFAR" OVERLAY TRANSITION
-  // 3. GSAP SCROLL-TRIGGER PINNED ZOOM & CRYSTAL-CLEAR INNER SHOWROOM PAGE
-  if (!prefersReducedMotion && zoomContainer && thrownPage && typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
-    gsap.registerPlugin(ScrollTrigger);
+  // ==========================================================
+  // --- 3. CURSOR-CLICK PORTAL TRANSITION ENGINE ---
+  // ==========================================================
+  const portalTrigger = assetWrapper;
 
-    // Set initial card states for slide-in (keeping meta/inner static or pre-placed)
-    const innerCards = thrownPage.querySelectorAll('.editorial-panel');
-    gsap.set(innerCards, {
-      y: 40,
-      opacity: 0
+  if (portalTrigger && thrownPage) {
+    // Dynamically build custom cursor element
+    const customCursor = document.createElement('div');
+    customCursor.className = 'portal-custom-cursor';
+    customCursor.innerHTML = '<span class="portal-custom-cursor-text">Reveal</span>';
+    document.body.appendChild(customCursor);
+
+    // Dynamically build full-screen flash veil
+    const flashVeil = document.createElement('div');
+    flashVeil.className = 'portal-flash-veil';
+    document.body.appendChild(flashVeil);
+
+    // Track cursor movement on body when custom cursor is active
+    document.addEventListener('mousemove', (e) => {
+      if (customCursor.classList.contains('active')) {
+        customCursor.style.left = `${e.clientX}px`;
+        customCursor.style.top = `${e.clientY}px`;
+      }
+    }, { passive: true });
+
+    // Activate custom cursor and hover aura class
+    portalTrigger.addEventListener('mouseenter', () => {
+      document.body.classList.add('portal-hover-active');
+      customCursor.classList.add('active');
     });
 
+    portalTrigger.addEventListener('mouseleave', () => {
+      document.body.classList.remove('portal-hover-active');
+      customCursor.classList.remove('active');
+    });
+
+    // Set initial GSAP states for lookbook components
+    const innerCards = thrownPage.querySelectorAll('.editorial-panel');
+    const innerContainer = thrownPage.querySelector('.thrown-page-inner');
+
     gsap.set(thrownPage, {
+      y: '100vh',
       opacity: 0,
-      display: 'none',
+      display: 'block',
       pointerEvents: 'none'
     });
 
-    const innerContainer = thrownPage.querySelector('.thrown-page-inner');
+    if (innerCards.length > 0) {
+      gsap.set(innerCards, {
+        y: 45,
+        opacity: 0
+      });
+    }
+
     if (innerContainer) {
       gsap.set(innerContainer, {
         opacity: 0
       });
     }
 
-    // ScrollTrigger Pinned Timeline configuration
-    const timeline = gsap.timeline({
-      scrollTrigger: {
-        trigger: heroSection,
-        start: 'top top',
-        end: '+=150%', // Pinned scroll track
-        scrub: 1.0, // Scrub perfectly maps timeline to scroll coordinates
-        pin: true, // Lock page scroll in place
-        anticipatePin: 1,
-        invalidateOnRefresh: true,
-        onLeave: () => {
-          thrownPage.classList.add('is-active');
-        },
-        onEnterBack: () => {
-          thrownPage.classList.remove('is-active');
+    let isTransitioning = false;
+
+    // Trigger Click Portal opening transition
+    portalTrigger.addEventListener('click', (e) => {
+      e.preventDefault();
+      if (isTransitioning) return;
+      isTransitioning = true;
+
+      // Retract custom cursor state
+      document.body.classList.remove('portal-hover-active');
+      customCursor.classList.remove('active');
+
+      // Click location on the canvas
+      const rect = heroSection.getBoundingClientRect();
+      const clickX = e.clientX - rect.left;
+      const clickY = e.clientY - rect.top;
+
+      // Spawn shockwave & sparks on the canvas (if window function is ready)
+      if (typeof window.triggerHeroClickPortal === 'function') {
+        window.triggerHeroClickPortal(clickX, clickY);
+      }
+
+      // 1. Flash effect
+      gsap.to(flashVeil, {
+        opacity: 0.9,
+        duration: 0.12,
+        onComplete: () => {
+          gsap.to(flashVeil, {
+            opacity: 0,
+            duration: 0.42,
+            delay: 0.04
+          });
         }
+      });
+
+      // 2. Blur hero background
+      heroSection.classList.add('portal-blurring');
+
+      // 3. Zoom centered necklace slightly
+      if (zoomContainer) {
+        gsap.to(zoomContainer, {
+          scale: 1.45,
+          duration: 0.85,
+          ease: 'power2.out'
+        });
+      }
+
+      // 4. Slide thrownPage lookbook overlay from bottom
+      gsap.to(thrownPage, {
+        y: '0vh',
+        opacity: 1,
+        pointerEvents: 'auto',
+        duration: 0.95,
+        ease: 'power3.out',
+        delay: 0.1,
+        onComplete: () => {
+          thrownPage.classList.add('is-active');
+          if (typeof window.setHeroCanvasActive === 'function') {
+            window.setHeroCanvasActive(false); // Disable loop to save GPU cycles when looking at the list
+          }
+        }
+      });
+
+      // 5. Fade inner details container
+      if (innerContainer) {
+        gsap.to(innerContainer, {
+          opacity: 1,
+          duration: 0.75,
+          ease: 'power2.out',
+          delay: 0.35
+        });
+      }
+
+      // 6. Stagger slide up image/details cards
+      if (innerCards.length > 0) {
+        gsap.to(innerCards, {
+          y: 0,
+          opacity: 1,
+          stagger: 0.08,
+          duration: 0.85,
+          ease: 'power2.out',
+          delay: 0.5,
+          force3D: false // Prevent text blurry rendering
+        });
       }
     });
 
-    // 1. Immersive 3D Zoom on the centered necklace (scrubs over the first 75% of scroll progress)
-    timeline.to(zoomContainer, {
-      scale: 26,
-      ease: 'power2.in' // Exponential zoom inward
-    }, 0);
+    // Scroll-to-Exit and Swipe-to-Exit Gesture Transition Logic
+    const closePortalLookbook = () => {
+      // Resume background particles canvas loops
+      if (typeof window.setHeroCanvasActive === 'function') {
+        window.setHeroCanvasActive(true);
+      }
 
-    // 2. Concurrently fade out editorial components
-    timeline.to('.asset-3d-shadow', {
-      opacity: 0,
-      scale: 2.2,
-      filter: 'blur(16px)',
-      ease: 'power1.out'
-    }, 0);
+      // Clear any canvas particles or lingering shockwaves
+      if (typeof window.clearHeroClickPortalEffects === 'function') {
+        window.clearHeroClickPortalEffects();
+      }
 
-    timeline.to('.collection-hero-editorial', {
-      opacity: 0,
-      x: -60,
-      ease: 'power1.out'
-    }, 0);
-
-    timeline.to('.hero-sidebar-indicator', {
-      opacity: 0,
-      x: -30,
-      ease: 'power1.out'
-    }, 0);
-
-    timeline.to('.hero-watermark', {
-      opacity: 0,
-      y: 50,
-      scale: 1.12,
-      ease: 'power1.out'
-    }, 0);
-
-    if (heroCanvas) {
-      timeline.to(heroCanvas, {
+      // Slide lookbook overlay away
+      gsap.to(thrownPage, {
+        y: '100vh',
         opacity: 0,
-        scale: 1.3,
-        ease: 'power1.out'
-      }, 0);
-    }
+        pointerEvents: 'none',
+        duration: 0.85,
+        ease: 'power3.inOut',
+        onComplete: () => {
+          thrownPage.classList.remove('is-active');
+          isTransitioning = false;
+          // Pre-reset content elements for next click reveal
+          gsap.set(innerCards, { y: 45, opacity: 0 });
+          gsap.set(innerContainer, { opacity: 0 });
+          thrownPage.scrollTop = 0; // Force lookbook cleanly to top
+        }
+      });
 
-    // 3. Fade in overlay using pure opacity (no parent scale/rotation/translation to ensure text stays sharp!)
-    // Scrubbed from 65% to 85% of scroll progress
-    timeline.to(thrownPage, {
-      display: 'block', /* Changed from flex to block */
-      opacity: 1,
-      pointerEvents: 'auto',
-      ease: 'power2.out'
-    }, 0.65);
+      // Revert background hero blur
+      heroSection.classList.remove('portal-blurring');
 
-    // 4. Fade in the inner page container using pure opacity (protect headers from blur)
-    // Scrubbed from 75% to 90% of scroll progress
-    if (innerContainer) {
-      timeline.to(innerContainer, {
-        opacity: 1,
-        ease: 'power2.out'
-      }, 0.75);
-    }
-
-    // 5. Stagger slide up the image cards only (stagger from 80% to 100% of scroll progress)
-    if (innerCards.length > 0) {
-      timeline.to(innerCards, {
-        y: 0,
-        opacity: 1,
-        stagger: 0.08,
-        ease: 'power2.out',
-        force3D: false // Prevent 3D transform bitmap caching on text grids
-      }, 0.8);
-    }
-  } else if (prefersReducedMotion && thrownPage) {
-    // Fallback path if user prefers reduced motion or no scroll scripts are active
-    window.addEventListener('scroll', () => {
-      const top = heroSection.getBoundingClientRect().top;
-      if (top <= 0) {
-        gsap.to(thrownPage, {
-          display: 'block', /* Changed from flex to block */
-          opacity: 1,
-          pointerEvents: 'auto',
-          duration: 0.5
+      // Reset zoom
+      if (zoomContainer) {
+        gsap.to(zoomContainer, {
+          scale: 1.0,
+          duration: 0.85,
+          ease: 'power2.out'
         });
-      } else {
-        gsap.to(thrownPage, {
-          opacity: 0,
-          pointerEvents: 'none',
-          duration: 0.5,
-          onComplete: () => {
-            thrownPage.style.display = 'none';
-          }
-        });
+      }
+    };
+
+    let isExiting = false;
+
+    // Detect wheel scroll-up at top to exit lookbook
+    thrownPage.addEventListener('wheel', (e) => {
+      if (!isTransitioning || isExiting) return;
+      
+      // If at the top of the lookbook page and scrolling UP
+      if (thrownPage.scrollTop <= 0 && e.deltaY < 0) {
+        isExiting = true;
+        closePortalLookbook();
+        setTimeout(() => { isExiting = false; }, 1000);
       }
     }, { passive: true });
-  }
 
-  // Elegant back/return button action to reset scroll triggers and exit lookbook (optional if present)
-  const backBtn = document.getElementById('thrown-page-back');
-  if (backBtn && thrownPage) {
-    backBtn.addEventListener('click', () => {
-      // Smoothly scroll the thrown page overlay back to top
-      thrownPage.scrollTo({ top: 0, behavior: 'smooth' });
-      // Smoothly scroll the window back to top
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    });
-  }
-
-  if (thrownPage) {
-    // Master-level UX: scrolling up when already at the top of the lookbook page zooms back out smoothly to hero
-    // We use a direct scroll forwarding with a 3.0x speed multiplier to allow a single, continuous, snappy flick to exit!
-    thrownPage.addEventListener('wheel', (e) => {
-      if (thrownPage.scrollTop <= 8 && e.deltaY < 0 && window.scrollY > 0) {
-        if (e.cancelable) e.preventDefault();
-        thrownPage.scrollTop = 0; // Force lookbook cleanly to top
-        window.scrollBy(0, e.deltaY * 3.0);
-      }
-    }, { passive: false });
-
-    // Touch Swipe gesture for mobile devices: swiping down at the top of the page zooms back out smoothly
+    // Detect touch-swipe-down at top to exit lookbook (Mobile)
     let touchStartY = 0;
-    let lastTouchY = 0;
     thrownPage.addEventListener('touchstart', (e) => {
       touchStartY = e.touches[0].clientY;
-      lastTouchY = touchStartY;
     }, { passive: true });
 
     thrownPage.addEventListener('touchmove', (e) => {
+      if (!isTransitioning || isExiting) return;
+
       const touchY = e.touches[0].clientY;
-      const diffY = touchY - touchStartY; // positive means swipe down (natural scroll up)
-      const deltaY = touchY - lastTouchY; // change since last touchmove
-      lastTouchY = touchY;
-      
-      if (thrownPage.scrollTop <= 8 && diffY > 8 && window.scrollY > 0) {
-        if (e.cancelable) e.preventDefault();
-        thrownPage.scrollTop = 0; // Force lookbook cleanly to top
-        window.scrollBy(0, -deltaY * 3.0);
+      const diffY = touchY - touchStartY; // positive means swipe down
+
+      // If at the top of the page and swiped down significantly (more than 60px)
+      if (thrownPage.scrollTop <= 0 && diffY > 60) {
+        isExiting = true;
+        closePortalLookbook();
+        setTimeout(() => { isExiting = false; }, 1000);
       }
-    }, { passive: false });
+    }, { passive: true });
+
+    // Handle deep-linking when landing directly on categories hash
+    const handleHashLoad = () => {
+      const isTargetHash = window.location.hash === '#curated-luxury-categories' || window.location.hash === '#temp-curated-luxury-categories';
+      if (isTargetHash) {
+        // Prevent body/window scroll offset
+        window.scrollTo(0, 0);
+
+        // Snap lookbook overlay open immediately
+        heroSection.classList.add('portal-blurring');
+        
+        if (zoomContainer) {
+          gsap.set(zoomContainer, { scale: 1.45 });
+        }
+
+        gsap.set(thrownPage, {
+          y: '0vh',
+          opacity: 1,
+          pointerEvents: 'auto'
+        });
+        thrownPage.classList.add('is-active');
+
+        if (innerContainer) {
+          gsap.set(innerContainer, { opacity: 1 });
+        }
+
+        if (innerCards.length > 0) {
+          gsap.set(innerCards, { y: 0, opacity: 1 });
+        }
+
+        isTransitioning = true;
+
+        if (typeof window.setHeroCanvasActive === 'function') {
+          window.setHeroCanvasActive(false);
+        }
+
+        // Restore target ID and scroll internally to categories section
+        setTimeout(() => {
+          const tempEl = document.getElementById('temp-curated-luxury-categories') || document.getElementById('curated-luxury-categories');
+          if (tempEl) {
+            tempEl.id = 'curated-luxury-categories';
+            tempEl.scrollIntoView({ behavior: 'smooth' });
+          }
+        }, 150);
+      }
+    };
+
+    handleHashLoad();
+    window.addEventListener('hashchange', handleHashLoad, { passive: true });
   }
 
   // ==========================================================

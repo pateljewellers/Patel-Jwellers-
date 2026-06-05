@@ -24,7 +24,7 @@ const pageMeta = {
   testimonials: { title: 'Testimonials', description: 'Stories from our valued customers.' },
   blog: { title: 'Blog', description: 'News, trends, and insights from Patel Jewellers.' },
   contact: { title: 'Contact', description: 'Visit us or get in touch — we are here to help.' },
-  'temple-bangles': { title: 'The Sacred Temple Bangles Immersive Experience', description: 'Explore the divine, fire-forged artistry of our Temple Bangles collection through an interactive portal.' },
+  'temple-bangles': { title: 'Pratha Collection | Immersive Experience', description: 'Explore the divine, fire-forged artistry of our Pratha Collection through an interactive portal.' },
 };
 
 function getNavItems() {
