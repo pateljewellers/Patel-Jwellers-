@@ -116,4 +116,36 @@ document.addEventListener('DOMContentLoaded', () => {
     }, { passive: true });
     updateParallax();
   }
+
+  // ——— Hero background-position parallax ———
+  // Shifts the heritage background image at ~25% scroll speed for a smooth depth effect.
+  const heroEl = document.querySelector('.hero-interactive-container');
+  const isMobileIOS = /iP(hone|ad|od)/.test(navigator.userAgent);
+  if (heroEl && !reducedMotion && !isMobileIOS) {
+    // Remove fixed attachment and drive it manually via background-position for smoother control
+    heroEl.style.backgroundAttachment = 'scroll';
+
+    let heroTicking = false;
+    const updateHeroParallax = () => {
+      const scrollY = window.scrollY || window.pageYOffset;
+      const heroRect = heroEl.getBoundingClientRect();
+      // Only run while the hero is at least partially visible
+      if (heroRect.bottom > 0) {
+        // Parallax offset: background moves at 25% of scroll speed (slower = depth illusion)
+        const posY = 15 - scrollY * 0.05; // 15% base (shifted higher), decreases on scroll for proper parallax
+        heroEl.style.backgroundPosition = `center ${posY}%`;
+      }
+      heroTicking = false;
+    };
+
+    window.addEventListener('scroll', () => {
+      if (!heroTicking) {
+        requestAnimationFrame(updateHeroParallax);
+        heroTicking = true;
+      }
+    }, { passive: true });
+
+    // Set initial position
+    updateHeroParallax();
+  }
 });

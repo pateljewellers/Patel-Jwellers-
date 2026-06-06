@@ -6,40 +6,8 @@
   <!-- Interactive Particles Canvas -->
   <canvas class="hero-interactive-canvas" id="hero-interactive-canvas"></canvas>
 
-  <!-- Floating Parallax Luxury Elements (Abstract Rings & Diamonds) -->
-  <div class="parallax-rings-container" aria-hidden="true">
-    <svg class="parallax-ring parallax-ring--outer" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <circle cx="50" cy="50" r="48" stroke="rgba(176, 168, 154, 0.08)" stroke-width="0.75" stroke-dasharray="4 6" />
-      <circle cx="50" cy="50" r="40" stroke="rgba(202, 161, 90, 0.12)" stroke-width="0.5" />
-    </svg>
-    <svg class="parallax-ring parallax-ring--inner" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <circle cx="50" cy="50" r="32" stroke="rgba(176, 168, 154, 0.12)" stroke-width="1.25" />
-      <circle cx="50" cy="50" r="30" stroke="rgba(255, 255, 255, 0.03)" stroke-width="0.5" stroke-dasharray="10 4" />
-      <path d="M 50 14 A 36 36 0 0 1 86 50" stroke="rgba(176, 168, 154, 0.25)" stroke-width="0.75" />
-    </svg>
-    
-    <!-- Floating 3D Wireframe Diamonds -->
-    <svg class="floating-diamond floating-diamond--1" viewBox="0 0 60 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M30 5 L55 30 L30 75 L5 30 Z" stroke="rgba(176, 168, 154, 0.12)" stroke-width="0.8" />
-      <path d="M30 5 L30 75" stroke="rgba(176, 168, 154, 0.06)" stroke-width="0.5" />
-      <path d="M5 30 L55 30" stroke="rgba(176, 168, 154, 0.06)" stroke-width="0.5" />
-      <path d="M30 5 L18 30 L30 75 L42 30 Z" stroke="rgba(176, 168, 154, 0.06)" stroke-width="0.5" />
-    </svg>
-    <svg class="floating-diamond floating-diamond--2" viewBox="0 0 60 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M30 5 L55 30 L30 75 L5 30 Z" stroke="rgba(255, 255, 255, 0.08)" stroke-width="0.7" />
-      <path d="M30 5 L30 75" stroke="rgba(255, 255, 255, 0.04)" stroke-width="0.4" />
-      <path d="M5 30 L55 30" stroke="rgba(255, 255, 255, 0.04)" stroke-width="0.4" />
-    </svg>
-    <svg class="floating-diamond floating-diamond--3" viewBox="0 0 60 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M30 5 L55 30 L30 75 L5 30 Z" stroke="rgba(202, 161, 90, 0.22)" stroke-width="0.8" />
-      <path d="M30 5 L18 30 L30 75 L42 30 Z" stroke="rgba(202, 161, 90, 0.12)" stroke-width="0.5" />
-    </svg>
-
-  </div>
-
-  <!-- Hero Main Flex Grid Layout Wrapper (Combines left text and right rings centerpiece) -->
+  <!-- Hero Main Content -->
   <div class="container hero-grid-wrapper">
-    <!-- Left Side: Hero Main Content -->
     <div class="home-hero__content">
       <span class="home-hero__eyebrow reveal-blur"><%= home.hero.eyebrow %></span>
       <h1 class="home-hero__title reveal-up reveal-delay-1"><%= home.hero.title %></h1>
@@ -49,14 +17,6 @@
           <%= home.hero.cta.label %>
           <span class="btn__arrow">→</span>
         </a>
-      </div>
-    </div>
-
-    <!-- Right Side: Floating Luxury Ring Centerpiece with 3D Parallax & Spotlight Aura -->
-    <div class="hero-centerpiece reveal-scale">
-      <div class="ring-3d-wrapper" id="ring-3d-wrapper">
-        <div class="ring-glow-back"></div>
-        <img src="/images/hero/luxury-ring.png" alt="Patel Jewellers Luxury Couple Rings" class="floating-ring-img" id="floating-ring-img" fetchpriority="high">
       </div>
     </div>
   </div>

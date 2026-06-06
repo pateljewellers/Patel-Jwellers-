@@ -1,14 +1,7 @@
 /**
- * LIQUID GLASS WATER REVEAL — About Hero
+ * LIQUID GLASS WATER REVEAL — About Hero & Brand Heritage Reveals
  * WebGL-powered subtle water distortion + ripple cursor effect
- *
- * Fixes applied in this version:
- *  1. Subtle effect tuning — gentle distortion, no nausea-inducing displacement.
- *  2. bfcache reinit — listens to `pageshow` (persisted) and `visibilitychange`
- *     so the effect re-initialises every time the page is revisited, not just
- *     on the first cold load.
- *  3. Proper destroy() — tears down the RAF loop, ResizeObserver, event
- *     listeners, and WebGL resources before each re-init so nothing leaks.
+ * Plus scroll-triggered stats and reveals for the Home Brand Story.
  *
  * Patel Jewellers Mehsanawala
  */
@@ -30,12 +23,6 @@ const VS = /* glsl */`
 
 /* ════════════════════════════════════════════════════════════════════════
    GLSL — Fragment Shader
-   Key tuning knobs (all deliberately small for an elegant result):
-     WATER_STR  — overall FBM wave displacement (UV units)
-     RIPPLE_STR — displacement per ripple ring
-     ABERR_MAX  — max chromatic split at lens edge (UV units)
-     SPEC_POW   — specular highlight sharpness
-     SPEC_STR   — specular highlight brightness
 ════════════════════════════════════════════════════════════════════════ */
 const FS = /* glsl */`
   precision highp float;
@@ -99,8 +86,8 @@ const FS = /* glsl */`
     vec2  mousePx = u_mouse * u_res;
     float dist    = length(fragPx - mousePx);
 
-    /* Smooth circular reveal — soft inner falloff */
-    float mask = smoothstep(u_radius, u_radius * 0.38, dist) * u_active;
+    /* Smooth circular reveal — soft radial gradient falloff all the way to center */
+    float mask = smoothstep(u_radius, 0.0, dist) * u_active;
 
     /* ── Subtle layered water displacement ──
        Two slow FBM fields at offset phases produce gently drifting
@@ -143,7 +130,7 @@ const FS = /* glsl */`
 
     /* ── Minimal chromatic aberration — glass edge only ──
        Increases toward lens perimeter, invisible at lens centre.     */
-    float edgeF = smoothstep(u_radius * 0.30, u_radius * 0.60, dist) * u_active;
+    float edgeF = smoothstep(0.0, u_radius, dist) * u_active;
     float aberr = edgeF * ABERR_MAX;
     texCol.r = texture2D(u_tex, clamp(sampleUV + vec2(aberr, 0.0),  0.001, 0.999)).r;
     texCol.b = texture2D(u_tex, clamp(sampleUV - vec2(aberr, 0.0),  0.001, 0.999)).b;
@@ -151,23 +138,17 @@ const FS = /* glsl */`
     /* ── Subtle specular — water surface wet sheen ── */
     float spec = pow(max(n1 * 0.5 + 0.5, 0.0), SPEC_POW) * SPEC_STR * mask;
 
-    /* ── Thin lens-edge highlight ring ── */
-    float rw  = u_radius * 0.055;
-    float rim = smoothstep(u_radius, u_radius - rw, dist)
-              * smoothstep(u_radius - rw * 2.2, u_radius - rw, dist);
-    vec3 rimCol = vec3(0.09, 0.04, 0.03) * rim * u_active; /* dim rim */
-
     /* ── Compose ── */
     vec3 dark  = vec3(0.031, 0.031, 0.031);
     vec3 water = texCol.rgb + spec;
-    vec3 color = mix(dark, water, mask) + rimCol;
+    vec3 color = mix(dark, water, mask);
 
     gl_FragColor = vec4(color, 1.0);
   }
 `;
 
 /* ════════════════════════════════════════════════════════════════════════
-   INIT — creates a self-contained instance with its own cleanup method
+   INIT WATER EFFECT — creates a self-contained WebGL instance
 ════════════════════════════════════════════════════════════════════════ */
 function initWaterEffect() {
   const section  = document.getElementById('about-hero');
@@ -512,6 +493,106 @@ function initCSSFallback(section, spotBg, canvas, resetBtn) {
 }
 
 /* ════════════════════════════════════════════════════════════════════════
+   BRAND HERITAGE SECTION — Venetian Spa-Style Scroll Animations
+   Uses Intersection Observer API for fade-in-up and counter animations.
+════════════════════════════════════════════════════════════════════════ */
+
+/* ─── Utility: ease function ─── */
+function easeOutExpo(t) {
+  return t === 1 ? 1 : 1 - Math.pow(2, -10 * t);
+}
+
+/* ─── Counter Animation ─── */
+function animateCounter(el) {
+  const target = parseInt(el.dataset.target, 10);
+  if (isNaN(target)) return;
+
+  const duration = 1800; // ms
+  const start = performance.now();
+
+  function tick(now) {
+    const elapsed = Math.min(now - start, duration);
+    const progress = easeOutExpo(elapsed / duration);
+    const value = Math.round(progress * target);
+
+    // Format with commas for large numbers
+    el.textContent = value >= 1000
+      ? value.toLocaleString('en-IN')
+      : String(value);
+
+    if (elapsed < duration) requestAnimationFrame(tick);
+    else el.textContent = target >= 1000 ? target.toLocaleString('en-IN') : String(target);
+  }
+
+  requestAnimationFrame(tick);
+}
+
+/* ─── Intersection Observer: scroll-triggered reveals ─── */
+function initBrandScrollReveals() {
+  const section = document.querySelector('#about-brand');
+  if (!section) return;
+
+  const els = section.querySelectorAll('.hs-reveal');
+  if (!els.length) return;
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+
+        const el = entry.target;
+        const delay = parseInt(el.dataset.delay || 0, 10);
+
+        setTimeout(() => {
+          el.classList.add('is-visible');
+
+          // Trigger counters when stats become visible
+          if (el.classList.contains('hs-brand__stats') || el.closest('.hs-brand__stats')) {
+            const counters = section.querySelectorAll('.hs-counter');
+            counters.forEach((c) => animateCounter(c));
+          }
+        }, delay);
+
+        observer.unobserve(el);
+      });
+    },
+    {
+      rootMargin: '-8% 0px -8% 0px',
+      threshold: 0.12,
+    }
+  );
+
+  els.forEach((el) => observer.observe(el));
+}
+
+/* ─── Stagger delay for stats row when it enters viewport ─── */
+function initStatsReveal() {
+  const statsRow = document.querySelector('.hs-brand__stats');
+  if (!statsRow) return;
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+
+        // Counters
+        const counters = statsRow.querySelectorAll('.hs-counter');
+        counters.forEach((c) => {
+          // Small stagger per counter
+          const idx = Array.from(counters).indexOf(c);
+          setTimeout(() => animateCounter(c), idx * 180);
+        });
+
+        observer.unobserve(statsRow);
+      });
+    },
+    { rootMargin: '-10% 0px', threshold: 0.3 }
+  );
+
+  observer.observe(statsRow);
+}
+
+/* ════════════════════════════════════════════════════════════════════════
    BOOTSTRAP — handles every way the page can become active:
      1. Cold load         → DOMContentLoaded
      2. Back/Forward nav  → pageshow (persisted = true)
@@ -521,10 +602,16 @@ function bootstrap() {
   /* Destroy any previously running instance first */
   if (_instance) { _instance.destroy(); _instance = null; }
 
-  /* Only initialise if the about-hero section exists on this page */
-  if (!document.getElementById('about-hero')) return;
+  /* 1. Initialise about-hero section if it exists on this page */
+  if (document.getElementById('about-hero')) {
+    _instance = initWaterEffect();
+  }
 
-  _instance = initWaterEffect();
+  /* 2. Initialise brand-story scroll reveals if it exists on this page */
+  if (document.getElementById('about-brand')) {
+    initBrandScrollReveals();
+    initStatsReveal();
+  }
 }
 
 /* Cold page load */
@@ -532,18 +619,12 @@ document.addEventListener('DOMContentLoaded', bootstrap);
 
 /* bfcache restore (browser back/forward button) */
 window.addEventListener('pageshow', (e) => {
-  /* `persisted` = true means the page was served from bfcache,
-     meaning DOMContentLoaded did NOT fire — we must re-bootstrap. */
   if (e.persisted) bootstrap();
 });
 
-/* Tab becomes visible again after being hidden
-   (covers some soft-navigation / SPA patterns) */
+/* Tab becomes visible again after being hidden */
 document.addEventListener('visibilitychange', () => {
   if (document.visibilityState === 'visible') {
-    /* Only re-init if the section exists but no active instance */
-    if (document.getElementById('about-hero') && !_instance) {
-      _instance = initWaterEffect();
-    }
+    bootstrap();
   }
 });

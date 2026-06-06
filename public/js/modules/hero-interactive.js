@@ -721,12 +721,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const text = element.innerText;
     element.innerHTML = '';
     
-    [...text].forEach(char => {
-      const span = document.createElement('span');
-      if (char === ' ') {
-        span.innerHTML = '&nbsp;';
-        span.className = 'interactive-space';
-      } else {
+    const words = text.split(' ');
+    words.forEach((word, wordIndex) => {
+      const wordSpan = document.createElement('span');
+      wordSpan.style.display = 'inline-block';
+      wordSpan.style.whiteSpace = 'nowrap';
+      
+      [...word].forEach(char => {
+        const span = document.createElement('span');
         span.textContent = char;
         span.className = 'interactive-char';
         
@@ -755,8 +757,17 @@ document.addEventListener('DOMContentLoaded', () => {
             clickSparkles.push(new Sparkle(clickX + (Math.random() * 12 - 6), clickY + (Math.random() * 12 - 6), col));
           }
         });
+        wordSpan.appendChild(span);
+      });
+      
+      element.appendChild(wordSpan);
+      
+      if (wordIndex < words.length - 1) {
+        const spaceSpan = document.createElement('span');
+        spaceSpan.innerHTML = '&nbsp;';
+        spaceSpan.className = 'interactive-space';
+        element.appendChild(spaceSpan);
       }
-      element.appendChild(span);
     });
   }
 
