@@ -56,6 +56,8 @@ document.addEventListener('DOMContentLoaded', () => {
     '.reveal-blur',
     '.reveal-rotate',
     '.reveal-fly',
+    '.reveal-serif-title',
+    '.reveal-tossed',
     '.animate-on-scroll',
   ].join(',');
 
@@ -89,7 +91,7 @@ document.addEventListener('DOMContentLoaded', () => {
   requestAnimationFrame(() => {
     elements.forEach((el) => {
       const rect = el.getBoundingClientRect();
-      if (rect.top < window.innerHeight * 0.92 && rect.bottom > 0) {
+      if (rect.top < window.innerHeight * 0.60 && rect.bottom > 0) {
         el.classList.add('is-visible');
       }
     });
@@ -180,16 +182,9 @@ document.addEventListener('DOMContentLoaded', () => {
           brandIntro.style.borderTopLeftRadius = `${currentRadius}px`;
           brandIntro.style.borderTopRightRadius = `${currentRadius}px`;
 
-          // Parallax for the contained background image
+          // Emulate viewport fixed attachment by translating background layer relative to parent's viewport top
           if (brandIntroBg) {
-            // Visibility progress: 0 when top is at bottom of viewport, 1 when top aligns with top of viewport
-            let visibilityProgress = (vh - rect.top) / vh;
-            visibilityProgress = Math.max(0, Math.min(1, visibilityProgress));
-            
-            // Translate it vertically inside the section clipping boundary
-            const maxTravel = rect.height * 0.22; // 22% of section height safety range
-            const yOffset = (visibilityProgress - 0.5) * maxTravel; 
-            brandIntroBg.style.transform = `translate3d(0, ${yOffset}px, 0)`;
+            brandIntroBg.style.transform = `translate3d(0, ${-rect.top}px, 0)`;
           }
         }
       }

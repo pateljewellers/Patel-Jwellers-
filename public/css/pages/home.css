@@ -833,27 +833,26 @@
 
 .brand-intro-section {
   position: relative;
-  background: transparent !important; /* Make transparent to show the parallax background image and stripes */
+  background: transparent !important;
   border-top-left-radius: 50vw; /* Starts as a perfect semicircle arch */
   border-top-right-radius: 50vw; /* Starts as a perfect semicircle arch */
   padding-top: 180px; /* Generous breathing room on top */
-  padding-bottom: 180px; /* Generous breathing room on bottom */
-  min-height: 140vh; /* Extremely long to show deep parallax scroll over the model background */
+  padding-bottom: 120px; /* Breathing room at bottom */
   display: flex;
-  align-items: center;
+  flex-direction: column;
+  gap: 100px; /* Elegant gap between brand intro, trust strip, and collections */
   overflow: hidden;
   width: 100%;
   will-change: border-top-left-radius, border-top-right-radius;
   transition: border-radius 0.1s ease-out;
 }
 
-/* Dynamic Parallax Background Image Container */
 .brand-intro-bg-parallax {
   position: absolute;
-  top: -20%;
+  top: 0;
   left: 0;
   width: 100%;
-  height: 140%; /* Taller to allow vertical translation for parallax effect */
+  height: 100vh; /* Match the viewport height exactly */
   background-size: cover;
   background-position: center;
   z-index: 0;
@@ -1292,7 +1291,7 @@
 /* --- Spacious, Boxless Luxury Featured Collections (Section 3) --- */
 .home-collections {
   position: relative;
-  background-color: #FBFBFA !important; /* Seamless light Warm Cream backdrop alignment */
+  background-color: transparent !important; /* Inherit the curved parent's cream backdrop */
   padding-block: 110px; /* Generous breathing room */
   overflow: hidden;
   width: 100%;
@@ -1333,21 +1332,28 @@
 
 .home-collections .section-header .section-eyebrow {
   color: #D4AF37 !important; /* Champagne gold eyebrow */
-  font-size: 0.72rem;
-  letter-spacing: 0.28em;
-  font-weight: 600;
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 1.25rem;
+  letter-spacing: 0.08em;
+  font-weight: 500;
+  text-transform: none;
   border-left: none;
   padding-left: 0;
   margin-bottom: var(--space-xs);
+  display: block;
 }
 
 .home-collections .section-header h2 {
   font-family: var(--font-serif);
-  font-size: clamp(2.2rem, 5vw, 3.2rem);
+  font-size: clamp(2.4rem, 6vw, 3.6rem);
   font-weight: 500;
   line-height: 1.25;
-  color: #500A12; /* Deep burgundy heading */
-  letter-spacing: -0.01em;
+  background: linear-gradient(135deg, #500A12 0%, #800A12 50%, #D4AF37 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
   margin-bottom: var(--space-md);
 }
 
@@ -1375,8 +1381,10 @@
 
 @media (min-width: 1024px) {
   .collections-grid {
-    grid-template-columns: repeat(4, 1fr);
-    gap: var(--space-lg);
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-2xl);
+    max-width: 1200px;
+    margin-inline: auto;
   }
 }
 
@@ -1401,11 +1409,11 @@
 .collection-card::before {
   content: '';
   position: absolute;
-  top: -1.5px;
-  left: -1.5px;
-  right: -1.5px;
-  bottom: 60px; /* leaves room for text body below */
-  border-radius: 161.5px 161.5px 0 0;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: 62px; /* leaves room for text body below */
+  border-radius: 18px; /* Slightly larger than img-wrap's 16px to create a perfect outer outline */
   border: 1.5px solid #D4AF37;
   opacity: 0;
   transform: scale(0.98);
@@ -1423,9 +1431,9 @@
 
 /* Arched image container (Indian Palace Showroom style) */
 .collection-card__img-wrap {
-  border-radius: 160px 160px 0 0 !important; /* Beautiful luxury architectural arch */
+  border-radius: 16px !important; /* Beautiful luxury square with slightly rounded corners */
   overflow: hidden;
-  aspect-ratio: 4 / 5;
+  aspect-ratio: 1 / 1 !important; /* Keep shape square */
   position: relative;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.04);
   transition: 
@@ -1437,7 +1445,13 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+  transform: scale(1.22); /* Zoomed in initially for reveal */
+  transition: transform 1.8s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform;
+}
+
+.collection-card.is-visible .collection-card__img-wrap img {
+  transform: scale(1); /* Smoothly zoom out when visible */
 }
 
 .collection-card__overlay {
@@ -1506,6 +1520,7 @@
 
 .collection-card:hover .collection-card__img-wrap img {
   transform: scale(1.08);
+  transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .collection-card:hover .collection-card__body h3 {

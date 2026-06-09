@@ -38,6 +38,27 @@
 .reveal-blur { transform: translate3d(0, 28px, 0); filter: blur(6px); }
 .reveal-rotate { transform: translate3d(0, 32px, 0) rotate(-3deg); }
 
+.reveal-serif-title {
+  opacity: 0;
+  filter: blur(12px);
+  letter-spacing: -0.05em;
+  transform: translate3d(0, 30px, 0) scale(0.98);
+  will-change: transform, opacity, filter, letter-spacing;
+  transition:
+    opacity 1.8s var(--ease-smooth),
+    transform 1.8s var(--ease-land),
+    filter 1.6s var(--ease-smooth),
+    letter-spacing 2.0s var(--ease-smooth);
+  transition-delay: var(--delay, 0ms);
+}
+
+.reveal-serif-title.is-visible {
+  opacity: 1;
+  filter: blur(0);
+  letter-spacing: 0.02em;
+  transform: translate3d(0, 0, 0) scale(1);
+}
+
 .reveal-up.is-visible,
 .reveal-down.is-visible,
 .reveal-left.is-visible,
@@ -49,6 +70,21 @@
   opacity: 1;
   transform: translate3d(0, 0, 0) scale(1) rotate(0);
   filter: blur(0);
+}
+
+.reveal-tossed {
+  opacity: 0;
+  transform: translate3d(-180px, 50px, 0) rotate(-14deg) scale(0.92);
+  will-change: transform, opacity;
+  transition:
+    opacity 1.4s var(--ease-smooth),
+    transform 1.6s cubic-bezier(0.19, 1, 0.22, 1);
+  transition-delay: var(--delay, 0ms);
+}
+
+.reveal-tossed.is-visible {
+  opacity: 1;
+  transform: translate3d(0, 0, 0) rotate(0deg) scale(1);
 }
 
 /* Fly-in — udine aavine land thay (rotate + distance + soft blur) */
@@ -133,8 +169,15 @@
 .reveal-delay-3 { --delay: 450ms; }
 
 .stagger-group .reveal-up,
+.stagger-group .reveal-down,
+.stagger-group .reveal-left,
+.stagger-group .reveal-right,
 .stagger-group .reveal-scale,
+.stagger-group .reveal-blur,
+.stagger-group .reveal-rotate,
 .stagger-group .reveal-fly,
+.stagger-group .reveal-serif-title,
+.stagger-group .reveal-tossed,
 .stagger-group .collection-card,
 .stagger-group .gallery-item,
 .stagger-group .process-step,

@@ -25,6 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
   let particles = [];
   let time = 0;
   let rafId = null;
+  let isSectionVisible = false;
 
   // =====================================================
   // CANVAS SETUP
@@ -409,33 +410,52 @@ document.addEventListener('DOMContentLoaded', () => {
         state.tiltX += (state.targetTiltX - state.tiltX) * tiltLerp;
         state.tiltY += (state.targetTiltY - state.tiltY) * tiltLerp;
 
-        // Dual-axis staggered sway (Y + X)
-        const phaseOff = idx * 1.1;
-        const swayY = Math.sin(time * 0.016 + phaseOff) * 7;
-        const swayX = Math.cos(time * 0.011 + phaseOff + 0.5) * 3;
+        if (isHov) {
+          // Combined transform on hover: 3D tilt + slight lift
+          card.style.transform = `translate3d(0, -10px, 0) rotateX(${state.tiltX}deg) rotateY(${state.tiltY}deg) scale(1.02)`;
 
-        // Combined transform: sway + 3D tilt
-        card.style.transform = isHov
-          ? `translate3d(${swayX}px, ${swayY - 10}px, 0) rotateX(${state.tiltX}deg) rotateY(${state.tiltY}deg) scale(1.02)`
-          : `translate3d(${swayX}px, ${swayY}px, 0) rotateX(${state.tiltX}deg) rotateY(${state.tiltY}deg)`;
-
-        // Breathing zoom inside the arch image
-        const img = card.querySelector('.collection-card__img-wrap img');
-        if (img) {
-          if (isHov) {
+          // Breathing zoom inside the image on hover
+          const img = card.querySelector('.collection-card__img-wrap img');
+          if (img) {
             const breathe = 1.08 + Math.sin(time * 0.038) * 0.018;
             img.style.transform = `scale(${breathe.toFixed(4)})`;
-          } else {
+          }
+        } else {
+          // Clear inline transform when not hovered, allowing CSS reveal animations to run smoothly
+          if (card.style.transform) {
+            card.style.transform = '';
+          }
+          const img = card.querySelector('.collection-card__img-wrap img');
+          if (img && img.style.transform) {
             img.style.transform = '';
           }
         }
       });
     }
 
-    rafId = requestAnimationFrame(tick);
+    if (isSectionVisible) {
+      rafId = requestAnimationFrame(tick);
+    }
   };
 
-  tick();
+  // Set up intersection observer to pause animation loop when section is offscreen
+  const visibilityObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      isSectionVisible = entry.isIntersecting;
+      if (isSectionVisible) {
+        if (!rafId) {
+          rafId = requestAnimationFrame(tick);
+        }
+      } else {
+        if (rafId) {
+          cancelAnimationFrame(rafId);
+          rafId = null;
+        }
+      }
+    });
+  }, { threshold: 0.01 });
+
+  visibilityObserver.observe(section);
 
   window.addEventListener('beforeunload', () => {
     if (rafId) cancelAnimationFrame(rafId);

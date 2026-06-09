@@ -49,14 +49,14 @@
   </div>
 
   <div class="container">
-    <header class="section-header collections-section-header reveal-blur">
-      <span class="section-eyebrow col-eyebrow-animate">Curated For You</span>
-      <h2 class="col-title-animate">Featured Collections</h2>
-      <p>Discover our signature ranges — each crafted with hallmark purity and timeless design.</p>
+    <header class="section-header collections-section-header stagger-group">
+      <span class="section-eyebrow col-eyebrow-animate reveal-down" style="--stagger-index: 0;">Curated For You</span>
+      <h2 class="col-title-animate reveal-blur" style="--stagger-index: 1;">Featured Collections</h2>
+      <p class="reveal-up" style="--stagger-index: 2;">Discover our signature ranges — each crafted with hallmark purity and timeless design.</p>
     </header>
-    <div class="collections-grid" id="collections-grid">
+    <div class="collections-grid stagger-group" id="collections-grid">
       <% home.collections.forEach(function(col, i) { %>
-        <a href="<%= col.href %>" class="collection-card" data-col-index="<%= i %>">
+        <a href="<%= col.href %>" class="collection-card reveal-tossed" data-col-index="<%= i %>" style="--stagger-index: <%= i %>;">
           <!-- Shimmer sweep layer -->
           <div class="card-shimmer-sweep" aria-hidden="true"></div>
           <div class="collection-card__img-wrap">
