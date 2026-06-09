@@ -1,4 +1,7 @@
 <section class="home-hero hero-interactive-container" id="home-hero">
+  <!-- Dedicated Parallax Background Image Layer -->
+  <div class="hero-bg-parallax" aria-hidden="true"></div>
+
   <!-- Glowing Background Ambient Orbs -->
   <div class="glow-orb glow-orb--burgundy" aria-hidden="true"></div>
   <div class="glow-orb glow-orb--gold" aria-hidden="true"></div>
@@ -12,25 +15,6 @@
       <span class="home-hero__eyebrow reveal-blur"><%= home.hero.eyebrow %></span>
       <h1 class="home-hero__title reveal-up reveal-delay-1"><%= home.hero.title %></h1>
       <p class="home-hero__tagline reveal-up reveal-delay-2"><%= home.hero.tagline %></p>
-      <div class="home-hero__actions reveal-up reveal-delay-3">
-        <a href="<%= home.hero.cta.href %>" class="btn btn--primary btn--magnetic btn--glow-gold">
-          <%= home.hero.cta.label %>
-          <span class="btn__arrow">→</span>
-        </a>
-      </div>
-    </div>
-  </div>
-
-  <!-- Interactive Luxury Collections Navigation Tags (Theme-Shift Triggers) -->
-  <div class="hero-quicktags reveal-up reveal-delay-4">
-    <div class="container">
-      <span class="hero-quicktags__label">Explore Masterpieces</span>
-      <div class="hero-quicktags__list">
-        <a href="/collection" class="hero-tag-link" data-theme="gold">Gold</a>
-        <a href="/collection" class="hero-tag-link" data-theme="ruby">Bridal</a>
-        <a href="/collection" class="hero-tag-link" data-theme="diamond">Diamonds</a>
-        <a href="/collection" class="hero-tag-link" data-theme="antique">Antique</a>
-      </div>
     </div>
   </div>
 
@@ -39,5 +23,123 @@
     <span class="home-hero__scroll-text">Discover Heritage</span>
     <span class="home-hero__scroll-line"></span>
   </div>
-</section>
 
+  <!-- Nested Brand Introduction Section (Counted as part of the Hero Section) -->
+  <div class="brand-intro-wrapper">
+    <div class="brand-intro-section scroll-section" id="brand-intro">
+      <!-- Dynamic Parallax Background Image -->
+      <div class="brand-intro-bg-parallax" style="background-image: url('/images/about/model-01.jpg');" aria-hidden="true"></div>
+      
+      <!-- Semi-transparent luxury overlay for text readability -->
+      <div class="brand-intro-overlay" aria-hidden="true"></div>
+
+      <!-- Glowing subtle ambient highlights -->
+      <div class="intro-bg-glow intro-bg-glow--champagne" aria-hidden="true"></div>
+      <div class="intro-bg-glow intro-bg-glow--burgundy" aria-hidden="true"></div>
+
+      <!-- Delicate gold blueprint drawing guides for professional jewelry sketching desk vibe -->
+      <div class="intro-blueprint-guides" aria-hidden="true">
+        <div class="blueprint-line blueprint-line--h1"></div>
+        <div class="blueprint-line blueprint-line--h2"></div>
+        <div class="blueprint-line blueprint-line--v1"></div>
+        <div class="blueprint-line blueprint-line--v2"></div>
+        <div class="blueprint-compass"></div>
+      </div>
+
+      <div class="container brand-intro__grid">
+        <!-- Left Column: Typography Narrative -->
+        <div class="brand-intro__content">
+          <span class="brand-intro__eyebrow reveal-up">Our Heritage</span>
+          <h2 class="brand-intro__title reveal-up reveal-delay-1">
+            Timeless Jewellery,<br>
+            <span class="brand-intro__gold-gradient">Crafted Forever</span>
+          </h2>
+          <p class="brand-intro__description reveal-up reveal-delay-2">
+            Exquisite 
+            <span class="text-trigger text-trigger--gold" data-target="gold">gold</span>, 
+            <span class="text-trigger text-trigger--diamond" data-target="diamond">certified diamonds</span> 
+            &amp; 
+            <span class="text-trigger text-trigger--bridal" data-target="bridal">bridal masterpieces</span> 
+            — crafted in Mehsana for generations.
+          </p>
+          
+          <div class="brand-intro__action reveal-up reveal-delay-3">
+            <a href="/collection" class="brand-intro__cta btn--magnetic">
+              <span class="brand-intro__cta-text">Discover the Craft</span>
+              <span class="brand-intro__cta-line" aria-hidden="true"></span>
+              <span class="brand-intro__cta-arrow">→</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Right Column: Boxless Floating Masterpiece 3D Visualizer -->
+        <div class="brand-intro__visual-container reveal-scale reveal-delay-1">
+          <!-- High performance interactive local canvas for stardust drift -->
+          <canvas class="intro-dust-canvas" id="intro-dust-canvas"></canvas>
+
+          <!-- Open floating jewelry sketch models - NO BOXES OR CARDS -->
+          <div class="brand-intro__visual" id="intro-visual-3d">
+            <!-- Gold Ring Silhouette Graphic (Gold Pillar) -->
+            <div class="intro-artifact intro-artifact--gold" data-depth="0.08" id="artifact-gold">
+              <svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <!-- Concentric design rings -->
+                <circle cx="100" cy="100" r="85" stroke="#D4AF37" stroke-width="0.75" stroke-dasharray="3 5" opacity="0.3" />
+                <circle cx="100" cy="100" r="70" stroke="#D4AF37" stroke-width="1.25" opacity="0.8" />
+                <circle cx="100" cy="100" r="54" stroke="#D4AF37" stroke-width="0.5" opacity="0.4" />
+                <!-- Ornate filigree golden petals -->
+                <path d="M100 15 C110 40 120 40 130 15" stroke="#D4AF37" stroke-width="1" stroke-linecap="round" />
+                <path d="M100 185 C110 160 120 160 130 185" stroke="#D4AF37" stroke-width="1" stroke-linecap="round" />
+                <path d="M15 100 C40 110 40 120 15 130" stroke="#D4AF37" stroke-width="1" stroke-linecap="round" />
+                <path d="M185 100 C160 110 160 120 185 130" stroke="#D4AF37" stroke-width="1" stroke-linecap="round" />
+                <!-- Inner Ring details -->
+                <circle cx="100" cy="100" r="40" stroke="#D4AF37" stroke-width="1.5" stroke-dasharray="12 4" />
+                <!-- Central golden blossom node -->
+                <path d="M90 100 Q100 80 110 100 Q100 120 90 100 Z" fill="rgba(212, 175, 55, 0.15)" stroke="#D4AF37" stroke-width="1.5" />
+                <circle cx="100" cy="100" r="4" fill="#D4AF37" />
+              </svg>
+            </div>
+
+            <!-- Diamond Solo Facet Model (Diamond Pillar) -->
+            <div class="intro-artifact intro-artifact--diamond" data-depth="0.05" id="artifact-diamond">
+              <svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <!-- Diamond light refract rays -->
+                <line x1="100" y1="10" x2="100" y2="190" stroke="rgba(255,255,255,0.4)" stroke-width="0.5" stroke-dasharray="6 8" />
+                <line x1="10" y1="100" x2="190" y2="100" stroke="rgba(255,255,255,0.4)" stroke-width="0.5" stroke-dasharray="6 8" />
+                <!-- Diamond solitaire outline -->
+                <path d="M100 20 L160 70 L100 175 L40 70 Z" stroke="#D4AF37" stroke-width="1.25" />
+                <path d="M100 20 L125 70 L100 175 L75 70 Z" stroke="#500A12" stroke-width="0.75" opacity="0.6" />
+                <path d="M40 70 L160 70" stroke="#D4AF37" stroke-width="0.75" />
+                <path d="M75 70 L125 70" stroke="#D4AF37" stroke-width="0.5" />
+                <!-- Star facet flashes -->
+                <path d="M100 20 L100 70" stroke="#D4AF37" stroke-width="1" />
+                <path d="M100 20 Q108 50 125 70 M100 20 Q92 50 75 70" stroke="rgba(255,255,255,0.5)" stroke-width="0.75" />
+                <!-- Glowing crown sparkles -->
+                <circle cx="100" cy="20" r="2.5" fill="#FFEAB5" />
+                <circle cx="40" cy="70" r="1.5" fill="#FFFFFF" />
+                <circle cx="160" cy="70" r="1.5" fill="#FFFFFF" />
+              </svg>
+            </div>
+
+            <!-- Bridal Floral Paisley Mandala (Bridal Pillar) -->
+            <div class="intro-artifact intro-artifact--bridal" data-depth="0.11" id="artifact-bridal">
+              <svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <!-- Royal Indian Paisley Outer Crown -->
+                <path d="M100 25 C140 60 175 90 175 125 C175 165 140 175 100 175 C60 175 25 165 25 125 C25 90 60 60 100 25 Z" stroke="#500A12" stroke-width="1.25" fill="rgba(80, 10, 18, 0.02)" />
+                <!-- Inner gold lace outline -->
+                <path d="M100 38 C130 70 160 95 160 125 C160 155 130 162 100 162 C70 162 40 155 40 125 C40 95 70 70 100 38 Z" stroke="#D4AF37" stroke-width="0.8" stroke-dasharray="4 2" />
+                <!-- Mandala concentric details -->
+                <circle cx="100" cy="120" r="30" stroke="#500A12" stroke-width="1" />
+                <circle cx="100" cy="120" r="22" stroke="#D4AF37" stroke-width="0.75" stroke-dasharray="2 4" />
+                <!-- Traditional royal Indian floral motifs -->
+                <path d="M100 90 C105 105 115 105 100 120 C85 105 95 105 100 90 Z" fill="rgba(212,175,55,0.2)" stroke="#D4AF37" stroke-width="1" />
+                <path d="M100 150 C105 135 115 135 100 120 C85 135 95 135 100 150 Z" fill="rgba(212,175,55,0.2)" stroke="#D4AF37" stroke-width="1" />
+                <path d="M70 120 C85 125 85 115 100 120 C85 125 85 115 70 120 Z" fill="rgba(212,175,55,0.2)" stroke="#D4AF37" stroke-width="1" />
+                <path d="M130 120 C115 125 115 115 100 120 C115 125 115 115 130 120 Z" fill="rgba(212,175,55,0.2)" stroke="#D4AF37" stroke-width="1" />
+              </svg>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

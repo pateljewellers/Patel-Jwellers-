@@ -149,18 +149,13 @@
 
 /* --- Highly Interactive Futuristic Hero Section --- */
 .hero-interactive-container {
-  /* Heritage background image — same as Brand Story section */
-  background-image: url('/images/about/heritage-model-bg.jpg');
-  background-attachment: fixed; /* CSS parallax: image stays fixed while page scrolls */
-  background-size: cover;
-  background-position: center 15%;
   background-color: #080707; /* Fallback colour while image loads */
   isolation: isolate;
   position: relative;
-  height: calc(100vh - var(--header-height, 80px));
-  min-height: 560px;
-  max-height: 960px;
+  height: auto; /* Allow height auto to wrap both sections */
+  min-height: 180vh; /* Make section tall to fit hero and heritage scroll view */
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: flex-start;
   overflow: hidden;
@@ -169,12 +164,19 @@
   transition: background-color 1s var(--ease-smooth);
 }
 
-/* iOS / mobile fallback: background-attachment: fixed is broken on iOS Safari */
-@supports (-webkit-touch-callout: none) {
-  .hero-interactive-container {
-    background-attachment: scroll;
-    background-size: cover;
-  }
+/* Dedicated Parallax Background Image Layer */
+.hero-bg-parallax {
+  position: absolute;
+  top: -10vh;
+  left: 0;
+  width: 100%;
+  height: 120vh; /* Controlled viewport-based height makes the background image smaller and perfectly scaled */
+  background-image: url('/images/about/heritage-model-bg.jpg');
+  background-size: cover;
+  background-position: center 15%;
+  z-index: -2; /* Safely sits underneath all overlays and canvases */
+  pointer-events: none;
+  will-change: transform;
 }
 
 /* Dark overlay behind content — desaturates & darkens the heritage image */
@@ -399,7 +401,9 @@
   align-items: center;
   justify-content: center;
   width: 100%;
-  height: 100%;
+  height: calc(100vh - var(--header-height, 72px)); /* Exact viewport height for first content */
+  min-height: 500px;
+  max-height: 900px;
   gap: var(--space-2xl);
   padding-inline: var(--space-lg);
   margin-top: calc(var(--header-height) - 10px);
@@ -627,7 +631,7 @@
   bottom: 2.8rem;
   left: 0;
   right: 0;
-  z-index: 3;
+  z-index: 10; /* Float on top of arched section */
   pointer-events: none;
 }
 
@@ -728,7 +732,7 @@
   position: absolute;
   bottom: 2.8rem;
   right: var(--space-lg);
-  z-index: 3;
+  z-index: 10; /* Float on top of arched section */
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -816,14 +820,54 @@
   }
 }
 
-/* --- Spacious, Boxless Luxury Brand Intro Section --- */
-.brand-intro-section {
+/* --- Spacious, Boxless Luxury Brand Intro Section Wrapper --- */
+.brand-intro-wrapper {
   position: relative;
-  background-color: #FBFBFA !important; /* Clean, premium luxury Warm Cream backdrop */
-  margin-top: 140px; /* Spacious, professional separation buffer from Hero */
-  padding-block: 120px; /* Generous breathing room */
+  background-color: transparent !important; /* Make transparent to show the hero background in the corners */
+  margin-top: -200px; /* Pull the section up to overlap and enter into the hero section */
+  z-index: 5; /* Sit above the hero background image/canvas */
+  padding-top: 0; /* Remove the padding-top gap entirely */
   overflow: hidden;
   width: 100%;
+}
+
+.brand-intro-section {
+  position: relative;
+  background: transparent !important; /* Make transparent to show the parallax background image and stripes */
+  border-top-left-radius: 50vw; /* Starts as a perfect semicircle arch */
+  border-top-right-radius: 50vw; /* Starts as a perfect semicircle arch */
+  padding-top: 180px; /* Generous breathing room on top */
+  padding-bottom: 180px; /* Generous breathing room on bottom */
+  min-height: 140vh; /* Extremely long to show deep parallax scroll over the model background */
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  width: 100%;
+  will-change: border-top-left-radius, border-top-right-radius;
+  transition: border-radius 0.1s ease-out;
+}
+
+/* Dynamic Parallax Background Image Container */
+.brand-intro-bg-parallax {
+  position: absolute;
+  top: -20%;
+  left: 0;
+  width: 100%;
+  height: 140%; /* Taller to allow vertical translation for parallax effect */
+  background-size: cover;
+  background-position: center;
+  z-index: 0;
+  pointer-events: none;
+  will-change: transform;
+}
+
+/* Semi-transparent warm cream overlay behind text but in front of background image */
+.brand-intro-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(251, 251, 250, 0.90); /* Very premium luxury warm cream overlay */
+  z-index: 1;
+  pointer-events: none;
 }
 
 /* Very subtle background ambient glowing highlights */
@@ -833,7 +877,7 @@
   pointer-events: none;
   filter: blur(120px);
   -webkit-filter: blur(120px);
-  z-index: 0;
+  z-index: 2; /* Position above overlay */
   opacity: 0.05;
   will-change: transform;
 }
@@ -859,7 +903,7 @@
   position: absolute;
   inset: 0;
   pointer-events: none;
-  z-index: 1;
+  z-index: 2; /* Position above overlay */
   opacity: 0.85;
 }
 

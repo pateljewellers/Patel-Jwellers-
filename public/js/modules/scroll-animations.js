@@ -117,35 +117,97 @@ document.addEventListener('DOMContentLoaded', () => {
     updateParallax();
   }
 
-  // ——— Hero background-position parallax ———
-  // Shifts the heritage background image at ~25% scroll speed for a smooth depth effect.
+  // ——— Combined Scroll Animations (Hero Parallax & Brand Intro Dynamic Arch) ———
   const heroEl = document.querySelector('.hero-interactive-container');
+  const heroBg = document.querySelector('.hero-bg-parallax');
   const isMobileIOS = /iP(hone|ad|od)/.test(navigator.userAgent);
-  if (heroEl && !reducedMotion && !isMobileIOS) {
-    // Remove fixed attachment and drive it manually via background-position for smoother control
-    heroEl.style.backgroundAttachment = 'scroll';
+  const brandIntro = document.getElementById('brand-intro');
+  const brandIntroBg = document.querySelector('.brand-intro-bg-parallax');
 
-    let heroTicking = false;
-    const updateHeroParallax = () => {
+  if (!reducedMotion) {
+    let ticking = false;
+
+    const handleScrollAnimations = () => {
       const scrollY = window.scrollY || window.pageYOffset;
-      const heroRect = heroEl.getBoundingClientRect();
-      // Only run while the hero is at least partially visible
-      if (heroRect.bottom > 0) {
-        // Parallax offset: background moves at 25% of scroll speed (slower = depth illusion)
-        const posY = 15 - scrollY * 0.05; // 15% base (shifted higher), decreases on scroll for proper parallax
-        heroEl.style.backgroundPosition = `center ${posY}%`;
+      const vh = window.innerHeight;
+
+      // 1. Hero Parallax Content & Background Layers
+      if (heroEl && !isMobileIOS) {
+        const heroRect = heroEl.getBoundingClientRect();
+        if (heroRect.bottom > 0) {
+          // Translate background image layer at 15% of scroll speed to accommodate tall combined height
+          if (heroBg) {
+            heroBg.style.transform = `translate3d(0, ${scrollY * 0.15}px, 0)`;
+          }
+
+          // Content layers vertical translations
+          const heroContent = heroEl.querySelector('.home-hero__content');
+          const canvasEl = heroEl.querySelector('.hero-interactive-canvas');
+          const ringsEl = heroEl.querySelector('.parallax-rings-container');
+          const tagsEl = heroEl.querySelector('.hero-quicktags');
+
+          if (heroContent) {
+            heroContent.style.transform = `translate3d(0, ${scrollY * 0.25}px, 0)`;
+            heroContent.style.opacity = Math.max(0, 1 - scrollY / 700);
+          }
+          if (canvasEl) {
+            canvasEl.style.transform = `translate3d(0, ${scrollY * 0.12}px, 0)`;
+          }
+          if (ringsEl) {
+            ringsEl.style.transform = `translate3d(0, ${scrollY * 0.18}px, 0)`;
+          }
+          if (tagsEl) {
+            tagsEl.style.transform = `translate3d(0, ${scrollY * 0.08}px, 0)`;
+          }
+        }
       }
-      heroTicking = false;
+
+      // 2. Brand Intro Dynamic Arch Border-Radius & Background Parallax
+      if (brandIntro) {
+        const rect = brandIntro.getBoundingClientRect();
+        if (rect.top < vh && rect.bottom > 0) {
+          // Progress of page scrolling down from 0 to 600px
+          let scrollProgress = scrollY / 600;
+          scrollProgress = Math.max(0, Math.min(1, scrollProgress));
+
+          // Calculate top border-radius based on scrollProgress
+          // At scrollY = 0: border-radius is a perfect semicircle arch (50vw or innerWidth / 2)
+          // As scrollY increases to 600px: border-radius flattens out smoothly to 24px
+          const maxRadius = window.innerWidth / 2;
+          const minRadius = 24;
+          const currentRadius = maxRadius - (maxRadius - minRadius) * scrollProgress;
+
+          brandIntro.style.borderTopLeftRadius = `${currentRadius}px`;
+          brandIntro.style.borderTopRightRadius = `${currentRadius}px`;
+
+          // Parallax for the contained background image
+          if (brandIntroBg) {
+            // Visibility progress: 0 when top is at bottom of viewport, 1 when top aligns with top of viewport
+            let visibilityProgress = (vh - rect.top) / vh;
+            visibilityProgress = Math.max(0, Math.min(1, visibilityProgress));
+            
+            // Translate it vertically inside the section clipping boundary
+            const maxTravel = rect.height * 0.22; // 22% of section height safety range
+            const yOffset = (visibilityProgress - 0.5) * maxTravel; 
+            brandIntroBg.style.transform = `translate3d(0, ${yOffset}px, 0)`;
+          }
+        }
+      }
+
+      ticking = false;
     };
 
     window.addEventListener('scroll', () => {
-      if (!heroTicking) {
-        requestAnimationFrame(updateHeroParallax);
-        heroTicking = true;
+      if (!ticking) {
+        requestAnimationFrame(handleScrollAnimations);
+        ticking = true;
       }
     }, { passive: true });
 
-    // Set initial position
-    updateHeroParallax();
+    // Set initial position & styles
+    if (heroEl && !isMobileIOS) {
+      heroEl.style.backgroundAttachment = 'scroll';
+    }
+    handleScrollAnimations();
   }
 });
