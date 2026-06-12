@@ -147,76 +147,12 @@ document.addEventListener('DOMContentLoaded', () => {
     animate();
   }
 
-  // 2. 3D ARCH TILT EFFECT (Mouse tracking)
+  // 2. 3D ARCH TILT EFFECT (Disabled to keep image static and shake-free)
   const archCard = document.getElementById('showroom-arch-card');
   const archCardWrap = document.querySelector('.showroom-arch-card-wrap');
   
   if (archCard && archCardWrap) {
-    let bounds;
-    
-    const updateTilt = (e) => {
-      if (!bounds) return;
-      const mouseX = e.clientX;
-      const mouseY = e.clientY;
-      const left = bounds.left;
-      const top = bounds.top;
-      const width = bounds.width;
-      const height = bounds.height;
-      
-      // Calculate coordinates from card center (-1 to 1)
-      const x = (mouseX - left - width / 2) / (width / 2);
-      const y = (mouseY - top - height / 2) / (height / 2);
-      
-      // Limit rotations (tilt up to 10 degrees)
-      const rotateX = (-y * 10).toFixed(2);
-      const rotateY = (x * 10).toFixed(2);
-      
-      // Parallax offset inside card elements
-      const shadowX = (x * 20).toFixed(1);
-      const shadowY = (y * 20).toFixed(1);
-
-      archCard.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
-      archCard.style.boxShadow = `${-shadowX}px ${-shadowY}px 35px rgba(42, 42, 42, 0.12), 0 20px 45px rgba(155, 27, 42, 0.08)`;
-      
-      // Parallax secondary element (brass filigrees and image shifting)
-      const img = archCard.querySelector('.showroom-main-img');
-      if (img) {
-        img.style.transform = `scale(1.08) translate3d(${-x * 8}px, ${-y * 8}px, 0)`;
-      }
-
-      // Parallax floating leaf/ornaments
-      const tags = archCard.querySelector('.showroom-tag');
-      if (tags) {
-        tags.style.transform = `translate3d(${x * 12}px, ${y * 12}px, 20px)`;
-      }
-    };
-
-    archCardWrap.addEventListener('mouseenter', () => {
-      bounds = archCardWrap.getBoundingClientRect();
-      archCard.style.transition = 'transform 0.15s cubic-bezier(0.25, 0.46, 0.45, 0.94), box-shadow 0.15s ease';
-      const img = archCard.querySelector('.showroom-main-img');
-      if (img) img.style.transition = 'transform 0.15s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
-    });
-
-    archCardWrap.addEventListener('mousemove', updateTilt);
-
-    archCardWrap.addEventListener('mouseleave', () => {
-      // Reset tilt smoothly
-      archCard.style.transition = 'transform 0.65s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.65s ease';
-      archCard.style.transform = 'rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)';
-      archCard.style.boxShadow = '';
-      
-      const img = archCard.querySelector('.showroom-main-img');
-      if (img) {
-        img.style.transition = 'transform 0.65s cubic-bezier(0.25, 1, 0.5, 1)';
-        img.style.transform = 'scale(1.0) translate3d(0, 0, 0)';
-      }
-
-      const tags = archCard.querySelector('.showroom-tag');
-      if (tags) {
-        tags.style.transform = '';
-      }
-    });
+    // Left empty: tilt and inner image translation are disabled for stability
   }
 
   // 3. BACKGROUND HERITAGE MANDALA PARALLAX

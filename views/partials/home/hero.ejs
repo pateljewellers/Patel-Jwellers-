@@ -1,20 +1,33 @@
 <section class="home-hero hero-interactive-container" id="home-hero">
-  <!-- Dedicated Parallax Background Image Layer -->
-  <div class="hero-bg-parallax" aria-hidden="true"></div>
-
-  <!-- Glowing Background Ambient Orbs -->
-  <div class="glow-orb glow-orb--burgundy" aria-hidden="true"></div>
-  <div class="glow-orb glow-orb--gold" aria-hidden="true"></div>
-  
-  <!-- Interactive Particles Canvas -->
+  <!-- Interactive Particles Canvas for Light Rays & Blueprint Geometry -->
   <canvas class="hero-interactive-canvas" id="hero-interactive-canvas"></canvas>
 
-  <!-- Hero Main Content -->
+  <!-- Glowing Background Ambient Orbs (Soft gold and rose-gold highlights) -->
+  <div class="glow-orb glow-orb--ivory" aria-hidden="true"></div>
+  <div class="glow-orb glow-orb--gold" aria-hidden="true"></div>
+
+  <!-- Hero Main Content Grid -->
   <div class="container hero-grid-wrapper">
+    <!-- Left Column: Typography Narrative -->
     <div class="home-hero__content">
       <span class="home-hero__eyebrow reveal-blur"><%= home.hero.eyebrow %></span>
       <h1 class="home-hero__title reveal-up reveal-delay-1"><%= home.hero.title %></h1>
       <p class="home-hero__tagline reveal-up reveal-delay-2"><%= home.hero.tagline %></p>
+      <div class="home-hero__actions reveal-up reveal-delay-3">
+        <a href="/collection" class="btn btn--glow-gold btn--magnetic">
+          Explore Collection
+          <span class="btn__arrow">→</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- Right Column: Interactive 3D Glassmorphic Portal Showcase -->
+    <div class="hero-portal-wrapper reveal-scale reveal-delay-1">
+      <div class="hero-glass-portal" id="hero-glass-portal">
+        <div class="glass-portal-image" style="background-image: url('/images/about/f20aa4b90167dba38b688c8fa0a6bf59.jpg');"></div>
+        <div class="glass-portal-shine" id="glass-portal-shine"></div>
+        <div class="glass-portal-overlay"></div>
+      </div>
     </div>
   </div>
 
@@ -26,9 +39,7 @@
 
   <!-- Nested Brand Introduction Section (Counted as part of the Hero Section) -->
   <div class="brand-intro-wrapper">
-    <div class="brand-intro-section scroll-section" id="brand-intro">
-      <!-- Dynamic Parallax Background Image -->
-      <div class="brand-intro-bg-parallax" style="background-image: url('/images/about/model-01.jpg');" aria-hidden="true"></div>
+    <div class="brand-intro-section scroll-section" id="brand-intro" style="background-image: url('/images/about/model-01.jpg');">
       
       <!-- Semi-transparent luxury overlay for text readability -->
       <div class="brand-intro-overlay" aria-hidden="true"></div>
@@ -141,8 +152,7 @@
         </div>
       </div>
 
-      <!-- Nested Featured Collections Section -->
-      <%- include('featured-collections') %>
+      <%- include('about-brand') %>
     </div>
   </div>
 </section>

@@ -93,7 +93,7 @@ document.addEventListener('DOMContentLoaded', () => {
         this.alpha = 1.0;
         this.fadeRate = Math.random() * 0.025 + 0.018;
         this.gravity = 0.06;
-        this.color = Math.random() > 0.4 ? '#D4AF37' : '#FFFFFF';
+        this.color = Math.random() > 0.4 ? '#caa15a' : '#9b1b2a'; /* Gold or Brand Burgundy (#9b1b2a) */
       } else {
         // trail
         const angle = Math.random() * Math.PI * 2;
@@ -105,8 +105,8 @@ document.addEventListener('DOMContentLoaded', () => {
         this.fadeRate = Math.random() * 0.018 + 0.006;
         this.gravity = 0.018;
         this.color = Math.random() > 0.35
-          ? `rgba(212,175,55,${(Math.random() * 0.6 + 0.4).toFixed(2)})`
-          : `rgba(255,255,255,${(Math.random() * 0.5 + 0.2).toFixed(2)})`;
+          ? `rgba(202,161,90,${(Math.random() * 0.6 + 0.4).toFixed(2)})` /* Official brand gold caa15a */
+          : `rgba(155,27,42,${(Math.random() * 0.4 + 0.2).toFixed(2)})`; /* Brand Burgundy */
         this.swingFreq = Math.random() * 0.04 + 0.01;
         this.swingAmp = Math.random() * 0.5 + 0.1;
         this.swingPhase = Math.random() * Math.PI * 2;
@@ -132,7 +132,7 @@ document.addEventListener('DOMContentLoaded', () => {
       ctx.save();
       ctx.globalAlpha = Math.max(this.alpha, 0);
       ctx.shadowBlur = 6;
-      ctx.shadowColor = '#D4AF37';
+      ctx.shadowColor = '#caa15a'; /* Official brand gold */
       ctx.fillStyle = this.color;
       ctx.beginPath();
       ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
@@ -185,10 +185,10 @@ document.addEventListener('DOMContentLoaded', () => {
       if (!ctx) return;
       ctx.save();
       ctx.globalAlpha = Math.max(this.alpha, 0);
-      ctx.strokeStyle = '#D4AF37';
+      ctx.strokeStyle = '#caa15a'; /* Official brand gold */
       ctx.lineWidth = this.thickness;
       ctx.shadowBlur = 12;
-      ctx.shadowColor = '#D4AF37';
+      ctx.shadowColor = '#caa15a';
       ctx.beginPath();
       ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
       ctx.stroke();
@@ -196,7 +196,7 @@ document.addEventListener('DOMContentLoaded', () => {
       // Second inner ripple ring
       if (this.radius > 30) {
         ctx.globalAlpha = Math.max(this.alpha * 0.4, 0);
-        ctx.strokeStyle = 'rgba(80,10,18,0.5)';
+        ctx.strokeStyle = 'rgba(155,27,42,0.5)'; /* Official brand burgundy 9b1b2a */
         ctx.lineWidth = this.thickness * 0.5;
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.radius * 0.72, 0, Math.PI * 2);
@@ -238,14 +238,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const r = R * 0.42;
     const d = R * 0.62 + Math.cos(t * 0.002) * 14;
 
-    const baseAlpha = hub.color === 'gold' ? 0.07 : 0.035;
+    const baseAlpha = hub.color === 'gold' ? 0.07 : 0.05;
     ctx.save();
     ctx.translate(cx, cy);
     ctx.rotate(t * hub.speed * speedMultiplier);
     ctx.lineWidth = 0.7;
     ctx.strokeStyle = hub.color === 'gold'
-      ? `rgba(212,175,55,${baseAlpha})`
-      : `rgba(80,10,18,${baseAlpha})`;
+      ? `rgba(202,161,90,${baseAlpha})` /* Official brand gold caa15a */
+      : `rgba(155,27,42,${baseAlpha * 1.5})`; /* Official brand burgundy 9b1b2a */
 
     ctx.beginPath();
     for (let theta = 0, steps = 380; theta < Math.PI * 8; theta += Math.PI * 8 / steps) {
@@ -296,8 +296,8 @@ document.addEventListener('DOMContentLoaded', () => {
       ctx.save();
       ctx.lineWidth = bi === 0 ? 0.9 : 0.6;
       ctx.strokeStyle = bi % 2 === 0
-        ? 'rgba(212,175,55,0.07)'
-        : 'rgba(80,10,18,0.03)';
+        ? 'rgba(202,161,90,0.08)' /* Official brand gold caa15a */
+        : 'rgba(155,27,42,0.04)'; /* Official brand burgundy 9b1b2a */
       ctx.beginPath();
 
       const steps = 80;

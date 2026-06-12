@@ -1,7 +1,7 @@
 /* ========== HOME PAGE — Patel Jewellers Mehsanawala ========== */
 
 .main-content--home {
-  overflow-x: hidden;
+  overflow-x: clip;
 }
 
 .page-home .site-header {
@@ -149,7 +149,8 @@
 
 /* --- Highly Interactive Futuristic Hero Section --- */
 .hero-interactive-container {
-  background-color: #080707; /* Fallback colour while image loads */
+  background: linear-gradient(105deg, #D4B8A8 0%, #EAD9CD 40%, #F5EDE4 70%, #FAF7F2 100%);
+  background-color: #EAD9CD; /* Fallback warm rose-beige */
   isolation: isolate;
   position: relative;
   height: auto; /* Allow height auto to wrap both sections */
@@ -160,94 +161,130 @@
   justify-content: flex-start;
   overflow: hidden;
   width: 100%;
-  color: var(--color-bg);
-  transition: background-color 1s var(--ease-smooth);
+  color: var(--color-dark);
+  transition: background-color 1.5s var(--ease-smooth);
 }
 
-/* Dedicated Parallax Background Image Layer */
+/* Disabled old full-bleed parallax background */
 .hero-bg-parallax {
-  position: absolute;
-  top: -10vh;
-  left: 0;
-  width: 100%;
-  height: 120vh; /* Controlled viewport-based height makes the background image smaller and perfectly scaled */
-  background-image: url('/images/about/heritage-model-bg.jpg');
-  background-size: cover;
-  background-position: center 15%;
-  z-index: -2; /* Safely sits underneath all overlays and canvases */
-  pointer-events: none;
-  will-change: transform;
+  display: none;
 }
 
-/* Dark overlay behind content — desaturates & darkens the heritage image */
+/* Dark overlay disabled for light theme */
 .hero-interactive-container::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  /* Heavy dark veil to keep hero text crisp on the image */
-  background:
-    radial-gradient(ellipse at 50% 50%, transparent 20%, rgba(4, 3, 2, 0.62) 100%),
-    linear-gradient(
-      to bottom,
-      rgba(6, 5, 3, 0.72) 0%,
-      rgba(6, 5, 3, 0.55) 50%,
-      rgba(6, 5, 3, 0.80) 100%
-    );
-  backdrop-filter: saturate(0.45) brightness(0.48);
-  -webkit-backdrop-filter: saturate(0.45) brightness(0.48);
-  pointer-events: none;
+  display: none;
 }
 
-/* Mouse-Follow Spotlight Glow Mask — raised above dark overlay */
+/* Mouse-Follow Spotlight Glow Mask (Subtle Luxury Golden Spotlight) */
 .hero-interactive-container::before {
   content: '';
   position: absolute;
   inset: 0;
-  z-index: 1; /* Sit above the ::after dark overlay */
+  z-index: 1; /* Sit above the canvas and background */
   pointer-events: none;
   background: radial-gradient(
-    circle 320px at var(--mouse-glow-x, 50%) var(--mouse-glow-y, 50%),
-    rgba(212, 175, 55, 0.18) 0%,
-    rgba(202, 161, 90, 0.04) 50%,
+    circle 360px at var(--mouse-glow-x, 50%) var(--mouse-glow-y, 50%),
+    rgba(202, 161, 90, 0.16) 0%,
+    rgba(176, 168, 154, 0.06) 60%,
     transparent 100%
   );
-  opacity: var(--mouse-glow-opacity, 0);
+  opacity: var(--mouse-glow-opacity, 0.8);
   transition: opacity 0.8s ease;
   will-change: background;
 }
 
 .hero-interactive-container.theme-gold::before {
   background: radial-gradient(
-    circle 380px at var(--mouse-glow-x, 50%) var(--mouse-glow-y, 50%),
-    rgba(212, 175, 55, 0.22) 0%,
+    circle 400px at var(--mouse-glow-x, 50%) var(--mouse-glow-y, 50%),
+    rgba(212, 175, 55, 0.12) 0%,
     transparent 100%
   );
 }
 
 .hero-interactive-container.theme-ruby::before {
   background: radial-gradient(
-    circle 380px at var(--mouse-glow-x, 50%) var(--mouse-glow-y, 50%),
-    rgba(184, 45, 61, 0.22) 0%,
+    circle 400px at var(--mouse-glow-x, 50%) var(--mouse-glow-y, 50%),
+    rgba(155, 27, 42, 0.08) 0%,
     transparent 100%
   );
 }
 
 .hero-interactive-container.theme-diamond::before {
   background: radial-gradient(
-    circle 380px at var(--mouse-glow-x, 50%) var(--mouse-glow-y, 50%),
-    rgba(255, 255, 255, 0.22) 0%,
-    rgba(193, 235, 255, 0.08) 50%,
+    circle 400px at var(--mouse-glow-x, 50%) var(--mouse-glow-y, 50%),
+    rgba(100, 130, 160, 0.1) 0%,
     transparent 100%
   );
 }
 
 .hero-interactive-container.theme-antique::before {
   background: radial-gradient(
-    circle 380px at var(--mouse-glow-x, 50%) var(--mouse-glow-y, 50%),
-    rgba(153, 126, 77, 0.2) 0%,
+    circle 400px at var(--mouse-glow-x, 50%) var(--mouse-glow-y, 50%),
+    rgba(153, 126, 77, 0.1) 0%,
     transparent 100%
   );
+}
+
+/* 3D Glassmorphic Showcase Portal Showcase styles */
+.hero-portal-wrapper {
+  position: relative;
+  z-index: 2;
+  perspective: 1000px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  max-width: 480px;
+}
+
+.hero-glass-portal {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 0.82; /* 410px wide by 500px tall */
+  border-radius: 220px 220px 24px 24px; /* Premium arched jewelry vault shape */
+  border: 1.5px solid rgba(202, 161, 90, 0.45); /* Elegant gold rim border */
+  background: rgba(255, 255, 255, 0.35);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  box-shadow: 
+    0 30px 70px rgba(42, 42, 42, 0.15), 
+    0 0 45px rgba(202, 161, 90, 0.08),
+    inset 0 0 20px rgba(255, 255, 255, 0.45);
+  overflow: hidden;
+  transform-style: preserve-3d;
+  will-change: transform;
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.glass-portal-image {
+  position: absolute;
+  inset: 12px; /* Inner margin to create a thick frame border */
+  border-radius: 210px 210px 18px 18px; /* Matching arch frame */
+  background-size: cover;
+  background-position: center center;
+  opacity: 0.95;
+  transform: translateZ(20px); /* 3D depth separation */
+  box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.05);
+  will-change: transform;
+}
+
+.glass-portal-shine {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+  background: linear-gradient(135deg, transparent 30%, rgba(255, 255, 255, 0.35) 50%, transparent 70%);
+  transform: translateZ(40px) translateX(-100%);
+  transition: transform 0.5s ease;
+}
+
+.glass-portal-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  background: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(212, 175, 55, 0.12) 0%, transparent 60%);
+  transform: translateZ(10px);
 }
 
 /* Glowing Background Ambient Orbs */
@@ -413,7 +450,7 @@
   .hero-grid-wrapper {
     flex-direction: row;
     align-items: center;
-    justify-content: flex-end; /* Keep content on the right side */
+    justify-content: space-between; /* Balanced left and right alignment */
     padding-inline: var(--space-xl);
     margin-top: 0;
   }
@@ -438,17 +475,16 @@
     padding-bottom: 0;
   }
   
-  .hero-centerpiece {
-    width: 235px;
-    opacity: 0.95;
-    margin-top: var(--space-md);
+  .hero-portal-wrapper {
+    max-width: 290px;
+    margin-top: var(--space-xl);
   }
 }
 
 @media (max-width: 576px) {
-  .hero-centerpiece {
-    width: 195px;
-    opacity: 0.9;
+  .hero-portal-wrapper {
+    max-width: 240px;
+    margin-top: var(--space-md);
   }
 }
 
@@ -528,7 +564,7 @@
   font-weight: 600;
   letter-spacing: 0.32em;
   text-transform: uppercase;
-  color: var(--color-accent-light); /* Golden champagne text */
+  color: var(--color-primary); /* Reverted to brand primary burgundy */
   margin-bottom: var(--space-md);
 }
 
@@ -537,9 +573,8 @@
   font-size: clamp(2.4rem, 6vw, 4.4rem);
   font-weight: 500;
   line-height: 1.15;
-  color: var(--color-white);
+  color: var(--color-dark); /* Reverted to dark charcoal */
   margin-bottom: var(--space-lg);
-  text-shadow: 0 4px 24px rgba(0, 0, 0, 0.45);
   letter-spacing: -0.01em;
 }
 
@@ -548,7 +583,7 @@
   font-size: clamp(1rem, 2.5vw, 1.25rem);
   font-weight: 300;
   letter-spacing: 0.04em;
-  color: rgba(237, 237, 236, 0.85); /* Exquisite brand off-white cream text */
+  color: var(--color-dark); /* Reverted to dark charcoal */
   margin-bottom: var(--space-2xl);
   max-width: 32ch;
   line-height: 1.6;
@@ -565,13 +600,13 @@
 
 .interactive-char:hover {
   transform: translateY(-8px) scale(1.22) rotate(4deg);
-  color: #D4AF37 !important;
-  text-shadow: 0 0 15px rgba(212, 175, 55, 0.85), 0 0 25px rgba(212, 175, 55, 0.45);
+  color: #caa15a !important;
+  text-shadow: 0 0 15px rgba(202, 161, 90, 0.5), 0 0 25px rgba(202, 161, 90, 0.25);
 }
 
 .interactive-char.clicked {
   animation: letterShock 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.45) forwards;
-  color: #FFFFFF !important;
+  color: #caa15a !important; /* Official gold shock */
 }
 
 @keyframes letterShock {
@@ -595,7 +630,7 @@
 .btn--glow-gold {
   position: relative;
   background-color: #caa15a;
-  color: #080707;
+  color: #161616;
   font-weight: 600;
   border: 1px solid rgba(212, 175, 55, 0.4);
   box-shadow: 0 4px 20px rgba(202, 161, 90, 0.25);
@@ -607,7 +642,7 @@
 
 .btn--glow-gold:hover {
   background-color: #d4af37;
-  color: #080707;
+  color: #161616;
   border-color: rgba(255, 255, 255, 0.5);
   box-shadow: 
     0 8px 30px rgba(212, 175, 55, 0.45),
@@ -661,8 +696,8 @@
   font-weight: 500;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: var(--color-accent-light);
-  opacity: 0.65;
+  color: var(--color-accent); /* Accent color for light contrast */
+  opacity: 0.85;
 }
 
 .hero-quicktags__list {
@@ -678,11 +713,11 @@
   font-weight: 500;
   letter-spacing: 0.15em;
   text-transform: uppercase;
-  color: var(--color-bg);
+  color: var(--color-dark); /* Reverted to dark charcoal */
   text-decoration: none;
   padding: 6px 14px;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(155, 27, 42, 0.04); /* Very soft brand pinkish/burgundy wash */
+  border: 1px solid rgba(155, 27, 42, 0.12); /* Subtle burgundy border */
   border-radius: 20px;
   backdrop-filter: blur(4px);
   -webkit-backdrop-filter: blur(4px);
@@ -695,36 +730,35 @@
 }
 
 .hero-tag-link:hover {
-  background: rgba(255, 255, 255, 0.15);
-  border-color: rgba(255, 255, 255, 0.35);
-  color: var(--color-white);
+  background: rgba(155, 27, 42, 0.12);
+  border-color: rgba(155, 27, 42, 0.35);
+  color: var(--color-primary-dark);
   transform: translateY(-2px);
 }
 
 /* Custom individual tag states on hover */
 .hero-tag-link[data-theme="gold"]:hover {
-  border-color: rgba(212, 175, 55, 0.45);
-  background: rgba(212, 175, 55, 0.15);
-  color: #ffe3a3;
+  border-color: rgba(202, 161, 90, 0.55);
+  background: rgba(202, 161, 90, 0.15);
+  color: var(--color-primary-dark);
 }
 
 .hero-tag-link[data-theme="ruby"]:hover {
-  border-color: rgba(184, 45, 61, 0.45);
-  background: rgba(184, 45, 61, 0.15);
-  color: #ffb3bc;
+  border-color: rgba(155, 27, 42, 0.45);
+  background: rgba(155, 27, 42, 0.15);
+  color: var(--color-primary-dark);
 }
 
 .hero-tag-link[data-theme="diamond"]:hover {
-  border-color: rgba(255, 255, 255, 0.5);
-  background: rgba(255, 255, 255, 0.18);
-  color: #ffffff;
+  border-color: rgba(42, 42, 42, 0.45);
+  background: rgba(42, 42, 42, 0.08);
+  color: var(--color-dark);
 }
 
 .hero-tag-link[data-theme="antique"]:hover {
-  border-color: rgba(153, 126, 77, 0.45);
-  background: rgba(153, 126, 77, 0.15);
-  color: #dfcaa4;
-  text-shadow: 0 0 8px rgba(153, 126, 77, 0.4);
+  border-color: rgba(176, 168, 154, 0.55);
+  background: rgba(176, 168, 154, 0.18);
+  color: var(--color-primary-dark);
 }
 
 /* Interactive Scroll Indicator */
@@ -752,17 +786,17 @@
   font-weight: 500;
   letter-spacing: 0.22em;
   text-transform: uppercase;
-  color: var(--color-accent-light);
+  color: var(--color-primary); /* Reverted to brand primary burgundy */
   writing-mode: vertical-lr;
   text-orientation: mixed;
-  opacity: 0.75;
+  opacity: 0.85;
 }
 
 .home-hero__scroll-line {
   display: block;
   width: 1px;
   height: 40px;
-  background: linear-gradient(to bottom, var(--color-accent-light), transparent);
+  background: linear-gradient(to bottom, var(--color-primary), transparent); /* Reverted to brand primary burgundy */
   animation: scrollPulse 2s var(--ease-in-out) infinite;
 }
 
@@ -775,7 +809,7 @@
 /* Transition zone from burgundy hero to home body content (elegant dark red to cream transition) */
 .bg-dark-transition {
   position: relative;
-  background: linear-gradient(to bottom, #080707 0%, var(--color-white) 100%) !important;
+  background: linear-gradient(to bottom, #161616 0%, var(--color-white) 100%) !important;
   color: var(--color-dark);
 }
 
@@ -833,7 +867,10 @@
 
 .brand-intro-section {
   position: relative;
-  background: transparent !important;
+  background-attachment: fixed !important;
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
   border-top-left-radius: 50vw; /* Starts as a perfect semicircle arch */
   border-top-right-radius: 50vw; /* Starts as a perfect semicircle arch */
   padding-top: 180px; /* Generous breathing room on top */
@@ -847,24 +884,33 @@
   transition: border-radius 0.1s ease-out;
 }
 
-.brand-intro-bg-parallax {
+/* iOS/Mobile fallback: background-attachment: fixed causes rendering bugs on mobile browsers */
+@media (hover: none) and (pointer: coarse), (-webkit-min-device-pixel-ratio: 2) and (max-width: 1024px) {
+  .brand-intro-section {
+    background-attachment: scroll !important;
+  }
+}
+
+.brand-intro-section::before {
+  content: '';
   position: absolute;
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100vh; /* Match the viewport height exactly */
-  background-size: cover;
-  background-position: center;
-  z-index: 0;
+  right: 0;
+  height: 1.5px;
+  background: linear-gradient(to right, transparent 10%, rgba(202, 161, 90, 0.55) 50%, transparent 90%);
   pointer-events: none;
-  will-change: transform;
+  z-index: 3;
+  border-top-left-radius: inherit;
+  border-top-right-radius: inherit;
 }
 
-/* Semi-transparent warm cream overlay behind text but in front of background image */
+/* Dark red-to-black gradient overlay — slightly reduced opacity so background image shows */
 .brand-intro-overlay {
   position: absolute;
   inset: 0;
-  background: rgba(251, 251, 250, 0.90); /* Very premium luxury warm cream overlay */
+  background: linear-gradient(135deg, #2D0D0D 0%, #1F0A0A 35%, #160808 65%, #0F0808 100%);
+  opacity: 0.78;
   z-index: 1;
   pointer-events: none;
 }
@@ -874,27 +920,29 @@
   position: absolute;
   border-radius: 50%;
   pointer-events: none;
-  filter: blur(120px);
-  -webkit-filter: blur(120px);
+  filter: blur(100px);
+  -webkit-filter: blur(100px);
   z-index: 2; /* Position above overlay */
-  opacity: 0.05;
+  opacity: 0.08;
   will-change: transform;
 }
 
 .intro-bg-glow--champagne {
   bottom: -5%;
   right: 5%;
-  width: 450px;
-  height: 450px;
-  background: radial-gradient(circle, #D4AF37 0%, transparent 75%);
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(202, 161, 90, 0.9) 0%, transparent 70%);
+  opacity: 0.18;
 }
 
 .intro-bg-glow--burgundy {
   top: -5%;
   left: 5%;
-  width: 400px;
-  height: 400px;
-  background: radial-gradient(circle, #500A12 0%, transparent 75%);
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(180, 30, 30, 0.95) 0%, transparent 70%);
+  opacity: 0.35;
 }
 
 /* Faint, elegant architectural jewelry blueprint drawing guides */
@@ -908,7 +956,7 @@
 
 .blueprint-line {
   position: absolute;
-  background-color: rgba(212, 175, 55, 0.07); /* Faint gold hairline grid */
+  background-color: rgba(176, 168, 154, 0.09); /* Faint taupe hairline grid */
 }
 
 .blueprint-line--h1 { top: 20%; left: 0; width: 100%; height: 1px; }
@@ -922,7 +970,7 @@
   top: 35%;
   width: 160px;
   height: 160px;
-  border: 1px dashed rgba(80, 10, 18, 0.03); /* Faint burgundy circular compass */
+  border: 1px dashed rgba(176, 168, 154, 0.12); /* Faint taupe circular compass */
   border-radius: 50%;
 }
 
@@ -933,7 +981,7 @@
   left: 50%;
   width: 220px;
   height: 1px;
-  background-color: rgba(80, 10, 18, 0.02);
+  background-color: rgba(176, 168, 154, 0.06);
   transform: translate(-50%, -50%) rotate(45deg);
 }
 
@@ -966,9 +1014,9 @@
   font-weight: 600;
   letter-spacing: 0.28em;
   text-transform: uppercase;
-  color: #500A12; /* Deep burgundy eyebrow */
+  color: #caa15a; /* Gold on dark background */
   margin-bottom: var(--space-md);
-  border-left: 2px solid #D4AF37;
+  border-left: 2px solid #caa15a;
   padding-left: var(--space-sm);
 }
 
@@ -977,14 +1025,14 @@
   font-size: clamp(2.2rem, 5vw, 3.4rem);
   font-weight: 500;
   line-height: 1.2;
-  color: #500A12; /* Deep burgundy heading */
+  color: rgba(255, 245, 230, 0.95); /* Warm off-white on dark background */
   margin-bottom: var(--space-lg);
   letter-spacing: -0.01em;
 }
 
 .brand-intro__gold-gradient {
-  color: #D4AF37;
-  background: linear-gradient(135deg, #B09855 0%, #D4AF37 50%, #CBB067 100%);
+  color: var(--color-primary);
+  background: linear-gradient(135deg, var(--color-primary-dark) 0%, #caa15a 50%, var(--color-primary) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   display: inline-block;
@@ -995,7 +1043,7 @@
   font-size: clamp(1.05rem, 2vw, 1.25rem);
   font-weight: 300;
   line-height: 1.85;
-  color: #222222; /* High-contrast professional dark charcoal text */
+  color: rgba(230, 215, 195, 0.82); /* Warm light ivory on dark background */
   margin-bottom: var(--space-3xl);
   max-width: 620px;
 }
@@ -1003,8 +1051,8 @@
 /* Interactive narrative triggers */
 .text-trigger {
   font-weight: 500;
-  color: #500A12;
-  border-bottom: 1.5px dashed rgba(212, 175, 55, 0.45);
+  color: #caa15a; /* Gold on dark background */
+  border-bottom: 1.5px dashed rgba(202, 161, 90, 0.5);
   cursor: pointer;
   padding-bottom: 1px;
   transition: all 0.3s ease;
@@ -1018,14 +1066,14 @@
   left: 0;
   width: 100%;
   height: 1.5px;
-  background-color: #D4AF37;
+  background-color: #e8c97a;
   transform: scaleX(0);
   transform-origin: left;
   transition: transform 0.3s ease;
 }
 
 .text-trigger:hover {
-  color: #D4AF37;
+  color: #e8c97a; /* Lighter gold on hover */
 }
 
 .text-trigger:hover::after {
@@ -1049,7 +1097,7 @@
   font-weight: 600;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: #500A12;
+  color: #caa15a; /* Gold on dark background */
   transition: color 0.3s ease;
 }
 
@@ -1059,14 +1107,14 @@
   left: 0;
   width: 100%;
   height: 1px;
-  background-color: rgba(80, 10, 18, 0.25);
+  background-color: rgba(202, 161, 90, 0.3);
 }
 
 .brand-intro__cta-line::after {
   content: '';
   position: absolute;
   inset: 0;
-  background-color: #D4AF37;
+  background-color: #e8c97a;
   transform: scaleX(0);
   transform-origin: left;
   transition: transform 0.4s var(--ease-smooth);
@@ -1074,7 +1122,7 @@
 
 .brand-intro__cta-arrow {
   font-size: 1.1rem;
-  color: #D4AF37;
+  color: #caa15a; /* Gold on dark background */
   transition: transform 0.35s var(--ease-smooth);
 }
 
@@ -1083,7 +1131,7 @@
 }
 
 .brand-intro__cta:hover .brand-intro__cta-text {
-  color: #D4AF37;
+  color: #e8c97a;
 }
 
 .brand-intro__cta:hover .brand-intro__cta-line::after {
@@ -1163,6 +1211,8 @@
   height: 100%;
   display: block;
 }
+
+/* Reverted SVG stroke/fill overrides to default deep burgundy lines for light theme cream */
 
 /* Default Positioning & 3D Layering */
 .intro-artifact--gold {
@@ -1331,7 +1381,7 @@
 }
 
 .home-collections .section-header .section-eyebrow {
-  color: #D4AF37 !important; /* Champagne gold eyebrow */
+  color: var(--color-primary) !important; /* Brand primary burgundy */
   font-family: var(--font-serif);
   font-style: italic;
   font-size: 1.25rem;
@@ -1349,7 +1399,7 @@
   font-size: clamp(2.4rem, 6vw, 3.6rem);
   font-weight: 500;
   line-height: 1.25;
-  background: linear-gradient(135deg, #500A12 0%, #800A12 50%, #D4AF37 100%);
+  background: linear-gradient(135deg, var(--color-primary-dark) 0%, #caa15a 50%, var(--color-primary) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   letter-spacing: 0.02em;
@@ -1362,7 +1412,7 @@
   font-size: 1.1rem;
   font-weight: 300;
   line-height: 1.7;
-  color: #555555; /* Readable professional dark grey subtitle */
+  color: var(--color-dark); /* Readable dark charcoal */
 }
 
 /* Clean, open-air visual grids */
@@ -1475,7 +1525,7 @@
   font-family: var(--font-serif);
   font-size: 1.55rem;
   font-weight: 500;
-  color: #500A12; /* Deep burgundy font */
+  color: var(--color-dark); /* Reverted to dark charcoal */
   margin-bottom: var(--space-xs);
   transition: 
     color 0.4s ease,
@@ -1488,7 +1538,7 @@
   font-weight: 600;
   letter-spacing: 0.15em;
   text-transform: uppercase;
-  color: #D4AF37; /* Champagne gold link */
+  color: #caa15a; /* Official brand gold link */
   display: inline-flex;
   align-items: center;
   gap: 6px;
@@ -1505,7 +1555,7 @@
   left: 50%;
   width: 40px;
   height: 1px;
-  background-color: rgba(212, 175, 55, 0.4);
+  background-color: rgba(202, 161, 90, 0.4);
   transform: translateX(-50%) scaleX(0.5);
   transition: 
     transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
@@ -1515,7 +1565,7 @@
 /* Hover active overrides */
 .collection-card:hover .collection-card__img-wrap {
   transform: translateY(-8px);
-  box-shadow: 0 16px 36px rgba(80, 10, 18, 0.08);
+  box-shadow: 0 16px 36px rgba(155, 27, 42, 0.12); /* burgundy reflection on hover shadow */
 }
 
 .collection-card:hover .collection-card__img-wrap img {
@@ -1524,17 +1574,17 @@
 }
 
 .collection-card:hover .collection-card__body h3 {
-  color: #D4AF37; /* shifts title to gold on hover */
+  color: var(--color-primary); /* shifts title to brand burgundy on hover */
   transform: translateY(-2px);
 }
 
 .collection-card:hover .collection-card__link {
-  color: #500A12; /* shifts link to burgundy on hover */
+  color: var(--color-primary); /* shifts link to brand burgundy on hover */
 }
 
 .collection-card:hover .collection-card__link::after {
   transform: translateX(-50%) scaleX(1.3);
-  background-color: #D4AF37;
+  background-color: var(--color-primary);
 }
 
 /* =====================================================
@@ -1810,63 +1860,26 @@
 /* ——— SECTION WRAPPER — background-attachment: fixed parallax ——— */
 .hs-brand {
   position: relative;
-  /* The fixed background: image locked to viewport while page scrolls over it */
-  background-image: url('/images/about/heritage-model-bg.jpg');
-  background-attachment: fixed;
-  background-size: cover;
-  background-position: center 20%;
-  /* Desaturate & darken the raw image */
-  isolation: isolate;
-  min-height: 100svh;
+  /* No background — inherits dark red gradient from parent brand-intro-section */
+  background: transparent !important;
+  /* z-index: 2 lifts this above the brand-intro-overlay (z-index:1) so content is visible */
+  z-index: 2;
   display: flex;
   flex-direction: column;
   justify-content: center;
+  border-top: 1px solid rgba(202, 161, 90, 0.18); /* Gold separator from featured collections */
 }
 
-/* Dark + gradient overlay — sits on top of the fixed image */
+/* No overlay pseudo-elements needed — background is inherited from parent */
 .hs-brand::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  /* Horizontal fade: almost opaque on left (content side), transparent on right (image side) */
-  background: linear-gradient(
-    90deg,
-    rgba(6, 5, 3, 0.97) 0%,
-    rgba(8, 6, 4, 0.92) 35%,
-    rgba(8, 6, 4, 0.72) 58%,
-    rgba(8, 6, 4, 0.22) 100%
-  );
-  pointer-events: none;
+  display: none;
 }
 
-/* Vignette overlay — top/bottom fade + radial depth */
 .hs-brand::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  background:
-    radial-gradient(ellipse at 40% 50%, transparent 25%, rgba(3, 2, 2, 0.55) 100%),
-    linear-gradient(to bottom,
-      rgba(6, 5, 3, 0.6) 0%,
-      transparent 18%,
-      transparent 80%,
-      rgba(6, 5, 3, 0.75) 100%
-    );
-  /* Also simulate the desaturate filter on the background */
-  backdrop-filter: saturate(0.55) brightness(0.5);
-  -webkit-backdrop-filter: saturate(0.55) brightness(0.5);
-  pointer-events: none;
+  display: none;
 }
 
-/* iOS / mobile fallback: background-attachment: fixed is broken on iOS Safari */
-@supports (-webkit-touch-callout: none) {
-  .hs-brand {
-    background-attachment: scroll;
-    background-size: cover;
-  }
-}
+/* iOS / mobile: no background image, so no fallback needed — gradient renders natively */
 
 /* ——— INNER LAYOUT GRID ——— */
 .hs-brand__inner {
@@ -2901,7 +2914,7 @@
 /* --- Signature gallery --- */
 .home-gallery {
   position: relative;
-  background: #000000;
+  background: linear-gradient(135deg, #2D0D0D 0%, #1F0A0A 35%, #160808 65%, #0F0808 100%);
   height: 180vh; /* Determines scrolling timeline length */
   width: 100%;
   overflow: visible; /* Crucial for position: sticky to work */
@@ -2940,7 +2953,7 @@
   justify-content: center;
   align-items: center;
   overflow: hidden;
-  background: #000000;
+  background: linear-gradient(135deg, #2D0D0D 0%, #1F0A0A 35%, #160808 65%, #0F0808 100%);
   width: 100%;
   box-sizing: border-box;
 }
@@ -3065,7 +3078,7 @@
   border-radius: 28px;
   border: 1px solid rgba(176, 168, 154, 0.25);
   overflow: hidden;
-  background: #080808;
+  background: #181818;
   margin-block: var(--space-lg) var(--space-md);
   box-shadow: 0 30px 80px rgba(0, 0, 0, 0.95), 0 0 40px rgba(176, 168, 154, 0.08);
   z-index: 3;
@@ -3695,7 +3708,7 @@
 
 .home-testimonials {
   position: relative;
-  background: linear-gradient(160deg, #1e1a1a 0%, #2a1015 40%, #1c1818 100%);
+  background: linear-gradient(135deg, #2D0D0D 0%, #1F0A0A 35%, #160808 65%, #0F0808 100%);
   overflow: hidden;
   padding-block: 110px 100px;
 }
@@ -5298,4 +5311,44 @@
 
 .btn--magnetic:hover::after {
   transform: translateX(100%);
+}
+
+/* Homepage Navigation Header Overrides for Light Rose-Beige to Ivory Theme Hero */
+.page-home .site-header {
+  background: linear-gradient(105deg, rgba(212, 184, 168, 0.97) 0%, rgba(234, 217, 205, 0.97) 40%, rgba(245, 237, 228, 0.97) 70%, rgba(250, 247, 242, 0.97) 100%) !important;
+  border-bottom: 1px solid rgba(155, 27, 42, 0.12) !important; /* Burgundy bottom divider */
+}
+
+.page-home .site-header.is-scrolled,
+.page-home .site-header.is-solid {
+  background: linear-gradient(105deg, rgba(212, 184, 168, 0.98) 0%, rgba(234, 217, 205, 0.98) 40%, rgba(245, 237, 228, 0.98) 70%, rgba(250, 247, 242, 0.98) 100%) !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+  border-bottom: 1px solid rgba(155, 27, 42, 0.18) !important;
+  box-shadow: 0 4px 30px rgba(155, 27, 42, 0.05) !important;
+}
+
+.page-home .site-header .nav-link {
+  color: rgba(42, 42, 42, 0.85) !important; /* Dark charcoal text */
+}
+
+.page-home .site-header .nav-link:hover,
+.page-home .site-header .nav-link.is-active {
+  color: var(--color-primary) !important; /* Hover to brand primary burgundy */
+}
+
+.page-home .site-header .nav-link::after {
+  background-color: var(--color-primary) !important; /* Underline indicator to brand burgundy */
+}
+
+.page-home .site-header .logo-img {
+  filter: none !important; /* Show original brand logo instead of inverted white logo */
+}
+
+.page-home .site-header .nav-toggle-bar {
+  background-color: var(--color-dark) !important; /* Mobile hamburger toggle bars to dark charcoal */
+}
+
+.page-home .site-header .nav-toggle:hover .nav-toggle-bar {
+  background-color: var(--color-primary) !important;
 }

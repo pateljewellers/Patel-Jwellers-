@@ -56,10 +56,10 @@
     </header>
     <div class="collections-grid stagger-group" id="collections-grid">
       <% home.collections.forEach(function(col, i) { %>
-        <a href="<%= col.href %>" class="collection-card reveal-tossed" data-col-index="<%= i %>" style="--stagger-index: <%= i %>;">
+        <a href="<%= col.href %>" class="collection-card" data-col-index="<%= i %>" style="--stagger-index: <%= i %>;">
           <!-- Shimmer sweep layer -->
           <div class="card-shimmer-sweep" aria-hidden="true"></div>
-          <div class="collection-card__img-wrap">
+          <div class="collection-card__img-wrap img-fly">
             <img src="<%= col.image %>" alt="<%= col.title %> collection" loading="lazy" width="400" height="500">
             <div class="collection-card__overlay"></div>
             <!-- Arch glow ring (draws on hover) -->
