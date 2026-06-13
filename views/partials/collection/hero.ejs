@@ -38,32 +38,96 @@
 
 
   <div class="container collection-hero__wrapper">
-    <div class="collection-hero-grid">
 
-      <!-- Left: Editorial Brand Story -->
-      <div class="collection-hero-editorial">
-        <span class="editorial-eyebrow">— THE 2026 SIGNATURE LINE</span>
-        <h1 class="editorial-title"><span class="title-light">Elegance</span><br><span class="title-gold">Redefined</span></h1>
-        <div class="editorial-title-divider"></div>
-        <p class="editorial-desc">A poetic synthesis of BIS-hallmarked gold, hand-cut diamonds, and heritage craftsmanship shaped for modern luxury.</p>
-        <div class="editorial-cta">
-          <div class="editorial-cta__icon" aria-hidden="true"></div>
-          <span class="editorial-cta__text">Click the Piece to Reveal</span>
+    <!-- ✦ IMAGE GALLERY HERO — Elegance Redefined ✦ -->
+    <div class="hero-gallery-spread">
+
+      <!-- Floating Editorial Header -->
+      <header class="hero-gallery-header">
+        <div class="gallery-header-left">
+          <span class="gallery-eyebrow">— THE 2026 SIGNATURE LINE</span>
+          <h1 class="gallery-title">
+            <span class="title-light">Elegance</span> <span class="title-gold">Redefined</span>
+          </h1>
         </div>
-      </div>
+        <div class="gallery-header-right">
+          <p class="gallery-header-desc">BIS-hallmarked gold &nbsp;·&nbsp; Hand-cut diamonds &nbsp;·&nbsp; Heritage craftsmanship</p>
+        </div>
+      </header>
 
-      <!-- Right: Centered Interactive Floating 3D Image Asset -->
-      <div class="collection-hero-asset">
-        <div class="asset-3d-zoom-container" id="collection-zoom-container">
-          <div class="asset-3d-wrapper" id="collection-interactive-3d">
-            <div class="portal-ring-aura" aria-hidden="true"></div>
-            <img src="/images/collections/3d-sanctuary.png?v=8.0" alt="3D Sanctuary Jewel" class="asset-3d-img">
+      <!-- 3-Column Image Mosaic Grid -->
+      <div class="hero-gallery-grid" id="collection-zoom-container">
+
+        <!-- Column A: Full-height portrait panel -->
+        <div class="gallery-col gallery-col--a">
+          <div class="gallery-frame">
+            <img src="/images/collections/gallery-a.png" alt="The Crown Ascent" class="gallery-img">
+            <div class="gallery-frame-overlay">
+              <span class="gallery-angle-tag">01</span>
+              <span class="gallery-img-label">The Crown Ascent</span>
+            </div>
+            <div class="gallery-corner gc-tl"></div>
+            <div class="gallery-corner gc-br"></div>
           </div>
         </div>
-        <div class="asset-3d-shadow" aria-hidden="true"></div>
-      </div>
 
-    </div>
+        <!-- Column B: Two stacked panels -->
+        <div class="gallery-col gallery-col--b">
+          <div class="gallery-frame">
+            <img src="/images/collections/gallery-c-bot.jpg" alt="Chamber Depth" class="gallery-img">
+            <div class="gallery-frame-overlay">
+              <span class="gallery-angle-tag">02</span>
+              <span class="gallery-img-label">Chamber Depth</span>
+            </div>
+            <div class="gallery-corner gc-tl"></div>
+            <div class="gallery-corner gc-br"></div>
+          </div>
+          <div class="gallery-frame">
+            <img src="/images/collections/gallery-b-bot.png" alt="Goldsmith Polish" class="gallery-img">
+            <div class="gallery-frame-overlay">
+              <span class="gallery-angle-tag">03</span>
+              <span class="gallery-img-label">Goldsmith Polish</span>
+            </div>
+            <div class="gallery-corner gc-tl"></div>
+            <div class="gallery-corner gc-br"></div>
+          </div>
+        </div>
+
+        <div class="gallery-col gallery-col--c">
+          <!-- Portal trigger — single large 4th image -->
+          <div class="gallery-frame gallery-frame--portal" id="collection-interactive-3d">
+            <img src="/images/collections/gallery-c-top.png" alt="Signature Piece" class="gallery-img">
+            <div class="gallery-frame-overlay gallery-frame-overlay--always">
+              <span class="gallery-angle-tag">04</span>
+              <span class="gallery-img-label">Signature Detail</span>
+            </div>
+            <!-- Reveal badge -->
+            <div class="gallery-portal-badge">
+              <div class="portal-badge-ring"></div>
+              <svg viewBox="0 0 24 24" class="portal-badge-icon" aria-hidden="true"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+              <span class="portal-badge-label">UNVEIL THE COLLECTION</span>
+            </div>
+            <div class="gallery-corner gc-tl"></div>
+            <div class="gallery-corner gc-br"></div>
+          </div>
+        </div>
+
+      </div><!-- /.hero-gallery-grid -->
+
+
+      <!-- Editorial Footer Bar -->
+      <footer class="hero-gallery-footer">
+        <p class="gallery-footer-desc">A poetic synthesis of BIS-hallmarked gold, hand-cut diamonds, and heritage craftsmanship shaped for modern luxury.</p>
+        <div class="gallery-footer-dots" aria-hidden="true">
+          <span class="gallery-footer-dot active"></span>
+          <span class="gallery-footer-dot"></span>
+          <span class="gallery-footer-dot"></span>
+          <span class="gallery-footer-dot"></span>
+        </div>
+      </footer>
+
+    </div><!-- /.hero-gallery-spread -->
+
   </div>
 
   <!-- Blank page overlay thrown from afar -->
@@ -173,7 +237,7 @@
             <!-- B -->
             <a href="/collection/earrings" class="category-dir-card size-double-height reveal-up">
               <div class="category-dir-media">
-                <img src="/images/collections/B.jpg" alt="Antique Jhumkas" loading="lazy">
+                <img src="/images/collections/savi-collection.jpg" alt="Savi's Collection" loading="lazy">
                 <div class="category-dir-spotlight"></div>
               </div>
               <div class="category-dir-glass">
@@ -187,7 +251,7 @@
             <!-- C -->
             <a href="/collection/temple-bangles" class="category-dir-card size-double-height reveal-up">
               <div class="category-dir-media">
-                <img src="/images/collections/C.jpg" alt="Pratha Gold Bangles" loading="lazy">
+                <img src="/images/collections/pratha-collection.jpg" alt="Pratha Gold Bangles" loading="lazy">
                 <div class="category-dir-spotlight"></div>
               </div>
               <div class="category-dir-glass">

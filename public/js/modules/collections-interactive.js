@@ -711,7 +711,10 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // 2. 3D INTERACTIVE TILT FOR CENTERED IMAGE (Wrapper level)
-  if (assetWrapper) {
+  // Disabled in gallery mode — gallery portal frame is a still image, not a 3D asset.
+  const isGalleryMode = assetWrapper && assetWrapper.classList.contains('gallery-frame--portal');
+
+  if (assetWrapper && !isGalleryMode) {
     const handleHeroMouseMove = (e) => {
       const rect = heroSection.getBoundingClientRect();
       const x = e.clientX - rect.left;
@@ -819,9 +822,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let isTransitioning = false;
 
-    // Trigger Click Portal opening transition
-    portalTrigger.addEventListener('click', (e) => {
-      e.preventDefault();
+    // Helper function to trigger opening the lookbook portal overlay
+    const openPortalLookbook = (clientX, clientY) => {
       if (isTransitioning) return;
       isTransitioning = true;
 
@@ -829,10 +831,17 @@ document.addEventListener('DOMContentLoaded', () => {
       document.body.classList.remove('portal-hover-active');
       customCursor.classList.remove('active');
 
-      // Click location on the canvas
-      const rect = heroSection.getBoundingClientRect();
-      const clickX = e.clientX - rect.left;
-      const clickY = e.clientY - rect.top;
+      // Click location or default to center of heroSection
+      let clickX, clickY;
+      if (clientX !== undefined && clientY !== undefined) {
+        const rect = heroSection.getBoundingClientRect();
+        clickX = clientX - rect.left;
+        clickY = clientY - rect.top;
+      } else {
+        const rect = heroSection.getBoundingClientRect();
+        clickX = rect.width / 2;
+        clickY = rect.height / 2;
+      }
 
       // Spawn shockwave & sparks on the canvas (if window function is ready)
       if (typeof window.triggerHeroClickPortal === 'function') {
@@ -902,7 +911,35 @@ document.addEventListener('DOMContentLoaded', () => {
           force3D: false // Prevent text blurry rendering
         });
       }
+    };
+
+    // Trigger Click Portal opening transition
+    portalTrigger.addEventListener('click', (e) => {
+      e.preventDefault();
+      openPortalLookbook(e.clientX, e.clientY);
     });
+
+    // Automatically enter the Sanctuary Lookbook on scroll down / wheel down (when not already transitioning/active)
+    window.addEventListener('wheel', (e) => {
+      if (!isTransitioning && e.deltaY > 0) {
+        openPortalLookbook();
+      }
+    }, { passive: true });
+
+    // Touch gesture swipe-up to open the lookbook (Mobile)
+    let heroTouchStartY = 0;
+    heroSection.addEventListener('touchstart', (e) => {
+      heroTouchStartY = e.touches[0].clientY;
+    }, { passive: true });
+
+    heroSection.addEventListener('touchmove', (e) => {
+      if (isTransitioning) return;
+      const touchY = e.touches[0].clientY;
+      const diffY = heroTouchStartY - touchY; // positive means swipe up / scroll down
+      if (diffY > 60) {
+        openPortalLookbook();
+      }
+    }, { passive: true });
 
     // Scroll-to-Exit and Swipe-to-Exit Gesture Transition Logic
     const closePortalLookbook = () => {

@@ -9,7 +9,11 @@
 
         <!-- Unveiled Background Image -->
         <div class="heritage-bg-container">
-          <img src="/images/gallery/model-11.jpg" alt="Bridal Heritage Showpiece" class="heritage-bg-image">
+          <% if (typeof categorySlug !== 'undefined' && categorySlug === 'earrings') { %>
+            <img src="/images/gallery/savi-hero.png" alt="Savi's Collection Showpiece" class="heritage-bg-image">
+          <% } else { %>
+            <img src="/images/gallery/model-11.jpg" alt="Bridal Heritage Showpiece" class="heritage-bg-image">
+          <% } %>
         </div>
 
         <!-- Pinned Curtain Overlay System -->
