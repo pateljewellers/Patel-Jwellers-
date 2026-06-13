@@ -9,6 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const canvas = document.getElementById('hero-interactive-canvas');
   const portal = document.getElementById('hero-glass-portal');
   const portalShine = document.getElementById('glass-portal-shine');
+  const portalImage = portal ? portal.querySelector('.glass-portal-image') : null;
   
   if (!hero || !canvas) return;
 
@@ -40,6 +41,12 @@ document.addEventListener('DOMContentLoaded', () => {
   let mouse = { x: width / 2, y: height / 2, targetX: width / 2, targetY: height / 2, active: false, velocity: 0 };
   let lastMouse = { x: width / 2, y: height / 2 };
   let time = 0;
+
+  // Portal image interaction state
+  let isPortalHovered = false;
+  let portalZoom = 1.0;
+  let portalTranslateZ = 20;
+  let portalParallaxMultiplier = 0.25;
 
   // LERP for smooth animations
   const lerp = (start, end, amt) => (1 - amt) * start + amt * end;
@@ -248,12 +255,31 @@ document.addEventListener('DOMContentLoaded', () => {
     const targetTiltX = -(dy / height) * maxTilt * 2;
     const targetTiltY = (dx / width) * maxTilt * 2;
 
-    // Smooth LERP transition
+    // Smooth LERP transition for portal container tilt
     portal.style.transform = `rotateX(${targetTiltX}deg) rotateY(${targetTiltY}deg)`;
 
     // Pass coordinates to CSS variables for hover spot overlay inside portal
     portal.style.setProperty('--mouse-x', `${((dx + rect.width / 2) / rect.width) * 100}%`);
     portal.style.setProperty('--mouse-y', `${((dy + rect.height / 2) / rect.height) * 100}%`);
+
+    // Inner Image Parallax and Zoom Logic
+    if (portalImage) {
+      const targetZoom = isPortalHovered ? 1.12 : 1.0;
+      const targetTranslateZ = isPortalHovered ? 38 : 20; // Pop forward on hover
+      const targetParallax = isPortalHovered ? 1.0 : 0.25; // Stronger parallax when hovered
+
+      portalZoom = lerp(portalZoom, targetZoom, 0.08);
+      portalTranslateZ = lerp(portalTranslateZ, targetTranslateZ, 0.08);
+      portalParallaxMultiplier = lerp(portalParallaxMultiplier, targetParallax, 0.08);
+
+      // Shift image in the opposite direction of the cursor for a depth parallax look (max 22px shift)
+      const maxImgOffset = 22;
+      const imgX = -(dx / rect.width) * maxImgOffset * portalParallaxMultiplier;
+      const imgY = -(dy / rect.height) * maxImgOffset * portalParallaxMultiplier;
+
+      // Apply 3D translate and scale
+      portalImage.style.transform = `translate3d(${imgX}px, ${imgY}px, ${portalTranslateZ}px) scale(${portalZoom})`;
+    }
   }
 
   // 6. Primary Animation Loop (High-Performance RAF)
@@ -372,6 +398,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // Trigger reflection on portal mouseenter
   if (portal) {
     portal.addEventListener('mouseenter', () => {
+      isPortalHovered = true;
       if (portalShine) {
         portalShine.style.transition = 'none';
         portalShine.style.transform = 'translateZ(40px) translateX(-100%)';
@@ -381,6 +408,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
     portal.addEventListener('mouseleave', () => {
+      isPortalHovered = false;
       if (portal) {
         portal.style.transform = 'rotateX(0deg) rotateY(0deg)';
       }
