@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  const heroContent = document.querySelector('.home-hero__content');
+  const heroContent = document.querySelector('.hero-center-wrapper');
   if (heroContent) {
     setTimeout(() => {
       heroContent.querySelectorAll('.reveal-up, .reveal-blur').forEach((el) => {

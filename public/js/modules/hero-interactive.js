@@ -1,40 +1,58 @@
 /**
  * Patel Jewellers Mehsanawala
  * Immersive Interactive Hero Engine (Light Luxury Theme)
- * Features 3D glass portal tilting, dynamic light refraction prism flares, gold drafting blueprint geometry, and kinetic letters.
+ * Features:
+ *  - 1. Magnetic Filigree Threads: real-time vector path bending with spring physics.
+ *  - 2. Celestial Mandala Chamber: 3D perspective tilting, rotating rings, and spotlight rays.
+ *  - 3. Volumetric Prism Flares and ambient gold stardust trails.
+ *  - 4. Spring-kinetic letter physics.
  */
 
 document.addEventListener('DOMContentLoaded', () => {
   const hero = document.getElementById('home-hero');
+  const frame = document.getElementById('hero-sticky-frame') || hero;
   const canvas = document.getElementById('hero-interactive-canvas');
-  const portal = document.getElementById('hero-glass-portal');
-  const portalShine = document.getElementById('glass-portal-shine');
-  const portalImage = portal ? portal.querySelector('.glass-portal-image') : null;
+  const svgContainer = document.getElementById('filigree-threads-svg');
+  const bgImage = document.getElementById('hero-fullscreen-bg');
+  
+  const gridNodes = [];
+  const gridSegments = [];
+  const rows = 5;
+  const cols = 8;
   
   if (!hero || !canvas) return;
+
+  // Track window scroll coordinates
+  let scrollY = window.scrollY;
+  window.addEventListener('scroll', () => {
+    scrollY = window.scrollY;
+  }, { passive: true });
 
   const ctx = canvas.getContext('2d');
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  // Configuration (Optimized for Light Gold/Ivory Theme)
+  // LERP helper
+  const lerp = (start, end, amt) => (1 - amt) * start + amt * end;
+
+  // Configuration (Light Luxury Gold Theme)
   const CONFIG = {
     particleCount: window.innerWidth < 768 ? 20 : 45,
     colors: {
-      gold: 'rgba(212, 175, 55, 0.45)',         // Champagne gold stardust
-      goldBright: 'rgba(185, 142, 45, 0.85)',   // Rich metallic gold
-      sparkle: 'rgba(255, 255, 255, 0.95)',     // White diamond spark
+      gold: 'rgba(212, 175, 55, 0.65)',         // Saturated champagne gold stardust
+      goldBright: 'rgba(185, 142, 45, 0.95)',   // Saturated metallic gold
+      sparkle: 'rgba(225, 190, 110, 0.95)',     // Rich gold-amber diamond spark
       refraction: [
-        'rgba(255, 235, 180, 0.08)',
         'rgba(212, 175, 55, 0.12)',
-        'rgba(255, 255, 255, 0.22)',
-        'rgba(180, 220, 255, 0.08)'
+        'rgba(185, 142, 45, 0.15)',
+        'rgba(225, 190, 110, 0.18)',
+        'rgba(202, 161, 90, 0.12)'
       ]
     }
   };
 
   // State Management
-  let width = canvas.width = hero.offsetWidth;
-  let height = canvas.height = hero.offsetHeight;
+  let width = canvas.width = frame.offsetWidth;
+  let height = canvas.height = frame.offsetHeight;
   let dpr = window.devicePixelRatio || 1;
 
   let sparkles = [];
@@ -42,19 +60,10 @@ document.addEventListener('DOMContentLoaded', () => {
   let lastMouse = { x: width / 2, y: height / 2 };
   let time = 0;
 
-  // Portal image interaction state
-  let isPortalHovered = false;
-  let portalZoom = 1.0;
-  let portalTranslateZ = 20;
-  let portalParallaxMultiplier = 0.25;
-
-  // LERP for smooth animations
-  const lerp = (start, end, amt) => (1 - amt) * start + amt * end;
-
-  // 1. High DPI Canvas Resize Handler
+  // High DPI Canvas Resize Handler
   function resize() {
-    width = hero.offsetWidth;
-    height = hero.offsetHeight;
+    width = frame.offsetWidth;
+    height = frame.offsetHeight;
     dpr = window.devicePixelRatio || 1;
 
     canvas.width = width * dpr;
@@ -64,7 +73,7 @@ document.addEventListener('DOMContentLoaded', () => {
     ctx.scale(dpr, dpr);
   }
 
-  // 2. Class representing clicking sparkle burst particles
+  // Sparkle Burst Particles class
   class Sparkle {
     constructor(x, y, colorType, isTrail = false) {
       this.x = x;
@@ -98,7 +107,6 @@ document.addEventListener('DOMContentLoaded', () => {
       ctx.beginPath();
       
       const s = this.size;
-      // Draw as diamond spark star
       ctx.moveTo(this.x, this.y - s);
       ctx.lineTo(this.x + s * 0.4, this.y - s * 0.4);
       ctx.lineTo(this.x + s, this.y);
@@ -117,22 +125,17 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // 3. Draw Dynamic Prism Light Flares (Volumetric Beams)
+  // Draw volumetric light flares
   function drawPrismFlares() {
     if (reducedMotion) return;
 
     ctx.save();
-    
-    // Calculate light sweep angle based on mouse X position
-    const sweepFactor = (mouse.x / width) * 0.2 - 0.1; // -10% to +10% rotation
+    const sweepFactor = (mouse.x / width) * 0.2 - 0.1;
     const timeSweep = Math.sin(time * 0.004) * 0.08;
-    const angle = Math.PI / 4 + sweepFactor + timeSweep; // 45 degrees base angle
-    
-    // Source point: Top-left corner
+    const angle = Math.PI / 4 + sweepFactor + timeSweep;
     const startX = -100;
     const startY = -100;
     
-    // Draw 3 layers of refractive colored flares
     const flareWidths = [180, 100, 320];
     const offsets = [-0.05, 0, 0.05];
     
@@ -142,8 +145,6 @@ document.addEventListener('DOMContentLoaded', () => {
       const endY = startY + Math.sin(currentAngle) * (height + 200);
       
       const grad = ctx.createLinearGradient(startX, startY, endX, endY);
-      
-      // Prism gradient colors
       grad.addColorStop(0, 'rgba(255,255,255,0)');
       grad.addColorStop(0.3, CONFIG.colors.refraction[i % 4]);
       grad.addColorStop(0.5, 'rgba(255,255,255,0.18)');
@@ -152,11 +153,8 @@ document.addEventListener('DOMContentLoaded', () => {
       
       ctx.beginPath();
       ctx.moveTo(startX, startY);
-      
-      // Draw a volumetric wedge shape
       const w = flareWidths[i];
       const perpAngle = currentAngle + Math.PI / 2;
-      
       ctx.lineTo(endX - Math.cos(perpAngle) * w, endY - Math.sin(perpAngle) * w);
       ctx.lineTo(endX + Math.cos(perpAngle) * w, endY + Math.sin(perpAngle) * w);
       ctx.closePath();
@@ -164,44 +162,41 @@ document.addEventListener('DOMContentLoaded', () => {
       ctx.fillStyle = grad;
       ctx.fill();
     }
-    
     ctx.restore();
   }
 
-  // 4. Draw Jewelry Drafting Blueprint Geometry (Compass & Ticks)
+  // Draw blueprint guidelines
   function drawBlueprintGeometries() {
     if (reducedMotion) return;
 
     ctx.save();
-    ctx.strokeStyle = 'rgba(212, 175, 55, 0.18)';
+    ctx.strokeStyle = 'rgba(202, 161, 90, 0.18)';
     ctx.lineWidth = 0.6;
     
-    // Draw coordinates guide lines passing through the cursor
     if (mouse.active) {
-      // Horizontal guideline
+      // Horizontal
       ctx.beginPath();
       ctx.moveTo(0, mouse.y);
       ctx.lineTo(width, mouse.y);
       ctx.stroke();
 
-      // Vertical guideline
+      // Vertical
       ctx.beginPath();
       ctx.moveTo(mouse.x, 0);
       ctx.lineTo(mouse.x, height);
       ctx.stroke();
 
-      // Draw active compass circles around cursor
+      // Compass Ring
       ctx.beginPath();
       ctx.arc(mouse.x, mouse.y, 45, 0, Math.PI * 2);
       ctx.stroke();
 
       ctx.beginPath();
       ctx.setLineDash([4, 6]);
-      ctx.arc(mouse.x, mouse.y, 90, 0, Math.PI * 2);
+      ctx.arc(mouse.x, mouse.y, 80, 0, Math.PI * 2);
       ctx.stroke();
       ctx.setLineDash([]);
       
-      // Ticking marks on the compass ring
       ctx.beginPath();
       for (let a = 0; a < Math.PI * 2; a += Math.PI / 4) {
         ctx.moveTo(mouse.x + Math.cos(a) * 45, mouse.y + Math.sin(a) * 45);
@@ -209,98 +204,219 @@ document.addEventListener('DOMContentLoaded', () => {
       }
       ctx.stroke();
     }
-
-    // Draw beautiful slowly rotating gold blueprint mandala in the background
-    const mandalaX = width * 0.78;
-    const mandalaY = height * 0.5;
-    ctx.save();
-    ctx.translate(mandalaX, mandalaY);
-    ctx.rotate(time * 0.001);
-
-    // Mandala concentric wireframes
-    ctx.beginPath();
-    ctx.arc(0, 0, 160, 0, Math.PI * 2);
-    ctx.stroke();
-
-    ctx.beginPath();
-    ctx.setLineDash([3, 5]);
-    ctx.arc(0, 0, 240, 0, Math.PI * 2);
-    ctx.stroke();
-    ctx.setLineDash([]);
-
-    // Mandala geometry stars/rotations
-    ctx.beginPath();
-    for (let i = 0; i < 8; i++) {
-      ctx.rotate(Math.PI / 4);
-      ctx.strokeRect(-60, -60, 120, 120);
-    }
-    ctx.restore();
     ctx.restore();
   }
 
-  // 5. Smoothly tilt the 3D Glass Portal on mousemove
-  function update3DGlassPortal() {
-    if (!portal || reducedMotion) return;
+  // -------------------------------------------------------------------------
+  // 1. MAGNETIC GEOMETRIC LATTICE ENGINE
+  // -------------------------------------------------------------------------
+  let shockwave = { active: false, radius: 0, x: 0, y: 0 };
 
-    const rect = portal.getBoundingClientRect();
-    const portalCenterX = rect.left + rect.width / 2;
-    const portalCenterY = rect.top + rect.height / 2;
+  function initFiligreeThreads() {
+    if (!svgContainer) return;
+    svgContainer.innerHTML = '';
+    
+    gridNodes.length = 0;
+    gridSegments.length = 0;
 
-    // Calculate displacement relative to portal center
-    const dx = mouse.x - (portalCenterX - hero.getBoundingClientRect().left);
-    const dy = mouse.y - (portalCenterY - hero.getBoundingClientRect().top);
+    // 1. Initialize nodes grid distributed across the full viewport
+    for (let r = 0; r < rows; r++) {
+      for (let c = 0; c < cols; c++) {
+        const x = (width / (cols - 1)) * c;
+        const y = (height / (rows - 1)) * r;
 
-    // Limit tilt axes to max 12 degrees
-    const maxTilt = 12;
-    const targetTiltX = -(dy / height) * maxTilt * 2;
-    const targetTiltY = (dx / width) * maxTilt * 2;
+        gridNodes.push({
+          x: x,
+          y: y,
+          anchorX: x,
+          anchorY: y,
+          vx: 0,
+          vy: 0,
+          row: r,
+          col: c
+        });
+      }
+    }
 
-    // Smooth LERP transition for portal container tilt
-    portal.style.transform = `rotateX(${targetTiltX}deg) rotateY(${targetTiltY}deg)`;
+    // Helper to get node by coordinates
+    const getNode = (r, c) => gridNodes[r * cols + c];
 
-    // Pass coordinates to CSS variables for hover spot overlay inside portal
-    portal.style.setProperty('--mouse-x', `${((dx + rect.width / 2) / rect.width) * 100}%`);
-    portal.style.setProperty('--mouse-y', `${((dy + rect.height / 2) / rect.height) * 100}%`);
+    // 2. Build segments to draw horizontal, vertical, and diamond diagonals
+    const segments = [];
 
-    // Inner Image Parallax and Zoom Logic
-    if (portalImage) {
-      const targetZoom = isPortalHovered ? 1.12 : 1.0;
-      const targetTranslateZ = isPortalHovered ? 38 : 20; // Pop forward on hover
-      const targetParallax = isPortalHovered ? 1.0 : 0.25; // Stronger parallax when hovered
+    // Horizontals
+    for (let r = 0; r < rows; r++) {
+      for (let c = 0; c < cols - 1; c++) {
+        segments.push({ nA: getNode(r, c), nB: getNode(r, c + 1) });
+      }
+    }
 
-      portalZoom = lerp(portalZoom, targetZoom, 0.08);
-      portalTranslateZ = lerp(portalTranslateZ, targetTranslateZ, 0.08);
-      portalParallaxMultiplier = lerp(portalParallaxMultiplier, targetParallax, 0.08);
+    // Verticals
+    for (let r = 0; r < rows - 1; r++) {
+      for (let c = 0; c < cols; c++) {
+        segments.push({ nA: getNode(r, c), nB: getNode(r + 1, c) });
+      }
+    }
 
-      // Shift image in the opposite direction of the cursor for a depth parallax look (max 22px shift)
-      const maxImgOffset = 22;
-      const imgX = -(dx / rect.width) * maxImgOffset * portalParallaxMultiplier;
-      const imgY = -(dy / rect.height) * maxImgOffset * portalParallaxMultiplier;
+    // Diagonals (Top-Left to Bottom-Right)
+    for (let r = 0; r < rows - 1; r++) {
+      for (let c = 0; c < cols - 1; c++) {
+        segments.push({ nA: getNode(r, c), nB: getNode(r + 1, c + 1) });
+      }
+    }
 
-      // Apply 3D translate and scale
-      portalImage.style.transform = `translate3d(${imgX}px, ${imgY}px, ${portalTranslateZ}px) scale(${portalZoom})`;
+    // Diagonals (Top-Right to Bottom-Left)
+    for (let r = 0; r < rows - 1; r++) {
+      for (let c = 0; c < cols - 1; c++) {
+        segments.push({ nA: getNode(r, c + 1), nB: getNode(r + 1, c) });
+      }
+    }
+
+    // Create SVG path elements for each facet segment
+    segments.forEach((seg) => {
+      const pathEl = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+      pathEl.setAttribute('class', 'filigree-thread');
+      svgContainer.appendChild(pathEl);
+      seg.path = pathEl;
+      gridSegments.push(seg);
+    });
+  }
+
+  function updateFiligreeThreads() {
+    // Re-anchor nodes proportionally if screen resized
+    gridNodes.forEach((node) => {
+      node.anchorX = (width / (cols - 1)) * node.col;
+      node.anchorY = (height / (rows - 1)) * node.row;
+    });
+
+    const attractionRadius = 260;
+
+    // Apply interactive physics vectors to lattice nodes
+    gridNodes.forEach((node) => {
+      let targetX = node.anchorX;
+      let targetY = node.anchorY;
+
+      // Snapping properties: lock borders, let inner nodes flex smoothly
+      const isEdge = (node.row === 0 || node.row === rows - 1 || node.col === 0 || node.col === cols - 1);
+      const stiffness = isEdge ? 0.18 : 0.045;
+      const damping = isEdge ? 0.65 : 0.82;
+
+      // Mouse warp warp attraction
+      if (mouse.active && !isEdge) {
+        const dx = mouse.x - node.x;
+        const dy = mouse.y - node.y;
+        const dist = Math.hypot(dx, dy);
+
+        if (dist < attractionRadius) {
+          const force = (1 - dist / attractionRadius) * 85;
+          targetX += (dx / dist) * force;
+          targetY += (dy / dist) * force;
+        }
+      }
+
+      // Click Shockwave ripple propagation
+      if (shockwave.active) {
+        const dx = node.x - shockwave.x;
+        const dy = node.y - shockwave.y;
+        const dist = Math.hypot(dx, dy);
+
+        const diff = Math.abs(dist - shockwave.radius);
+        if (diff < 90) {
+          const force = (1 - diff / 90) * 120 * Math.sin((diff / 90) * Math.PI);
+          const angle = Math.atan2(dy, dx);
+          // Flex edges slightly under shockwave, then snap back
+          targetX += Math.cos(angle) * force;
+          targetY += Math.sin(angle) * force;
+        }
+      }
+
+      // Spring kinetics equations
+      const forceX = (targetX - node.x) * stiffness;
+      const forceY = (targetY - node.y) * stiffness;
+
+      node.vx = (node.vx + forceX) * damping;
+      node.vy = (node.vy + forceY) * damping;
+
+      node.x += node.vx;
+      node.y += node.vy;
+    });
+
+    // Render segments connecting warped intersections
+    gridSegments.forEach((seg) => {
+      const d = `M ${seg.nA.x} ${seg.nA.y} L ${seg.nB.x} ${seg.nB.y}`;
+      seg.path.setAttribute('d', d);
+    });
+  }
+
+  // -------------------------------------------------------------------------
+  // 2. IMMERSIVE BACKDROP PARALLAX
+  // -------------------------------------------------------------------------
+  let clickPulse = 0;
+
+  function updateBackdropParallax() {
+    if (!bgImage) return;
+
+    // Decaying bounce scale
+    clickPulse = lerp(clickPulse, 0, 0.08);
+
+    const dx = mouse.x - width / 2;
+    const dy = mouse.y - height / 2;
+
+    const maxShift = 15; // 15px max depth shift
+    const shiftX = -(dx / (width / 2)) * maxShift;
+    const shiftY = -(dy / (height / 2)) * maxShift;
+
+    // Scroll zoom progress
+    const scrollProgress = Math.max(0, Math.min(1, scrollY / window.innerHeight));
+    const baseScale = 1.02;
+    const zoomScale = scrollProgress * 0.12;
+    const finalScale = baseScale + zoomScale + clickPulse;
+
+    if (!reducedMotion) {
+      bgImage.style.transform = `scale(${finalScale}) translate3d(${shiftX}px, ${shiftY}px, 0)`;
+      const blurAmount = scrollProgress * 12;
+      bgImage.style.filter = blurAmount > 0.1 ? `blur(${blurAmount}px)` : 'none';
+    } else {
+      bgImage.style.transform = `scale(${baseScale + clickPulse})`;
+      bgImage.style.filter = 'none';
     }
   }
 
-  // 6. Primary Animation Loop (High-Performance RAF)
+  // -------------------------------------------------------------------------
+  // 3. PRIMARY ANIMATION LOOP
+  // -------------------------------------------------------------------------
   function animate() {
     time++;
     ctx.clearRect(0, 0, width, height);
 
-    // 1. Draw volumetric light sweeps
+    // Draw sweeps & guide rulers
     drawPrismFlares();
-
-    // 2. Draw gold blueprints
     drawBlueprintGeometries();
 
-    // LERP mouse coordinates smoothly
-    mouse.x = lerp(mouse.x, mouse.targetX, 0.08);
-    mouse.y = lerp(mouse.y, mouse.targetY, 0.08);
+    // LERP mouse coordinates
+    mouse.x = lerp(mouse.x, mouse.targetX, 0.085);
+    mouse.y = lerp(mouse.y, mouse.targetY, 0.085);
 
-    // Set cursor variables on main hero element
+    // Set cursor variables on hero section
     hero.style.setProperty('--mouse-glow-x', `${(mouse.x / width) * 100}%`);
     hero.style.setProperty('--mouse-glow-y', `${(mouse.y / height) * 100}%`);
     hero.style.setProperty('--mouse-glow-opacity', mouse.active ? '1' : '0.45');
+
+    // Dynamic overlay gradient shifting on scroll
+    const overlay = document.querySelector('.hero-fullscreen-overlay');
+    if (overlay) {
+      const scrollProgress = Math.max(0, Math.min(1, scrollY / window.innerHeight));
+      const centerOpacity = 0.25 + scrollProgress * 0.45;
+      const edgeOpacity = 0.72 + scrollProgress * 0.18;
+      overlay.style.background = `radial-gradient(circle at 50% 50%, rgba(252, 250, 247, ${centerOpacity}) 0%, rgba(252, 250, 247, ${edgeOpacity}) 100%)`;
+    }
+
+    // Parallax scroll for the 3D artifacts wrapper
+    const introVisual = document.getElementById('intro-visual-3d');
+    if (introVisual && !reducedMotion) {
+      const scrollOffset = (scrollY - window.innerHeight) * -0.12;
+      introVisual.style.transform = `translate3d(0, ${scrollOffset}px, 0)`;
+    }
 
     // Calculate cursor velocity
     const dx = mouse.x - lastMouse.x;
@@ -309,12 +425,12 @@ document.addEventListener('DOMContentLoaded', () => {
     lastMouse.x = mouse.x;
     lastMouse.y = mouse.y;
 
-    // Spawn trail sparkles when mouse is moving
-    if (mouse.active && !reducedMotion && mouse.velocity > 1.5 && Math.random() > 0.4) {
+    // Spawn gold stardust sparkles on move
+    if (mouse.active && !reducedMotion && mouse.velocity > 1.5 && Math.random() > 0.45) {
       sparkles.push(new Sparkle(mouse.x, mouse.y, 'gold', true));
     }
 
-    // Update and draw sparkles
+    // Update & draw sparkles
     for (let i = sparkles.length - 1; i >= 0; i--) {
       const sp = sparkles[i];
       sp.update();
@@ -325,23 +441,34 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     }
 
-    // Tilt the 3D showcase glass panel
-    update3DGlassPortal();
+    // Update shockwave progression
+    if (shockwave.active) {
+      shockwave.radius += 22; // Ripple velocity
+      if (shockwave.radius > Math.hypot(width, height)) {
+        shockwave.active = false;
+      }
+    }
 
-    // Organic idle pathing when mouse leaves screen
+    // Update grid warp coordinates and image depth offsets
+    updateFiligreeThreads();
+    updateBackdropParallax();
+
+    // Organic hover circles movement when mouse is off-screen
     if (!mouse.active && !reducedMotion) {
-      const targetSpeed = 0.002;
-      mouse.targetX = width / 2 + Math.sin(time * targetSpeed) * (width * 0.22);
-      mouse.targetY = height / 2 + Math.cos(time * targetSpeed * 1.3) * (height * 0.18);
+      const targetSpeed = 0.0022;
+      mouse.targetX = width / 2 + Math.sin(time * targetSpeed) * (width * 0.2);
+      mouse.targetY = height / 2 + Math.cos(time * targetSpeed * 1.3) * (height * 0.15);
     }
 
     requestAnimationFrame(animate);
   }
 
-  // 7. Event Listeners for Interaction Tracking
+  // -------------------------------------------------------------------------
+  // 4. EVENT BINDINGS
+  // -------------------------------------------------------------------------
   hero.addEventListener('mousemove', (e) => {
     mouse.active = true;
-    const rect = hero.getBoundingClientRect();
+    const rect = frame.getBoundingClientRect();
     mouse.targetX = e.clientX - rect.left;
     mouse.targetY = e.clientY - rect.top;
   });
@@ -350,10 +477,10 @@ document.addEventListener('DOMContentLoaded', () => {
     mouse.active = false;
   });
 
-  // Touch tracking for mobile
+  // Touch tracking
   hero.addEventListener('touchstart', (e) => {
     mouse.active = true;
-    const rect = hero.getBoundingClientRect();
+    const rect = frame.getBoundingClientRect();
     if (e.touches.length > 0) {
       mouse.targetX = e.touches[0].clientX - rect.left;
       mouse.targetY = e.touches[0].clientY - rect.top;
@@ -361,7 +488,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }, { passive: true });
 
   hero.addEventListener('touchmove', (e) => {
-    const rect = hero.getBoundingClientRect();
+    const rect = frame.getBoundingClientRect();
     if (e.touches.length > 0) {
       mouse.targetX = e.touches[0].clientX - rect.left;
       mouse.targetY = e.touches[0].clientY - rect.top;
@@ -372,52 +499,30 @@ document.addEventListener('DOMContentLoaded', () => {
     setTimeout(() => { mouse.active = false; }, 1500);
   });
 
-  // Tap/Click sparkles burst
+  // Click burst sparkles
   hero.addEventListener('click', (e) => {
-    const rect = hero.getBoundingClientRect();
+    const rect = frame.getBoundingClientRect();
     const clickX = e.clientX - rect.left;
     const clickY = e.clientY - rect.top;
     
-    // Spawn sparkle burst
-    const count = window.innerWidth < 768 ? 12 : 24;
+    // Trigger physical ripple shockwave
+    shockwave.active = true;
+    shockwave.radius = 0;
+    shockwave.x = clickX;
+    shockwave.y = clickY;
+
+    // Trigger scale bounce using clickPulse variable
+    clickPulse = 0.05;
+    
+    const count = window.innerWidth < 768 ? 30 : 60;
     for (let i = 0; i < count; i++) {
       sparkles.push(new Sparkle(clickX, clickY));
     }
-
-    // Dynamic swipe reflection on the glass portal image
-    if (portalShine) {
-      portalShine.style.transition = 'none';
-      portalShine.style.transform = 'translateZ(40px) translateX(-100%)';
-      // Force reflow
-      void portalShine.offsetWidth;
-      portalShine.style.transition = 'transform 0.8s cubic-bezier(0.16, 1, 0.3, 1)';
-      portalShine.style.transform = 'translateZ(40px) translateX(100%)';
-    }
   });
 
-  // Trigger reflection on portal mouseenter
-  if (portal) {
-    portal.addEventListener('mouseenter', () => {
-      isPortalHovered = true;
-      if (portalShine) {
-        portalShine.style.transition = 'none';
-        portalShine.style.transform = 'translateZ(40px) translateX(-100%)';
-        void portalShine.offsetWidth;
-        portalShine.style.transition = 'transform 0.7s cubic-bezier(0.16, 1, 0.3, 1)';
-        portalShine.style.transform = 'translateZ(40px) translateX(100%)';
-      }
-    });
-    portal.addEventListener('mouseleave', () => {
-      isPortalHovered = false;
-      if (portal) {
-        portal.style.transform = 'rotateX(0deg) rotateY(0deg)';
-      }
-    });
-  }
-
-  // 8. Kinetic spring-physics letters implementation for Hero Title & Tagline
-  const heroTitle = document.querySelector('.home-hero__title');
-  const heroTagline = document.querySelector('.home-hero__tagline');
+  // Spring letter physics
+  const heroBrand = document.querySelector('.hero-brand-header');
+  const heroTitle = document.querySelector('.hero-center-title');
 
   function makeTextInteractive(element) {
     if (!element) return;
@@ -432,8 +537,13 @@ document.addEventListener('DOMContentLoaded', () => {
       
       [...word].forEach(char => {
         const span = document.createElement('span');
-        span.textContent = char;
-        span.className = 'interactive-char';
+        if (char === '\u00A0' || char === ' ') {
+          span.innerHTML = '&nbsp;';
+          span.className = 'interactive-space';
+        } else {
+          span.textContent = char;
+          span.className = 'interactive-char';
+        }
         
         let position = { x: 0, y: 0 };
         let velocity = { x: 0, y: 0 };
@@ -442,7 +552,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const damping = 0.75;
         let active = false;
 
-        // Spring physics animation loop for hovered characters
         const updateSpring = () => {
           if (!active && Math.abs(position.x) < 0.05 && Math.abs(position.y) < 0.05) {
             span.style.transform = '';
@@ -462,36 +571,35 @@ document.addEventListener('DOMContentLoaded', () => {
           requestAnimationFrame(updateSpring);
         };
 
-        span.addEventListener('mouseenter', () => {
-          active = true;
-          // Displace character away from cursor
-          target.x = (Math.random() - 0.5) * 16;
-          target.y = -Math.random() * 14 - 6;
-          updateSpring();
-        });
+        if (char !== '\u00A0' && char !== ' ') {
+          span.addEventListener('mouseenter', () => {
+            active = true;
+            target.x = (Math.random() - 0.5) * 16;
+            target.y = -Math.random() * 14 - 6;
+            updateSpring();
+          });
 
-        span.addEventListener('mouseleave', () => {
-          active = false;
-          target.x = 0;
-          target.y = 0;
-        });
+          span.addEventListener('mouseleave', () => {
+            active = false;
+            target.x = 0;
+            target.y = 0;
+          });
 
-        span.addEventListener('click', (e) => {
-          e.stopPropagation();
-          // Burst click sparkles at character
-          const rect = span.getBoundingClientRect();
-          const heroRect = hero.getBoundingClientRect();
-          const cx = rect.left - heroRect.left + rect.width / 2;
-          const cy = rect.top - heroRect.top + rect.height / 2;
-          
-          for (let i = 0; i < 12; i++) {
-            sparkles.push(new Sparkle(cx, cy));
-          }
-          
-          // Kinetic bounce displacement
-          velocity.y = -18;
-          updateSpring();
-        });
+          span.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const rect = span.getBoundingClientRect();
+            const heroRect = hero.getBoundingClientRect();
+            const cx = rect.left - heroRect.left + rect.width / 2;
+            const cy = rect.top - heroRect.top + rect.height / 2;
+            
+            for (let i = 0; i < 12; i++) {
+              sparkles.push(new Sparkle(cx, cy));
+            }
+            
+            velocity.y = -18;
+            updateSpring();
+          });
+        }
 
         wordSpan.appendChild(span);
       });
@@ -507,11 +615,16 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  makeTextInteractive(heroBrand);
   makeTextInteractive(heroTitle);
-  makeTextInteractive(heroTagline);
 
-  // Initializing
-  window.addEventListener('resize', resize);
+  // Initialize and run
+  window.addEventListener('resize', () => {
+    resize();
+    initFiligreeThreads();
+  });
+
   resize();
+  initFiligreeThreads();
   requestAnimationFrame(animate);
 });

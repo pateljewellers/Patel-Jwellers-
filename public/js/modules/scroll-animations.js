@@ -142,21 +142,12 @@ document.addEventListener('DOMContentLoaded', () => {
             heroBg.style.transform = `translate3d(0, ${scrollY * 0.15}px, 0)`;
           }
 
-          // Content layers vertical translations
-          const heroContent = heroEl.querySelector('.home-hero__content');
-          const canvasEl = heroEl.querySelector('.hero-interactive-canvas');
-          const ringsEl = heroEl.querySelector('.parallax-rings-container');
+          const heroContent = heroEl.querySelector('.hero-center-wrapper');
           const tagsEl = heroEl.querySelector('.hero-quicktags');
 
           if (heroContent) {
             heroContent.style.transform = `translate3d(0, ${scrollY * 0.25}px, 0)`;
             heroContent.style.opacity = Math.max(0, 1 - scrollY / 700);
-          }
-          if (canvasEl) {
-            canvasEl.style.transform = `translate3d(0, ${scrollY * 0.12}px, 0)`;
-          }
-          if (ringsEl) {
-            ringsEl.style.transform = `translate3d(0, ${scrollY * 0.18}px, 0)`;
           }
           if (tagsEl) {
             tagsEl.style.transform = `translate3d(0, ${scrollY * 0.08}px, 0)`;
