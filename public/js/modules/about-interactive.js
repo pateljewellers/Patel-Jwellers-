@@ -139,9 +139,22 @@ const FS = /* glsl */`
     float spec = pow(max(n1 * 0.5 + 0.5, 0.0), SPEC_POW) * SPEC_STR * mask;
 
     /* ── Compose ── */
-    vec3 dark  = vec3(0.031, 0.031, 0.031);
+    float g = uv.x * 0.966 - uv.y * 0.259;
+    float tGrad = clamp((g + 0.259) / 1.225, 0.0, 1.0);
+    vec3 col0 = vec3(0.831, 0.722, 0.659); // #D4B8A8 (0%)
+    vec3 col1 = vec3(0.918, 0.851, 0.804); // #EAD9CD (40%)
+    vec3 col2 = vec3(0.961, 0.929, 0.894); // #F5EDE4 (70%)
+    vec3 col3 = vec3(0.980, 0.968, 0.949); // #FAF7F2 (100%)
+    vec3 light;
+    if (tGrad < 0.4) {
+      light = mix(col0, col1, tGrad / 0.4);
+    } else if (tGrad < 0.7) {
+      light = mix(col1, col2, (tGrad - 0.4) / 0.3);
+    } else {
+      light = mix(col2, col3, (tGrad - 0.7) / 0.3);
+    }
     vec3 water = texCol.rgb + spec;
-    vec3 color = mix(dark, water, mask);
+    vec3 color = mix(light, water, mask);
 
     gl_FragColor = vec4(color, 1.0);
   }
@@ -155,11 +168,10 @@ function initWaterEffect() {
   if (!section) return null;
 
   const canvas   = document.getElementById('about-water-canvas');
-  const resetBtn = document.getElementById('about-reset-btn');
   const spotBg   = document.getElementById('about-spotlight-bg');
 
   const prefersRM = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if (!canvas || prefersRM) { initCSSFallback(section, spotBg, canvas, resetBtn); return null; }
+  if (!canvas || prefersRM) { initCSSFallback(section, spotBg, canvas); return null; }
 
   /* ── WebGL context ── */
   const gl = canvas.getContext('webgl', {
@@ -168,7 +180,7 @@ function initWaterEffect() {
     preserveDrawingBuffer: false,
     powerPreference: 'high-performance',
   });
-  if (!gl) { initCSSFallback(section, spotBg, canvas, resetBtn); return null; }
+  if (!gl) { initCSSFallback(section, spotBg, canvas); return null; }
 
   /* ── Compile shader ── */
   function compileShader(type, src) {
@@ -183,14 +195,14 @@ function initWaterEffect() {
   }
   const vert = compileShader(gl.VERTEX_SHADER,   VS);
   const frag = compileShader(gl.FRAGMENT_SHADER, FS);
-  if (!vert || !frag) { initCSSFallback(section, spotBg, canvas, resetBtn); return null; }
+  if (!vert || !frag) { initCSSFallback(section, spotBg, canvas); return null; }
 
   const prog = gl.createProgram();
   gl.attachShader(prog, vert); gl.attachShader(prog, frag);
   gl.linkProgram(prog);
   if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) {
     console.warn('[WaterReveal] Link error:', gl.getProgramInfoLog(prog));
-    initCSSFallback(section, spotBg, canvas, resetBtn); return null;
+    initCSSFallback(section, spotBg, canvas); return null;
   }
 
   /* ── Quad geometry ── */
@@ -234,7 +246,7 @@ function initWaterEffect() {
     texReady = true;
     startLoop();
   };
-  img.onerror = () => initCSSFallback(section, spotBg, canvas, resetBtn);
+  img.onerror = () => initCSSFallback(section, spotBg, canvas);
   img.src = imgSrc;
 
   /* Mark WebGL active — CSS hides the fallback spotlight */
@@ -368,20 +380,16 @@ function initWaterEffect() {
     startLoop();
   };
   const onClick = (e) => {
-    if (e.target.closest('#about-reset-btn')) return;
-    if (!isPlaying) {
-      isPlaying = true; isHovered = false;
+    if (isPlaying) {
+      isPlaying = false;
+      section.classList.remove('is-playing');
+      startLoop();
+    } else {
+      isPlaying = true;
+      isHovered = false;
       section.classList.add('is-playing');
-      if (resetBtn) { resetBtn.style.opacity = '1'; resetBtn.style.pointerEvents = 'auto'; }
       startLoop();
     }
-  };
-  const onReset = (e) => {
-    e.stopPropagation();
-    isPlaying = false;
-    section.classList.remove('is-playing');
-    if (resetBtn) { resetBtn.style.opacity = '0'; resetBtn.style.pointerEvents = 'none'; }
-    startLoop();
   };
 
   if (hasHover) {
@@ -403,7 +411,6 @@ function initWaterEffect() {
   }
 
   section.addEventListener('click', onClick);
-  if (resetBtn) resetBtn.addEventListener('click', onReset);
 
   /* ── Destroy — tears everything down cleanly ── */
   function destroy() {
@@ -415,7 +422,6 @@ function initWaterEffect() {
     section.removeEventListener('mouseenter', onEnter);
     section.removeEventListener('mouseleave', onLeave);
     section.removeEventListener('click',      onClick);
-    if (resetBtn) resetBtn.removeEventListener('click', onReset);
 
     /* Clean up WebGL resources */
     if (texture) gl.deleteTexture(texture);
@@ -429,7 +435,7 @@ function initWaterEffect() {
 
     /* Reset canvas opacity in case is-playing was active */
     section.classList.remove('is-playing');
-    if (resetBtn) { resetBtn.style.opacity = '0'; resetBtn.style.pointerEvents = 'none'; }
+    // No reset button to clean up
   }
 
   return { destroy };
@@ -438,7 +444,7 @@ function initWaterEffect() {
 /* ════════════════════════════════════════════════════════════════════════
    CSS FALLBACK — original LERP spotlight (no WebGL)
 ════════════════════════════════════════════════════════════════════════ */
-function initCSSFallback(section, spotBg, canvas, resetBtn) {
+function initCSSFallback(section, spotBg, canvas) {
   if (canvas)  canvas.style.display = 'none';
   if (spotBg)  spotBg.style.display = 'block';
   section.classList.remove('has-webgl');
@@ -474,22 +480,14 @@ function initCSSFallback(section, spotBg, canvas, resetBtn) {
   }, { passive: true });
 
   section.addEventListener('click', (e) => {
-    if (e.target.closest('#about-reset-btn')) return;
-    if (!section.classList.contains('is-playing')) {
+    if (section.classList.contains('is-playing')) {
+      section.classList.remove('is-playing');
+    } else {
       section.classList.add('is-playing');
       section.classList.remove('mouse-active');
       hovered = false; cancelAnimationFrame(raf);
-      if (resetBtn) { resetBtn.style.opacity = '1'; resetBtn.style.pointerEvents = 'auto'; }
     }
   });
-
-  if (resetBtn) {
-    resetBtn.addEventListener('click', (e) => {
-      e.stopPropagation();
-      section.classList.remove('is-playing');
-      resetBtn.style.opacity = '0'; resetBtn.style.pointerEvents = 'none';
-    });
-  }
 }
 
 /* ════════════════════════════════════════════════════════════════════════
