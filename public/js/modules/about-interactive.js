@@ -141,10 +141,10 @@ const FS = /* glsl */`
     /* ── Compose ── */
     float g = uv.x * 0.966 - uv.y * 0.259;
     float tGrad = clamp((g + 0.259) / 1.225, 0.0, 1.0);
-    vec3 col0 = vec3(0.831, 0.722, 0.659); // #D4B8A8 (0%)
-    vec3 col1 = vec3(0.918, 0.851, 0.804); // #EAD9CD (40%)
-    vec3 col2 = vec3(0.961, 0.929, 0.894); // #F5EDE4 (70%)
-    vec3 col3 = vec3(0.980, 0.968, 0.949); // #FAF7F2 (100%)
+    vec3 col0 = vec3(0.082, 0.051, 0.055); // #150D0E (0%)
+    vec3 col1 = vec3(0.098, 0.059, 0.063); // #190F10 (40%)
+    vec3 col2 = vec3(0.122, 0.071, 0.075); // #1F1214 (70%)
+    vec3 col3 = vec3(0.071, 0.039, 0.043); // #120A0B (100%)
     vec3 light;
     if (tGrad < 0.4) {
       light = mix(col0, col1, tGrad / 0.4);
@@ -164,11 +164,12 @@ const FS = /* glsl */`
    INIT WATER EFFECT — creates a self-contained WebGL instance
 ════════════════════════════════════════════════════════════════════════ */
 function initWaterEffect() {
-  const section  = document.getElementById('about-hero');
+  const section  = document.getElementById('about-brand');
   if (!section) return null;
 
   const canvas   = document.getElementById('about-water-canvas');
   const spotBg   = document.getElementById('about-spotlight-bg');
+  const imgFrame = section.querySelector('.hs-brand__img-frame');
 
   const prefersRM = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   if (!canvas || prefersRM) { initCSSFallback(section, spotBg, canvas); return null; }
@@ -230,7 +231,7 @@ function initWaterEffect() {
   let texture = null, texW = 1, texH = 1, texReady = false;
   const bgStyle  = spotBg ? spotBg.style.backgroundImage : '';
   const srcMatch = bgStyle.match(/url\(['"]?(.+?)['"]?\)/);
-  const imgSrc   = srcMatch ? srcMatch[1] : '/images/about/our_story_bg.png';
+  const imgSrc   = srcMatch ? srcMatch[1] : '/images/about/brand_heritage.png';
 
   const img = new Image();
   img.crossOrigin = 'anonymous';
@@ -238,6 +239,7 @@ function initWaterEffect() {
     texW = img.naturalWidth; texH = img.naturalHeight;
     texture = gl.createTexture();
     gl.bindTexture(gl.TEXTURE_2D, texture);
+    gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);
     gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, img);
     gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
     gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
@@ -412,6 +414,62 @@ function initWaterEffect() {
 
   section.addEventListener('click', onClick);
 
+  // 3D Parallax frame tilt event listeners
+  if (imgFrame && !prefersRM) {
+    imgFrame.addEventListener('mousemove', (e) => {
+      const rect = imgFrame.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      const normX = (x / rect.width) * 2 - 1;
+      const normY = (y / rect.height) * 2 - 1;
+      const tiltX = -normY * 12; // 12 degrees max tilt
+      const tiltY = normX * 12;
+      imgFrame.style.transform = `perspective(1000px) rotateX(${tiltX}deg) rotateY(${tiltY}deg) scale3d(1.04, 1.04, 1.04)`;
+    }, { passive: true });
+
+    imgFrame.addEventListener('mouseleave', () => {
+      imgFrame.style.transform = '';
+    }, { passive: true });
+  }
+
+  // Bind legacy timeline interactive triggers inside water effect to access closures
+  const tabs = section.querySelectorAll('.timeline-tab');
+  const panes = section.querySelectorAll('.hs-brand__pane');
+
+  tabs.forEach(tab => {
+    tab.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const chapter = tab.dataset.chapter;
+
+      // Update tabs active state
+      tabs.forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+
+      // Update panes active state
+      panes.forEach(pane => {
+        if (pane.dataset.chapter === chapter) {
+          pane.classList.add('active');
+          // Re-trigger stats counter animations in the active pane
+          const counters = pane.querySelectorAll('.hs-counter');
+          counters.forEach(c => {
+            c.textContent = '0';
+            animateCounter(c);
+          });
+        } else {
+          pane.classList.remove('active');
+        }
+      });
+
+      // Spawn a wave of WebGL water ripples on timeline change!
+      for (let i = 0; i < 4; i++) {
+        setTimeout(() => {
+          spawnRipple(0.5 + (Math.random() - 0.5) * 0.12, 0.45 + (Math.random() - 0.5) * 0.12);
+          startLoop();
+        }, i * 140);
+      }
+    });
+  });
+
   /* ── Destroy — tears everything down cleanly ── */
   function destroy() {
     if (rafId) { cancelAnimationFrame(rafId); rafId = null; }
@@ -435,7 +493,6 @@ function initWaterEffect() {
 
     /* Reset canvas opacity in case is-playing was active */
     section.classList.remove('is-playing');
-    // No reset button to clean up
   }
 
   return { destroy };
@@ -600,8 +657,8 @@ function bootstrap() {
   /* Destroy any previously running instance first */
   if (_instance) { _instance.destroy(); _instance = null; }
 
-  /* 1. Initialise about-hero section if it exists on this page */
-  if (document.getElementById('about-hero')) {
+  /* 1. Initialise water reveal effect if it exists on this page */
+  if (document.getElementById('about-brand') || document.getElementById('about-hero')) {
     _instance = initWaterEffect();
   }
 

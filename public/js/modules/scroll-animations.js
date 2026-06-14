@@ -119,12 +119,12 @@ document.addEventListener('DOMContentLoaded', () => {
     updateParallax();
   }
 
-  // ——— Combined Scroll Animations (Hero Parallax & Brand Intro Dynamic Arch) ———
+  // ——— Combined Scroll Animations (Hero Parallax & Brand Story Dynamic Arch) ———
   const heroEl = document.querySelector('.hero-interactive-container');
   const heroBg = document.querySelector('.hero-bg-parallax');
   const isMobileIOS = /iP(hone|ad|od)/.test(navigator.userAgent);
-  const brandIntro = document.getElementById('brand-intro');
-  const brandIntroBg = document.querySelector('.brand-intro-bg-parallax');
+  const brandIntro = document.getElementById('about-brand');
+  const brandIntroBg = document.getElementById('about-spotlight-bg');
 
   if (!reducedMotion) {
     let ticking = false;
@@ -159,13 +159,13 @@ document.addEventListener('DOMContentLoaded', () => {
       if (brandIntro) {
         const rect = brandIntro.getBoundingClientRect();
         if (rect.top < vh && rect.bottom > 0) {
-          // Progress of page scrolling down from 0 to 600px
-          let scrollProgress = scrollY / 600;
+          // Progress of section scrolling into viewport from bottom to top
+          let scrollProgress = 1 - (rect.top / vh);
           scrollProgress = Math.max(0, Math.min(1, scrollProgress));
 
           // Calculate top border-radius based on scrollProgress
-          // At scrollY = 0: border-radius is a perfect semicircle arch (50vw or innerWidth / 2)
-          // As scrollY increases to 600px: border-radius flattens out smoothly to 24px
+          // At entry: border-radius is a perfect semicircle arch (50vw or innerWidth / 2)
+          // As it scrolls up to top of screen: border-radius flattens out smoothly to 24px
           const maxRadius = window.innerWidth / 2;
           const minRadius = 24;
           const currentRadius = maxRadius - (maxRadius - minRadius) * scrollProgress;

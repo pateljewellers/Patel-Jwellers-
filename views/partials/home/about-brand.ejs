@@ -1,10 +1,15 @@
-<!-- ===== BRAND STORY & HERITAGE — VENETIAN SPA EDITORIAL STYLE ===== -->
-<section class="hs-brand" id="about-brand" aria-label="Brand Story & Heritage">
+<!-- ===== ROYAL BRAND STORY & PATEL CRAFT PILLARS COMBINED ===== -->
+<section class="hs-brand scroll-section" id="about-brand" aria-label="Brand Story & Heritage">
+  <!-- Ambient section glow bleed -->
+  <div class="spheres-ambient-glow" aria-hidden="true"></div>
+  
+  <!-- WebGL water reveal canvas background overlay -->
+  <canvas class="hs-brand__water-canvas" id="about-water-canvas"></canvas>
+  <div class="hs-brand__spotlight-bg" id="about-spotlight-bg" style="background-image: url('/images/about/brand_heritage.png'); display: none;"></div>
 
-
+  <!-- PART 1: BRAND STORY & HERITAGE (Venetian Editorial Block) -->
   <div class="hs-brand__inner container">
-
-    <!-- LEFT COLUMN: Vertical rotated label (Venetian-style side text) -->
+    <!-- LEFT COLUMN: Vertical rotated label -->
     <div class="hs-brand__side-label" aria-hidden="true">
       <span class="hs-brand__vertical-text">PATEL JEWELLERS</span>
       <span class="hs-brand__vertical-line"></span>
@@ -12,7 +17,6 @@
 
     <!-- CENTER COLUMN: Content block -->
     <div class="hs-brand__content">
-
       <!-- Eyebrow line -->
       <div class="hs-brand__eyebrow hs-reveal hs-reveal--fade-up" data-delay="0">
         <span class="hs-brand__eyebrow-dot"></span>
@@ -20,46 +24,78 @@
         <span class="hs-brand__eyebrow-rule"></span>
       </div>
 
-      <!-- Main editorial title — each word animates in separately -->
+      <!-- Main editorial title -->
       <h2 class="hs-brand__title">
-        <span class="hs-brand__title-line hs-reveal hs-reveal--slide-up" data-delay="80">Brand</span>
-        <span class="hs-brand__title-line hs-reveal hs-reveal--slide-up" data-delay="160">Story</span>
-        <span class="hs-brand__title-line hs-brand__title-line--gold hs-reveal hs-reveal--slide-up" data-delay="240">&amp; Heritage</span>
+        <span class="hs-brand__title-line hs-reveal hs-reveal--slide-up" data-delay="80">Brand Story</span>
+        <span class="hs-brand__title-line hs-brand__title-line--gold hs-reveal hs-reveal--slide-up" data-delay="160">&amp; Heritage</span>
       </h2>
 
-      <!-- Stats row -->
-      <div class="hs-brand__stats hs-reveal hs-reveal--fade-up" data-delay="320">
-        <div class="hs-brand__stat">
-          <span class="hs-brand__stat-num hs-counter" data-target="50">0</span><span class="hs-brand__stat-sup">+</span>
-          <span class="hs-brand__stat-label">Years of Legacy</span>
+      <!-- Interactive Legacy Timeline Tabs -->
+      <div class="hs-brand__timeline hs-reveal hs-reveal--fade-up" data-delay="240">
+        <button class="timeline-tab active" data-chapter="1970" aria-label="Explore 1970s era">1970s</button>
+        <button class="timeline-tab" data-chapter="2000" aria-label="Explore 2000s era">2000s</button>
+        <button class="timeline-tab" data-chapter="today" aria-label="Explore Today's era">Today</button>
+      </div>
+
+      <!-- Narrative Content Panes -->
+      <div class="hs-brand__panes hs-reveal hs-reveal--fade-up" data-delay="320">
+        <!-- 1970s Pane -->
+        <div class="hs-brand__pane active" data-chapter="1970">
+          <p class="hs-brand__para"><%= home.about.paragraphs[0] %></p>
+          <div class="hs-brand__pane-stats">
+            <div class="hs-brand__stat">
+              <div class="hs-brand__stat-num"><span class="hs-counter" data-target="50">0</span><span class="hs-brand__stat-sup">+</span></div>
+              <span class="hs-brand__stat-label">Years of Legacy</span>
+            </div>
+            <div class="hs-brand__stat-sep" aria-hidden="true"></div>
+            <div class="hs-brand__stat">
+              <span class="hs-brand__stat-highlight">1970s</span>
+              <span class="hs-brand__stat-label">Mehsana Roots</span>
+            </div>
+          </div>
         </div>
-        <div class="hs-brand__stat-sep" aria-hidden="true"></div>
-        <div class="hs-brand__stat">
-          <span class="hs-brand__stat-num hs-counter" data-target="10000">0</span><span class="hs-brand__stat-sup">+</span>
-          <span class="hs-brand__stat-label">Happy Families</span>
+
+        <!-- 2000s Pane -->
+        <div class="hs-brand__pane" data-chapter="2000">
+          <p class="hs-brand__para"><%= home.about.paragraphs[1] %></p>
+          <div class="hs-brand__pane-stats">
+            <div class="hs-brand__stat">
+              <div class="hs-brand__stat-num"><span class="hs-counter" data-target="10000">0</span><span class="hs-brand__stat-sup">+</span></div>
+              <span class="hs-brand__stat-label">Happy Families</span>
+            </div>
+            <div class="hs-brand__stat-sep" aria-hidden="true"></div>
+            <div class="hs-brand__stat">
+              <span class="hs-brand__stat-highlight">Transparency</span>
+              <span class="hs-brand__stat-label">Core Philosophy</span>
+            </div>
+          </div>
         </div>
-        <div class="hs-brand__stat-sep" aria-hidden="true"></div>
-        <div class="hs-brand__stat">
-          <span class="hs-brand__stat-num hs-counter" data-target="100">0</span><span class="hs-brand__stat-sup">%</span>
-          <span class="hs-brand__stat-label">Hallmark Certified</span>
+
+        <!-- Today Pane -->
+        <div class="hs-brand__pane" data-chapter="today">
+          <p class="hs-brand__para"><%= home.about.paragraphs[2] %></p>
+          <div class="hs-brand__pane-stats">
+            <div class="hs-brand__stat">
+              <div class="hs-brand__stat-num"><span class="hs-counter" data-target="100">0</span><span class="hs-brand__stat-sup">%</span></div>
+              <span class="hs-brand__stat-label">Hallmark Gold</span>
+            </div>
+            <div class="hs-brand__stat-sep" aria-hidden="true"></div>
+            <div class="hs-brand__stat">
+              <span class="hs-brand__stat-highlight">Generation Skill</span>
+              <span class="hs-brand__stat-label">Certified Solitaires</span>
+            </div>
+          </div>
         </div>
       </div>
 
-      <!-- Body paragraphs -->
-      <div class="hs-brand__body">
-        <% home.about.paragraphs.forEach(function(p, i) { %>
-          <p class="hs-brand__para hs-reveal hs-reveal--fade-up" data-delay="<%= 400 + i * 100 %>"><%= p %></p>
-        <% }); %>
-      </div>
-
-      <!-- Quote accent -->
-      <blockquote class="hs-brand__quote hs-reveal hs-reveal--fade-up" data-delay="680">
+      <!-- Quote Accent -->
+      <blockquote class="hs-brand__quote hs-reveal hs-reveal--fade-up" data-delay="400">
         <span class="hs-brand__quote-mark">"</span>
         <span class="hs-brand__quote-text">Crafted with love, worn through generations.</span>
       </blockquote>
 
       <!-- CTA -->
-      <div class="hs-brand__cta-row hs-reveal hs-reveal--fade-up" data-delay="760">
+      <div class="hs-brand__cta-row hs-reveal hs-reveal--fade-up" data-delay="480">
         <a href="<%= home.about.cta.href %>" class="hs-brand__cta" id="about-cta-btn">
           <span class="hs-brand__cta-label"><%= home.about.cta.label %></span>
           <span class="hs-brand__cta-icon" aria-hidden="true">
@@ -71,7 +107,7 @@
       </div>
     </div>
 
-    <!-- RIGHT COLUMN: floating stats card + image accent -->
+    <!-- RIGHT COLUMN: WebGL Spotlight Image Frame -->
     <div class="hs-brand__visual hs-reveal hs-reveal--fade-left" data-delay="200">
       <!-- Floating heritage badge -->
       <div class="hs-brand__badge">
@@ -81,18 +117,202 @@
         <span class="hs-brand__badge-sub">Mehsana, Gujarat</span>
       </div>
 
-      <!-- Slim vertical accent image strip -->
-      <div class="hs-brand__img-strip">
-        <img src="/images/about/model-hero.jpg" alt="Patel Jewellers bridal heritage model" loading="lazy">
-        <div class="hs-brand__img-strip-caption">
-          <span>Bridal Heritage</span>
+      <!-- Arched Interactive Showcase Frame -->
+      <div class="hs-brand__img-frame" id="about-interactive-frame">
+        <img class="hs-brand__img-fallback" src="/images/about/brand_heritage.png" alt="Patel Jewellers bridal heritage model" loading="lazy">
+        <div class="hs-brand__img-frame-caption">
+          <span>Heritage Sanctuary</span>
         </div>
       </div>
     </div>
-
   </div>
 
-  <!-- Bottom gold rule -->
-  <div class="hs-brand__bottom-rule" aria-hidden="true"></div>
+  <!-- ROYAL SECTION DIVIDER (Filigree Gold Crest Line) -->
+  <div class="royal-section-divider container">
+    <span class="divider-line"></span>
+    <div class="divider-crest" aria-hidden="true">
+      <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M32 8C20 8 12 16 12 28C12 36 18 42 24 45L32 56L40 45C46 42 52 36 52 28C52 16 44 8 32 8Z" stroke="#caa15a" stroke-width="1.5" stroke-linejoin="round"/>
+        <circle cx="32" cy="24" r="5" stroke="#caa15a" stroke-width="1.5"/>
+        <path d="M24 28H40" stroke="#caa15a" stroke-width="1.5"/>
+      </svg>
+    </div>
+    <span class="divider-line"></span>
+  </div>
 
+  <!-- PART 2: THE SPHERES OF PATEL CRAFT (Holographic Mandala Chamber) -->
+  <div class="spheres-section-wrapper container">
+    <div class="spheres-mandala-layout">
+      <!-- Left Column: Editorial Details -->
+      <div class="spheres-details">
+        <header class="spheres-header reveal-blur">
+          <span class="spheres-eyebrow">Our Heritage</span>
+          <h2 class="spheres-title">The Spheres of Patel Craft</h2>
+        </header>
+
+        <!-- Chapter Narratives -->
+        <div class="spheres-panes">
+          <!-- Gold Pane -->
+          <div class="sphere-pane active" data-pillar="gold">
+            <div class="sphere-pane__header">
+              <span class="sphere-pane__number">Pillar I</span>
+              <div class="royal-crest-icon">
+                <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M12 44L18 24L32 36L46 24L52 44H12Z" stroke="#caa15a" stroke-width="2" stroke-linejoin="round" />
+                  <path d="M32 36V48" stroke="#caa15a" stroke-width="2" />
+                  <circle cx="32" cy="18" r="3" fill="#caa15a" />
+                  <circle cx="18" cy="22" r="2.5" fill="#caa15a" />
+                  <circle cx="46" cy="22" r="2.5" fill="#caa15a" />
+                  <line x1="8" y1="52" x2="56" y2="52" stroke="#caa15a" stroke-width="1.5" />
+                </svg>
+              </div>
+            </div>
+            <h3 class="sphere-pane__title">Ancestral Gold</h3>
+            <p class="sphere-pane__desc">Mehsana's legendary 22k pure antique gold, hand-carved to narrate ancestral stories.</p>
+            
+            <!-- Royal Specs Grid -->
+            <div class="royal-specs-grid">
+              <div class="royal-spec-item">
+                <span class="royal-spec-label">Purity</span>
+                <span class="royal-spec-val">22K Antique</span>
+              </div>
+              <div class="royal-spec-item">
+                <span class="royal-spec-label">Origin</span>
+                <span class="royal-spec-val">Mehsana Heritage</span>
+              </div>
+              <div class="royal-spec-item">
+                <span class="royal-spec-label">Artistry</span>
+                <span class="royal-spec-val">Ancestral Carving</span>
+              </div>
+            </div>
+
+            <a href="/collection" class="sphere-panel__link btn--luxury-outline">
+              <span>Explore Gold</span>
+              <span class="sphere-panel__arrow">→</span>
+            </a>
+          </div>
+
+          <!-- Diamonds Pane -->
+          <div class="sphere-pane" data-pillar="diamond">
+            <div class="sphere-pane__header">
+              <span class="sphere-pane__number">Pillar II</span>
+              <div class="royal-crest-icon">
+                <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M32 12L48 24L32 52L16 24L32 12Z" stroke="#caa15a" stroke-width="2" stroke-linejoin="round" />
+                  <path d="M16 24H48" stroke="#caa15a" stroke-width="1.5" />
+                  <path d="M32 12V52" stroke="#caa15a" stroke-width="1.5" />
+                  <path d="M32 24L24 18M32 24L40 18" stroke="#caa15a" stroke-width="1.5" />
+                  <line x1="8" y1="56" x2="56" y2="56" stroke="#caa15a" stroke-width="1.5" />
+                </svg>
+              </div>
+            </div>
+            <h3 class="sphere-pane__title">Certified Diamonds</h3>
+            <p class="sphere-pane__desc">Flawless diamonds of celestial clarity, certified to match the world's finest standards.</p>
+            
+            <!-- Royal Specs Grid -->
+            <div class="royal-specs-grid">
+              <div class="royal-spec-item">
+                <span class="royal-spec-label">Clarity</span>
+                <span class="royal-spec-val">VVS1+ Choice</span>
+              </div>
+              <div class="royal-spec-item">
+                <span class="royal-spec-label">Cut</span>
+                <span class="royal-spec-val">Ideal Brilliance</span>
+              </div>
+              <div class="royal-spec-item">
+                <span class="royal-spec-label">Certificate</span>
+                <span class="royal-spec-val">IGI / GIA Audited</span>
+              </div>
+            </div>
+
+            <a href="/collection" class="sphere-panel__link btn--luxury-outline">
+              <span>Explore Diamonds</span>
+              <span class="sphere-panel__arrow">→</span>
+            </a>
+          </div>
+
+          <!-- Bridal Pane -->
+          <div class="sphere-pane" data-pillar="bridal">
+            <div class="sphere-pane__header">
+              <span class="sphere-pane__number">Pillar III</span>
+              <div class="royal-crest-icon">
+                <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M14 48C14 36 22 28 32 28C42 28 50 36 50 48" stroke="#caa15a" stroke-width="2" />
+                  <path d="M22 28C22 18 32 12 32 12C32 12 42 18 42 28" stroke="#caa15a" stroke-width="2" />
+                  <circle cx="32" cy="28" r="4" stroke="#caa15a" stroke-width="2" fill="#FCFAF7" />
+                  <path d="M8 52H56" stroke="#caa15a" stroke-width="2" />
+                  <path d="M20 52V42M44 52V42" stroke="#caa15a" stroke-width="1.5" />
+                </svg>
+              </div>
+            </div>
+            <h3 class="sphere-pane__title">Bridal Masterpieces</h3>
+            <p class="sphere-pane__desc">Exquisite bespoke bridal adornments, fusing custom design with auspicious heritage.</p>
+            
+            <!-- Royal Specs Grid -->
+            <div class="royal-specs-grid">
+              <div class="royal-spec-item">
+                <span class="royal-spec-label">Creation</span>
+                <span class="royal-spec-val">Bespoke Custom</span>
+              </div>
+              <div class="royal-spec-item">
+                <span class="royal-spec-label">Design</span>
+                <span class="royal-spec-val">Royal Heritage</span>
+              </div>
+              <div class="royal-spec-item">
+                <span class="royal-spec-label">Occasion</span>
+                <span class="royal-spec-val">Grand Wedding</span>
+              </div>
+            </div>
+
+            <a href="/collection" class="sphere-panel__link btn--luxury-outline">
+              <span>Explore Bridal</span>
+              <span class="sphere-panel__arrow">→</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Inline Navigation dots -->
+        <div class="spheres-dots">
+          <button class="sphere-dot active" data-pillar="gold" aria-label="Gold chapter"></button>
+          <button class="sphere-dot" data-pillar="diamond" aria-label="Diamonds chapter"></button>
+          <button class="sphere-dot" data-pillar="bridal" aria-label="Bridal chapter"></button>
+        </div>
+      </div>
+
+      <!-- Right Column: Interactive Mandala Pedestal -->
+      <div class="spheres-pedestal-container">
+        <div class="spheres-pedestal" id="spheres-pedestal">
+          <!-- Canvas for Mandala grid and stardust -->
+          <canvas class="pedestal-canvas" id="pedestal-canvas"></canvas>
+
+          <!-- Central Hologram Viewport -->
+          <div class="hologram-viewport">
+            <div class="hologram-glow"></div>
+            <img class="hologram-img active" data-pillar="gold" src="/images/collection/pillar_gold.png" alt="Gold Craft">
+            <img class="hologram-img" data-pillar="diamond" src="/images/collection/pillar_diamonds.png" alt="Diamond Craft">
+            <img class="hologram-img" data-pillar="bridal" src="/images/collection/pillar_bridal.png" alt="Bridal Craft">
+          </div>
+
+          <!-- Orbital Selectors Ring -->
+          <div class="orbit-selectors" id="orbit-selectors">
+            <!-- Node: Gold -->
+            <div class="orbit-node active" data-pillar="gold" data-angle="0">
+              <div class="orbit-node__glow"></div>
+              <span class="orbit-node__label">Gold</span>
+            </div>
+            <!-- Node: Diamonds -->
+            <div class="orbit-node" data-pillar="diamond" data-angle="120">
+              <div class="orbit-node__glow"></div>
+              <span class="orbit-node__label">Diamonds</span>
+            </div>
+            <!-- Node: Bridal -->
+            <div class="orbit-node" data-pillar="bridal" data-angle="240">
+              <div class="orbit-node__glow"></div>
+              <span class="orbit-node__label">Bridal</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </section>

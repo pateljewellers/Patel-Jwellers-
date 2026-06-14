@@ -74,8 +74,10 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // Sparkle Burst Particles class
+  let activePillar = null;
+
   class Sparkle {
-    constructor(x, y, colorType, isTrail = false) {
+    constructor(x, y, colorType = null, isTrail = false) {
       this.x = x;
       this.y = y;
       this.size = isTrail ? Math.random() * 1.5 + 0.5 : Math.random() * 2.5 + 1.0;
@@ -89,7 +91,17 @@ document.addEventListener('DOMContentLoaded', () => {
       this.friction = isTrail ? 0.98 : 0.96;
       this.life = 1.0;
       this.decay = isTrail ? Math.random() * 0.03 + 0.02 : Math.random() * 0.02 + 0.01;
-      this.color = Math.random() > 0.5 ? CONFIG.colors.goldBright : CONFIG.colors.sparkle;
+      
+      // Dynamic color shifting based on active pillar hover focus
+      if (activePillar === 'gold' || colorType === 'gold') {
+        this.color = Math.random() > 0.5 ? 'rgba(212, 175, 55, 0.95)' : 'rgba(244, 215, 144, 0.9)';
+      } else if (activePillar === 'diamond' || colorType === 'diamond') {
+        this.color = Math.random() > 0.5 ? 'rgba(165, 230, 255, 0.95)' : 'rgba(255, 255, 255, 0.9)';
+      } else if (activePillar === 'bridal' || colorType === 'bridal') {
+        this.color = Math.random() > 0.5 ? 'rgba(176, 27, 46, 0.95)' : 'rgba(212, 175, 55, 0.8)';
+      } else {
+        this.color = Math.random() > 0.5 ? CONFIG.colors.goldBright : CONFIG.colors.sparkle;
+      }
     }
 
     update() {
@@ -411,11 +423,11 @@ document.addEventListener('DOMContentLoaded', () => {
       overlay.style.background = `radial-gradient(circle at 50% 50%, rgba(252, 250, 247, ${centerOpacity}) 0%, rgba(252, 250, 247, ${edgeOpacity}) 100%)`;
     }
 
-    // Parallax scroll for the 3D artifacts wrapper
-    const introVisual = document.getElementById('intro-visual-3d');
-    if (introVisual && !reducedMotion) {
-      const scrollOffset = (scrollY - window.innerHeight) * -0.12;
-      introVisual.style.transform = `translate3d(0, ${scrollOffset}px, 0)`;
+    // Parallax scroll for the pillars container wrapper
+    const pillarsContainer = document.querySelector('.pillars-container');
+    if (pillarsContainer && !reducedMotion) {
+      const scrollOffset = (scrollY - window.innerHeight) * -0.10;
+      pillarsContainer.style.transform = `translate3d(0, ${scrollOffset}px, 0)`;
     }
 
     // Calculate cursor velocity
@@ -617,6 +629,56 @@ document.addEventListener('DOMContentLoaded', () => {
 
   makeTextInteractive(heroBrand);
   makeTextInteractive(heroTitle);
+
+  // Three Pillars Interactive Hovers & Theme shifting
+  const pillarCards = document.querySelectorAll('.pillar-card');
+  pillarCards.forEach((card) => {
+    card.addEventListener('mouseenter', () => {
+      const pillar = card.dataset.pillar;
+      activePillar = pillar;
+
+      pillarCards.forEach(c => {
+        if (c === card) {
+          c.classList.add('is-focused');
+          c.classList.remove('is-blurred');
+        } else {
+          c.classList.add('is-blurred');
+          c.classList.remove('is-focused');
+        }
+      });
+
+      hero.classList.remove('theme-gold', 'theme-ruby', 'theme-diamond', 'theme-antique');
+      if (pillar === 'gold') {
+        hero.classList.add('theme-gold');
+      } else if (pillar === 'diamond') {
+        hero.classList.add('theme-diamond');
+      } else if (pillar === 'bridal') {
+        hero.classList.add('theme-ruby');
+      }
+
+      // Hover burst sparkles
+      if (!reducedMotion) {
+        const icon = card.querySelector('.pillar-card__image-container') || card.querySelector('.pillar-card__icon');
+        if (icon) {
+          const iconRect = icon.getBoundingClientRect();
+          const frameRect = frame.getBoundingClientRect();
+          const cx = iconRect.left - frameRect.left + iconRect.width / 2;
+          const cy = iconRect.top - frameRect.top + iconRect.height / 2;
+          for (let i = 0; i < 15; i++) {
+            sparkles.push(new Sparkle(cx, cy, pillar));
+          }
+        }
+      }
+    });
+
+    card.addEventListener('mouseleave', () => {
+      activePillar = null;
+      pillarCards.forEach(c => {
+        c.classList.remove('is-focused', 'is-blurred');
+      });
+      hero.classList.remove('theme-gold', 'theme-ruby', 'theme-diamond', 'theme-antique');
+    });
+  });
 
   // Initialize and run
   window.addEventListener('resize', () => {
