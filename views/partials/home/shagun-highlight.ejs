@@ -1,102 +1,114 @@
 <section class="home-shagun scroll-section" id="shagun">
-  <!-- Background decorative canvas -->
+  <!-- Background decorative canvas for rising gold stardust particles -->
   <canvas class="shagun-motion-canvas" id="shagun-motion-canvas"></canvas>
 
-  <!-- Ambient decorative elements -->
+  <!-- Ambient glowing blobs -->
   <div class="shagun-ambient" aria-hidden="true">
     <div class="shagun-orb shagun-orb--burgundy"></div>
     <div class="shagun-orb shagun-orb--gold"></div>
     <div class="shagun-mandala">
       <svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <circle cx="100" cy="100" r="92" stroke="rgba(176,168,154,0.06)" stroke-width="0.75" stroke-dasharray="6 8"/>
-        <circle cx="100" cy="100" r="70" stroke="rgba(176,168,154,0.04)" stroke-width="0.5"/>
-        <path d="M100 10 C100 10, 106 32, 100 50 C94 32, 100 10, 100 10 Z" fill="rgba(176,168,154,0.02)" stroke="rgba(176,168,154,0.05)" stroke-width="0.5"/>
-        <path d="M100 190 C100 190, 106 168, 100 150 C94 168, 100 190, 100 190 Z" fill="rgba(176,168,154,0.02)" stroke="rgba(176,168,154,0.05)" stroke-width="0.5"/>
-        <path d="M10 100 C10 100, 32 106, 50 100 C32 94, 10 100, 10 100 Z" fill="rgba(176,168,154,0.02)" stroke="rgba(176,168,154,0.05)" stroke-width="0.5"/>
-        <path d="M190 100 C190 100, 168 106, 150 100 C168 94, 190 100, 190 100 Z" fill="rgba(176,168,154,0.02)" stroke="rgba(176,168,154,0.05)" stroke-width="0.5"/>
+        <circle cx="100" cy="100" r="92" stroke="rgba(202,161,90,0.12)" stroke-width="0.75" stroke-dasharray="6 8"/>
+        <circle cx="100" cy="100" r="70" stroke="rgba(202,161,90,0.06)" stroke-width="0.5"/>
+        <path d="M100 10 C100 10, 106 32, 100 50 C94 32, 100 10, 100 10 Z" fill="rgba(202,161,90,0.02)" stroke="rgba(202,161,90,0.08)" stroke-width="0.5"/>
+        <path d="M100 190 C100 190, 106 168, 100 150 C94 168, 100 190, 100 190 Z" fill="rgba(202,161,90,0.02)" stroke="rgba(202,161,90,0.08)" stroke-width="0.5"/>
       </svg>
     </div>
   </div>
 
-  <div class="container shagun-grid">
-
-    <!-- ===== LEFT: Animated Typography & Content ===== -->
-    <div class="shagun-content" id="shagun-content">
-      <!-- Eyebrow with animated gold underline -->
-      <div class="shagun-eyebrow-wrap reveal-up">
+  <div class="container shagun-container">
+    
+    <!-- Centered Editorial Header -->
+    <div class="shagun-header">
+      <div class="shagun-eyebrow-wrap">
         <span class="shagun-eyebrow"><%= home.shagun.eyebrow %></span>
         <span class="shagun-eyebrow__line" aria-hidden="true"></span>
       </div>
-
-      <!-- Kinetic title: each word slides in -->
-      <h2 class="shagun-title reveal-up reveal-delay-1">
-        <span class="shagun-word-wrap"><em class="shagun-word">Register</em></span>
-        <span class="shagun-word-wrap"><em class="shagun-word">Your</em></span>
-        <span class="shagun-word-wrap"><em class="shagun-word">Bridal</em></span>
-        <span class="shagun-word-wrap shagun-word-wrap--gold"><em class="shagun-word">Shagun</em></span>
-      </h2>
-
-      <!-- Description paragraph -->
-      <p class="shagun-desc reveal-up reveal-delay-1"><%= home.shagun.description %></p>
-
-      <!-- Privilege Items linked to the 3D Cards -->
-      <div class="shagun-privileges reveal-up reveal-delay-2" id="shagun-privileges-list">
-        <% home.shagun.privileges.forEach(function(priv, i) { %>
-          <div class="shagun-privilege-item<%= i === 0 ? ' is-active' : '' %>" data-target="<%= i %>">
-            <div class="privilege-num-wrap">
-              <span class="privilege-num"><%= priv.num %></span>
-              <span class="privilege-dot"></span>
-            </div>
-            <div class="privilege-text">
-              <h3><%= priv.title %></h3>
-              <p><%= priv.desc %></p>
-            </div>
-          </div>
-        <% }); %>
-      </div>
-
-      <!-- Gold accent quote -->
-      <blockquote class="shagun-quote reveal-up reveal-delay-3">
-        <span class="shagun-quote__mark">"</span>
-        <span class="shagun-quote__text">A golden step toward your eternal beginning.</span>
-      </blockquote>
-
-      <!-- CTA row -->
-      <div class="shagun-cta-row reveal-up reveal-delay-3">
-        <a href="<%= home.shagun.cta.href %>" class="shagun-cta btn--magnetic" id="shagun-cta-btn">
-          <span class="shagun-cta__text"><%= home.shagun.cta.label %></span>
-          <span class="shagun-cta__arrow" aria-hidden="true">
-            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-              <path d="M4 10H16M10 4l6 6-6 6" stroke="var(--color-accent)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </span>
-          <span class="shagun-cta__underline" aria-hidden="true"></span>
-        </a>
-      </div>
+      <h2 class="shagun-title"><%= home.shagun.title %></h2>
+      <p class="shagun-desc"><%= home.shagun.description %></p>
     </div>
 
-    <!-- ===== RIGHT: 3D Parallax Staggered Showcase ===== -->
-    <div class="shagun-showcase-wrapper" id="shagun-showcase-wrapper">
-      <!-- Staggered Deck -->
-      <div class="shagun-showcase-deck" id="shagun-showcase-deck">
-        <% home.shagun.cards.forEach(function(card, idx) { %>
-          <div class="shagun-card shagun-card--<%= idx %><%= idx === 0 ? ' is-active' : '' %>" data-idx="<%= idx %>">
-            <img src="<%= card.image %>" alt="<%= card.alt %>" loading="lazy">
-            <div class="shagun-card__overlay"></div>
-            <div class="shagun-card__caption">
-              <span><%= card.caption %></span>
-            </div>
-            <div class="shagun-card__shimmer" aria-hidden="true"></div>
+    <!-- Triptych Accordion Screen -->
+    <div class="shagun-triptych" id="shagun-triptych-accordion">
+      <% home.shagun.steps.forEach(function(step, idx) { %>
+        <div class="shagun-triptych-card<%= idx === 0 ? ' is-active' : '' %>" data-idx="<%= idx %>">
+          
+          <!-- Background Image Container -->
+          <div class="shagun-card-bg">
+            <img src="<%= step.image %>" alt="<%= step.alt %>" loading="lazy">
+            <div class="shagun-card-overlay"></div>
           </div>
-        <% }); %>
-      </div>
+          
+          <!-- Frosted Glass Card Content Panel -->
+          <div class="shagun-card-content">
+            
+            <div class="shagun-card-header">
+              <!-- Step Number Badge -->
+              <span class="shagun-card-num"><%= step.num %></span>
+              
+              <!-- SVG Icon -->
+              <div class="shagun-card-icon-wrap">
+                <div class="shagun-card-icon">
+                  <% if (idx === 0) { %>
+                    <!-- Register icon (form/pencil) -->
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="svg-icon">
+                      <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                      <polyline points="14 2 14 8 20 8"></polyline>
+                      <line x1="16" y1="13" x2="8" y2="13"></line>
+                      <line x1="16" y1="17" x2="8" y2="17"></line>
+                      <polyline points="10 9 9 9 8 9"></polyline>
+                    </svg>
+                  <% } else if (idx === 1) { %>
+                    <!-- Group/Bulk Invitation icon (users/group) -->
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="svg-icon">
+                      <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                      <circle cx="9" cy="7" r="4"></circle>
+                      <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                      <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                    </svg>
+                  <% } else { %>
+                    <!-- Pooja & Silver coin icon (mandala/coin) -->
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="svg-icon">
+                      <circle cx="12" cy="12" r="10"></circle>
+                      <circle cx="12" cy="12" r="6"></circle>
+                      <circle cx="12" cy="12" r="2"></circle>
+                    </svg>
+                  <% } %>
+                </div>
+                <div class="shagun-card-icon-glow"></div>
+              </div>
+            </div>
 
-      <!-- Gold measurement line accent -->
-      <div class="shagun-measure-line" aria-hidden="true">
-        <span class="shagun-measure-tick"></span>
-        <span class="shagun-measure-bar"></span>
-        <span class="shagun-measure-tick"></span>
-      </div>
+            <!-- Step Titles & Body -->
+            <div class="shagun-card-details">
+              <h3 class="shagun-card-title"><%= step.title %></h3>
+              <p class="shagun-card-desc"><%= step.desc %></p>
+              
+              <!-- Subtle Gold Prompt Link -->
+              <span class="shagun-card-link">
+                <%= step.cta %>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="arrow-svg">
+                  <path d="M5 12h14M12 5l7 7-7 7"/>
+                </svg>
+              </span>
+            </div>
+
+          </div>
+          
+          <!-- Outer border/glow container for interactive feedback -->
+          <div class="shagun-card-border" aria-hidden="true"></div>
+        </div>
+      <% }); %>
+    </div>
+
+    <!-- Centered Call to Action at the bottom -->
+    <div class="shagun-cta-wrapper">
+      <a href="<%= home.shagun.cta.href %>" class="shagun-cta-btn btn--magnetic" id="shagun-cta-btn">
+        <span><%= home.shagun.cta.label %></span>
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" class="cta-arrow">
+          <path d="M4 10H16M10 4l6 6-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </a>
     </div>
 
   </div>

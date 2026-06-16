@@ -38,18 +38,17 @@
   z-index: 0;
   display: flex;
   pointer-events: none;
+  background: radial-gradient(circle at 50% 30%, #FFFFFF 0%, #FDFAF6 50%, #F5EDE4 80%, #D4C3B3 100%);
 }
 
 .hero-split-bg__left {
   flex: 1;
-  background: #0C0A09;
-  /* Deep Obsidian Charcoal */
+  background: transparent !important;
 }
 
 .hero-split-bg__right {
   flex: 1;
-  background: #FAF7F2;
-  /* Warm Matte Ivory */
+  background: transparent !important;
 }
 
 /* Shared radial dot-grid texture overlay across both backgrounds */
@@ -57,9 +56,9 @@
   content: '';
   position: absolute;
   inset: 0;
-  background-image: radial-gradient(rgba(202, 161, 90, 0.15) 1px, transparent 1px);
-  background-size: 28px 28px;
-  opacity: 0.35;
+  background-image: radial-gradient(rgba(202, 161, 90, 0.25) 1.2px, transparent 1.2px);
+  background-size: 32px 32px;
+  opacity: 0.55;
   z-index: 1;
 }
 
@@ -84,7 +83,7 @@
   transform: translate(-50%, -50%) rotate(45deg);
   width: 22px;
   height: 22px;
-  background: #0C0A09;
+  background: #FAF7F2;
   border: 1.5px solid #caa15a;
   box-shadow: 0 0 10px rgba(202, 161, 90, 0.45);
   display: flex;
@@ -124,7 +123,7 @@
   }
 
   .hero-split-bg__emblem {
-    background: #0C0A09;
+    background: #FAF7F2;
   }
 }
 
@@ -132,9 +131,9 @@
    ✦ HERO GALLERY SPREAD — IMAGE-CENTRIC REDESIGN
    ======================================================== */
 
-/* Make the whole hero background unified obsidian for gallery mode */
+/* Make the whole hero background unified light gradient for gallery mode */
 .collection-hero .hero-split-bg__right {
-  background: #0C0A09 !important;
+  background: transparent !important;
 }
 
 .collection-hero .hero-split-bg__divider {
@@ -188,18 +187,21 @@
 
 .gallery-title {
   font-family: var(--font-serif);
-  font-size: clamp(2.2rem, 3.8vw, 4rem);
-  font-weight: 600;
-  line-height: 1.15;
+  font-size: clamp(3.2rem, 6.2vw, 6.5rem);
+  font-weight: 300;
+  line-height: 0.95;
   margin: 0;
-  letter-spacing: -0.01em;
+  letter-spacing: -0.02em;
   padding-bottom: 0.08em;
-  /* Prevent bottom clip on background-clipped gradient text */
   overflow: visible;
+  text-transform: capitalize;
 }
 
 .gallery-title .title-light {
-  background: linear-gradient(135deg, #ffffff 40%, #e0c38c 100%) !important;
+  font-style: italic;
+  font-family: var(--font-serif);
+  font-weight: 400;
+  background: linear-gradient(135deg, var(--color-primary, #9b1b2a) 30%, #caa15a 100%) !important;
   -webkit-background-clip: text !important;
   -webkit-text-fill-color: transparent !important;
   display: inline;
@@ -213,7 +215,10 @@
 }
 
 .gallery-title .title-gold {
-  background: linear-gradient(135deg, #caa15a 30%, #e8d5a3 100%) !important;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  background: linear-gradient(135deg, #caa15a 30%, #b38e4c 100%) !important;
   -webkit-background-clip: text !important;
   -webkit-text-fill-color: transparent !important;
   display: inline;
@@ -227,7 +232,8 @@
 .gallery-header-desc {
   font-family: var(--font-sans);
   font-size: 0.78rem;
-  color: rgba(255, 255, 255, 0.38);
+  color: var(--color-dark, #2a2a2a);
+  opacity: 0.7;
   letter-spacing: 0.07em;
   margin: 0;
   line-height: 1.5;
@@ -246,8 +252,24 @@
 .gallery-col {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 12px;
   min-height: 0;
+  transition: transform 0.8s var(--ease-out);
+}
+
+@media (min-width: 1024px) {
+  .gallery-col--a,
+  .gallery-col--b,
+  .gallery-col--c {
+    transform: none;
+  }
+
+  /* Parallax Column Shifting on Grid Hover — Aligned along the bottom */
+  .hero-gallery-grid:hover .gallery-col--a,
+  .hero-gallery-grid:hover .gallery-col--b,
+  .hero-gallery-grid:hover .gallery-col--c {
+    transform: none;
+  }
 }
 
 /* ---- Gallery Frames (individual image containers) ---- */
@@ -255,11 +277,51 @@
   position: relative;
   overflow: hidden;
   flex: 1;
-  border: 1px solid rgba(202, 161, 90, 0.18);
-  border-radius: 2px;
-  background: #0d0b09;
+  border: 1.5px solid rgba(202, 161, 90, 0.22);
+  background: var(--color-white, #ffffff);
   min-height: 0;
-  transition: border-color 0.4s ease, box-shadow 0.4s ease;
+  transition: border-color 0.5s var(--ease-out), box-shadow 0.5s var(--ease-out), transform 0.5s var(--ease-out);
+  box-shadow: 0 15px 35px rgba(155, 27, 42, 0.05), 0 5px 15px rgba(0, 0, 0, 0.04);
+}
+
+/* Shimmer gold silk swipe overlay */
+.gallery-frame::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    110deg,
+    transparent 30%,
+    rgba(202, 161, 90, 0.15) 45%,
+    rgba(255, 255, 255, 0.25) 50%,
+    rgba(202, 161, 90, 0.15) 55%,
+    transparent 70%
+  );
+  transform: translateX(-100%);
+  transition: transform 0.8s var(--ease-out);
+  z-index: 2;
+  pointer-events: none;
+}
+
+.gallery-frame:hover::after {
+  transform: translateX(100%);
+}
+
+/* Royal Archway Shapes for Haveli Gateway Colonnade */
+.gallery-col--a .gallery-frame {
+  border-radius: 220px 220px 4px 4px;
+}
+.gallery-col--b .gallery-frame:first-child {
+  border-radius: 110px 110px 4px 4px;
+  flex: 1;
+}
+.gallery-col--b .gallery-frame:last-child {
+  border-radius: 6px;
+  flex: none;
+  aspect-ratio: 1 / 1;
+}
+.gallery-col--c .gallery-frame {
+  border-radius: 220px 6px 220px 6px;
 }
 
 .gallery-frame:hover {
@@ -280,47 +342,54 @@
 /* ---- Caption Overlay (revealed on hover) ---- */
 .gallery-frame-overlay {
   position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  padding: 28px 14px 12px;
-  background: linear-gradient(to top, rgba(8, 6, 4, 0.88) 0%, transparent 100%);
+  bottom: 18px;
+  left: 50%;
+  transform: translate(-50%, 6px);
+  width: 85%;
+  background: rgba(253, 250, 246, 0.92);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(202, 161, 90, 0.35);
+  border-radius: 6px;
+  padding: 8px 12px;
   display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  pointer-events: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
   opacity: 0;
-  transform: translateY(4px);
-  transition: opacity 0.35s ease, transform 0.35s ease;
-  z-index: 2;
+  pointer-events: none;
+  transition: opacity 0.4s var(--ease-out), transform 0.4s var(--ease-out), box-shadow 0.4s ease;
+  box-shadow: 0 10px 25px rgba(155, 27, 42, 0.04);
+  z-index: 5;
 }
 
 .gallery-frame:hover .gallery-frame-overlay {
   opacity: 1;
-  transform: translateY(0);
+  transform: translate(-50%, 0);
+  box-shadow: 0 15px 35px rgba(202, 161, 90, 0.12);
 }
 
 /* Always-visible overlay variant (for portal panel) */
-.gallery-frame-overlay--always {
-  opacity: 1 !important;
-  transform: translateY(0) !important;
+.gallery-frame--portal .gallery-frame-overlay {
+  bottom: 52px;
+  width: 72%;
 }
 
 .gallery-angle-tag {
   font-family: var(--font-sans);
-  font-size: 0.6rem;
+  font-size: 0.65rem;
   font-weight: 700;
-  letter-spacing: 0.38em;
-  color: #caa15a;
-  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: var(--color-primary, #9b1b2a);
 }
 
 .gallery-img-label {
-  font-family: var(--font-sans);
-  font-size: 0.7rem;
+  font-family: var(--font-serif);
+  font-size: 0.75rem;
   font-weight: 600;
-  letter-spacing: 0.14em;
-  color: rgba(255, 255, 255, 0.8);
+  letter-spacing: 0.08em;
+  color: var(--color-dark, #2a2a2a);
   text-transform: uppercase;
 }
 
@@ -343,15 +412,22 @@
 }
 
 .gallery-corner.gc-tl {
-  top: 7px;
+  top: auto;
+  bottom: 7px;
   left: 7px;
-  border-width: 1.5px 0 0 1.5px;
+  border-width: 0 0 1.5px 1.5px;
 }
 
 .gallery-corner.gc-br {
   bottom: 7px;
   right: 7px;
   border-width: 0 1.5px 1.5px 0;
+}
+
+.gallery-corner.gc-tr {
+  top: 7px;
+  right: 7px;
+  border-width: 1.5px 1.5px 0 0;
 }
 
 /* ---- Portal Panel (Column C) — Reveal Badge ---- */
@@ -368,29 +444,47 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 10px;
+  justify-content: center;
+  gap: 12px;
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  background: rgba(253, 250, 246, 0.88);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1.5px solid rgba(202, 161, 90, 0.45);
+  box-shadow: 0 15px 35px rgba(202, 161, 90, 0.15), inset 0 0 15px rgba(202, 161, 90, 0.1);
   opacity: 0;
   pointer-events: none;
   z-index: 10;
-  transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1),
-    transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: opacity 0.4s var(--ease-out), transform 0.4s var(--ease-out), box-shadow 0.4s ease;
 }
 
 .gallery-frame--portal:hover .gallery-portal-badge {
   opacity: 1;
   transform: translate(-50%, -50%) scale(1);
+  box-shadow: 0 25px 55px rgba(202, 161, 90, 0.25), inset 0 0 20px rgba(202, 161, 90, 0.15);
 }
 
 .portal-badge-ring {
   position: absolute;
-  width: 96px;
-  height: 96px;
-  border: 1.5px solid rgba(202, 161, 90, 0.65);
+  width: 154px;
+  height: 154px;
+  border: 1.5px dashed rgba(202, 161, 90, 0.6);
   border-radius: 50%;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  animation: galleryPortalPulse 2.2s ease-in-out infinite;
+  animation: galleryPortalPulse 2.5s ease-in-out infinite, rotatePortalBadge 15s linear infinite;
+}
+
+@keyframes rotatePortalBadge {
+  0% {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+  100% {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
 }
 
 @keyframes galleryPortalPulse {
@@ -444,7 +538,8 @@
 .gallery-footer-desc {
   font-family: var(--font-sans);
   font-size: 0.78rem;
-  color: rgba(255, 255, 255, 0.38);
+  color: var(--color-dark, #2a2a2a);
+  opacity: 0.7;
   margin: 0;
   max-width: 540px;
   line-height: 1.6;
@@ -2525,7 +2620,7 @@
 }
 
 .editorial-title .title-light {
-  background: linear-gradient(135deg, #ffffff 40%, #e0c38c 100%) !important;
+  background: linear-gradient(135deg, var(--color-primary, #9b1b2a) 40%, #caa15a 100%) !important;
   -webkit-background-clip: text !important;
   -webkit-text-fill-color: transparent !important;
   display: inline-block;
@@ -2542,8 +2637,8 @@
   font-family: var(--font-sans);
   font-size: 1.05rem;
   line-height: 1.8;
-  color: rgba(255, 255, 255, 0.72) !important;
-  /* Off-white with 72% opacity for luxury contrast */
+  color: var(--color-dark, #2a2a2a) !important;
+  opacity: 0.8;
   margin: 0;
   font-weight: 400;
 }
@@ -2664,7 +2759,7 @@
 
 /* Elegant Royal Double Frame Border around landing viewport */
 .hero-royal-frame {
-  display: none;
+  display: block;
   position: absolute;
   top: 18px;
   left: 18px;
@@ -2857,47 +2952,97 @@
    --- CURATED LUXURY CATEGORY DIRECTORY REDESIGN ---
    ========================================================== */
 .luxury-category-directory {
-  padding: 60px 4% 60px 4%;
+  padding: 80px 4% 80px 4%;
   background: transparent;
   width: 100%;
   position: relative;
   z-index: 10;
 }
 
+/* Header Enhancements inside Directory */
+.luxury-category-directory .editorial-sec-header {
+  position: relative;
+  padding-bottom: 24px;
+  text-align: center;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.luxury-category-directory .editorial-sec-header::after {
+  content: '';
+  display: block;
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 70px;
+  height: 1.5px;
+  background: linear-gradient(to right, transparent, #caa15a 40%, #caa15a 60%, transparent);
+}
+
+.luxury-category-directory .editorial-sec-eyebrow {
+  color: var(--color-primary, #9b1b2a) !important;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  display: block;
+  margin-bottom: 12px;
+}
+
+.luxury-category-directory .editorial-sec-title {
+  font-family: var(--font-serif);
+  font-size: clamp(2.6rem, 4.2vw, 3.8rem);
+  font-weight: 500;
+  line-height: 1.1;
+  background: linear-gradient(135deg, var(--color-primary, #9b1b2a) 30%, #caa15a 100%) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  margin: 0;
+}
+
+.luxury-category-directory .editorial-sec-subtitle {
+  font-family: var(--font-sans);
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: #555555;
+  max-width: 620px;
+  margin: 16px auto 0 auto;
+}
+
 .category-directory-grid {
   display: grid;
   grid-template-columns: repeat(1, 1fr);
-  gap: 20px;
+  gap: 24px;
   width: 100%;
   max-width: 1020px;
-  margin: 40px auto 0 auto;
+  margin: 50px auto 0 auto;
   grid-auto-flow: dense;
 }
 
 @media (min-width: 640px) {
   .category-directory-grid {
     grid-template-columns: repeat(2, 1fr);
-    gap: 24px;
+    gap: 32px;
   }
 }
 
 @media (min-width: 1024px) {
   .category-directory-grid {
     grid-template-columns: repeat(2, 1fr);
-    gap: 28px;
+    gap: 40px;
   }
 }
 
-/* Category Card Styling */
+/* Category Card Styling — Premium Asymmetrical Arched Pairs */
 .category-dir-card {
   position: relative;
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  border-radius: 18px;
   background: var(--color-white);
-  border: 1px solid rgba(202, 161, 90, 0.18);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+  border: 1px solid rgba(202, 161, 90, 0.22);
+  box-shadow: 0 15px 35px rgba(155, 27, 42, 0.04), 0 5px 15px rgba(0, 0, 0, 0.02);
   aspect-ratio: 3 / 4;
   transition: transform 0.8s cubic-bezier(0.25, 1, 0.33, 1),
     box-shadow 0.8s cubic-bezier(0.25, 1, 0.33, 1),
@@ -2905,6 +3050,16 @@
   cursor: pointer;
   z-index: 12;
   transform-style: preserve-3d;
+}
+
+/* Card B: Curved Top-Left Archway */
+.category-directory-grid a:nth-child(1) {
+  border-radius: 220px 6px 20px 20px;
+}
+
+/* Card C: Curved Top-Right Archway */
+.category-directory-grid a:nth-child(2) {
+  border-radius: 6px 220px 20px 20px;
 }
 
 .category-dir-card.size-double-height {
@@ -2937,8 +3092,8 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 1.2s cubic-bezier(0.25, 1, 0.33, 1);
-  filter: brightness(0.95);
+  transition: transform 1.2s cubic-bezier(0.25, 1, 0.33, 1), filter 0.8s ease;
+  filter: brightness(0.92) contrast(1.02);
 }
 
 /* Metallic spotlight sweeping shine overlay */
@@ -2959,94 +3114,111 @@
   opacity: 1;
 }
 
-/* Floating Glass Overlay Styling with Shape Curves */
+/* Floating Frosted Glass Overlay Placard */
 .category-dir-glass {
   position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  padding: 2.2rem 2.0rem 2.0rem 2.0rem;
-  background: linear-gradient(to top, rgba(15, 15, 15, 0.98) 0%, rgba(15, 15, 15, 0.8) 75%, rgba(15, 15, 15, 0) 100%);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  bottom: 24px;
+  left: 7%;
+  width: 86%;
+  padding: 20px 22px;
+  background: rgba(253, 250, 246, 0.92) !important;
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  border: 1px solid rgba(202, 161, 90, 0.35) !important;
+  border-radius: 14px;
+  box-shadow: 0 12px 30px rgba(155, 27, 42, 0.05);
   display: flex;
   flex-direction: column;
-  gap: 0.4rem;
-  color: var(--color-white);
+  gap: 0.3rem;
   z-index: 5;
-  text-align: left;
-  transition: transform 0.6s cubic-bezier(0.25, 1, 0.33, 1);
-  transform: translateY(62px);
-  /* Hide detailed descriptions on rest */
-  border-top-left-radius: 20px;
-  border-top-right-radius: 20px;
-  border-top: 1px solid rgba(202, 161, 90, 0.2);
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.6s cubic-bezier(0.25, 1, 0.33, 1),
+    background-color 0.4s ease,
+    border-color 0.4s ease,
+    box-shadow 0.4s ease;
+  transform: translateY(0);
 }
 
 .category-dir-code {
   font-family: var(--font-sans);
-  font-size: 0.7rem;
+  font-size: 0.65rem;
   font-weight: 700;
-  color: #caa15a;
+  color: var(--color-primary, #9b1b2a) !important;
   letter-spacing: 0.22em;
   text-transform: uppercase;
 }
 
 .category-dir-name {
   font-family: var(--font-serif);
-  font-size: 1.45rem;
+  font-size: 1.35rem;
   font-weight: 600;
-  color: var(--color-white);
+  color: var(--color-dark, #2a2a2a) !important;
   margin: 0;
   line-height: 1.25;
 }
 
 .category-dir-text {
   font-family: var(--font-sans);
-  font-size: 0.85rem;
+  font-size: 0.8rem;
   line-height: 1.5;
-  color: rgba(255, 255, 255, 0.65);
-  margin: 0.4rem 0 0.2rem 0;
+  color: #555555 !important;
+  margin: 0;
+  max-height: 0;
   opacity: 0;
-  transition: opacity 0.5s ease;
+  overflow: hidden;
+  transition: max-height 0.6s cubic-bezier(0.25, 1, 0.33, 1), opacity 0.4s ease, margin-top 0.4s ease;
 }
 
 .category-dir-link {
   font-family: var(--font-sans);
   font-size: 0.72rem;
   font-weight: 700;
-  color: #caa15a;
+  color: var(--color-primary, #9b1b2a) !important;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  border-bottom: 1px solid #caa15a;
+  border-bottom: 1.5px solid rgba(155, 27, 42, 0.4);
   width: fit-content;
-  margin-top: 0.5rem;
+  max-height: 0;
   opacity: 0;
-  transition: opacity 0.5s ease;
+  overflow: hidden;
+  margin-top: 0;
+  transition: max-height 0.6s cubic-bezier(0.25, 1, 0.33, 1), opacity 0.4s ease, margin-top 0.4s ease;
 }
 
 /* Card Hover Interactions */
 .category-dir-card:hover {
-  transform: translateY(-8px) scale(1.01);
-  border-color: rgba(155, 27, 42, 0.4);
-  box-shadow: 0 35px 85px rgba(0, 0, 0, 0.18);
+  transform: translateY(-10px) scale(1.02);
+  border-color: rgba(202, 161, 90, 0.6);
+  box-shadow: 0 30px 70px rgba(155, 27, 42, 0.12), 0 10px 25px rgba(0, 0, 0, 0.05);
 }
 
 .category-dir-card:hover .category-dir-media img {
   transform: scale(1.06);
-  filter: brightness(1.05);
+  filter: brightness(1.02) contrast(1.04);
 }
 
 .category-dir-card:hover .category-dir-glass {
-  transform: translateY(0);
+  background: rgba(255, 255, 255, 0.96) !important;
+  border-color: rgba(155, 27, 42, 0.45) !important;
+  box-shadow: 0 20px 45px rgba(155, 27, 42, 0.1);
+  transform: translateY(-6px);
 }
 
-.category-dir-card:hover .category-dir-text,
-.category-dir-card:hover .category-dir-link {
+.category-dir-card:hover .category-dir-text {
+  max-height: 80px;
   opacity: 1;
+  margin-top: 6px;
 }
 
-/* Picture Matte Border inside categories */
+.category-dir-card:hover .category-dir-link {
+  max-height: 40px;
+  opacity: 1;
+  margin-top: 10px;
+}
+
+/* Picture Matte Border inside categories — Matches Card Archway Curves */
 .category-dir-card::before {
   content: '';
   position: absolute;
@@ -3054,15 +3226,22 @@
   left: 10px;
   right: 10px;
   bottom: 10px;
-  border: 1px solid rgba(202, 161, 90, 0.15);
-  border-radius: 18px;
+  border: 1px solid rgba(202, 161, 90, 0.16);
   pointer-events: none;
   z-index: 6;
   transition: border-color 0.4s ease;
 }
 
+.category-directory-grid a:nth-child(1)::before {
+  border-radius: 210px 4px 12px 12px;
+}
+
+.category-directory-grid a:nth-child(2)::before {
+  border-radius: 4px 210px 12px 12px;
+}
+
 .category-dir-card:hover::before {
-  border-color: rgba(155, 27, 42, 0.35);
+  border-color: rgba(155, 27, 42, 0.4);
 }
 
 /* ==========================================================
@@ -4340,67 +4519,70 @@
 
 
 /* ╔══════════════════════════════════════════════════════════╗
-   ║  THE SANCTUARY NECKLACE — DARK LUXE EDITORIAL REDESIGN  ║
+   ║  THE SANCTUARY NECKLACE — LUXURY LIGHT EDITORIAL THEME  ║
    ╚══════════════════════════════════════════════════════════╝ */
 
-/* ── 1. Full overlay: obsidian background ── */
+/* ── 1. Full overlay: premium light parchment radial gradient ── */
 .thrown-page-overlay {
-  background: #08060A !important;
+  background: radial-gradient(circle at 50% 30%, #FFFFFF 0%, #FDFAF6 55%, #F5EDE4 85%, #EAD9CD 100%) !important;
 }
 
-/* ── 2. Background blobs → warm gold on dark ── */
+/* ── 2. Background blobs → soft gold/burgundy tints on light ── */
 .thrown-page-overlay .shape-blob-1 {
-  background: radial-gradient(circle, rgba(202, 161, 90, 0.55) 0%, transparent 70%);
-  opacity: 0.07;
+  background: radial-gradient(circle, rgba(202, 161, 90, 0.22) 0%, transparent 70%);
+  opacity: 0.45;
 }
 
 .thrown-page-overlay .shape-blob-2 {
-  background: radial-gradient(circle, rgba(202, 161, 90, 0.6) 0%, transparent 70%);
-  opacity: 0.07;
+  background: radial-gradient(circle, rgba(155, 27, 42, 0.12) 0%, transparent 70%);
+  opacity: 0.35;
 }
 
 .thrown-page-overlay .shape-blob-3 {
-  background: radial-gradient(circle, rgba(155, 27, 42, 0.5) 0%, transparent 70%);
-  opacity: 0.05;
+  background: radial-gradient(circle, rgba(202, 161, 90, 0.16) 0%, transparent 70%);
+  opacity: 0.35;
 }
 
-/* ── 3. Dot-grid: gold tint on dark ── */
+/* ── 3. Dot-grid: warm gold jaali grid on light ── */
 .thrown-page-overlay .elegant-jaali-grid {
-  background-image: radial-gradient(rgba(202, 161, 90, 0.13) 1px, transparent 1px);
-  background-size: 26px 26px;
+  background-image: radial-gradient(rgba(202, 161, 90, 0.18) 1.2px, transparent 1.2px);
+  background-size: 28px 28px;
+  opacity: 0.6;
 }
 
-/* ── 4. Back button → dark glass pill ── */
+/* ── 4. Back button → frosted white glass pill with burgundy/gold accents ── */
 .thrown-page-back {
-  background: rgba(12, 9, 14, 0.88) !important;
-  border-color: rgba(202, 161, 90, 0.28) !important;
-  color: #e8d5a3 !important;
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4) !important;
+  background: rgba(255, 255, 255, 0.76) !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+  border: 1px solid rgba(202, 161, 90, 0.35) !important;
+  color: var(--color-primary, #9b1b2a) !important;
+  box-shadow: 0 8px 30px rgba(155, 27, 42, 0.05) !important;
 }
 
 .thrown-page-back:hover {
-  background: rgba(202, 161, 90, 0.12) !important;
-  border-color: rgba(202, 161, 90, 0.55) !important;
-  color: #caa15a !important;
-  box-shadow: 0 12px 35px rgba(202, 161, 90, 0.15) !important;
+  background: rgba(253, 250, 246, 0.95) !important;
+  border-color: rgba(155, 27, 42, 0.55) !important;
+  color: var(--color-primary, #9b1b2a) !important;
+  box-shadow: 0 12px 35px rgba(155, 27, 42, 0.12) !important;
   transform: translateY(-2px) !important;
 }
 
 /* ── 5. Section header typography ── */
 .thrown-page-overlay .editorial-sec-eyebrow {
-  color: #caa15a !important;
+  color: var(--color-primary, #9b1b2a) !important;
   letter-spacing: 0.42em;
 }
 
 .thrown-page-overlay .editorial-sec-title {
-  color: #FFFFFF !important;
-  background: linear-gradient(135deg, #ffffff 50%, #e0c38c 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  color: var(--color-dark, #2a2a2a) !important;
+  background: linear-gradient(135deg, var(--color-primary, #9b1b2a) 30%, #caa15a 100%) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
 }
 
 .thrown-page-overlay .editorial-sec-subtitle {
-  color: rgba(255, 255, 255, 0.48) !important;
+  color: #555555 !important;
 }
 
 /* Decorative gold rule under header */
@@ -4421,31 +4603,32 @@
   background: linear-gradient(to right, transparent, #caa15a 40%, #caa15a 60%, transparent);
 }
 
-/* ── 6. Panel image wrappers — ZERO movement, gold frame ── */
+/* ── 6. Panel image wrappers — soft shadows & gold borders ── */
 .panel-image-wrapper {
-  transition: box-shadow 0.4s ease !important;
+  transition: box-shadow 0.4s ease, border-color 0.4s ease !important;
   transform: none !important;
   transform-style: flat !important;
   will-change: box-shadow !important;
-  border-color: rgba(202, 161, 90, 0.3) !important;
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.45) !important;
-  background: #0d0b09 !important;
+  border-color: rgba(202, 161, 90, 0.22) !important;
+  box-shadow: 0 20px 45px rgba(155, 27, 42, 0.06), 0 5px 15px rgba(0, 0, 0, 0.03) !important;
+  background: #ffffff !important;
 }
 
 .panel-image-wrapper:hover,
 .editorial-panel:hover .panel-image-wrapper {
   transform: none !important;
-  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.55), 0 0 0 1px rgba(202, 161, 90, 0.2) !important;
+  box-shadow: 0 30px 60px rgba(155, 27, 42, 0.12), 0 10px 25px rgba(0, 0, 0, 0.05) !important;
+  border-color: rgba(202, 161, 90, 0.5) !important;
 }
 
-/* Full-bleed wrappers also static */
+/* Full-bleed wrappers static */
 .panel-full-bleed .panel-image-wrapper {
-  background: #0A0807 !important;
+  background: #FDFAF6 !important;
   border: none !important;
   transform: none !important;
 }
 
-/* Panel images — guaranteed no movement */
+/* Panel images — no movement */
 .panel-card-img {
   transform: none !important;
   transition: none !important;
@@ -4455,50 +4638,45 @@
   transform: none !important;
 }
 
-/* Disable spotlight shimmer on dark bg (too light) */
-.thrown-page-overlay .panel-card-spotlight {
-  display: none;
-}
-
-/* ── 7. Dark glass overlay cards ── */
+/* ── 7. Frosted luxury light glass overlays ── */
 .thrown-page-overlay .panel-glass-overlay {
-  background: rgba(10, 8, 13, 0.82) !important;
-  backdrop-filter: blur(20px) !important;
-  -webkit-backdrop-filter: blur(20px) !important;
-  border: 1px solid rgba(202, 161, 90, 0.22) !important;
-  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45), 0 0 0 0.5px rgba(202, 161, 90, 0.12) !important;
+  background: rgba(253, 250, 246, 0.88) !important;
+  backdrop-filter: blur(15px) !important;
+  -webkit-backdrop-filter: blur(15px) !important;
+  border: 1px solid rgba(202, 161, 90, 0.35) !important;
+  box-shadow: 0 20px 50px rgba(155, 27, 42, 0.08), 0 5px 15px rgba(0, 0, 0, 0.04) !important;
 }
 
 .thrown-page-overlay .panel-glass-overlay:hover {
-  background: rgba(14, 11, 18, 0.9) !important;
-  border-color: rgba(202, 161, 90, 0.4) !important;
-  box-shadow: 0 32px 72px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(202, 161, 90, 0.25) !important;
+  background: rgba(255, 255, 255, 0.95) !important;
+  border-color: rgba(202, 161, 90, 0.6) !important;
+  box-shadow: 0 30px 65px rgba(155, 27, 42, 0.15), 0 10px 30px rgba(0, 0, 0, 0.06) !important;
 }
 
-/* ── 8. Panel typography → light palette ── */
+/* ── 8. Panel typography → rich contrast palette ── */
 .thrown-page-overlay .panel-tag {
-  color: #caa15a !important;
+  color: var(--color-primary, #9b1b2a) !important;
   letter-spacing: 0.3em;
 }
 
 .thrown-page-overlay .panel-title {
-  color: #FFFFFF !important;
+  color: var(--color-dark, #2a2a2a) !important;
 }
 
 .thrown-page-overlay .panel-desc {
-  color: rgba(255, 255, 255, 0.58) !important;
+  color: #555555 !important;
 }
 
 .thrown-page-overlay .panel-inspect-badge {
-  color: rgba(202, 161, 90, 0.75) !important;
+  color: var(--color-primary, #9b1b2a) !important;
 }
 
 .thrown-page-overlay .inspect-lbl {
-  color: rgba(202, 161, 90, 0.75) !important;
+  color: var(--color-primary, #9b1b2a) !important;
 }
 
 .thrown-page-overlay .inspect-svg {
-  fill: rgba(202, 161, 90, 0.75) !important;
+  fill: var(--color-primary, #9b1b2a) !important;
 }
 
 .thrown-page-overlay .editorial-panel:hover .panel-inspect-badge,
@@ -4509,20 +4687,19 @@
 .thrown-page-overlay .editorial-panel:hover .inspect-svg {
   fill: #caa15a !important;
   transform: none !important;
-  /* No scale on icon either */
 }
 
-/* Panel-split info container (text side) */
+/* Panel-split info container text colors */
 .thrown-page-overlay .panel-info-container .panel-tag {
-  color: #caa15a !important;
+  color: var(--color-primary, #9b1b2a) !important;
 }
 
 .thrown-page-overlay .panel-info-container .panel-title {
-  color: #FFFFFF !important;
+  color: var(--color-dark, #2a2a2a) !important;
 }
 
 .thrown-page-overlay .panel-info-container .panel-desc {
-  color: rgba(255, 255, 255, 0.55) !important;
+  color: #555555 !important;
 }
 
 /* ── 9. Decorative gold vertical spine between panels ── */
@@ -4539,9 +4716,9 @@
   width: 1px;
   background: linear-gradient(to bottom,
       transparent 0%,
-      rgba(202, 161, 90, 0.14) 8%,
-      rgba(202, 161, 90, 0.14) 92%,
-      transparent 100%);
+      rgba(202, 161, 90, 0.25) 8%,
+      rgba(202, 161, 90, 0.25) 92%,
+      transparent 100%) !important;
   transform: translateX(-50%);
   pointer-events: none;
   z-index: 0;
@@ -4552,7 +4729,7 @@
   content: '◆';
   display: block;
   text-align: center;
-  color: rgba(202, 161, 90, 0.35);
+  color: rgba(202, 161, 90, 0.6) !important;
   font-size: 0.55rem;
   letter-spacing: 0.8em;
   margin-bottom: -20px;
@@ -4567,7 +4744,7 @@
   position: absolute;
   width: 14px;
   height: 14px;
-  border-color: rgba(202, 161, 90, 0.5);
+  border-color: rgba(202, 161, 90, 0.45) !important;
   border-style: solid;
   pointer-events: none;
   z-index: 5;
@@ -4588,7 +4765,7 @@
 
 .editorial-panel:hover .panel-image-wrapper::before,
 .editorial-panel:hover .panel-image-wrapper::after {
-  border-color: rgba(202, 161, 90, 0.85);
+  border-color: var(--color-primary, #9b1b2a) !important;
 }
 
 /* ── 12. Panel gap separator enhancement ── */

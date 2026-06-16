@@ -163,15 +163,9 @@ document.addEventListener('DOMContentLoaded', () => {
           let scrollProgress = 1 - (rect.top / vh);
           scrollProgress = Math.max(0, Math.min(1, scrollProgress));
 
-          // Calculate top border-radius based on scrollProgress
-          // At entry: border-radius is a perfect semicircle arch (50vw or innerWidth / 2)
-          // As it scrolls up to top of screen: border-radius flattens out smoothly to 24px
-          const maxRadius = window.innerWidth / 2;
-          const minRadius = 24;
-          const currentRadius = maxRadius - (maxRadius - minRadius) * scrollProgress;
-
-          brandIntro.style.borderTopLeftRadius = `${currentRadius}px`;
-          brandIntro.style.borderTopRightRadius = `${currentRadius}px`;
+          // No arch animation — keep top corners flat/straight
+          brandIntro.style.borderTopLeftRadius = '0px';
+          brandIntro.style.borderTopRightRadius = '0px';
 
           // Emulate viewport fixed attachment by translating background layer relative to parent's viewport top
           if (brandIntroBg) {

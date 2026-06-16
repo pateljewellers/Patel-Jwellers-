@@ -60,20 +60,36 @@ module.exports = {
   },
 
   shagun: {
-    eyebrow: 'Shagun Registration',
-    title: 'Register Your Bridal Shagun Journey',
+    eyebrow: 'A Sacred Tradition',
+    title: 'The Bridal Shagun Journey',
     description:
-      'Celebrate your wedding with our exclusive Shagun Registration — curated bridal sets, personalised consultations, and special privileges for your big day.',
-    cta: { label: 'Register Now', href: '/shagun-registration' },
-    cards: [
-      { image: '/images/shagun/bridal-gold.jpg', caption: 'Heritage Curation', alt: 'Premium heavy gold bridal necklace set' },
-      { image: '/images/shagun/artisan-sketch.jpg', caption: 'Artisan Consultation', alt: 'Artisan designer sketching bespoke bridal jewellery' },
-      { image: '/images/shagun/blessing-box.jpg', caption: 'Shagun Blessings', alt: 'Gilded Shagun gold coin blessing keepsake box' }
-    ],
-    privileges: [
-      { num: '01', title: 'Curated Bridal Trousseau', desc: 'VIP access to exclusive handcrafted antique and gold bridal sets.' },
-      { num: '02', title: 'Artisan Consultation', desc: 'One-on-one session with our master designers to sketch your bespoke dream pieces.' },
-      { num: '03', title: 'Royal Shagun Privileges', desc: 'Special blessings including guaranteed savings and personalized keepsake boxes.' }
+      'An auspicious celebration of love and heritage. Register online to begin, join our intimate showroom group gatherings, and receive a blessed 999 pure silver coin during our traditional Pooja ceremony.',
+    cta: { label: 'Begin Shagun Registration', href: '/shagun-registration' },
+    steps: [
+      {
+        num: '01',
+        title: 'Online Registration',
+        desc: 'Submit your wedding details and register online to reserve your place in the upcoming Shagun celebrations.',
+        image: '/images/shagun/shagun-register.png',
+        alt: 'Elegant bride-to-be registering online on her tablet',
+        cta: 'Register Online'
+      },
+      {
+        num: '02',
+        title: 'Group Invitations',
+        desc: 'Receive an exclusive invitation to visit our showroom in select groups of brides-to-be for a curated experience.',
+        image: '/images/shagun/shagun-group.png',
+        alt: 'Intimate gathering of brides-to-be discussing jewelry in our showroom',
+        cta: 'View Group Gatherings'
+      },
+      {
+        num: '03',
+        title: 'Pooja & Silver Blessing',
+        desc: 'Attend the traditional showroom pooja ceremony, and receive your blessed 999 pure silver Shagun coin.',
+        image: '/images/shagun/shagun-pooja-coin.png',
+        alt: 'Sacred showroom pooja ceremony presenting a silver shagun coin',
+        cta: 'Receive Silver Blessing'
+      }
     ]
   },
 
@@ -131,7 +147,7 @@ module.exports = {
   showroom: {
     eyebrow: 'Visit Our Sanctuary',
     title: 'Patel Jewellers Mehsanawala',
-    image: '/images/about/patel-jewellers-mehsanawala.png',
+    image: '/images/about/pjimage2.png',
     features: [
       {
         title: 'Bridal Styling Suites',

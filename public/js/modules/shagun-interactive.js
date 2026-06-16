@@ -1,6 +1,6 @@
 /**
- * BRIDAL SHAGUN JOURNEY INTERACTIVE MODULE
- * 3D Staggered Parallax Card Deck, Synced Hover Privileges,
+ * BRIDAL SHAGUN TRIPTYCH ACCORDION INTERACTIVE MODULE
+ * Handlers for triptych card accordion, mobile clicks, organic 3D tilt,
  * and advanced HTML5 Canvas Sparkling Gold & Bokeh Particle Engine.
  *
  * Patel Jewellers Mehsanawala
@@ -13,63 +13,65 @@ document.addEventListener('DOMContentLoaded', () => {
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   // =====================================================
-  // 1. INTERACTIVE PRIVILEGES & CARD SYNCING
+  // 1. TRIPTYCH ACCORDION SYNCING & HOVER ENGINE
   // =====================================================
-  const privilegeItems = Array.from(section.querySelectorAll('.shagun-privilege-item'));
-  const shagunCards    = Array.from(section.querySelectorAll('.shagun-card'));
+  const triptychContainer = document.getElementById('shagun-triptych-accordion');
+  const triptychCards = Array.from(section.querySelectorAll('.shagun-triptych-card'));
 
   const setActiveCard = (activeIndex) => {
-    privilegeItems.forEach((item, idx) => {
-      item.classList.toggle('is-active', idx === activeIndex);
-    });
-
-    shagunCards.forEach((card, idx) => {
+    triptychCards.forEach((card, idx) => {
       card.classList.toggle('is-active', idx === activeIndex);
     });
   };
 
-  if (privilegeItems.length > 0) {
-    privilegeItems.forEach((item) => {
-      item.addEventListener('mouseenter', () => {
-        const targetIdx = parseInt(item.getAttribute('data-target'), 10);
-        if (!isNaN(targetIdx)) {
-          setActiveCard(targetIdx);
+  if (triptychContainer && triptychCards.length > 0) {
+    triptychCards.forEach((card, idx) => {
+      // Desktop hover trigger
+      card.addEventListener('mouseenter', () => {
+        if (window.innerWidth >= 960) {
+          setActiveCard(idx);
+        }
+      });
+
+      // Mobile/touch click trigger
+      card.addEventListener('click', () => {
+        if (window.innerWidth < 960) {
+          setActiveCard(idx);
         }
       });
     });
 
-    // Make cards clickable to cycle
-    shagunCards.forEach((card) => {
-      card.addEventListener('click', () => {
-        const currentActive = shagunCards.findIndex(c => c.classList.contains('is-active'));
-        const nextActive = (currentActive + 1) % shagunCards.length;
-        setActiveCard(nextActive);
-      });
+    // Reset to first card when mouse leaves triptych container on desktop
+    triptychContainer.addEventListener('mouseleave', () => {
+      if (window.innerWidth >= 960) {
+        setActiveCard(0);
+      }
     });
   }
 
   // =====================================================
-  // 2. 3D MOUSE PERSPECTIVE TILT & DIFFERENTIAL PARALLAX
+  // 2. 3D MOUSE PERSPECTIVE TILT FOR TRIPTYCH CARDS
   // =====================================================
-  const showcaseWrapper = document.getElementById('shagun-showcase-wrapper');
-  const showcaseDeck    = document.getElementById('shagun-showcase-deck');
-  let tilt = { x: 0, y: 0, tx: 0, ty: 0 };
+  let tiltStates = triptychCards.map(() => ({ x: 0, y: 0, tx: 0, ty: 0 }));
 
-  if (showcaseWrapper && !prefersReducedMotion) {
-    showcaseWrapper.addEventListener('mousemove', (e) => {
-      const rect = showcaseWrapper.getBoundingClientRect();
-      const nx = (e.clientX - rect.left) / rect.width - 0.5;
-      const ny = (e.clientY - rect.top) / rect.height - 0.5;
-      
-      // Calculate target tilt values (max 14 degrees)
-      tilt.tx = ny * -14;
-      tilt.ty = nx * 14;
-    }, { passive: true });
+  if (triptychCards.length > 0 && !prefersReducedMotion) {
+    triptychCards.forEach((card, idx) => {
+      card.addEventListener('mousemove', (e) => {
+        if (window.innerWidth < 960) return;
+        const rect = card.getBoundingClientRect();
+        const nx = (e.clientX - rect.left) / rect.width - 0.5;
+        const ny = (e.clientY - rect.top) / rect.height - 0.5;
+        
+        // Tilt slightly (max 8 degrees)
+        tiltStates[idx].tx = ny * -8;
+        tiltStates[idx].ty = nx * 8;
+      }, { passive: true });
 
-    showcaseWrapper.addEventListener('mouseleave', () => {
-      tilt.tx = 0;
-      tilt.ty = 0;
-    }, { passive: true });
+      card.addEventListener('mouseleave', () => {
+        tiltStates[idx].tx = 0;
+        tiltStates[idx].ty = 0;
+      }, { passive: true });
+    });
   }
 
   // =====================================================
@@ -117,7 +119,7 @@ document.addEventListener('DOMContentLoaded', () => {
       reset(init = false) {
         this.x = Math.random() * canvas.width;
         this.y = init ? Math.random() * canvas.height : canvas.height + 15;
-        this.vy = -(Math.random() * 0.7 + 0.3); // floats upward
+        this.vy = -(Math.random() * 0.7 + 0.35); // floats upward
         this.vx = (Math.random() - 0.5) * 0.4;
         this.size = Math.random() * 2 + 0.6;
         this.alpha = Math.random() * 0.65 + 0.15;
@@ -126,7 +128,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // Strict brand colors: Taupe, White, Burgundy
         const rand = Math.random();
         if (rand > 0.45) {
-          this.color = 'rgba(176,168,154,'; // Warm Taupe (#B0A89A)
+          this.color = 'rgba(202,161,90,'; // Warm Gold (#caa15a)
         } else if (rand > 0.15) {
           this.color = 'rgba(255,255,255,'; // White
         } else {
@@ -170,7 +172,7 @@ document.addEventListener('DOMContentLoaded', () => {
         ctx.globalAlpha = Math.max(this.alpha, 0);
         ctx.fillStyle   = this.color + this.alpha.toFixed(2) + ')';
         ctx.shadowBlur  = this.size > 1.2 ? 6 : 2;
-        ctx.shadowColor = '#B0A89A'; // Warm Taupe
+        ctx.shadowColor = '#caa15a'; // Brand gold glow
         
         ctx.beginPath();
         // Render diamonds for premium starry aesthetic
@@ -203,7 +205,7 @@ document.addEventListener('DOMContentLoaded', () => {
         this.radius = Math.random() * 45 + 15; // large bubbles
         this.alpha  = Math.random() * 0.035 + 0.005; // extremely faint
         this.fade   = Math.random() * 0.0002 + 0.00005;
-        this.color  = Math.random() > 0.4 ? '176, 168, 154' : '155, 27, 42'; // Warm Taupe or Burgundy
+        this.color  = Math.random() > 0.4 ? '202, 161, 90' : '155, 27, 42'; // Gold or Burgundy
       }
 
       update() {
@@ -263,36 +265,20 @@ document.addEventListener('DOMContentLoaded', () => {
       }
 
       // =====================================================
-      // 4. LERP 3D TILT & DIFFERENTIAL CARD PARALLAX
+      // 4. LERP 3D TILT FOR TRIPTYCH CARDS
       // =====================================================
-      if (showcaseDeck && !prefersReducedMotion) {
-        tilt.x += (tilt.tx - tilt.x) * 0.08;
-        tilt.y += (tilt.ty - tilt.y) * 0.08;
+      if (triptychCards.length > 0 && !prefersReducedMotion) {
+        triptychCards.forEach((card, idx) => {
+          const state = tiltStates[idx];
+          state.x += (state.tx - state.x) * 0.08;
+          state.y += (state.ty - state.y) * 0.08;
 
-        // Apply global 3D tilt perspective
-        showcaseDeck.style.transform = `perspective(1500px) rotateX(${tilt.x}deg) rotateY(${tilt.y}deg)`;
-
-        // Apply differential parallax displacement based on depth layer!
-        // Staggered overlay sliding vector calculations:
-        shagunCards.forEach((card, idx) => {
-          let multiplier = 0;
-          if (idx === 0) multiplier = -0.55; // shifts slightly against cursor angle (feels close)
-          else if (idx === 1) multiplier = 0.22;  // middle shifts with cursor angle
-          else if (idx === 2) multiplier = 0.78;  // background shifts highly with cursor (feels deep)
-          
-          const shiftX = tilt.y * multiplier;
-          const shiftY = tilt.x * multiplier;
-          
-          // Inject custom CSS translation offsets
-          card.style.setProperty('--px-x', `${shiftX.toFixed(2)}px`);
-          card.style.setProperty('--px-y', `${shiftY.toFixed(2)}px`);
-          
-          // Apply translations alongside existing layouts
-          const isActive = card.classList.contains('is-active');
-          const zDepth = isActive ? 40 : (idx === 0 ? 10 : (idx === 1 ? 0 : -10));
-          const scale  = isActive ? 1.04 : 1;
-          
-          card.style.transform = `translate3d(var(--px-x, 0px), var(--px-y, 0px), ${zDepth}px) scale(${scale})`;
+          // Apply 3D tilt perspective to the individual card
+          if (card.classList.contains('is-active')) {
+            card.style.transform = `perspective(1000px) rotateX(${state.x}deg) rotateY(${state.y}deg) translateY(-4px)`;
+          } else {
+            card.style.transform = '';
+          }
         });
       }
 

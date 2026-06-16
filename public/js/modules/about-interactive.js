@@ -40,6 +40,7 @@ const FS = /* glsl */`
   uniform float     u_time;
   uniform float     u_radius;    /* reveal radius in canvas px         */
   uniform float     u_active;    /* animated 0..1 reveal strength      */
+  uniform float     u_lightTheme; /* 1.0 = light, 0.0 = dark            */
 
   uniform vec2      u_rpos[6];
   uniform float     u_rage[6];   /* age in seconds; <0 = inactive      */
@@ -77,7 +78,12 @@ const FS = /* glsl */`
   vec2 coverUV(vec2 uv, vec2 can, vec2 tex) {
     float ca = can.x / can.y, ta = tex.x / tex.y;
     vec2 s = (ca > ta) ? vec2(1.0, ta / ca) : vec2(ca / ta, 1.0);
-    return (uv - 0.5) * s + 0.5;
+    float yAlign = (u_lightTheme > 0.5) ? 0.15 : 0.5;
+    vec2 offset = vec2(0.0);
+    if (ca > ta) {
+      offset.y = (0.5 - yAlign) * (1.0 - s.y);
+    }
+    return (uv - 0.5) * s + 0.5 + offset;
   }
 
   void main() {
@@ -88,6 +94,10 @@ const FS = /* glsl */`
 
     /* Smooth circular reveal — soft radial gradient falloff all the way to center */
     float mask = smoothstep(u_radius, 0.0, dist) * u_active;
+
+    /* Default visibility on left and right sides (curved falloff towards center) */
+    float defaultVisibility = pow(abs(uv.x - 0.5) * 2.0, 3.0) * 0.35;
+    float finalMask = clamp(mask + defaultVisibility, 0.0, 1.0);
 
     /* ── Subtle layered water displacement ──
        Two slow FBM fields at offset phases produce gently drifting
@@ -100,7 +110,7 @@ const FS = /* glsl */`
     float n2  = fbm(wu + vec2(-t * 0.30 + 3.7, t * 0.22 + 1.9));
 
     /* Scale distortion to UV space — WATER_STR keeps it very gentle  */
-    vec2 wDist = vec2(n1, n2) * WATER_STR * mask;
+    vec2 wDist = vec2(n1, n2) * WATER_STR * finalMask;
 
     /* ── Expanding ring ripples ──
        Each ripple is a single sine wave propagating outward.
@@ -120,7 +130,7 @@ const FS = /* glsl */`
                  * exp(-rd   / (u_radius * 0.9));
 
       vec2 dir = (rd > 0.5) ? normalize(fragPx - rp) : vec2(0.0, 1.0);
-      wDist   += dir * wave * RIPPLE_STR * mask;
+      wDist   += dir * wave * RIPPLE_STR * finalMask;
     }
 
     /* ── Sample texture with cover-fit and distortion ── */
@@ -136,15 +146,23 @@ const FS = /* glsl */`
     texCol.b = texture2D(u_tex, clamp(sampleUV - vec2(aberr, 0.0),  0.001, 0.999)).b;
 
     /* ── Subtle specular — water surface wet sheen ── */
-    float spec = pow(max(n1 * 0.5 + 0.5, 0.0), SPEC_POW) * SPEC_STR * mask;
+    float spec = pow(max(n1 * 0.5 + 0.5, 0.0), SPEC_POW) * SPEC_STR * finalMask;
 
     /* ── Compose ── */
     float g = uv.x * 0.966 - uv.y * 0.259;
     float tGrad = clamp((g + 0.259) / 1.225, 0.0, 1.0);
-    vec3 col0 = vec3(0.082, 0.051, 0.055); // #150D0E (0%)
-    vec3 col1 = vec3(0.098, 0.059, 0.063); // #190F10 (40%)
-    vec3 col2 = vec3(0.122, 0.071, 0.075); // #1F1214 (70%)
-    vec3 col3 = vec3(0.071, 0.039, 0.043); // #120A0B (100%)
+    vec3 col0, col1, col2, col3;
+    if (u_lightTheme > 0.5) {
+      col0 = vec3(0.831, 0.722, 0.659); // #D4B8A8
+      col1 = vec3(0.918, 0.851, 0.804); // #EAD9CD
+      col2 = vec3(0.961, 0.929, 0.894); // #F5EDE4
+      col3 = vec3(0.980, 0.969, 0.949); // #FAF7F2
+    } else {
+      col0 = vec3(0.082, 0.051, 0.055); // #150D0E (0%)
+      col1 = vec3(0.098, 0.059, 0.063); // #190F10 (40%)
+      col2 = vec3(0.122, 0.071, 0.075); // #1F1214 (70%)
+      col3 = vec3(0.071, 0.039, 0.043); // #120A0B (100%)
+    }
     vec3 light;
     if (tGrad < 0.4) {
       light = mix(col0, col1, tGrad / 0.4);
@@ -154,7 +172,7 @@ const FS = /* glsl */`
       light = mix(col2, col3, (tGrad - 0.7) / 0.3);
     }
     vec3 water = texCol.rgb + spec;
-    vec3 color = mix(light, water, mask);
+    vec3 color = mix(light, water, finalMask);
 
     gl_FragColor = vec4(color, 1.0);
   }
@@ -164,12 +182,15 @@ const FS = /* glsl */`
    INIT WATER EFFECT — creates a self-contained WebGL instance
 ════════════════════════════════════════════════════════════════════════ */
 function initWaterEffect() {
-  const section  = document.getElementById('about-brand');
+  const section  = document.getElementById('about-hero') || document.getElementById('about-brand');
   if (!section) return null;
 
   const canvas   = document.getElementById('about-water-canvas');
   const spotBg   = document.getElementById('about-spotlight-bg');
   const imgFrame = section.querySelector('.hs-brand__img-frame');
+
+  const isLightTheme = section.classList.contains('about-hero-immersive') ||
+                       window.matchMedia('(prefers-color-scheme: light)').matches;
 
   const prefersRM = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   if (!canvas || prefersRM) { initCSSFallback(section, spotBg, canvas); return null; }
@@ -215,15 +236,16 @@ function initWaterEffect() {
 
   /* ── Uniform locations ── */
   const U = {
-    tex:     gl.getUniformLocation(prog, 'u_tex'),
-    res:     gl.getUniformLocation(prog, 'u_res'),
-    texSize: gl.getUniformLocation(prog, 'u_texSize'),
-    mouse:   gl.getUniformLocation(prog, 'u_mouse'),
-    time:    gl.getUniformLocation(prog, 'u_time'),
-    radius:  gl.getUniformLocation(prog, 'u_radius'),
-    active:  gl.getUniformLocation(prog, 'u_active'),
-    rpos:    gl.getUniformLocation(prog, 'u_rpos[0]'),
-    rage:    gl.getUniformLocation(prog, 'u_rage[0]'),
+    tex:        gl.getUniformLocation(prog, 'u_tex'),
+    res:        gl.getUniformLocation(prog, 'u_res'),
+    texSize:    gl.getUniformLocation(prog, 'u_texSize'),
+    mouse:      gl.getUniformLocation(prog, 'u_mouse'),
+    time:       gl.getUniformLocation(prog, 'u_time'),
+    radius:     gl.getUniformLocation(prog, 'u_radius'),
+    active:     gl.getUniformLocation(prog, 'u_active'),
+    lightTheme: gl.getUniformLocation(prog, 'u_lightTheme'),
+    rpos:       gl.getUniformLocation(prog, 'u_rpos[0]'),
+    rage:       gl.getUniformLocation(prog, 'u_rage[0]'),
   };
   const A_POS = gl.getAttribLocation(prog, 'a_pos');
 
@@ -344,7 +366,8 @@ function initWaterEffect() {
     gl.uniform2f(U.mouse,   mouse.x, 1.0 - mouse.y);
     gl.uniform1f(U.time,    t);
     gl.uniform1f(U.radius,  Math.min(canvas.width, canvas.height) * 0.28);
-    gl.uniform1f(U.active,  activeVal);
+    gl.uniform1f(U.active,      activeVal);
+    gl.uniform1f(U.lightTheme,  isLightTheme ? 1.0 : 0.0);
     gl.uniform2fv(U.rpos, rposArr);
     gl.uniform1fv(U.rage, rageArr);
 
@@ -582,7 +605,7 @@ function animateCounter(el) {
   requestAnimationFrame(tick);
 }
 
-/* ─── Intersection Observer: scroll-triggered reveals ─── */
+/* ─── Intersection Observer: scroll-triggered reveals (re-triggers every entry) ─── */
 function initBrandScrollReveals() {
   const section = document.querySelector('#about-brand');
   if (!section) return;
@@ -593,31 +616,86 @@ function initBrandScrollReveals() {
   const observer = new IntersectionObserver(
     (entries) => {
       entries.forEach((entry) => {
-        if (!entry.isIntersecting) return;
-
         const el = entry.target;
-        const delay = parseInt(el.dataset.delay || 0, 10);
 
-        setTimeout(() => {
-          el.classList.add('is-visible');
+        if (entry.isIntersecting) {
+          // Animate in with the element's own delay
+          const delay = parseInt(el.dataset.delay || 0, 10);
+          setTimeout(() => {
+            el.classList.add('is-visible');
 
-          // Trigger counters when stats become visible
-          if (el.classList.contains('hs-brand__stats') || el.closest('.hs-brand__stats')) {
-            const counters = section.querySelectorAll('.hs-counter');
-            counters.forEach((c) => animateCounter(c));
-          }
-        }, delay);
-
-        observer.unobserve(el);
+            // Re-trigger counters any time the stats panel re-enters
+            if (el.classList.contains('hs-brand__stats') || el.closest('.hs-brand__stats')) {
+              const counters = section.querySelectorAll('.hs-counter');
+              counters.forEach((c) => animateCounter(c));
+            }
+          }, delay);
+        } else {
+          // Reset so the animation replays on the next entry
+          el.classList.remove('is-visible');
+        }
       });
     },
     {
-      rootMargin: '-8% 0px -8% 0px',
-      threshold: 0.12,
+      rootMargin: '0px 0px -5% 0px',
+      threshold: 0.05,
     }
   );
 
   els.forEach((el) => observer.observe(el));
+}
+
+/* ─── Section-level entrance: drop from top / rise from bottom ─── */
+function initBrandSectionEntrance() {
+  const section = document.getElementById('about-brand');
+  if (!section) return;
+
+  // Track scroll direction
+  let lastScrollY = window.scrollY;
+  let scrollDirection = 'down';
+  window.addEventListener('scroll', () => {
+    const current = window.scrollY;
+    scrollDirection = current > lastScrollY ? 'down' : 'up';
+    lastScrollY = current;
+  }, { passive: true });
+
+  const ENTER_DIST = 70;  // px the section travels on entry
+  const DURATION   = '0.75s';
+  const EASE       = 'cubic-bezier(0.22, 1, 0.36, 1)';
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          // Direction when entering: scrolling down → drop from above; up → rise from below
+          const startY = scrollDirection === 'down' ? -ENTER_DIST : ENTER_DIST;
+
+          // Snap to start position (no transition)
+          section.style.transition = 'none';
+          section.style.opacity    = '0';
+          section.style.transform  = `translateY(${startY}px)`;
+
+          // One rAF to flush the snap, then animate to resting position
+          requestAnimationFrame(() => {
+            requestAnimationFrame(() => {
+              section.style.transition = `opacity ${DURATION} ${EASE}, transform ${DURATION} ${EASE}`;
+              section.style.opacity    = '1';
+              section.style.transform  = 'translateY(0)';
+            });
+          });
+        } else {
+          // Section left viewport — instantly hide so it's ready to animate again
+          section.style.transition = 'none';
+          section.style.opacity    = '0';
+          section.style.transform  = 'translateY(0)';
+        }
+      });
+    },
+    // Fire as soon as any sliver of the section enters the viewport
+    { threshold: 0.02, rootMargin: '0px' }
+  );
+
+  observer.observe(section);
 }
 
 /* ─── Stagger delay for stats row when it enters viewport ─── */
@@ -662,8 +740,9 @@ function bootstrap() {
     _instance = initWaterEffect();
   }
 
-  /* 2. Initialise brand-story scroll reveals if it exists on this page */
+  /* 2. Initialise brand-story scroll reveals and section entrance */
   if (document.getElementById('about-brand')) {
+    initBrandSectionEntrance();
     initBrandScrollReveals();
     initStatsReveal();
   }

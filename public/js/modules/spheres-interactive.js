@@ -256,7 +256,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // Spawns a burst of sparkles
   function triggerStardustFlare() {
     if (prefersReducedMotion) return;
-    
+
     // Find active node angle in radians
     const currentActiveNode = Array.from(orbitNodes).find(n => n.dataset.pillar === activePillar);
     const initialAngle = parseInt(currentActiveNode.dataset.angle, 10);
@@ -353,7 +353,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const initialAngle = parseInt(currentActiveNode.dataset.angle, 10);
         // Absolute Angle = base offset of gold (-90deg) + node orientation angle + selector ring rotation
         const absoluteAngle = (-90 + initialAngle + currentRotation) * (Math.PI / 180);
-        
+
         // Spawn particle traveling inward from node to center
         particles.push(new StardustParticle(cx, cy, absoluteAngle, orbitRadius, themes[activePillar]));
       }
@@ -384,4 +384,91 @@ document.addEventListener('DOMContentLoaded', () => {
   // Kick off loops
   loop();
   startAutoCycle();
+
+  /* ═══════════════════════════════════════════════════════════════
+    SPHERES ENTRANCE ANIMATION
+    Triggers ONLY when "The Spheres of Patel Craft" section
+    reaches the center of the viewport.
+ ═══════════════════════════════════════════════════════════════ */
+  function initSpheresAnimations() {
+
+    const textCol =
+      sectionWrapper.querySelector('.spheres-details');
+
+    const imageCol =
+      sectionWrapper.querySelector('.spheres-pedestal-container');
+
+    const triggerElement =
+      sectionWrapper.querySelector('.spheres-heading') ||
+      sectionWrapper;
+
+    if (!textCol || !imageCol) return;
+
+    const EASE = 'cubic-bezier(0.22,1,0.36,1)';
+
+    let hasAnimated = false;
+
+    function resetAll() {
+
+      sectionWrapper.style.transition = 'none';
+      sectionWrapper.style.opacity = '0';
+
+      imageCol.style.transition = 'none';
+      textCol.style.transition = 'none';
+
+      imageCol.style.opacity = '0';
+      textCol.style.opacity = '0';
+
+      imageCol.style.transform = 'translateX(-150px)';
+      textCol.style.transform = 'translateX(150px)';
+    }
+
+    function animateIn() {
+
+      sectionWrapper.style.transition =
+        'opacity 0.6s ease';
+
+      imageCol.style.transition =
+        `transform 1s ${EASE},
+       opacity 1s ease`;
+
+      textCol.style.transition =
+        `transform 1s ${EASE} 0.15s,
+       opacity 1s ease 0.15s`;
+
+      sectionWrapper.style.opacity = '1';
+
+      imageCol.style.opacity = '1';
+      imageCol.style.transform = 'translateX(0)';
+
+      textCol.style.opacity = '1';
+      textCol.style.transform = 'translateX(0)';
+    }
+
+    resetAll();
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+
+        if (entry.isIntersecting && !hasAnimated) {
+          hasAnimated = true;
+          animateIn();
+        }
+
+        if (!entry.isIntersecting) {
+          hasAnimated = false;
+          resetAll();
+        }
+      },
+      {
+        threshold: 0,
+        rootMargin: '-45% 0px -45% 0px'
+      }
+    );
+
+    observer.observe(triggerElement);
+  }
+
+  /* Boot */
+  initSpheresAnimations();
 });
